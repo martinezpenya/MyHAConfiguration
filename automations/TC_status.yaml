@@ -1,0 +1,22 @@
+##########################################
+## KEYBOARD - status
+##
+- alias: 'TC status'
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/status'
+  action:
+    - service: notify.HomeAssistant
+      data_template:
+          title: "***Estat del sistema:***"
+          message: "Carrega del sistema: ***{{states.sensor.netdata_load.state_with_unit}}***
+                    
+          CPU: ***{{states.sensor.netdata_cpu.state_with_unit}}***
+          
+          {% for state in states.sensor -%}
+          {%- if loop.first %}***____Sensors:____***\n - {% elif loop.last %} \n - {% else %}\n - {% endif -%}
+            {{ state.name | lower }}: ***{{state.state_with_unit}}***
+          {%- endfor %}"

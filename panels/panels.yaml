@@ -1,0 +1,15 @@
+router:
+  title: 'Router'
+  icon: mdi:router-wireless
+  url: 'http://192.168.0.1'
+
+netdata:
+  title: 'Estat Raspberry'
+  icon: mdi:raspberrypi
+  url: 'http://192.168.0.3:19999'
+
+pihole:
+  title: 'Pi Hole'
+  icon: mdi:music-note-whole
+  url: 'http://192.168.0.3/admin/'
+
