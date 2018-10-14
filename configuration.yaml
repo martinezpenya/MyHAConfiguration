@@ -14,7 +14,7 @@ homeassistant:
   customize: !include customize.yaml
 
 # Show links to resources in log and frontend
-introduction:
+#introduction:
 
 # Enables the frontend
 frontend:
@@ -112,9 +112,9 @@ sensor:
 
   - platform: template
     sensors:
-      meteocarlet:
-        value_template: '{%set list2 = "0","Clear sky","Fair","Partly cloudy","Cloudy","Rain showers","Rain showers and thunder","Sleet showers","Snow showers","Rain","Heavy rain","Heavy rain and thunder","Sleet","Snow","Snow and thunder","Fog","Sleet showers and thunder","Snow showers and thunder","Rain and thunder","Sleet and thunder","Light rain showers and thunder","Heavy rain showers and thunder","Light sleet showers and thunder","Heavy sleet showers and thunder","Light snow showers and thunder","Heavy snow showers and thunder","Light rain and thunder","Light sleet and thunder","Heavy sleet and thunder","Light snow and thunder","Heavy snow and thunder","Light rain showers","Heavy rain showers","Light sleet showers","Heavy sleet showers","Light snow showers","Heavy snow showers","Light rain","Light sleet","Heavy sleet","Light snow","Heavy snow"%}{{list2[states.sensor.meteocarlet_Symbol.state|int]}}'
-        #entity_picture_template: "{{ state_attr('sensor.yr_symbol','entity_picture') }}"
+      meteocarlet_symbol:
+        friendly_name: "meteocarlet symbol"
+        value_template: '{%set list2 = "sunny", "clearnight", "cloudy", "cloudy2", "night cloudy", "dry", "fog", "haze", "heavyrain", "mainlyfine", "mist", "night fog", "night heavyrain", "night overcast", "night rain", "night showers", "night snow", "night", "thunder", "overcast", "partlycloudy", "rain", "rain2", "showers2", "sleet", "sleetshowers", "snow", "snowmelt", "snowshowers2", "sunny", "thundershowers", "thundershowers2", "thunderstorms", "tornado", "windy", "stopped", "rainning", "wind + rain"%}{{list2[states.sensor.meteocarlet_symbol.state|int]}}'
       
   # sensor netdata
   - platform: netdata
