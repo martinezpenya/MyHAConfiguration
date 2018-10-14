@@ -1,0 +1,13 @@
+- alias: 'Sunrise'
+  trigger:
+    platform: sun
+    event: sunrise
+    #offset: "-00:45:00"
+  #condition:
+    #condition: state
+    #entity_id: group.all_devices
+    #state: home
+  action:
+    service: notify.HomeAssistant
+    data:
+      message: "Sunrise"
