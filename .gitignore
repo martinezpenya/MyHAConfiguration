@@ -3,3 +3,4 @@
 /home-assistant_v2.db
 /home-assistant.log
 /secrets.yaml
+/.storage/
