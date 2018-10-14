@@ -53,27 +53,70 @@ map:
 # Track the sun
 sun:
 
-# Weather prediction
+
 sensor:
-  - platform: yr
-    name: Oratge
-    forecast: 24
+# Weather prediction
+  #- platform: yr
+  #- platform: template
+  #  sensors:
+  #    yr:
+  #      value_template: '{%set list2 = "0","Clear sky","Fair","Partly cloudy","Cloudy","Rain showers","Rain showers and thunder","Sleet showers","Snow showers","Rain","Heavy rain","Heavy rain and thunder","Sleet","Snow","Snow and thunder","Fog","Sleet showers and thunder","Snow showers and thunder","Rain and thunder","Sleet and thunder","Light rain showers and thunder","Heavy rain showers and thunder","Light sleet showers and thunder","Heavy sleet showers and thunder","Light snow showers and thunder","Heavy snow showers and thunder","Light rain and thunder","Light sleet and thunder","Heavy sleet and thunder","Light snow and thunder","Heavy snow and thunder","Light rain showers","Heavy rain showers","Light sleet showers","Heavy sleet showers","Light snow showers","Heavy snow showers","Light rain","Light sleet","Heavy sleet","Light snow","Heavy snow"%}{{list2[states.sensor.yr_symbol.state|int]}}'
+  #      entity_picture_template: "{{ state_attr('sensor.yr_symbol','entity_picture') }}"
+    #name: Oratge
+    #forecast: 24
+    #monitored_conditions:
+    #  - temperature
+    #  - symbol
+    #  - precipitation
+    #  - windSpeed
+    #  - pressure
+    #  - windDirection
+    #  - humidity
+    #  - fog
+    #  - cloudiness
+    #  - lowClouds
+    #  - mediumClouds
+    #  - highClouds
+    #  - dewpointTemperature
+    
+    
+    #sensor clientraw
+    #reads info from clientraw.txt from meteo stations on Internet from URL.
+    #needs .homeassistant/custom_components/sensor/clientraw.py
+    #from: https://github.com/pilotak/HomeAssistant-MyConfig/tree/master/custom_components/sensor
+  - platform: clientraw
+    interval: 5
+    name: meteocarlet
+    url: !secret clientrawURL
     monitored_conditions:
-      - temperature
+      - temp_c
+      #- temp_f
+      #- dewpoint_c
+      #- dewpoint_f
+      #- heat_index_c
+      #- heat_index_f
+      #- humidex_c
+      #- humidex_f
+      #- wind_degrees
+      - wind_dir
+      - wind_gust_kph
+      - wind_gust_mph
+      - wind_kph
+      #- wind_mph
       - symbol
-      - precipitation
-      - windSpeed
+      - rain_rate
       - pressure
-      - windDirection
       - humidity
-      - fog
-      - cloudiness
-      - lowClouds
-      - mediumClouds
-      - highClouds
-      - dewpointTemperature
+      #- cloud_height_m
+      #- cloud_height_ft
+
+  - platform: template
+    sensors:
+      meteocarlet:
+        value_template: '{%set list2 = "0","Clear sky","Fair","Partly cloudy","Cloudy","Rain showers","Rain showers and thunder","Sleet showers","Snow showers","Rain","Heavy rain","Heavy rain and thunder","Sleet","Snow","Snow and thunder","Fog","Sleet showers and thunder","Snow showers and thunder","Rain and thunder","Sleet and thunder","Light rain showers and thunder","Heavy rain showers and thunder","Light sleet showers and thunder","Heavy sleet showers and thunder","Light snow showers and thunder","Heavy snow showers and thunder","Light rain and thunder","Light sleet and thunder","Heavy sleet and thunder","Light snow and thunder","Heavy snow and thunder","Light rain showers","Heavy rain showers","Light sleet showers","Heavy sleet showers","Light snow showers","Heavy snow showers","Light rain","Light sleet","Heavy sleet","Light snow","Heavy snow"%}{{list2[states.sensor.meteocarlet_Symbol.state|int]}}'
+        #entity_picture_template: "{{ state_attr('sensor.yr_symbol','entity_picture') }}"
       
-# sensor netdata
+  # sensor netdata
   - platform: netdata
     resources:
       load:
