@@ -13,8 +13,7 @@ from homeassistant.const import (
     CONF_MONITORED_CONDITIONS, TEMP_FAHRENHEIT, TEMP_CELSIUS, ATTR_ATTRIBUTION)
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.entity import Entity
-from homeassistant.helpers.event import (
-    async_track_point_in_utc_time, async_track_time_interval)
+from homeassistant.helpers.event import (async_track_point_in_utc_time, async_track_time_interval)
 from homeassistant.util import dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
@@ -23,10 +22,10 @@ CONF_ATTRIBUTION = "Weather forecast delivered by your WD Clientraw enabled " \
     "weather station."
 
 SENSOR_TYPES = {
-    'dewpoint_c': ['Dewpoint (°C)', TEMP_CELSIUS],
-    'heat_index_c': ['Heat index (°C)', TEMP_CELSIUS],
-    'temp_c': ['Temperature (°C)', TEMP_CELSIUS],
-    'humidex_c': ['Humidex (°C)', TEMP_CELSIUS],
+    'dewpoint': ['Dewpoint (°C)', TEMP_CELSIUS],
+    'heat_index': ['Heat index (°C)', TEMP_CELSIUS],
+    'temp': ['Temperature (°C)', TEMP_CELSIUS],
+    'humidex': ['Humidex (°C)', TEMP_CELSIUS],
     'wind_degrees': ['Wind Degrees', '°'],
     'wind_dir': ['Wind Direction', None],
     'wind_gust_kph': ['Wind Gust (km/h)', 'km/h'],
@@ -34,6 +33,7 @@ SENSOR_TYPES = {
     'wind_kph': ['Wind Speed (km/h)', 'km/h'],
     'wind_mph': ['Wind Speed (mph)', 'mph'],
     'symbol': ['Symbol', None],
+    'forecast': ['Forecast', None],
     'daily_rain': ['Daily Rain', 'mm'],
     'rain_rate': ['Rain Rate', 'mm'],
     'pressure': ['Pressure', 'hPa'],
@@ -177,13 +177,27 @@ class ClientrawData(object):
             if dev.type == 'symbol':
                 new_state = int(self.data[48])
 
+            elif dev.type == 'forecast':
+                val = int(self.data[15])
+                arr = ["sunny", "clearnight", "cloudy", "cloudy2", 
+                       "night cloudy", "dry", "fog", "haze", "heavyrain", 
+                       "mainlyfine", "mist", "night fog", "night heavyrain",
+                       "night overcast", "night rain", "night showers", 
+                       "night snow", "night", "thunder", "overcast", 
+                       "partlycloudy", "rain", "rain2", "showers2", "sleet", 
+                       "sleetshowers", "snow", "snowmelt", "snowshowers2", 
+                       "sunny", "thundershowers", "thundershowers2", 
+                       "thunderstorms", "tornado", "windy", "stopped", 
+                       "rainning", "wind + rain"]
+                new_state = arr[(val)]
+
             elif dev.type == 'daily_rain':
                 new_state = float(self.data[7])
 
             elif dev.type == 'rain_rate':
                 new_state = float(self.data[10])
 
-            elif dev.type == 'temp_c':
+            elif dev.type == 'temp':
                 new_state = float(self.data[4])
 
             elif dev.type == 'wind_kph':
@@ -227,13 +241,13 @@ class ClientrawData(object):
                 meters = float(self.data[73])
                 new_state = round(meters / 0.3048, 2)
 
-            elif dev.type == 'dewpoint_c':
+            elif dev.type == 'dewpoint':
                 new_state = float(self.data[72])
 
-            elif dev.type == 'heat_index_c':
+            elif dev.type == 'heat_index':
                 new_state = float(self.data[112])
 
-            elif dev.type == 'humidex_c':
+            elif dev.type == 'humidex':
                 new_state = float(self.data[44])
 
             _LOGGER.debug("%s %s", dev.type, new_state)

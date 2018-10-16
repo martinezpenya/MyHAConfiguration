@@ -89,32 +89,36 @@ sensor:
     name: meteocarlet
     url: !secret clientrawURL
     monitored_conditions:
-      - temp_c
-      #- temp_f
-      #- dewpoint_c
-      #- dewpoint_f
-      #- heat_index_c
-      #- heat_index_f
-      #- humidex_c
-      #- humidex_f
-      #- wind_degrees
+      - temp
       - wind_dir
       - wind_gust_kph
-      - wind_gust_mph
       - wind_kph
-      #- wind_mph
       - symbol
+      - forecast
       - rain_rate
       - pressure
       - humidity
-      #- cloud_height_m
-      #- cloud_height_ft
 
-  - platform: template
-    sensors:
-      meteocarlet_symbol:
-        friendly_name: "meteocarlet symbol"
-        value_template: '{%set list2 = "sunny", "clearnight", "cloudy", "cloudy2", "night cloudy", "dry", "fog", "haze", "heavyrain", "mainlyfine", "mist", "night fog", "night heavyrain", "night overcast", "night rain", "night showers", "night snow", "night", "thunder", "overcast", "partlycloudy", "rain", "rain2", "showers2", "sleet", "sleetshowers", "snow", "snowmelt", "snowshowers2", "sunny", "thundershowers", "thundershowers2", "thunderstorms", "tornado", "windy", "stopped", "rainning", "wind + rain"%}{{list2[states.sensor.meteocarlet_symbol.state|int]}}'
+  - platform: clientraw
+    interval: 5
+    name: meteoinsti
+    url: !secret clientrawURL2
+    monitored_conditions:
+      - temp
+      - wind_dir
+      - wind_gust_kph
+      - wind_kph
+      - symbol
+      - forecast
+      - rain_rate
+      - pressure
+      - humidity
+
+  #- platform: template
+  #  sensors:
+  #    meteocarlet_symbol:
+  #      friendly_name: "meteocarlet symbol"
+  #      value_template: '{%set list = "sunny", "clearnight", "cloudy", "cloudy2", "night cloudy", "dry", "fog", "haze", "heavyrain", "mainlyfine", "mist", "night fog", "night heavyrain", "night overcast", "night rain", "night showers", "night snow", "night", "thunder", "overcast", "partlycloudy", "rain", "rain2", "showers2", "sleet", "sleetshowers", "snow", "snowmelt", "snowshowers2", "sunny", "thundershowers", "thundershowers2", "thunderstorms", "tornado", "windy", "stopped", "rainning", "wind + rain"%}{{list[states.sensor.meteocarlet_symbol.state-1|int]}}'
       
   # sensor netdata
   - platform: netdata
