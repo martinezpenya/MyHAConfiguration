@@ -48,7 +48,20 @@ Preparing [sonoff](http://https://www.sonoff.in/) with [tasmota](https://github.
     - connect USB to your computer
     - wait 4-5 seconds
     - release button
-2. In console launch:
+1. In console launch:
 ```
 esptool.py --port /dev/ttyUSB0 write_flash -fs 1MB -fm dout 0x0 .pioenvs/sonoff/firmware.bin
 ```
+
+## Configure HomeAssistant
+Add to `configure.yaml`:
+```yaml
+mqtt:
+  password: !secret mqttpassword
+```
+
+## Configure Sonoff
+1. Connect to the ip of your device with webbrowser
+1. In `Configuration`/`Configure Module` select `08 Sonoff S2X` and Save
+1. In `Configuration`/`Configure MQTT` configure Host, User and Password as seen:
+![sonoffs26 mqtt configuration](images/sonoffmqtt.png)
