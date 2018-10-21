@@ -1,5 +1,6 @@
 switchsonoff:
   name: Sonoff
+  control: hidden
   entities:
     - switch.sonoffwaterheater
     - switch.sonoffTVset
@@ -7,6 +8,7 @@ switchsonoff:
     
 Waterheatertimer1:
   name: Timer 1
+  control: hidden
   entities: 
     - automation.Timer1
     - sensor.timer1_time
@@ -18,6 +20,7 @@ Waterheatertimer1:
 
 Waterheatertimer2:
   name: Timer 2
+  control: hidden
   entities: 
     - automation.Timer2
     - sensor.timer2_time
