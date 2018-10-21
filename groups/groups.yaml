@@ -1,0 +1,28 @@
+switchsonoff:
+  name: Sonoff
+  entities:
+    - switch.sonoffwaterheater
+    - switch.sonoffTVset
+    - switch.sonoffPrinter
+    
+Waterheatertimer1:
+  name: Timer 1
+  entities: 
+    - automation.Timer1
+    - sensor.timer1_time
+    - sensor.timer1_duration
+    - input_number.timer1_hour
+    - input_number.timer1_minutes
+    - input_number.timer1_duration
+    - input_boolean.programweekday1
+
+Waterheatertimer2:
+  name: Timer 2
+  entities: 
+    - automation.Timer2
+    - sensor.timer2_time
+    - sensor.timer2_duration
+    - input_number.timer2_hour
+    - input_number.timer2_minutes
+    - input_number.timer2_duration
+    - input_boolean.programweekday2

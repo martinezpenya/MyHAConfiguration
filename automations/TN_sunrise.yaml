@@ -1,4 +1,5 @@
 - alias: 'Sunrise'
+  hide_entity: true
   trigger:
     platform: sun
     event: sunrise

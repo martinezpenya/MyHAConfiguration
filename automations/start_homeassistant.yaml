@@ -1,0 +1,16 @@
+- alias: "Power state on HA start-up"
+  hide_entity: true
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.sonoffwaterheater          
+          - switch.sonoffTVset
+          - switch.sonoffPrinter
+    - service: notify.HomeAssistant
+      data:
+        message: "HA has started: Revise status"
+          
