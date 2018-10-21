@@ -1,0 +1,18 @@
+##########################################
+## KEYBOARD - waterheater_off
+##
+- alias: 'TC waterheater_off'
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/waterheater_off'
+  action:
+    - service: notify.HomeAssistant
+      data:
+        message: "waterheater off"
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.sonoffwaterheater

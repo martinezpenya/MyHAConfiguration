@@ -1,19 +1,19 @@
 ##########################################
-## KEYBOARD - start
+## KEYBOARD - waterheater
 ##
-- alias: 'TC start'
+- alias: 'TC waterheater'
   hide_entity: true
   trigger:
      - platform: event
        event_type: telegram_command
        event_data:
-         command: '/start'
+         command: '/waterheater'
   action:
      - service: notify.HomeAssistant
        data:
          message: 'Select an option'
          data:
             keyboard:
-                - '/status, /ping'
-                - '/waterheater'
+                - '/waterheater_30min, /waterheater_15min'
+                - '/waterheater_on, /waterheater_off'
                 #- '/alarma, /puertas, /switches'

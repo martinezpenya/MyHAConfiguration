@@ -1,0 +1,47 @@
+##########################################
+## Sonoff s26 http://192.168.0.151/
+## Waterheater
+##
+- platform: mqtt
+  name: "sonoffwaterheater"
+  friendly_name: "Water heater"
+  state_topic: "stat/sonoffS26_1/POWER"
+  command_topic: "cmnd/sonoffS26_1/POWER"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  optimistic: false
+  retain: true
+  icon: mdi:power-socket-eu
+  
+##########################################
+## Sonoff s26 http://192.168.0.152/
+## TV set
+##
+- platform: mqtt
+  name: "sonoffTVset"
+  friendly_name: "TV set"
+  state_topic: "stat/sonoffS26_2/POWER"
+  command_topic: "cmnd/sonoffS26_2/POWER"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  optimistic: false
+  retain: true
+  icon: mdi:power-socket-eu
+  
+##########################################
+## Sonoff s26 http://192.168.0.153/
+## TV set
+##
+- platform: mqtt
+  name: "sonoffPrinter"
+  friendly_name: "Printer"
+  state_topic: "stat/sonoffS26_3/POWER"
+  command_topic: "cmnd/sonoffS26_3/POWER"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  optimistic: false
+  retain: true
+  icon: mdi:power-socket-eu

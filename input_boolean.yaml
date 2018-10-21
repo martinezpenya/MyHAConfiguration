@@ -1,0 +1,13 @@
+#integracio dashbutton
+dashbutton:
+    initial: off
+    icon: mdi:hockey-puck
+
+#Programador    
+programweekday1:
+    name: Weekdays Only
+    icon: mdi:calendar
+programweekday2:
+    name: Weekdays Only
+    icon: mdi:calendar
+ 

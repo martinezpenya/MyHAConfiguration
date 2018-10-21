@@ -47,102 +47,22 @@ history:
 # View all events in a logbook
 logbook:
 
+#https://home-assistant.io/components/recorder/
+#The recorder component is storing details in a database which then are handled by the history component.
+recorder:
+  purge_interval: 7
+  purge_keep_days: 7
+
 # Enables a map showing the location of tracked devices
 map:
 
 # Track the sun
 sun:
 
-
-sensor:
-# Weather prediction
-  #- platform: yr
-  #- platform: template
-  #  sensors:
-  #    yr:
-  #      value_template: '{%set list2 = "0","Clear sky","Fair","Partly cloudy","Cloudy","Rain showers","Rain showers and thunder","Sleet showers","Snow showers","Rain","Heavy rain","Heavy rain and thunder","Sleet","Snow","Snow and thunder","Fog","Sleet showers and thunder","Snow showers and thunder","Rain and thunder","Sleet and thunder","Light rain showers and thunder","Heavy rain showers and thunder","Light sleet showers and thunder","Heavy sleet showers and thunder","Light snow showers and thunder","Heavy snow showers and thunder","Light rain and thunder","Light sleet and thunder","Heavy sleet and thunder","Light snow and thunder","Heavy snow and thunder","Light rain showers","Heavy rain showers","Light sleet showers","Heavy sleet showers","Light snow showers","Heavy snow showers","Light rain","Light sleet","Heavy sleet","Light snow","Heavy snow"%}{{list2[states.sensor.yr_symbol.state|int]}}'
-  #      entity_picture_template: "{{ state_attr('sensor.yr_symbol','entity_picture') }}"
-    #name: Oratge
-    #forecast: 24
-    #monitored_conditions:
-    #  - temperature
-    #  - symbol
-    #  - precipitation
-    #  - windSpeed
-    #  - pressure
-    #  - windDirection
-    #  - humidity
-    #  - fog
-    #  - cloudiness
-    #  - lowClouds
-    #  - mediumClouds
-    #  - highClouds
-    #  - dewpointTemperature
-    
-    
-    #sensor clientraw
-    #reads info from clientraw.txt from meteo stations on Internet from URL.
-    #needs .homeassistant/custom_components/sensor/clientraw.py
-    #from: https://github.com/pilotak/HomeAssistant-MyConfig/tree/master/custom_components/sensor
-  - platform: clientraw
-    interval: 5
-    name: meteocarlet
-    url: !secret clientrawURL
-    monitored_conditions:
-      - temp
-      - wind_dir
-      - wind_gust_kph
-      - wind_kph
-      - symbol
-      - forecast
-      - rain_rate
-      - pressure
-      - humidity
-
-  - platform: clientraw
-    interval: 5
-    name: meteoinsti
-    url: !secret clientrawURL2
-    monitored_conditions:
-      - temp
-      - wind_dir
-      - wind_gust_kph
-      - wind_kph
-      - symbol
-      - forecast
-      - rain_rate
-      - pressure
-      - humidity
-
-  #- platform: template
-  #  sensors:
-  #    meteocarlet_symbol:
-  #      friendly_name: "meteocarlet symbol"
-  #      value_template: '{%set list = "sunny", "clearnight", "cloudy", "cloudy2", "night cloudy", "dry", "fog", "haze", "heavyrain", "mainlyfine", "mist", "night fog", "night heavyrain", "night overcast", "night rain", "night showers", "night snow", "night", "thunder", "overcast", "partlycloudy", "rain", "rain2", "showers2", "sleet", "sleetshowers", "snow", "snowmelt", "snowshowers2", "sunny", "thundershowers", "thundershowers2", "thunderstorms", "tornado", "windy", "stopped", "rainning", "wind + rain"%}{{list[states.sensor.meteocarlet_symbol.state-1|int]}}'
-      
-  # sensor netdata
-  - platform: netdata
-    resources:
-      load:
-        data_group: system.load
-        element: load15
-      cpu:
-        data_group: system.cpu
-        element: system
-
-# sensor systemmonitor
-  - platform: systemmonitor
-    #name: MonitorSistema
-    #en segons (1 hora)
-    #scan_interval: 3600 
-    resources:
-        - type: disk_use_percent
-          arg: /home
-        - type: memory_free
-        - type: processor_use
-        - type: last_boot
-        - type: since_last_boot
-
+###  Sensors  ###
+#  Sensors are anything (hardware or software) that has a state.
+sensor: !include_dir_merge_list sensors
+     
 # Text to speech
 tts:
   - platform: google
@@ -150,7 +70,11 @@ tts:
 # Cloud
 cloud:
 
-group: !include groups.yaml
+mqtt:
+  password: !secret mqttpassword
+  
+switch: !include config/switches.yaml
+group: !include_dir_merge_named groups
 panel_iframe: !include panels/panels.yaml
 automation: !include_dir_merge_list automations
 notify: !include_dir_merge_list notify
@@ -163,3 +87,10 @@ telegram_bot:
   allowed_chat_ids: 
    - !secret id_group_telegram
    - !secret id_user_telegram
+     
+### Input Boolean ###
+# The input_boolean component allows the user to define boolean values that can be controlled via the frontend and can be used within conditions of automation.
+input_boolean: !include input_boolean.yaml
+
+### Input Number ###
+input_number: !include input_number.yaml
