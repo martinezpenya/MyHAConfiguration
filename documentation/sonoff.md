@@ -1,6 +1,6 @@
 Preparing [sonoff](http://https://www.sonoff.in/) with [tasmota](https://github.com/arendst/Sonoff-Tasmota) firmware for [HomeAssistant](https://home-assistant.io/)
 
-##Preparation:
+## Preparation:
 1. Install [Atom](https://atom.io/) environment.
 1. Add [PlatformIO](https://platformio.org/platformio-ide):
     1. Open **Atom Package Manager**:
@@ -11,7 +11,7 @@ Preparing [sonoff](http://https://www.sonoff.in/) with [tasmota](https://github.
     1. Install PlatformIO IDE.
 1. Install [esptool.py](https://github.com/espressif/esptool)
 
-##Source code
+## Source code
 1. Clone [tasmota](https://github.com/arendst/Sonoff-Tasmota) repository:
     - `git clone git@github.com:arendst/Sonoff-Tasmota.git`
 1. Open Atom and `Open folder...` where you cloned Sonoff-Tasmota repository.
@@ -36,13 +36,13 @@ Preparing [sonoff](http://https://www.sonoff.in/) with [tasmota](https://github.
 1. Selec build from PlatformIO menu (Alt+Ctrl+B)
 1. On terminal open `.pioenvs/sonoff` folder in cloned git folder and search for `firmware.bin`
 
-##Hardware setup
+## Hardware setup
 1. You will need a sonoff product (s26 in my case)
 1. An FTDI (serial to usb converter)
 1. Weld wires and connect to FTDI as in image:
 <img alt="sonoffs26 welded and wired to FTDI" src="images/sonoff_s6.jpg" width="100%">
 
-##Firmware upload
+## Firmware upload
 1. Connect FTDI and sonoff to computer:
     - Press sonoff button
     - connect USB to your computer
