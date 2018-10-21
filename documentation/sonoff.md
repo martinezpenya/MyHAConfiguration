@@ -40,7 +40,7 @@ Preparing [sonoff](http://https://www.sonoff.in/) with [tasmota](https://github.
 1. You will need a sonoff product (s26 in my case)
 1. An FTDI (serial to usb converter)
 1. Weld wires and connect to FTDI as in image:
-<img alt="sonoffs26 welded and wired to FTDI" src="images/sonoff_s6.jpg" width="100%">
+<img alt="sonoffs26 welded and wired to FTDI" src="./images/sonoff_s6.jpg" width="100%">
 
 ## Firmware upload
 1. Connect FTDI and sonoff to computer:
