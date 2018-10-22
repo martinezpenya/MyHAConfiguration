@@ -14,6 +14,7 @@
          message: 'Select an option'
          data:
             keyboard:
-                - '/waterheater_30min, /waterheater_15min'
-                - '/waterheater_on, /waterheater_off'
-                #- '/alarma, /puertas, /switches'
+            - '/waterheater_30min, /waterheater_15min'
+            - '/waterheater_off, /waterheater_on'
+            - '/start'
+                

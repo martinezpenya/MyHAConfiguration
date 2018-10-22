@@ -1,18 +1,18 @@
 ##########################################
-## KEYBOARD - waterheater_on
+## KEYBOARD - TVset_on
 ##
-- alias: 'TC_waterheater_on'
+- alias: 'TC_TVset_on'
   hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
     event_data:
-      command: '/waterheater_on'
+      command: '/TVset_on'
   action:
     - service: notify.HomeAssistant
       data:
-        message: "waterheater on"
+        message: "TVset on"
     - service: switch.turn_on
       data:
         entity_id:
-          - switch.sonoffwaterheater
+          - switch.sonoffTVset

@@ -1,18 +1,18 @@
 ##########################################
-## KEYBOARD - waterheater_on
+## KEYBOARD - Printer_on
 ##
-- alias: 'TC_waterheater_on'
+- alias: 'TC_Printer_on'
   hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
     event_data:
-      command: '/waterheater_on'
+      command: '/Printer_on'
   action:
     - service: notify.HomeAssistant
       data:
-        message: "waterheater on"
+        message: "Printer on"
     - service: switch.turn_on
       data:
         entity_id:
-          - switch.sonoffwaterheater
+          - switch.sonoffPrinter
