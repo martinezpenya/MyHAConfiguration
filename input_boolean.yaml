@@ -1,8 +1,3 @@
-#integracio dashbutton
-dashbutton:
-    initial: off
-    icon: mdi:hockey-puck
-
 #Programador    
 programweekday1:
     name: Weekdays Only
