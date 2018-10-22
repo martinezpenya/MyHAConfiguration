@@ -1,16 +1,28 @@
-- alias: botodash
+###############################
+# /etc/amazon-dash.yml
+#
+#settings:
+#  delay: 10
+#devices:
+#  **:**:**:**:**:**:
+#    name: botoON
+#    homeassistant: 000.000.000.000 #HA ip
+#    event: botodash
+#    access_token: one_time_access_token_generated in Homeassistant/Profile/At the bottom of the page --> create auth token.
+
+- alias: dashbutton
   trigger:
-    - platform: state
-      entity_id: input_boolean.dashbutton
-      from: 'off'
-      to: 'on'
+    platform: event
+    event_type: botodash
   action:
-    - service: switch.turn_on
+    - service: notify.HomeAssistant
       data:
-        entity_id:
-          - switch.sonoffwaterheater
-    - delay: 00:00:05
-    - service: switch.turn_off
-      data:
-        entity_id:
-          - switch.sonoffwaterheater
+        message: "dashbutton pressed"
+    - service: automation.trigger
+      data_template:
+        entity_id: >-
+          {% if is_state('switch.sonoffTVset', 'on') %}
+            automation.TC_TVset_off
+          {% else %}
+            automation.TC_TVset_on
+          {% endif %}

@@ -1,11 +1,10 @@
 switchsonoff:
   name: Sonoff
-  control: hidden
   entities:
     - switch.sonoffwaterheater
     - switch.sonoffTVset
     - switch.sonoffPrinter
-    
+
 Waterheatertimer1:
   name: Timer 1
   control: hidden
