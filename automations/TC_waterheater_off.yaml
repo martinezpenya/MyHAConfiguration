@@ -1,7 +1,7 @@
 ##########################################
 ## KEYBOARD - waterheater_off
 ##
-- alias: 'TC waterheater_off'
+- alias: 'TC_waterheater_off'
   hide_entity: true
   trigger:
     platform: event
