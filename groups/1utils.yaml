@@ -1,5 +1,0 @@
-utils:
-  name: "1. Utils"
-  view: yes
-  entities:
-    - group.switchsonoff        
