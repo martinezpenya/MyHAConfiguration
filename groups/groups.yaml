@@ -1,5 +1,6 @@
 switchsonoff:
   name: Sonoff
+  view: no
   entities:
     - switch.sonoffwaterheater
     - switch.sonoffTVset
@@ -7,6 +8,7 @@ switchsonoff:
 
 Waterheatertimer1:
   name: Timer 1
+  view: no
   control: hidden
   entities: 
     - automation.Timer1
@@ -19,6 +21,7 @@ Waterheatertimer1:
 
 Waterheatertimer2:
   name: Timer 2
+  view: no
   control: hidden
   entities: 
     - automation.Timer2
@@ -28,3 +31,89 @@ Waterheatertimer2:
     - input_number.timer2_minutes
     - input_number.timer2_duration
     - input_boolean.programweekday2
+
+sun:
+  name: sun
+  view: no
+  entities:
+    - sun.sun
+    
+meteocarlet:
+    name: MeteoCarlet
+    view: no
+    entities:
+        - sensor.meteocarlet_temperature_c        
+        - sensor.meteocarlet_forecast
+        - sensor.meteocarlet_humidity
+        - sensor.meteocarlet_pressure
+        - sensor.meteocarlet_rain_rate
+        - sensor.meteocarlet_daily_rain
+        - sensor.meteocarlet_symbol
+        - sensor.meteocarlet_wind_direction
+        - sensor.meteocarlet_wind_gust_kmh
+        - sensor.meteocarlet_wind_speed_kmh
+        
+meteoinsti:
+    name: MeteoInsti
+    view: no
+    entities:
+        - sensor.meteoinsti_temperature_c        
+        - sensor.meteoinsti_forecast
+        - sensor.meteoinsti_humidity
+        - sensor.meteoinsti_pressure
+        - sensor.meteoinsti_rain_rate
+        - sensor.meteoinsti_daily_rain
+        - sensor.meteoinsti_symbol
+        - sensor.meteoinsti_wind_direction
+        - sensor.meteoinsti_wind_gust_kmh
+        - sensor.meteoinsti_wind_speed_kmh
+
+pihole:
+    name: Pi-Hole
+    view: no
+    entities:
+        - sensor.pihole_ads_blocked_today
+        - sensor.pihole_ads_percentage_blocked_today
+        - sensor.pihole_dns_queries_today
+        - sensor.pihole_dns_unique_domains
+        - sensor.pihole_dns_queries_cached
+        - sensor.pihole_dns_queries_forwarded
+        - sensor.pihole_dns_unique_clients
+        - sensor.pihole_domains_blocked
+        - sensor.pihole_seen_clients
+
+rpimonitor:
+    name: Pi monitor
+    view: no
+    entities:
+        - sensor.netdata_cpu
+        - sensor.netdata_load
+        - sensor.processor_use
+        - sensor.memory_free
+        - sensor.disk_use_percent_home
+        - sensor.last_boot
+        - sensor.since_last_boot        
+
+datetime:
+    view: no
+    name: DateTime
+    entities:
+        - sensor.date
+        - sensor.date__time
+        - sensor.time
+        - sensor.time__date
+        - sensor.time_utc
+        
+presence:
+    view: no
+    name: presence
+    entities:    
+        - device_tracker.onepluslan
+        - binary_sensor.pir_kerui_p831_1
+        
+cameras:
+    view: no
+    name: cameras
+    entities:
+        - camera.despatx
+        - camera.entrada

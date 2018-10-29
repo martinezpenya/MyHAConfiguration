@@ -14,5 +14,6 @@
     - symbol
     - forecast
     - rain_rate
+    - daily_rain
     - pressure
     - humidity

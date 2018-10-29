@@ -62,7 +62,10 @@ sun:
 ###  Sensors  ###
 #  Sensors are anything (hardware or software) that has a state.
 sensor: !include_dir_merge_list sensors
-     
+
+binary_sensor: !include binary_sensors.yaml
+device_tracker: !include device_tracker.yaml
+
 # Text to speech
 tts:
   - platform: google
@@ -94,3 +97,16 @@ input_boolean: !include input_boolean.yaml
 
 ### Input Number ###
 input_number: !include input_number.yaml
+
+media_player:
+  - platform: kodi
+    host: 192.168.0.106
+    tcp_port: !secret kodi_tcp_port
+    username: !secret kodi_username
+    password: !secret kodi_password
+    
+cast:
+  media_player:
+      - host: 192.168.0.108
+      
+camera: !include_dir_merge_list cameras
