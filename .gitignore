@@ -4,3 +4,5 @@
 /home-assistant.log
 /secrets.yaml
 /.storage/
+/known_devices.yaml
+/tts/

@@ -1,0 +1,7 @@
+meteo:
+  name: "Meteo"
+  view: yes
+  entities:
+    - group.meteocarlet
+    - group.meteoinsti
+    - group.sun

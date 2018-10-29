@@ -1,0 +1,16 @@
+- alias: 'PIR motion 1'
+  hide_entity: true
+  trigger:
+    platform: state
+    entity_id: 'binary_sensor.PIR_kerui_p831_1'
+    to: 'on'
+  condition:
+    #- condition: template
+    #  value_template: "{{ states.device_tracker.onepluslan != home }}"
+    - condition: state
+      entity_id: device_tracker.onepluslan
+      state: 'not_home'
+  action:
+    service: notify.HomeAssistant
+    data:
+      message: "PIR motion 1"

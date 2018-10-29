@@ -1,0 +1,6 @@
+waterheater:
+  name: "Waterheater"
+  view: yes
+  entities:
+    - group.Waterheatertimer1 
+    - group.Waterheatertimer2

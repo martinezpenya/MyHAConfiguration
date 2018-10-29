@@ -1,0 +1,6 @@
+media:
+  name: "Media"
+  view: yes
+  entities:
+    - media_player.kodi
+    - media_player.salon
