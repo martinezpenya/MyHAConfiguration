@@ -1,0 +1,4 @@
+- platform: generic
+  name: Despatx
+  still_image_url: http://192.168.0.104:8888/picture/3/current/?_username=admin&_signature=53261619c679f01fb6aba7a51f289193a2651373
+  scan_interval: 2

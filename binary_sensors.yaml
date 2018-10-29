@@ -1,0 +1,12 @@
+###
+# Sonoff rf bridge
+# http://192.168.0.155
+
+#PIR p831 1 -> 57180A
+- platform: mqtt
+  name: "PIR_kerui_p831_1"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "57180A"
+  payload_off: "57180Aoff"
+  device_class: motion
+  value_template: '{{ value_json.RfReceived.Data }}'
