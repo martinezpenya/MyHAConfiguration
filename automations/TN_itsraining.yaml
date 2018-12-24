@@ -12,4 +12,4 @@
     service: notify.HomeAssistant
     data_template:
       title: "It's raining"
-      message: "({{ states.sensor.meteocarlet_rain_rate.state }} mm)"
+      message: "({{ states.sensor.meteocarlet_rain_rate.state }} mm now)\n ({{ states.sensor.meteocarlet_daily_rain.state }} mm today)"
