@@ -1,0 +1,8 @@
+- alias: 'UpdateAvailable'
+  trigger:
+    platform: state
+    entity_id: updater.updater
+  action:
+    service: notify.HomeAssistant
+    data:
+      message: "Ha salido una nueva actualización de Home Assistant"
