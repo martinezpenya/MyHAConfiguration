@@ -10,19 +10,19 @@
 #    event: botodash
 #    access_token: one_time_access_token_generated in Homeassistant/Profile/At the bottom of the page --> create auth token.
 
-- alias: dashbutton
-  trigger:
-    platform: event
-    event_type: botodash
-  action:
-    - service: notify.HomeAssistant
-      data:
-        message: "dashbutton pressed"
-    - service: automation.trigger
-      data_template:
-        entity_id: >-
-          {% if is_state('switch.sonoffTVset', 'on') %}
-            automation.TC_TVset_off
-          {% else %}
-            automation.TC_TVset_on
-          {% endif %}
+#- alias: dashbutton
+#  trigger:
+#    platform: event
+#    event_type: botodash
+#  action:
+#    - service: notify.HomeAssistant
+#      data:
+#        message: "dashbutton pressed"
+#    - service: automation.trigger
+#      data_template:
+#        entity_id: >-
+#          {% if is_state('switch.sonoffTVset', 'on') %}
+#            automation.TC_TVset_off
+#          {% else %}
+#            automation.TC_TVset_on
+#          {% endif %}
