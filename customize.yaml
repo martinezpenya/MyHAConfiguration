@@ -1,0 +1,6 @@
+switch.aire_despatx:
+  icon: mdi:air-conditioner
+  assumed_state: false
+switch.musica_despatx:
+  icon: mdi:music
+  assumed_state: false
