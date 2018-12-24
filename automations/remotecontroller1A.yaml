@@ -1,0 +1,23 @@
+###############################
+# Remote controller 4 buttons
+
+###############################
+# Button A
+
+- alias: Remote1ButtonA
+  trigger:
+    platform: state
+    entity_id: binary_sensor.Remote1_BtnA
+    to: 'on'
+  action:
+    - service: notify.HomeAssistant
+      data:
+        message: "Remote1 buttonA pressed"
+    - service: automation.trigger
+      data_template:
+        entity_id: >-
+          {% if is_state('switch.sonoffTVset', 'on') %}
+            automation.TC_TVset_off
+          {% else %}
+            automation.TC_TVset_on
+          {% endif %}
