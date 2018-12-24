@@ -1,0 +1,19 @@
+- alias: 'Front door open'
+  hide_entity: true
+  trigger:
+    platform: state
+    entity_id: 'binary_sensor.front_door'
+    to: 'on'
+#  condition:
+#    condition: or
+#    conditions:
+#      - condition: state
+#        entity_id: device_tracker.onepluslan_5gh
+#        state: 'home'
+#      - condition: state
+#        entity_id: device_tracker.oneplus
+#        state: 'home'
+  action:
+    - service: notify.HomeAssistant
+      data:
+        message: "Front door opened"
