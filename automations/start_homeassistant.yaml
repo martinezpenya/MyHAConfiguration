@@ -4,12 +4,12 @@
     platform: homeassistant
     event: start
   action:
-    - service: switch.turn_off
-      data:
-        entity_id:
-          - switch.sonoffwaterheater          
-          - switch.sonoffTVset
-          - switch.sonoffPrinter
+#    - service: switch.turn_off
+#      data:
+#        entity_id:
+#          - switch.sonoffwaterheater          
+#          - switch.sonoffTVset
+#          - switch.sonoffPrinter
     - service: notify.HomeAssistant
       data:
         message: "HA has started: Revise status"
