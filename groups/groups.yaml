@@ -1,11 +1,36 @@
 switchsonoff:
   name: Sonoff
+  control: hidden
   view: no
   entities:
-    - switch.sonoffwaterheater
+    - switch.sonoffAmbiCorredor
+    - switch.sonoffAmbiBany
     - switch.sonoffTVset
-    - switch.sonoffPrinter
-
+    
+switchbroadlink:
+  name: BroadlinkRMmini3Despatx
+  control: hidden
+  view: no
+  entities:
+    - switch.aire_despatx
+    - switch.musica_despatx
+    - switch.musica_despatxplayBT
+    - switch.musica_despatxSwith2CD
+    - switch.musica_despatxplayCD
+    - switch.musica_despatxpauseCD
+    - switch.musica_despatxstopCD
+    - switch.musica_despatxprevCD
+    - switch.musica_despatxnextCD
+    
+remotecontroller1:
+  name: RemoteController_433_1
+  view: no
+  entities:
+    - binary_sensor.Remote1_BtnA
+    - binary_sensor.Remote1_BtnB
+    - binary_sensor.Remote1_BtnC
+    - binary_sensor.Remote1_BtnD
+    
 Waterheatertimer1:
   name: Timer 1
   view: no
@@ -68,6 +93,51 @@ meteoinsti:
         - sensor.meteoinsti_wind_gust_kmh
         - sensor.meteoinsti_wind_speed_kmh
 
+lolin1:
+    name: Entradeta
+    view: no
+    entities:
+        - sensor.lolin1_humidity
+        - sensor.lolin1_ldr
+        - binary_sensor.lolin1_pir
+        - sensor.lolin1_real_feel
+        - sensor.lolin1_temperature
+        - light.lolin1_light
+        
+lolin2:
+    name: Despatx
+    view: no
+    entities:
+        - sensor.lolin2_humidity
+        - sensor.lolin2_ldr
+        - sensor.lolin2_pir
+        - sensor.lolin2_real_feel
+        - sensor.lolin2_temperature
+        - light.lolin2_light
+lolin3:
+    name: Habitacio
+    view: no
+    entities:
+        - sensor.lolin3_humidity
+        - sensor.lolin3_ldr
+        - sensor.lolin3_pir
+        - sensor.lolin3_real_feel
+        - sensor.lolin3_temperature        
+        - light.lolin3_light
+#        - light.lolin3_relay
+
+lolin4:
+    name: Proves
+    view: no
+    entities:
+        - sensor.lolin4_humidity
+        - sensor.lolin4_ldr
+        - sensor.lolin4_pir
+        - sensor.lolin4_real_feel
+        - sensor.lolin4_temperature        
+        - light.lolin4_light
+        - switch.lolin4_relay
+
 pihole:
     name: Pi-Hole
     view: no
@@ -108,8 +178,11 @@ presence:
     view: no
     name: presence
     entities:    
-        - device_tracker.onepluslan
+        - device_tracker.onepluslan_5GH
+        - device_tracker.oneplus
         - binary_sensor.pir_kerui_p831_1
+        - binary_sensor.pir_kerui_p831_2
+        - binary_sensor.pir_kerui_p831_3
         
 cameras:
     view: no
@@ -117,3 +190,45 @@ cameras:
     entities:
         - camera.despatx
         - camera.entrada
+        
+##########################################
+## BlitzWolf SHP2
+## BliTZW0lF_1 
+##        
+BliTZW0lF_1:
+  name: WaterHeater
+  #view: yes
+  icon: mdi:fish
+  #control: hidden
+  entities:
+    - switch.BliTZW0lF_1
+    - sensor.bw1_power
+    - sensor.bw1_current
+    - sensor.bw1_voltage
+    - sensor.bw1_factor
+    - sensor.bw1_today
+    - sensor.bw1_yesterday
+    - sensor.bw1_yesterday_euro
+    - sensor.bw1_total   
+    - sensor.bw1_total_euro
+    
+##########################################
+## BlitzWolf SHP2
+## BliTZW0lF_2
+##        
+BliTZW0lF_2:
+  name: Computer
+  #view: yes
+  icon: mdi:fish
+  #control: hidden
+  entities:
+    - switch.BliTZW0lF_2
+    - sensor.bw2_power
+    - sensor.bw2_current
+    - sensor.bw2_voltage
+    - sensor.bw2_factor
+    - sensor.bw2_today
+    - sensor.bw2_yesterday
+    - sensor.bw2_yesterday_euro
+    - sensor.bw2_total   
+    - sensor.bw2_total_euro  
