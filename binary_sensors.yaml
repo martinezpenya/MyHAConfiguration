@@ -10,3 +10,84 @@
   payload_off: "57180Aoff"
   device_class: motion
   value_template: '{{ value_json.RfReceived.Data }}'
+
+#PIR p831 2 -> A0170A
+- platform: mqtt
+  name: "PIR_kerui_p831_2"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "A0170A"
+  payload_off: "A0170Aoff"
+  device_class: motion
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+#PIR p831 3 -> FF160A
+- platform: mqtt
+  name: "PIR_kerui_p831_3"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "FF160A"
+  payload_off: "FF160Aoff"
+  device_class: motion
+  value_template: '{{ value_json.RfReceived.Data }}'  
+  
+###############################
+# Remote controller 4 buttons
+
+###############################
+# Button A
+- platform: mqtt
+  name: "Remote1_BtnA"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "801D48"
+  payload_off: "801D48off"
+  value_template: '{{ value_json.RfReceived.Data }}'
+          
+###############################
+# Button B
+
+- platform: mqtt
+  name: "Remote1_BtnB"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "801D44"
+  payload_off: "801D44off"
+  value_template: '{{ value_json.RfReceived.Data }}'
+      
+###############################
+# Button C
+
+- platform: mqtt
+  name: "Remote1_BtnC"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "801D42"
+  payload_off: "801D42off"
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+###############################
+# Button D
+
+- platform: mqtt
+  name: "Remote1_BtnD"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "801D41"
+  payload_off: "801D41off"
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+#Front door Sensor 433
+#closed: 2D380E
+#open: 2D380A
+#tamper: 2D3807
+
+- platform: mqtt
+  name: "Front Door"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "2D380A"
+  payload_off: "2D380E"
+  device_class: door
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+- platform: mqtt  
+  state_topic: "dmp/lolin1"  
+  name: "Lolin1 PIR"  
+  device_class: motion
+  value_template: '{{ value_json.motion }}'  
+  payload_on: "motion detected"
+  payload_off: "standby"
