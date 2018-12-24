@@ -1,0 +1,37 @@
+- alias: 'Front door open for 5 minutes'
+  hide_entity: true
+  trigger:
+    - platform: state
+      entity_id: 'binary_sensor.front_door'
+      from: 'off'
+      to: 'on'
+      for:
+        minutes: 1
+    - platform: state
+      entity_id: 'binary_sensor.front_door'
+      from: 'off'
+      to: 'on'
+      for:
+        minutes: 5
+    - platform: state
+      entity_id: 'binary_sensor.front_door'
+      from: 'off'
+      to: 'on'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: 'binary_sensor.front_door'
+      from: 'off'
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: 'binary_sensor.front_door'
+      from: 'off'
+      to: 'on'
+      for:
+        minutes: 20
+  action:
+    - service: notify.HomeAssistant
+      data:
+        message: "Front door Still Open!!!"
