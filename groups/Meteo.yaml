@@ -2,6 +2,10 @@ meteo:
   name: "Meteo"
   view: yes
   entities:
+    - group.lolin1
+    - group.lolin2
+    - group.lolin3
+    - group.lolin4
     - group.meteocarlet
     - group.meteoinsti
     - group.sun
