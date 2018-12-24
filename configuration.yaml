@@ -23,9 +23,12 @@ frontend:
 config:
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-# http:
-#   base_url: example.duckdns.org:8123
-
+http:
+  base_url: !secret base_url
+  server_port: 8123
+  ssl_certificate: !secret ssl_certificate
+  ssl_key: !secret ssl_key
+  
 # Checks for available updates
 # Note: This component will send some information about your system to
 # the developers to assist with development of Home Assistant.
@@ -37,6 +40,8 @@ updater:
 
 # Discover some devices automatically
 discovery:
+  ignore:
+    - yeelight    
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
@@ -73,10 +78,18 @@ tts:
 # Cloud
 cloud:
 
-mqtt:
-  password: !secret mqttpassword
+#embeded
+#mqtt:
+#  password: !secret mqttpassword
   
+#mosquitto
+mqtt:
+  broker: 192.168.0.3
+  port: 1883
+  discovery: True
+
 switch: !include config/switches.yaml
+light: !include config/lights.yaml
 group: !include_dir_merge_named groups
 panel_iframe: !include panels/panels.yaml
 automation: !include_dir_merge_list automations
@@ -98,15 +111,21 @@ input_boolean: !include input_boolean.yaml
 ### Input Number ###
 input_number: !include input_number.yaml
 
+### Input Select ###
+input_select: !include input_select.yaml
+
 media_player:
   - platform: kodi
     host: 192.168.0.106
     tcp_port: !secret kodi_tcp_port
     username: !secret kodi_username
     password: !secret kodi_password
-    
+
 cast:
   media_player:
       - host: 192.168.0.108
       
 camera: !include_dir_merge_list cameras
+
+#logger:
+#  default: debug
