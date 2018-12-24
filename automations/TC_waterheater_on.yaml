@@ -15,4 +15,4 @@
     - service: switch.turn_on
       data:
         entity_id:
-          - switch.sonoffwaterheater
+          - switch.BliTZW0lF_1
