@@ -1,0 +1,87 @@
+yeelight_night:
+  alias: Yeelight night
+  sequence:      
+    # Turn the lights to low brightness at a very warm temperature
+    - service: light.turn_on
+      data:
+        entity_id: light.Yeelight_1
+        rgb_color: [255,0,0]
+
+    # Wait 5 seconds
+    - delay: 00:00:10
+        
+    - service: light.turn_off
+      data:
+        entity_id: light.Yeelight_1
+        transition: 40
+        
+christmas_tree:
+  alias: Christmas tree
+  sequence:      
+    # Turn the tree lights on
+    - service: light.turn_on
+      data:
+        entity_id: light.lolin1_light
+
+    # Wait 1 minute
+    - delay: 00:01:00
+        
+    - service: light.turn_off
+      data:
+        entity_id: light.lolin1_light
+
+    # Over ten minutes, turn the lights a little brighter and to a
+    # cooler-than-soft-white color.
+    #- service: light.turn_on
+    #  data:
+    #    entity_id: light.Yeelight_1
+    #    transition: 600
+    #    brightness: 63
+    #    kelvin: 3600
+
+    # Wait again
+    #- delay: 00:00:05
+
+    # Finally, over fifteen minutes, shift the lights to a cool white at 90%.
+    #- service: light.turn_on
+    #  data:
+    #    entity_id: light.Yeelight_1
+    #    transition: 900
+    #    brightness: 230
+    #    kelvin: 4200
+    
+    
+yeelight_day:
+  alias: Yeelight day
+  sequence:       
+    # Turn the lights to low brightness at a very warm temperature
+    - service: light.turn_on
+      data:
+        entity_id: light.Yeelight_1
+        rgb_color: [255,255,255]
+        brightness_pct: 100
+        
+    # Wait 5 seconds
+    - delay: 00:00:10
+        
+    - service: light.turn_off
+      data:
+        entity_id: light.Yeelight_1
+        transition: 40
+
+yeelight_step:
+  sequence:
+    - service: light.turn_on
+      data_template:
+        entity_id: light.Yeelight_1
+        transition: '1'
+        brightness: >-
+          {%- if states.light.Yeelight_1.attributes.brightness <= 20 %}
+            63
+          {% elif states.light.Yeelight_1.attributes.brightness <= 63 %}
+            127
+          {% elif states.light.Yeelight_1.attributes.brightness <= 127 %}
+            189
+          {% elif states.light.Yeelight_1.attributes.brightness <= 189 %}
+            255
+          {% endif %}
