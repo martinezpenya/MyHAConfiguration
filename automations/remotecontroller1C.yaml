@@ -1,0 +1,15 @@
+###############################
+# Remote controller 4 buttons
+
+###############################
+# Button C
+
+- alias: Remote1ButtonC
+  trigger:
+    platform: state
+    entity_id: binary_sensor.Remote1_BtnC
+    to: 'on'
+  action:
+    - service: notify.HomeAssistant
+      data:
+        message: "Remote1 buttonC pressed"
