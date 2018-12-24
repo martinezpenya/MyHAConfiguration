@@ -1,0 +1,15 @@
+- alias: 'PIR motion 1_night'
+  hide_entity: true
+  trigger:
+    platform: state
+    entity_id: 'binary_sensor.PIR_kerui_p831_1'
+    to: 'on'
+  condition: 
+    condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:   
+    #- service: notify.HomeAssistant
+    #  data:
+    #    message: "PIR motion 1 night"
+    - service: script.yeelight_night
