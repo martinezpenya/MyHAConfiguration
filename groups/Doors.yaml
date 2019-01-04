@@ -1,0 +1,7 @@
+viewCameras:
+  name: "Doors"
+  view: yes
+  entities:
+    - group.FrontDoor
+    - group.AAMenjador
+    - group.AADespatx
