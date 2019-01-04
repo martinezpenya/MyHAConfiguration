@@ -96,6 +96,7 @@ meteoinsti:
 lolin1:
     name: Entradeta
     view: no
+    control: hidden
     entities:
         - sensor.lolin1_humidity
         - sensor.lolin1_ldr
@@ -103,36 +104,41 @@ lolin1:
         - sensor.lolin1_real_feel
         - sensor.lolin1_temperature
         - light.lolin1_light
+        - switch.lolin1_relay
         
 lolin2:
     name: Despatx
     view: no
+    control: hidden
     entities:
         - sensor.lolin2_humidity
         - sensor.lolin2_ldr
-        - sensor.lolin2_pir
+        - binary_sensor.lolin2_pir
         - sensor.lolin2_real_feel
         - sensor.lolin2_temperature
         - light.lolin2_light
+        - switch.lolin2_relay
 lolin3:
     name: Habitacio
     view: no
+    control: hidden    
     entities:
         - sensor.lolin3_humidity
         - sensor.lolin3_ldr
-        - sensor.lolin3_pir
+        - binary_sensor.lolin3_pir
         - sensor.lolin3_real_feel
         - sensor.lolin3_temperature        
         - light.lolin3_light
-#        - light.lolin3_relay
+        - switch.lolin3_relay
 
 lolin4:
-    name: Proves
+    name: Menjador
     view: no
+    control: hidden
     entities:
         - sensor.lolin4_humidity
         - sensor.lolin4_ldr
-        - sensor.lolin4_pir
+        - binary_sensor.lolin4_pir
         - sensor.lolin4_real_feel
         - sensor.lolin4_temperature        
         - light.lolin4_light
@@ -190,7 +196,31 @@ cameras:
     entities:
         - camera.despatx
         - camera.entrada
-        
+
+FrontDoor:
+    view: no
+    name: FrontDoor
+    entities:
+        - binary_sensor.Front_Door
+        - binary_sensor.Front_Door_Battery
+        - binary_sensor.Front_Door_Violation
+
+AAMenjador:
+    view: no
+    name: AAMenjador
+    entities:
+        - binary_sensor.AA_Menjador
+        - binary_sensor.AA_Menjador_Battery
+        - binary_sensor.AA_Menjador_Violation
+
+AADespatx:
+    view: no
+    name: AADespatx
+    entities:
+        - binary_sensor.AA_Despatx
+        - binary_sensor.AA_Despatx_Battery
+        - binary_sensor.AA_Despatx_Violation
+
 ##########################################
 ## BlitzWolf SHP2
 ## BliTZW0lF_1 
@@ -232,3 +262,24 @@ BliTZW0lF_2:
     - sensor.bw2_yesterday_euro
     - sensor.bw2_total   
     - sensor.bw2_total_euro  
+    
+##########################################
+## BlitzWolf SHP2
+## BliTZW0lF_3
+##        
+BliTZW0lF_3:
+  name: Alexa
+  #view: yes
+  icon: mdi:fish
+  #control: hidden
+  entities:
+    - switch.BliTZW0lF_3
+    - sensor.bw3_power
+    - sensor.bw3_current
+    - sensor.bw3_voltage
+    - sensor.bw3_factor
+    - sensor.bw3_today
+    - sensor.bw3_yesterday
+    - sensor.bw3_yesterday_euro
+    - sensor.bw3_total   
+    - sensor.bw3_total_euro  
