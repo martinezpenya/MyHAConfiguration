@@ -1,4 +1,4 @@
-Preparing [sonoff](http://https://www.sonoff.in/) with [tasmota](https://github.com/arendst/Sonoff-Tasmota) firmware for [HomeAssistant](https://home-assistant.io/)
+# Preparing [sonoff](http://https://www.sonoff.in/) with [tasmota](https://github.com/arendst/Sonoff-Tasmota) firmware for [HomeAssistant](https://home-assistant.io/)
 
 ## Preparation:
 1. Install [Atom](https://atom.io/) environment.
@@ -13,13 +13,14 @@ Preparing [sonoff](http://https://www.sonoff.in/) with [tasmota](https://github.
 
 ## Source code
 1. Clone [tasmota](https://github.com/arendst/Sonoff-Tasmota) repository:
+
     - `git clone git@github.com:arendst/Sonoff-Tasmota.git`
 1. Open Atom and `Open folder...` where you cloned Sonoff-Tasmota repository.
 1. Search and open `sonoff` folder on `Project` (left panel)
 1. Edit `user_config.h`:
     - `hostname`
-    ```cpp
-        #define PROJECT        "sonoffs26_1" // PROJECT is used as the default topic delimiter
+    ```c++
+    #define PROJECT        "sonoffs26_1" // PROJECT is used as the default topic delimiter
     ```
     - `dhcp or static ip`
     ```cpp
@@ -30,7 +31,7 @@ Preparing [sonoff](http://https://www.sonoff.in/) with [tasmota](https://github.
     ```
     - `WIFI setup`
     ```cpp
-    #define STA_SSID1              ""                // [Ssid1] Wifi SSID
+#define STA_SSID1 "" // [Ssid1] Wifi SSID
     #define STA_PASS1 "" // [Password1] Wifi password
     ```
 1. Selec build from PlatformIO menu (Alt+Ctrl+B)
@@ -49,7 +50,7 @@ Preparing [sonoff](http://https://www.sonoff.in/) with [tasmota](https://github.
     - wait 4-5 seconds
     - release button
 1. In console launch:
-```
+```sh
 esptool.py --port /dev/ttyUSB0 write_flash -fs 1MB -fm dout 0x0 .pioenvs/sonoff/firmware.bin
 ```
 
