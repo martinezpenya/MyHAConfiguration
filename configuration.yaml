@@ -127,5 +127,10 @@ cast:
       
 camera: !include_dir_merge_list cameras
 
+api:
+
+alexa:
+  smart_home:
+
 #logger:
 #  default: debug
