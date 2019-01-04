@@ -13,11 +13,6 @@
   
 - platform: mqtt  
   state_topic: "dmp/lolin3"
-  name: "Lolin3 PIR"
-  value_template: '{{ value_json.motion }}'  
-  
-- platform: mqtt  
-  state_topic: "dmp/lolin3"
   name: "Lolin3 Temperature"  
   unit_of_measurement: "°F"  
   value_template: '{{ value_json.temperature | round(1) }}'  
