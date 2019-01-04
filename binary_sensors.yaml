@@ -84,10 +84,98 @@
   device_class: door
   value_template: '{{ value_json.RfReceived.Data }}'
 
+- platform: mqtt
+  name: "Front Door Battery"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "2D3806"
+  payload_off: "2D3806off"
+  device_class: battery
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+- platform: mqtt
+  name: "Front Door Violation"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "2D3807"
+  payload_off: "2D3807off"
+  device_class: problem
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+- platform: mqtt
+  name: "AA Menjador"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "2C660A"
+  payload_off: "2C660E"
+  device_class: lock
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+- platform: mqtt
+  name: "AA Menjador Battery"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "2C6606"
+  payload_off: "2C6606off"
+  device_class: battery
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+- platform: mqtt
+  name: "AA Menjador Violation"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "2C6607"
+  payload_off: "2C6607off"
+  device_class: problem
+  value_template: '{{ value_json.RfReceived.Data }}'
+  
+- platform: mqtt
+  name: "AA Despatx"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "2BFE0A"
+  payload_off: "2BFE0E"
+  device_class: lock
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+- platform: mqtt
+  name: "AA Despatx Battery"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "2BFE06"
+  payload_off: "2BFE06off"
+  device_class: battery
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+- platform: mqtt
+  name: "AA Despatx Violation"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "2BFE07"
+  payload_off: "2BFE07off"
+  device_class: problem
+  value_template: '{{ value_json.RfReceived.Data }}'
+  
 - platform: mqtt  
   state_topic: "dmp/lolin1"  
   name: "Lolin1 PIR"  
   device_class: motion
   value_template: '{{ value_json.motion }}'  
+  payload_on: "motion detected"
+  payload_off: "standby"
+  
+- platform: mqtt
+  state_topic: "dmp/lolin2"
+  name: "Lolin2 PIR"
+  device_class: motion
+  value_template: '{{ value_json.motion }}'
+  payload_on: "motion detected"
+  payload_off: "standby"
+
+- platform: mqtt
+  state_topic: "dmp/lolin3"
+  name: "Lolin3 PIR"
+  device_class: motion
+  value_template: '{{ value_json.motion }}'
+  payload_on: "motion detected"
+  payload_off: "standby"
+
+- platform: mqtt
+  state_topic: "dmp/lolin4"
+  name: "Lolin4 PIR"
+  device_class: motion
+  value_template: '{{ value_json.motion }}'
   payload_on: "motion detected"
   payload_off: "standby"
