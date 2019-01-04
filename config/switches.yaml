@@ -1,5 +1,5 @@
 ##########################################
-## BlitzWolf SHP2 (2.3 http://192.168.0.160
+## BlitzWolf SHP2 (2.3) http://192.168.0.160
 ## BliTZW0lF_1 
 ##
 
@@ -18,7 +18,7 @@
   icon: mdi:speedometer
   
 ##########################################
-## BlitzWolf SHP2 (2.3 http://192.168.0.161
+## BlitzWolf SHP2 (2.3) http://192.168.0.161
 ## BliTZW0lF_2 
 ##
 
@@ -36,6 +36,24 @@
   retain: true
   icon: mdi:speedometer
 
+##########################################
+## BlitzWolf SHP2 (normal) http://192.168.0.162
+## BliTZW0lF_3 
+##
+
+- platform: mqtt
+  name: "BliTZW0lF_3"
+  state_topic: "stat/BliTZW0lF_3/POWER"
+  command_topic: "cmnd/BliTZW0lF_3/POWER"
+  availability_topic: "tele/BliTZW0lF_3/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  optimistic: false
+  retain: true
+  icon: mdi:speedometer
 
 ##########################################
 ## Sonoff s26 http://192.168.0.151/
@@ -85,6 +103,22 @@
   retain: true
   icon: mdi:power-socket-eu
   
+    ##########################################
+## Sonoff s26 http://192.168.0.154/
+## proves
+##
+- platform: mqtt
+  name: "sonoffBasic"
+  friendly_name: "Proves"
+  state_topic: "stat/sonoffBasic_1/POWER"
+  command_topic: "cmnd/sonoffBasic_1/POWER"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  optimistic: false
+  retain: true
+  icon: mdi:power-socket-eu
+  
 ##########################################
 ## Broadlink RMmini3 192.168.0.170
 ## Ir Switch
@@ -121,11 +155,34 @@
 #      friendly_name: "Technics Musica NextCD"
 #      command_on:  'JgDMAHM5Dw4OKw8ODg4PDw8ODg4PDg8ODw4PDg4ODw4PKg8ODw0PDw8ODg4PDg8PDisODg8rDw0PDg8ODisOEA4ODw4PDQ8PDyoPDg8qDw4PDg4ODw4PDg8rDg4PDg8ODysPDQ8rDgAJm3M5Dw4PKw4ODw4PDg4ODw4PDg4PDw4PDQ8ODw8OKw4PDg4PDg8ODg4PDg8ODysODg8qDw8PDg8NDysODg8ODw4ODg8PDyoPDg8qDw8ODg8ODw4ODg8qDw4PDg8ODysODg8qDwANBQAAAAAAAAAAAAAAAA==='
 
-- platform: mqtt  
+- platform: mqtt
+  name: "Lolin1 relay"  
+  state_topic: "dmp/lolin1"  
+  command_topic: "dmp/lolin1/relay"
+  value_template: '{{ value_json.relay }}'  
+  qos: 0
+  retain: true
+
+- platform: mqtt
+  name: "Lolin2 relay"  
+  state_topic: "dmp/lolin2"  
+  command_topic: "dmp/lolin2/relay"
+  value_template: '{{ value_json.relay }}'
+  qos: 0
+  retain: true
+  
+- platform: mqtt
+  name: "Lolin3 relay"  
+  state_topic: "dmp/lolin3"  
+  command_topic: "dmp/lolin3/relay"
+  value_template: '{{ value_json.relay }}'
+  qos: 0
+  retain: true
+  
+- platform: mqtt
   name: "Lolin4 relay"  
   state_topic: "dmp/lolin4"  
-  command_topic: "dmp/lolin4/relayset"  
-  payload_on: '{"relay": "ON"}'
-  payload_off: '{"relay": "OFF"}'
+  command_topic: "dmp/lolin4/relay"
+  value_template: '{{ value_json.relay }}'
   qos: 0
   retain: true
