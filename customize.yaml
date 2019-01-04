@@ -4,3 +4,6 @@ switch.aire_despatx:
 switch.musica_despatx:
   icon: mdi:music
   assumed_state: false
+switch.aire_menjador:
+  icon: mdi:air-conditioner
+  assumed_state: false

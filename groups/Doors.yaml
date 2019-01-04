@@ -5,3 +5,5 @@ viewCameras:
     - group.FrontDoor
     - group.AAMenjador
     - group.AADespatx
+    - group.switchbroadlinkDespatx
+    - group.switchbroadlinkMenjador    

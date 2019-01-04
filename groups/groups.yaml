@@ -7,7 +7,7 @@ switchsonoff:
     - switch.sonoffAmbiBany
     - switch.sonoffTVset
     
-switchbroadlink:
+switchbroadlinkDespatx:
   name: BroadlinkRMmini3Despatx
   control: hidden
   view: no
@@ -21,6 +21,13 @@ switchbroadlink:
     - switch.musica_despatxstopCD
     - switch.musica_despatxprevCD
     - switch.musica_despatxnextCD
+
+switchbroadlinkMenjador:
+  name: BroadlinkRMmini3Menjador
+  control: hidden
+  view: no
+  entities:
+    - switch.aire_menjador
     
 remotecontroller1:
   name: RemoteController_433_1
