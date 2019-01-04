@@ -1,0 +1,57 @@
+##########################################
+## BlitzWolf SHP2 (normal) http://192.168.0.162
+## BliTZW0lF_3 
+##
+
+- platform: mqtt
+  name: bw3_total
+  state_topic: "tele/BliTZW0lF_3/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Total }}"
+  unit_of_measurement: "kW/h"
+
+- platform: mqtt
+  name: bw3_total_euro
+  state_topic: "tele/BliTZW0lF_3/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Total | multiply(0.145) | round(2) }}"
+  unit_of_measurement: "€"
+    
+- platform: mqtt
+  name: bw3_yesterday
+  state_topic: "tele/BliTZW0lF_3/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Yesterday }}"
+  unit_of_measurement: "kW/h"  
+  
+- platform: mqtt
+  name: bw3_yesterday_euro
+  state_topic: "tele/BliTZW0lF_3/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Yesterday | multiply(0.145) | round(2) }}"
+  unit_of_measurement: "€"  
+  
+- platform: mqtt
+  name: bw3_today
+  state_topic: "tele/BliTZW0lF_3/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Today }}"
+  unit_of_measurement: "kW/h"  
+  
+- platform: mqtt
+  name: bw3_power
+  state_topic: "tele/BliTZW0lF_3/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Power }}"
+  unit_of_measurement: "W"
+
+- platform: mqtt
+  name: bw3_factor
+  state_topic: "tele/BliTZW0lF_3/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Factor }}"
+
+- platform: mqtt
+  name: bw3_voltage
+  state_topic: "tele/BliTZW0lF_3/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Voltage }}"
+  unit_of_measurement: "V"
+
+- platform: mqtt
+  name: bw3_current
+  state_topic: "tele/BliTZW0lF_3/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Current }}"
+  unit_of_measurement: "A" 
