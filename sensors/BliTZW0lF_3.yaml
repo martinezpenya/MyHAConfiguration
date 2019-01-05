@@ -4,6 +4,12 @@
 ##
 
 - platform: mqtt
+  name: bw3_totalstarttime
+  state_topic: "tele/BliTZW0lF_3/SENSOR"
+  value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S%z')) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
+  unit_of_measurement: ""
+  
+- platform: mqtt
   name: bw3_total
   state_topic: "tele/BliTZW0lF_3/SENSOR"
   value_template: "{{ value_json['ENERGY'].Total }}"
@@ -54,4 +60,4 @@
   name: bw3_current
   state_topic: "tele/BliTZW0lF_3/SENSOR"
   value_template: "{{ value_json['ENERGY'].Current }}"
-  unit_of_measurement: "A" 
+  unit_of_measurement: "A"
