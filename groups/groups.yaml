@@ -150,6 +150,32 @@ lolin4:
         - sensor.lolin4_temperature        
         - light.lolin4_light
         - switch.lolin4_relay
+        
+lolin5:
+    name: Lolin5
+    view: no
+    control: hidden
+    entities:
+        - sensor.lolin5_humidity
+        - sensor.lolin5_ldr
+        - binary_sensor.lolin5_pir
+        - sensor.lolin5_real_feel
+        - sensor.lolin5_temperature        
+        - light.lolin5_light
+        - switch.lolin5_relay
+
+lolin6:
+    name: Lolin6
+    view: no
+    control: hidden
+    entities:
+        - sensor.lolin6_humidity
+        - sensor.lolin6_ldr
+        - binary_sensor.lolin6_pir
+        - sensor.lolin6_real_feel
+        - sensor.lolin6_temperature        
+        - light.lolin6_light
+        - switch.lolin6_relay
 
 pihole:
     name: Pi-Hole

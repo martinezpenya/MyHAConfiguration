@@ -202,3 +202,19 @@
   value_template: '{{ value_json.relay }}'
   qos: 0
   retain: true
+  
+- platform: mqtt
+  name: "Lolin5 relay"  
+  state_topic: "dmp/lolin5"  
+  command_topic: "dmp/lolin5/relay"
+  value_template: '{{ value_json.relay }}'
+  qos: 0
+  retain: true
+  
+- platform: mqtt
+  name: "Lolin6 relay"  
+  state_topic: "dmp/lolin6"  
+  command_topic: "dmp/lolin6/relay"
+  value_template: '{{ value_json.relay }}'
+  qos: 0
+  retain: true

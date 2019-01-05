@@ -179,3 +179,19 @@
   value_template: '{{ value_json.motion }}'
   payload_on: "motion detected"
   payload_off: "standby"
+  
+- platform: mqtt
+  state_topic: "dmp/lolin5"
+  name: "Lolin5 PIR"
+  device_class: motion
+  value_template: '{{ value_json.motion }}'
+  payload_on: "motion detected"
+  payload_off: "standby"
+  
+- platform: mqtt
+  state_topic: "dmp/lolin6"
+  name: "Lolin6 PIR"
+  device_class: motion
+  value_template: '{{ value_json.motion }}'
+  payload_on: "motion detected"
+  payload_off: "standby"

@@ -59,3 +59,25 @@
   rgb: true  
   optimistic: false
   qos: 0
+  
+- platform: mqtt_json  
+  name: "Lolin5 light"  
+  state_topic: "dmp/lolin5"  
+  command_topic: "dmp/lolin5/light"  
+  assumed_state: false
+  brightness: true
+  flash: false  
+  rgb: true  
+  optimistic: false
+  qos: 0
+
+- platform: mqtt_json  
+  name: "Lolin6 light"  
+  state_topic: "dmp/lolin6"  
+  command_topic: "dmp/lolin6/light"  
+  assumed_state: false
+  brightness: true
+  flash: false  
+  rgb: true  
+  optimistic: false
+  qos: 0
