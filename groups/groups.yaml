@@ -262,7 +262,7 @@ BliTZW0lF_1:
   name: WaterHeater
   #view: yes
   icon: mdi:fish
-  #control: hidden
+  control: hidden
   entities:
     - switch.BliTZW0lF_1
     - sensor.bw1_power
@@ -272,8 +272,10 @@ BliTZW0lF_1:
     - sensor.bw1_today
     - sensor.bw1_yesterday
     - sensor.bw1_yesterday_euro
+    - sensor.bw1_totalstarttime
     - sensor.bw1_total   
     - sensor.bw1_total_euro
+    - automation.blitzwolf1_reset    
     
 ##########################################
 ## BlitzWolf SHP2
@@ -283,7 +285,7 @@ BliTZW0lF_2:
   name: Computer
   #view: yes
   icon: mdi:fish
-  #control: hidden
+  control: hidden
   entities:
     - switch.BliTZW0lF_2
     - sensor.bw2_power
@@ -293,8 +295,10 @@ BliTZW0lF_2:
     - sensor.bw2_today
     - sensor.bw2_yesterday
     - sensor.bw2_yesterday_euro
+    - sensor.bw2_totalstarttime   
     - sensor.bw2_total   
-    - sensor.bw2_total_euro  
+    - sensor.bw2_total_euro
+    - automation.blitzwolf2_reset        
     
 ##########################################
 ## BlitzWolf SHP2
@@ -304,7 +308,7 @@ BliTZW0lF_3:
   name: Alexa
   #view: yes
   icon: mdi:fish
-  #control: hidden
+  control: hidden
   entities:
     - switch.BliTZW0lF_3
     - sensor.bw3_power
@@ -314,5 +318,7 @@ BliTZW0lF_3:
     - sensor.bw3_today
     - sensor.bw3_yesterday
     - sensor.bw3_yesterday_euro
-    - sensor.bw3_total   
-    - sensor.bw3_total_euro  
+    - sensor.bw3_totalstarttime
+    - sensor.bw3_total
+    - sensor.bw3_total_euro
+    - automation.blitzwolf3_reset
