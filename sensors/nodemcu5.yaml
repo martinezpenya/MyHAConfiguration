@@ -1,24 +1,24 @@
 - platform: mqtt  
-  state_topic: "dmp/lolin4"
-  name: "Lolin4 Humidity"  
+  state_topic: "dmp/lolin5"
+  name: "Lolin5 Humidity"  
   unit_of_measurement: "%"  
   value_template: '{{ value_json.humidity | round(1) }}'  
   
 - platform: mqtt  
-  state_topic: "dmp/lolin4"
-  name: "Lolin4 LDR"
+  state_topic: "dmp/lolin5"
+  name: "Lolin5 LDR"
   ##This sensor is not calibrated to actual LUX. Rather, this a map of the input voltage ranging from 0 - 1023.
   unit_of_measurement: "LUX"  
   value_template: '{{ value_json.ldr }}'  
   
 - platform: mqtt  
-  state_topic: "dmp/lolin4"
-  name: "Lolin4 Temperature"  
+  state_topic: "dmp/lolin5"
+  name: "Lolin5 Temperature"  
   unit_of_measurement: "°F"  
   value_template: '{{ value_json.temperature | round(1) }}'  
 
 - platform: mqtt
-  state_topic: "dmp/lolin4"
-  name: "Lolin4 Real Feel"
+  state_topic: "dmp/lolin5"
+  name: "Lolin5 Real Feel"
   unit_of_measurement: "°F"
   value_template: '{{ value_json.heatIndex | round(1) }}'
