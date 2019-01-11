@@ -6,7 +6,7 @@
   action:
     - service: persistent_notification.create
       data_template:
-        title: "Blitwolf1 from {{ (states.sensor.bw2_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}} to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}"
+        title: "Blitwolf2 from {{ (states.sensor.bw2_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}} to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}"
         message: "Total euros: {{ states.sensor.bw2_total_euro.state_with_unit }} \nTotal KW/h: {{ states.sensor.bw2_total.state_with_unit }}"
     - service: mqtt.publish
       data_template:

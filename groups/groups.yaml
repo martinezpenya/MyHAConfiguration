@@ -322,3 +322,26 @@ BliTZW0lF_3:
     - sensor.bw3_total
     - sensor.bw3_total_euro
     - automation.blitzwolf3_reset
+    
+##########################################
+## BlitzWolf SHP2
+## BliTZW0lF_4
+##        
+BliTZW0lF_4:
+  name: BliTZW0lF_4
+  #view: yes
+  icon: mdi:fish
+  control: hidden
+  entities:
+    - switch.BliTZW0lF_4
+    - sensor.bw4_power
+    - sensor.bw4_current
+    - sensor.bw4_voltage
+    - sensor.bw4_factor
+    - sensor.bw4_today
+    - sensor.bw4_yesterday
+    - sensor.bw4_yesterday_euro
+    - sensor.bw4_totalstarttime
+    - sensor.bw4_total
+    - sensor.bw4_total_euro
+    - automation.blitzwolf4_reset
