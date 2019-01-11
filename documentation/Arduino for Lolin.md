@@ -17,5 +17,5 @@ Arduino preparation for Lolin (libraries):
 7. In the same windows search for *json* and install ArduinoJson by Benoit Blanchon (version 5.8.3) and close this window
 8. Go back to arduino "portable" folder we've created previously and navigate to portable/sketchbook/libraries/pubsubclient/src and edit pubsubclient.h open with your favorite text editor and change value on line `#define MQTT_MAX_PACKET_SIZE 128` to `#define MQTT_MAX_PACKET_SIZE 512`
 9. Save and close editor
-10. In Arduino IDE copy source for sensor from: https://github.com/bruhautomation/ESP-MQTT-JSON-Multisensor/tree/master/bruh_mqtt_multisensor_github
+10. In Arduino IDE copy source for sensor from: https://github.com/martinezpenya/ESP-MQTT-JSON-Multisensor.git it's a fork from https://github.com/bruhautomation/ESP-MQTT-JSON-Multisensor/tree/master/bruh_mqtt_multisensor_github
 
