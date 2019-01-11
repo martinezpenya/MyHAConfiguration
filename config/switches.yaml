@@ -56,6 +56,39 @@
   icon: mdi:speedometer
 
 ##########################################
+## BlitzWolf SHP2 (normal) http://192.168.0.163
+## BliTZW0lF_4
+##
+
+- platform: mqtt
+  name: "BliTZW0lF_4"
+  state_topic: "stat/BliTZW0lF_4/POWER"
+  command_topic: "cmnd/BliTZW0lF_4/POWER"
+  availability_topic: "tele/BliTZW0lF_4/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  optimistic: false
+  retain: true
+  icon: mdi:speedometer
+  
+###########################################
+### BlitzWolf SHP2 (espurna) http://192.168.0.163
+### BliTZW0lF_4
+###
+#- platform: mqtt
+#  name: BliTzW0lf4
+#  state_topic: BliTzW0lf4/relay/0
+#  command_topic: BliTzW0lf4/relay/0/set
+#  payload_on: 1
+#  payload_off: 0
+#  availability_topic: BliTzW0lf4/status
+#  payload_available: 1
+#  payload_not_available: 0
+    
+##########################################
 ## Sonoff s26 http://192.168.0.151/
 ## Waterheater
 ##

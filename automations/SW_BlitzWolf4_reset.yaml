@@ -1,0 +1,22 @@
+- alias: 'Blitzwolf4 reset'
+  initial_state: on
+  trigger:
+    - platform: template
+      value_template: '{{ now().strftime("%d") == "1" }}'
+  action:
+    - service: persistent_notification.create
+      data_template:
+        title: "Blitwolf4 from {{ (states.sensor.bw4_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}} to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}"
+        message: "Total euros: {{ states.sensor.bw4_total_euro.state_with_unit }} \nTotal KW/h: {{ states.sensor.bw4_total.state_with_unit }}"
+    - service: mqtt.publish
+      data_template:
+        topic: "cmnd/BliTZW0lF_4/energyreset1"
+        payload: "0"
+    - service: mqtt.publish
+      data_template:
+        topic: "cmnd/BliTZW0lF_4/energyreset2"
+        payload: "0"
+    - service: mqtt.publish
+      data_template:
+        topic: "cmnd/BliTZW0lF_4/energyreset3"
+        payload: "0"
