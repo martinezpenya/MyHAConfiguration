@@ -15,6 +15,7 @@
          data:
             keyboard:
                 - '/status, /ping'
-                - '/waterheater, /TVset, /Printer'
+                - '/waterheater, /TVset' 
+                #, /Printer'
                 - '/computer'
                 #- '/alarma, /puertas, /switches'
