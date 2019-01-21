@@ -7,9 +7,9 @@
   condition:
     condition: and
     conditions:
-      - condition: state
-        entity_id: device_tracker.onepluslan_5gh
-        state: 'not_home'
+#      - condition: state
+#        entity_id: device_tracker.onepluslan_5gh
+#        state: 'not_home'
       - condition: state
         entity_id: device_tracker.oneplus
         state: 'not_home'
