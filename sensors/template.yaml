@@ -12,3 +12,107 @@
     timer2_duration:
       friendly_name: 'duration'  
       value_template: '{{ "%0.02d:%0.02d" | format(0 | int, states("input_number.timer2_duration") | int) }}'
+
+    sensor_bw1_kw_valle:
+      friendly_name: 'kw valle'
+      value_template: '{{ (states("input_number.bw1_kw_valle") | float| round(6)) }}'
+      unit_of_measurement: "KW"
+      icon_template: mdi:trending-down
+    sensor_bw1_kw_pico:
+      friendly_name: 'kw pico'
+      value_template: '{{ (states("input_number.bw1_kw_pico") | float | round(6)) }}'
+      icon_template: mdi:trending-up
+      unit_of_measurement: "KW"
+    sensor_bw1_eur_valle:
+      friendly_name: 'Eur valle'
+      value_template: '{{ (states("input_number.bw1_kw_valle") | multiply(0.1074275) | float | round(2)) }}'
+      icon_template: mdi:progress-download     
+      unit_of_measurement: "€"
+    sensor_bw1_eur_pico:
+      friendly_name: 'Eur pico'
+      value_template: '{{ (states("input_number.bw1_kw_pico") | multiply(0.153033) | float | round(2)) }}'      
+      icon_template: mdi:progress-upload
+      unit_of_measurement: "€"
+    sensor_bw1_total_euro:
+      friendly_name: 'Eur Total'
+      value_template: '{{(((states.sensor.sensor_bw1_eur_valle.state | float) + (states.sensor.sensor_bw1_eur_pico.state  | float)) | round(2)) }}'
+      unit_of_measurement: "€"
+      icon_template: mdi:currency-eur
+    
+    sensor_bw2_kw_valle:
+      friendly_name: 'kw valle'
+      value_template: '{{ (states("input_number.bw2_kw_valle") | float| round(6)) }}'
+      icon_template: mdi:trending-down
+      unit_of_measurement: "KW"
+    sensor_bw2_kw_pico:
+      friendly_name: 'kw pico'
+      value_template: '{{ (states("input_number.bw2_kw_pico") | float | round(6)) }}'
+      icon_template: mdi:trending-up
+      unit_of_measurement: "KW"
+    sensor_bw2_eur_valle:
+      friendly_name: 'Eur valle'
+      value_template: '{{ (states("input_number.bw2_kw_valle") | multiply(0.1074275) | float | round(2)) }}'
+      unit_of_measurement: "€"
+      icon_template: mdi:progress-download
+    sensor_bw2_eur_pico:
+      friendly_name: 'Eur pico'
+      value_template: '{{ (states("input_number.bw2_kw_pico") | multiply(0.153033) | float | round(2)) }}'
+      icon_template: mdi:progress-upload
+      unit_of_measurement: "€"
+    sensor_bw2_total_euro:
+      friendly_name: 'Eur Total'
+      value_template: '{{(((states.sensor.sensor_bw2_eur_valle.state | float) + (states.sensor.sensor_bw2_eur_pico.state  | float)) | round(2)) }}'
+      unit_of_measurement: "€"
+      icon_template: mdi:currency-eur
+
+    sensor_bw3_kw_valle:
+      friendly_name: 'kw valle'
+      value_template: '{{ (states("input_number.bw3_kw_valle") | float| round(6)) }}'
+      icon_template: mdi:trending-down
+      unit_of_measurement: "KW"
+    sensor_bw3_kw_pico:
+      friendly_name: 'kw pico'
+      value_template: '{{ (states("input_number.bw3_kw_pico") | float | round(6)) }}'
+      icon_template: mdi:trending-up
+      unit_of_measurement: "KW"
+    sensor_bw3_eur_valle:
+      friendly_name: 'Eur valle'
+      value_template: '{{ (states("input_number.bw3_kw_valle") | multiply(0.1074275) | float | round(2)) }}'
+      unit_of_measurement: "€"
+      icon_template: mdi:progress-download
+    sensor_bw3_eur_pico:
+      friendly_name: 'Eur pico'
+      value_template: '{{ (states("input_number.bw3_kw_pico") | multiply(0.153033) | float | round(2)) }}'
+      icon_template: mdi:progress-upload
+      unit_of_measurement: "€"
+    sensor_bw3_total_euro:
+      friendly_name: 'Eur Total'
+      value_template: '{{(((states.sensor.sensor_bw3_eur_valle.state | float) + (states.sensor.sensor_bw3_eur_pico.state  | float)) | round(2)) }}'
+      unit_of_measurement: "€"
+      icon_template: mdi:currency-eur
+      
+    sensor_bw4_kw_valle:
+      friendly_name: 'kw valle'
+      value_template: '{{ (states("input_number.bw4_kw_valle") | float| round(6)) }}'
+      icon_template: mdi:trending-down
+      unit_of_measurement: "KW"
+    sensor_bw4_kw_pico:
+      friendly_name: 'kw pico'
+      value_template: '{{ (states("input_number.bw4_kw_pico") | float | round(6)) }}'
+      icon_template: mdi:trending-up
+      unit_of_measurement: "KW"
+    sensor_bw4_eur_valle:
+      friendly_name: 'Eur valle'
+      value_template: '{{ (states("input_number.bw4_kw_valle") | multiply(0.1074275) | float | round(2)) }}'
+      unit_of_measurement: "€"
+      icon_template: mdi:progress-download
+    sensor_bw4_eur_pico:
+      friendly_name: 'Eur pico'
+      value_template: '{{ (states("input_number.bw4_kw_pico") | multiply(0.153033) | float | round(2)) }}'
+      icon_template: mdi:progress-upload
+      unit_of_measurement: "€"
+    sensor_bw4_total_euro:
+      friendly_name: 'Eur Total'
+      value_template: '{{(((states.sensor.sensor_bw4_eur_valle.state | float) + (states.sensor.sensor_bw4_eur_pico.state  | float)) | round(2)) }}'
+      unit_of_measurement: "€"
+      icon_template: mdi:currency-eur          
