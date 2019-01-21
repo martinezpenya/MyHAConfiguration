@@ -16,7 +16,8 @@
 #        name: Yeelight_1
 #        model: color2
 
-- platform: mqtt_json  
+- platform: mqtt
+  schema: json  
   name: "Lolin1 light"  
   state_topic: "dmp/lolin1"  
   command_topic: "dmp/lolin1/light"  
@@ -27,7 +28,8 @@
   optimistic: false
   qos: 0
   
-- platform: mqtt_json  
+- platform: mqtt
+  schema: json  
   name: "Lolin2 light"  
   state_topic: "dmp/lolin2"  
   command_topic: "dmp/lolin2/light"  
@@ -38,7 +40,8 @@
   optimistic: false
   qos: 0
   
-- platform: mqtt_json  
+- platform: mqtt
+  schema: json  
   name: "Lolin3 light"  
   state_topic: "dmp/lolin3"  
   command_topic: "dmp/lolin3/light"  
@@ -49,7 +52,8 @@
   optimistic: false
   qos: 0
 
-- platform: mqtt_json  
+- platform: mqtt
+  schema: json  
   name: "Lolin4 light"  
   state_topic: "dmp/lolin4"  
   command_topic: "dmp/lolin4/light"  
@@ -60,7 +64,8 @@
   optimistic: false
   qos: 0
   
-- platform: mqtt_json  
+- platform: mqtt
+  schema: json  
   name: "Lolin5 light"  
   state_topic: "dmp/lolin5"  
   command_topic: "dmp/lolin5/light"  
@@ -71,7 +76,8 @@
   optimistic: false
   qos: 0
 
-- platform: mqtt_json  
+- platform: mqtt
+  schema: json  
   name: "Lolin6 light"  
   state_topic: "dmp/lolin6"  
   command_topic: "dmp/lolin6/light"  
