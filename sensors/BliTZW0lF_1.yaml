@@ -8,56 +8,62 @@
   state_topic: "tele/BliTZW0lF_1/SENSOR"
   value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S%z')) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
   unit_of_measurement: ""
-#as_timestamp(strptime(states.sensor.bw1_totalstarttime.state, '%Y-%m-%dT%H:%M:%S%z')) | timestamp_custom('%d/%m/%Y %H:%M:%S' )
+  icon: mdi:update
+
 - platform: mqtt
   name: bw1_total
   state_topic: "tele/BliTZW0lF_1/SENSOR"
   value_template: "{{ value_json['ENERGY'].Total }}"
-  unit_of_measurement: "kW/h"
+  unit_of_measurement: "KW"
+  icon: mdi:elevation-rise
 
-- platform: mqtt
-  name: bw1_total_euro
-  state_topic: "tele/BliTZW0lF_1/SENSOR"
-  value_template: "{{ value_json['ENERGY'].Total | multiply(0.145) | round(2) }}"
-  unit_of_measurement: "€"
-    
-- platform: mqtt
-  name: bw1_yesterday
-  state_topic: "tele/BliTZW0lF_1/SENSOR"
-  value_template: "{{ value_json['ENERGY'].Yesterday }}"
-  unit_of_measurement: "kW/h"  
-  
-- platform: mqtt
-  name: bw1_yesterday_euro
-  state_topic: "tele/BliTZW0lF_1/SENSOR"
-  value_template: "{{ value_json['ENERGY'].Yesterday | multiply(0.145) | round(2) }}"
-  unit_of_measurement: "€"  
+#- platform: mqtt
+#  name: bw1_total_euro
+#  state_topic: "tele/BliTZW0lF_1/SENSOR"
+#  value_template: "{{ value_json['ENERGY'].Total | multiply(0.145) | round(2) }}"
+#  unit_of_measurement: "€"
+#    
+#- platform: mqtt
+#  name: bw1_yesterday
+#  state_topic: "tele/BliTZW0lF_1/SENSOR"
+#  value_template: "{{ value_json['ENERGY'].Yesterday }}"
+#  unit_of_measurement: "kW/h"  
+#  
+#- platform: mqtt
+#  name: bw1_yesterday_euro
+#  state_topic: "tele/BliTZW0lF_1/SENSOR"
+#  value_template: "{{ value_json['ENERGY'].Yesterday | multiply(0.145) | round(2) }}"
+#  unit_of_measurement: "€"  
   
 - platform: mqtt
   name: bw1_today
   state_topic: "tele/BliTZW0lF_1/SENSOR"
   value_template: "{{ value_json['ENERGY'].Today }}"
-  unit_of_measurement: "kW/h"  
+  unit_of_measurement: "KW"  
+  icon: mdi:elevation-rise
   
 - platform: mqtt
   name: bw1_power
   state_topic: "tele/BliTZW0lF_1/SENSOR"
   value_template: "{{ value_json['ENERGY'].Power }}"
   unit_of_measurement: "W"
-
-- platform: mqtt
-  name: bw1_factor
-  state_topic: "tele/BliTZW0lF_1/SENSOR"
-  value_template: "{{ value_json['ENERGY'].Factor }}"
+  icon: mdi:elevation-rise
+      
+#- platform: mqtt
+#  name: bw1_factor
+#  state_topic: "tele/BliTZW0lF_1/SENSOR"
+#  value_template: "{{ value_json['ENERGY'].Factor }}"
 
 - platform: mqtt
   name: bw1_voltage
   state_topic: "tele/BliTZW0lF_1/SENSOR"
   value_template: "{{ value_json['ENERGY'].Voltage }}"
   unit_of_measurement: "V"
+  icon: mdi:current-ac
 
 - platform: mqtt
   name: bw1_current
   state_topic: "tele/BliTZW0lF_1/SENSOR"
   value_template: "{{ value_json['ENERGY'].Current }}"
   unit_of_measurement: "A"
+  icon: mdi:transfer

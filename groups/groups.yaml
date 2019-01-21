@@ -74,7 +74,7 @@ meteocarlet:
     name: MeteoCarlet
     view: no
     entities:
-        - sensor.meteocarlet_temperature_c        
+        - sensor.meteocarlet_temperature_degc        
         - sensor.meteocarlet_forecast
         - sensor.meteocarlet_humidity
         - sensor.meteocarlet_pressure
@@ -82,14 +82,14 @@ meteocarlet:
         - sensor.meteocarlet_daily_rain
         - sensor.meteocarlet_symbol
         - sensor.meteocarlet_wind_direction
-        - sensor.meteocarlet_wind_gust_kmh
-        - sensor.meteocarlet_wind_speed_kmh
+        - sensor.meteocarlet_wind_gust_km_h
+        - sensor.meteocarlet_wind_speed_km_h
         
 meteoinsti:
     name: MeteoInsti
     view: no
     entities:
-        - sensor.meteoinsti_temperature_c        
+        - sensor.meteoinsti_temperature_degc        
         - sensor.meteoinsti_forecast
         - sensor.meteoinsti_humidity
         - sensor.meteoinsti_pressure
@@ -97,8 +97,8 @@ meteoinsti:
         - sensor.meteoinsti_daily_rain
         - sensor.meteoinsti_symbol
         - sensor.meteoinsti_wind_direction
-        - sensor.meteoinsti_wind_gust_kmh
-        - sensor.meteoinsti_wind_speed_kmh
+        - sensor.meteoinsti_wind_gust_km_h
+        - sensor.meteoinsti_wind_speed_km_h
 
 lolin1:
     name: Entradeta
@@ -181,15 +181,15 @@ pihole:
     name: Pi-Hole
     view: no
     entities:
-        - sensor.pihole_ads_blocked_today
-        - sensor.pihole_ads_percentage_blocked_today
-        - sensor.pihole_dns_queries_today
-        - sensor.pihole_dns_unique_domains
-        - sensor.pihole_dns_queries_cached
-        - sensor.pihole_dns_queries_forwarded
-        - sensor.pihole_dns_unique_clients
-        - sensor.pihole_domains_blocked
-        - sensor.pihole_seen_clients
+        - sensor.pi_hole_ads_blocked_today
+        - sensor.pi_hole_ads_percentage_blocked_today
+        - sensor.pi_hole_dns_queries_today
+        - sensor.pi_hole_dns_unique_domains
+        - sensor.pi_hole_dns_queries_cached
+        - sensor.pi_hole_dns_queries_forwarded
+        - sensor.pi_hole_dns_unique_clients
+        - sensor.pi_hole_domains_blocked
+        - sensor.pi_hole_seen_clients
 
 rpimonitor:
     name: Pi monitor
@@ -201,23 +201,23 @@ rpimonitor:
         - sensor.memory_free
         - sensor.disk_use_percent_home
         - sensor.last_boot
-        - sensor.since_last_boot        
+#        - sensor.since_last_boot        
 
 datetime:
     view: no
     name: DateTime
     entities:
         - sensor.date
-        - sensor.date__time
+        - sensor.date_time
         - sensor.time
-        - sensor.time__date
+        - sensor.time_date
         - sensor.time_utc
         
 presence:
     view: no
     name: presence
     entities:    
-        - device_tracker.onepluslan_5GH
+#        - device_tracker.onepluslan_5GH
         - device_tracker.oneplus
         - binary_sensor.pir_kerui_p831_1
         - binary_sensor.pir_kerui_p831_2
@@ -268,14 +268,24 @@ BliTZW0lF_1:
     - sensor.bw1_power
     - sensor.bw1_current
     - sensor.bw1_voltage
-    - sensor.bw1_factor
+#    - sensor.bw1_factor
     - sensor.bw1_today
-    - sensor.bw1_yesterday
-    - sensor.bw1_yesterday_euro
+#    - sensor.bw1_yesterday
+#    - sensor.bw1_yesterday_euro
     - sensor.bw1_totalstarttime
+    - sensor.sensor_bw1_kw_pico
+    - sensor.sensor_bw1_kw_valle
     - sensor.bw1_total   
-    - sensor.bw1_total_euro
-    - automation.blitzwolf1_reset    
+    - sensor.sensor_bw1_eur_pico
+    - sensor.sensor_bw1_eur_valle
+    - sensor.sensor_bw1_total_euro
+    - automation.blitzwolf1_reset
+    - script.blitzwolf1_report
+#    - input_number.bw1_kw_valle
+#    - input_number.bw1_kw_pico
+    - input_number.bw1_partial
+    - automation.blitzwolf1_valle
+    - automation.blitzwolf1_pico
     
 ##########################################
 ## BlitzWolf SHP2
@@ -291,14 +301,24 @@ BliTZW0lF_2:
     - sensor.bw2_power
     - sensor.bw2_current
     - sensor.bw2_voltage
-    - sensor.bw2_factor
+#    - sensor.bw2_factor
     - sensor.bw2_today
-    - sensor.bw2_yesterday
-    - sensor.bw2_yesterday_euro
-    - sensor.bw2_totalstarttime   
+#    - sensor.bw2_yesterday
+#    - sensor.bw2_yesterday_euro
+    - sensor.bw2_totalstarttime
+    - sensor.sensor_bw2_kw_pico
+    - sensor.sensor_bw2_kw_valle
     - sensor.bw2_total   
-    - sensor.bw2_total_euro
-    - automation.blitzwolf2_reset        
+    - sensor.sensor_bw2_eur_pico
+    - sensor.sensor_bw2_eur_valle
+    - sensor.sensor_bw2_total_euro
+    - automation.blitzwolf2_reset
+    - script.blitzwolf2_report
+#    - input_number.bw2_kw_valle
+#    - input_number.bw2_kw_pico
+    - input_number.bw2_partial
+    - automation.blitzwolf2_valle
+    - automation.blitzwolf2_pico  
     
 ##########################################
 ## BlitzWolf SHP2
@@ -314,14 +334,24 @@ BliTZW0lF_3:
     - sensor.bw3_power
     - sensor.bw3_current
     - sensor.bw3_voltage
-    - sensor.bw3_factor
+#    - sensor.bw3_factor
     - sensor.bw3_today
-    - sensor.bw3_yesterday
-    - sensor.bw3_yesterday_euro
+#    - sensor.bw3_yesterday
+#    - sensor.bw3_yesterday_euro
     - sensor.bw3_totalstarttime
-    - sensor.bw3_total
-    - sensor.bw3_total_euro
+    - sensor.sensor_bw3_kw_pico
+    - sensor.sensor_bw3_kw_valle
+    - sensor.bw3_total   
+    - sensor.sensor_bw3_eur_pico
+    - sensor.sensor_bw3_eur_valle
+    - sensor.sensor_bw3_total_euro
     - automation.blitzwolf3_reset
+    - script.blitzwolf3_report
+#    - input_number.bw3_kw_valle
+#    - input_number.bw3_kw_pico
+    - input_number.bw3_partial
+    - automation.blitzwolf3_valle
+    - automation.blitzwolf3_pico 
     
 ##########################################
 ## BlitzWolf SHP2
@@ -337,11 +367,21 @@ BliTZW0lF_4:
     - sensor.bw4_power
     - sensor.bw4_current
     - sensor.bw4_voltage
-    - sensor.bw4_factor
+#    - sensor.bw4_factor
     - sensor.bw4_today
-    - sensor.bw4_yesterday
-    - sensor.bw4_yesterday_euro
+#    - sensor.bw4_yesterday
+#    - sensor.bw4_yesterday_euro
     - sensor.bw4_totalstarttime
-    - sensor.bw4_total
-    - sensor.bw4_total_euro
+    - sensor.sensor_bw4_kw_pico
+    - sensor.sensor_bw4_kw_valle
+    - sensor.bw4_total   
+    - sensor.sensor_bw4_eur_pico
+    - sensor.sensor_bw4_eur_valle
+    - sensor.sensor_bw4_total_euro
     - automation.blitzwolf4_reset
+    - script.blitzwolf4_report
+#    - input_number.bw4_kw_valle
+#    - input_number.bw4_kw_pico
+    - input_number.bw4_partial
+    - automation.blitzwolf4_valle
+    - automation.blitzwolf4_pico 
