@@ -10,7 +10,57 @@
 #          - switch.sonoffwaterheater          
 #          - switch.sonoffTVset
 #          - switch.sonoffPrinter
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/BliTZW0lF_1/state"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: cmnd/BliTZW0lF_1/POWER          
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/BliTZW0lF_2/state"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: cmnd/BliTZW0lF_2/POWER          
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/BliTZW0lF_3/state"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: cmnd/BliTZW0lF_3/POWER          
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/BliTZW0lF_4/state"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: cmnd/BliTZW0lF_4/POWER          
+
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/sonoffS26_1/state"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: cmnd/sonoffS26_1/POWER   
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/sonoffS26_2/state"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: cmnd/sonoffS26_2/POWER   
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/sonoffS26_3/state"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: cmnd/sonoffS26_3/POWER           
+
     - service: notify.HomeAssistant
       data:
         message: "HA has started: Revise status"
-          

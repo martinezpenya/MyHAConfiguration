@@ -4,10 +4,7 @@
     - platform: template
       value_template: '{{ now().strftime("%d") == "1" }}'
   action:
-    - service: persistent_notification.create
-      data_template:
-        title: "Blitwolf3 from {{ (states.sensor.bw3_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}} to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}"
-        message: "Total euros: {{ states.sensor.bw3_total_euro.state_with_unit }} \nTotal KW/h: {{ states.sensor.bw3_total.state_with_unit }}"
+    - service: script.blitzwolf3_report
     - service: mqtt.publish
       data_template:
         topic: "cmnd/BliTZW0lF_3/energyreset1"
@@ -20,3 +17,55 @@
       data_template:
         topic: "cmnd/BliTZW0lF_3/energyreset3"
         payload: "0"
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.bw3_Kw_pico
+        value: "0"
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.bw3_Kw_valle
+        value: "0"
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.bw3_partial
+        value: "0"
+      
+- alias: 'Blitzwolf3 Valle'
+  hide_entity: true
+  initial_state: on
+  trigger:
+    - platform: template
+      value_template: '{{ now().strftime("%M") == "00" }}'
+  condition:
+    - condition: template
+      value_template: '{{ now().strftime("%H") == "12" }}'
+  action:
+    - service: script.blitzwolf3_report
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.bw3_kw_valle
+        value: "{{ ((states.input_number.bw3_kw_valle.state|float) + ((states.sensor.bw3_total.state|float) - (states.input_number.bw3_partial.state|float))|float) }}"
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.bw3_partial
+        value: "{{ states.sensor.bw3_total.state }}"          
+
+- alias: 'Blitzwolf3 Pico'
+  hide_entity: true
+  initial_state: on
+  trigger:
+    - platform: template
+      value_template: '{{ now().strftime("%M") == "00" }}'
+  condition:
+    - condition: template
+      value_template: '{{ now().strftime("%H") == "22" }}'
+  action:
+    - service: script.blitzwolf3_report
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.bw3_kw_pico
+        value: "{{ ((states.input_number.bw3_kw_pico.state|float) + ((states.sensor.bw3_total.state|float) - (states.input_number.bw3_partial.state|float))|float) }}"
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.bw3_partial
+        value: "{{ states.sensor.bw3_total.state }}"           

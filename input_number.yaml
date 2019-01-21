@@ -36,4 +36,103 @@ timer2_duration:
   min: 0
   max: 59
   step: 5
-      
+
+bw1_kw_pico:
+  name: Kw pico
+  icon: mdi:trending-up
+  unit_of_measurement: "KW"
+  min: 0
+  max: 1000
+  mode: box
+  step: 0.001 
+bw1_kw_valle:
+  name: Kw valle
+  icon: mdi:trending-down
+  unit_of_measurement: "KW"
+  min: 0
+  max: 1000
+  mode: box
+  step: 0.001 
+bw1_partial:
+  name: partial data
+  icon: mdi:calculator-variant
+  unit_of_measurement: "KW"
+  min: 0
+  max: 1000
+  mode: box
+  step: 0.001
+
+bw2_kw_pico:
+  name: Kw pico
+  icon: mdi:trending-up
+  unit_of_measurement: "KW"
+  min: 0
+  max: 1000
+  mode: box
+  step: 0.001 
+bw2_kw_valle:
+  name: Kw valle
+  icon: mdi:trending-down
+  unit_of_measurement: "KW"
+  min: 0
+  max: 1000
+  mode: box
+  step: 0.001 
+bw2_partial:
+  name: partial data
+  icon: mdi:calculator-variant
+  unit_of_measurement: "KW"
+  min: 0
+  max: 1000
+  mode: box
+  step: 0.001
+  
+bw3_kw_pico:
+  name: Kw pico
+  icon: mdi:trending-up
+  unit_of_measurement: "KW"
+  min: 0
+  max: 1000
+  mode: box
+  step: 0.001 
+bw3_kw_valle:
+  name: Kw valle
+  icon: mdi:trending-down
+  unit_of_measurement: "KW"
+  min: 0
+  max: 1000
+  mode: box
+  step: 0.001 
+bw3_partial:
+  name: partial data
+  icon: mdi:calculator-variant
+  unit_of_measurement: "KW"
+  min: 0
+  max: 1000
+  mode: box
+  step: 0.001
+  
+bw4_kw_pico:
+  name: Kw pico
+  icon: mdi:trending-up
+  unit_of_measurement: "KW"
+  min: 0
+  max: 1000
+  mode: box
+  step: 0.001 
+bw4_kw_valle:
+  name: Kw valle
+  icon: mdi:trending-down
+  unit_of_measurement: "KW"
+  min: 0
+  max: 1000
+  mode: box
+  step: 0.001 
+bw4_partial:
+  name: partial data
+  icon: mdi:calculator-variant
+  unit_of_measurement: "KW"
+  min: 0
+  max: 1000
+  mode: box
+  step: 0.001  
