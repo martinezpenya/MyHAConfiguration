@@ -2,7 +2,7 @@
   initial_state: on
   trigger:
     - platform: template
-      value_template: '{{ now().strftime("%d") == "1" }}'
+      value_template: '{{ now().strftime("%d") == "01" }}'
   action:
     - service: script.blitzwolf1_report
     - service: mqtt.publish
@@ -40,7 +40,6 @@
     - condition: template
       value_template: '{{ now().strftime("%H") == "12" }}'
   action:
-    - service: script.blitzwolf1_report
     - service: input_number.set_value
       data_template:
         entity_id: input_number.bw1_kw_valle
@@ -49,6 +48,7 @@
       data_template:
         entity_id: input_number.bw1_partial
         value: "{{ states.sensor.bw1_total.state }}"          
+#    - service: script.blitzwolf1_report
 
 - alias: 'Blitzwolf1 Pico'
   hide_entity: true
@@ -60,7 +60,6 @@
     - condition: template
       value_template: '{{ now().strftime("%H") == "22" }}'
   action:
-    - service: script.blitzwolf1_report
     - service: input_number.set_value
       data_template:
         entity_id: input_number.bw1_kw_pico
@@ -69,3 +68,4 @@
       data_template:
         entity_id: input_number.bw1_partial
         value: "{{ states.sensor.bw1_total.state }}"   
+#    - service: script.blitzwolf1_report
