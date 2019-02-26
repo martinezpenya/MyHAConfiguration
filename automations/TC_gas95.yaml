@@ -1,0 +1,16 @@
+##########################################
+## KEYBOARD - status
+##
+- alias: 'TC gas95'
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/gas95'
+  action:
+    - service: notify.HomeAssistant
+      data_template:
+          title: "***Gasolina 95 en Carlet:***"
+          message: "{% for entity_id in states.group.gasolineras.attributes.entity_id %}{% set domain, device = entity_id.split('.') %}{{'*' + states[domain][device].state_with_unit | replace('.',',') + '* (' + states[domain][device].name + ')\n'}}{% endfor %}"
+          
