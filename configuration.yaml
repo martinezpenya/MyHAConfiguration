@@ -86,12 +86,13 @@ cloud:
 mqtt:
   broker: 192.168.0.3
   port: 1883
-  discovery: True
+  discovery: False
 
 switch: !include config/switches.yaml
 light: !include config/lights.yaml
 group: !include_dir_merge_named groups
-panel_iframe: !include panels/panels.yaml
+#panel_iframe: !include panels/panels.yaml
+weblink: !include panels/weblinks.yaml
 automation: !include_dir_merge_list automations
 notify: !include_dir_merge_list notify
 script: !include scripts.yaml
