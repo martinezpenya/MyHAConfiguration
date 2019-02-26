@@ -1,5 +1,0 @@
-Gasolineras:
-  name: "Gasolineras"
-  view: yes
-  entities:
-    - group.Gasolineras
