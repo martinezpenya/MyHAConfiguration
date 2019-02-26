@@ -1,14 +1,14 @@
 #requires nmap on debian:
 # sudo apt-get install net-tools nmap
 
-- platform: nmap_tracker
-  hosts: 192.168.0.1/24
-  interval_seconds: 60
-  consider_home: 180
-  scan_options: " –privileged -sP –host-timeout 3s "
-  new_device_defaults:
-      track_new_devices: True
-      hide_if_away: False
+#- platform: nmap_tracker
+#  hosts: 192.168.0.1/24
+#  interval_seconds: 60
+#  consider_home: 180
+#  scan_options: " –privileged -sP –host-timeout 3s "
+#  new_device_defaults:
+#      track_new_devices: True
+#      hide_if_away: False
 
 #requires installing pybluez:
 #   sudo apt-get install bluetooth libbluetooth-dev
