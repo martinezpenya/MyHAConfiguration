@@ -14,7 +14,7 @@
          message: 'Select an option'
          data:
             keyboard:
-                - '/status, /ping'
+                - '/status, /gas95, /ping'
                 - '/waterheater, /TVset' 
                 #, /Printer'
                 - '/computer'
