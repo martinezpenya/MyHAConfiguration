@@ -34,3 +34,6 @@ automation.blitzwolf3_reset:
   icon: mdi:restore
 automation.blitzwolf4_reset:
   icon: mdi:restore
+
+sensor.gasolinera:
+  hidden: true
