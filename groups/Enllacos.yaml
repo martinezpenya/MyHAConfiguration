@@ -1,0 +1,5 @@
+viewEnllacos:
+  name: "Enllaços"
+  view: yes
+  entities:
+    - group.enllacos
