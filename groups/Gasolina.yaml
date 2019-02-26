@@ -1,0 +1,5 @@
+Gasolina:
+  name: "Gasolina"
+  view: yes
+  entities:
+    - group.Gasolineras
