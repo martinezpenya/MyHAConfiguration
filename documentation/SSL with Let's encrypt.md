@@ -1,5 +1,6 @@
-## SSL with [Let's encrypt](https://letsencrypt.org/):
+# SSL with [Let's encrypt](https://letsencrypt.org/):
 1. Create a DYNHOST in OVH. Details:
+
     1. [OVH guide](https://docs.ovh.com/es/domains/web_hosting_dynhost)
     1. [ddclient](https://blog.ichasco.com/ddns-con-ovh/)
 1. Redirect ports:
@@ -21,6 +22,9 @@
     ./certbot-auto certonly --standalone --preferred-challenges http-01 --email your@email.address -d hass-example.duckdns.org
     ```
 1. When you need to renew the Certificate:
+    1. Port 80 (external) to 80 (internal) we can remove this one later after Let's encrypt renewal
+    1. If you have another https server, stop it.
+    1. then...
     ```sh
     ./certbot-auto renew --quiet --no-self-upgrade --standalone --preferred-challenges http-01
     ```
