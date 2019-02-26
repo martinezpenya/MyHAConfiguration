@@ -1,3 +1,11 @@
+enllacos:
+  name: Enllacos
+  view: no
+  entities:
+    - weblink.estat_raspberry
+    - weblink.pi_hole
+    - weblink.router
+  
 switchsonoff:
   name: Sonoff
   control: hidden
@@ -6,6 +14,7 @@ switchsonoff:
     - switch.sonoffAmbiCorredor
     - switch.sonoffAmbiBany
     - switch.sonoffTVset
+    - switch.sonoffBasic
     
 switchbroadlinkDespatx:
   name: BroadlinkRMmini3Despatx
@@ -334,10 +343,7 @@ BliTZW0lF_3:
     - sensor.bw3_power
     - sensor.bw3_current
     - sensor.bw3_voltage
-#    - sensor.bw3_factor
     - sensor.bw3_today
-#    - sensor.bw3_yesterday
-#    - sensor.bw3_yesterday_euro
     - sensor.bw3_totalstarttime
     - sensor.sensor_bw3_kw_pico
     - sensor.sensor_bw3_kw_valle
@@ -347,8 +353,6 @@ BliTZW0lF_3:
     - sensor.sensor_bw3_total_euro
     - automation.blitzwolf3_reset
     - script.blitzwolf3_report
-#    - input_number.bw3_kw_valle
-#    - input_number.bw3_kw_pico
     - input_number.bw3_partial
     - automation.blitzwolf3_valle
     - automation.blitzwolf3_pico 
@@ -358,7 +362,7 @@ BliTZW0lF_3:
 ## BliTZW0lF_4
 ##        
 BliTZW0lF_4:
-  name: BliTZW0lF_4
+  name: planxa
   #view: yes
   icon: mdi:fish
   control: hidden
@@ -367,10 +371,7 @@ BliTZW0lF_4:
     - sensor.bw4_power
     - sensor.bw4_current
     - sensor.bw4_voltage
-#    - sensor.bw4_factor
     - sensor.bw4_today
-#    - sensor.bw4_yesterday
-#    - sensor.bw4_yesterday_euro
     - sensor.bw4_totalstarttime
     - sensor.sensor_bw4_kw_pico
     - sensor.sensor_bw4_kw_valle
@@ -380,8 +381,15 @@ BliTZW0lF_4:
     - sensor.sensor_bw4_total_euro
     - automation.blitzwolf4_reset
     - script.blitzwolf4_report
-#    - input_number.bw4_kw_valle
-#    - input_number.bw4_kw_pico
     - input_number.bw4_partial
     - automation.blitzwolf4_valle
     - automation.blitzwolf4_pico 
+
+Gasolineras:
+    - sensor.gasolinera1
+    - sensor.gasolinera2
+    - sensor.gasolinera3
+    - sensor.gasolinera4
+    - sensor.gasolinera5
+    - sensor.gasolinera6
+    - sensor.gasolinera7
