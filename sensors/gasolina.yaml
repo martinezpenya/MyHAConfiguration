@@ -4,7 +4,7 @@
 #  value_template: '{{ value_json["ListaEESSPrecio"] }}' 
   #[2]["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }}'
 #  unit_of_measurement: '€/L' 
-  scan_interval: 86400
+  scan_interval: 3600
 #    
 - platform: template
   sensors:      

@@ -1,4 +1,4 @@
-viewCameras:
+viewDoors:
   name: "Doors"
   view: yes
   entities:

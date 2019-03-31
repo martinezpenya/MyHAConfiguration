@@ -1,4 +1,4 @@
-Gasolina:
+viewGasolina:
   name: "Gasolina"
   view: yes
   entities:
