@@ -1,45 +1,15 @@
-- platform: jsonrest     
-  resource: https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/FiltroMunicipio/7051
+- platform: jsonrest
+  resource: !secret clientgasolina
   name: gasolinera
-#  value_template: '{{ value_json["ListaEESSPrecio"] }}' 
-  #[2]["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }}'
-#  unit_of_measurement: '€/L' 
   scan_interval: 3600
-#    
+    
 - platform: template
   sensors:      
-    gasolinera1:
-      friendly_name: E.S. LA REINA
-      value_template: >-
-              {%- for petrol in states.sensor.gasolinera.attributes.ListaEESSPrecio -%}
-                {%- if petrol["IDEESS"] | int  == 4117 -%}  
-                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
-                {%- endif -%}
-              {%- endfor -%}
-      unit_of_measurement: '€/L' 
-    gasolinera2:
-      friendly_name: GASEXPRESS
-      value_template: >-
-              {%- for petrol in states.sensor.gasolinera.attributes.ListaEESSPrecio -%}
-                {%- if petrol["IDEESS"] | int  == 12771 -%}  
-                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
-                {%- endif -%}
-              {%- endfor -%}
-      unit_of_measurement: '€/L'       
     gasolinera3:
-      friendly_name: CAMPSAEXPRESS
+      friendly_name: CAMPSA EXPRESS
       value_template: >-
               {%- for petrol in states.sensor.gasolinera.attributes.ListaEESSPrecio -%}
                 {%- if petrol["IDEESS"] | int  == 12925 -%}  
-                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
-                {%- endif -%}
-              {%- endfor -%}
-      unit_of_measurement: '€/L'
-    gasolinera4:
-      friendly_name: GALP
-      value_template: >-
-              {%- for petrol in states.sensor.gasolinera.attributes.ListaEESSPrecio -%}
-                {%- if petrol["IDEESS"] | int  == 4117 -%}  
                   {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
                 {%- endif -%}
               {%- endfor -%}
@@ -53,15 +23,15 @@
                 {%- endif -%}
               {%- endfor -%}
       unit_of_measurement: '€/L'
-    gasolinera6:
-      friendly_name: E.S. EL CORTIJO
+    gasolinera1:
+      friendly_name: E.S. LA REINA
       value_template: >-
               {%- for petrol in states.sensor.gasolinera.attributes.ListaEESSPrecio -%}
-                {%- if petrol["IDEESS"] | int  == 4114 -%}  
+                {%- if petrol["IDEESS"] | int  == 4117 -%}  
                   {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
                 {%- endif -%}
               {%- endfor -%}
-      unit_of_measurement: '€/L'
+      unit_of_measurement: '€/L' 
     gasolinera7:
       friendly_name: COOPCARLET
       value_template: >-
@@ -71,3 +41,31 @@
                 {%- endif -%}
               {%- endfor -%}
       unit_of_measurement: '€/L'        
+    gasolinera6:
+      friendly_name: E.S. EL CORTIJO
+      value_template: >-
+              {%- for petrol in states.sensor.gasolinera.attributes.ListaEESSPrecio -%}
+                {%- if petrol["IDEESS"] | int  == 4114 -%}  
+                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+                {%- endif -%}
+              {%- endfor -%}
+      unit_of_measurement: '€/L'          
+    gasolinera2:
+      friendly_name: VALCARCE (POLIGONO)
+      value_template: >-
+              {%- for petrol in states.sensor.gasolinera.attributes.ListaEESSPrecio -%}
+                {%- if petrol["IDEESS"] | int  == 10530 -%}  
+                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+                {%- endif -%}
+              {%- endfor -%}
+      unit_of_measurement: '€/L'       
+    gasolinera4:
+      friendly_name: GASEXPRESS
+      value_template: >-
+              {%- for petrol in states.sensor.gasolinera.attributes.ListaEESSPrecio -%}
+                {%- if petrol["IDEESS"] | int  == 12771 -%}  
+                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+                {%- endif -%}
+              {%- endfor -%}
+      unit_of_measurement: '€/L'
+

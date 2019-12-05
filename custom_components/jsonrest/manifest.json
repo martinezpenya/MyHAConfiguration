@@ -1,0 +1,8 @@
+{
+  "domain": "jsonrest",
+  "name": "Petrol Station Client",
+  "documentation": "https://www.home-assistant.io/components/hue",
+  "dependencies": [],
+  "codeowners": [],
+  "requirements": []
+}
