@@ -6,4 +6,5 @@ viewDoors:
     - group.AAMenjador
     - group.AADespatx
     - group.switchbroadlinkDespatx
-    - group.switchbroadlinkMenjador    
+    - group.switchbroadlinkMenjador
+    - group.persianes

@@ -2,12 +2,15 @@ meteo:
   name: "Meteo"
   view: yes
   entities:
-    - group.lolin1
-    - group.lolin2
-    - group.lolin3
-    - group.lolin4
+    - climate.ac_menjador
+    - climate.ac_despatx      
+    - group.esphome1
+    - group.esphome2
+    - group.esphome3
+    - group.esphome4
     - group.lolin5
-    - group.lolin6
+    - group.esphome6
     - group.meteocarlet
     - group.meteoinsti
+    - group.meteoinsti2
     - group.sun
