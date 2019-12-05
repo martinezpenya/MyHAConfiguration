@@ -26,7 +26,7 @@ _LOGGER = logging.getLogger(__name__)
 
 DEFAULT_METHOD = 'GET'
 DEFAULT_NAME = 'JSON REST Sensor'
-DEFAULT_VERIFY_SSL = True
+DEFAULT_VERIFY_SSL = False
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_RESOURCE): cv.url,
