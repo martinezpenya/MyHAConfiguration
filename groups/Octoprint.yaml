@@ -1,0 +1,5 @@
+viewImpressora3d:
+  name: "Impressora 3D"
+  view: yes
+  entities:
+    - group.Octoprint
