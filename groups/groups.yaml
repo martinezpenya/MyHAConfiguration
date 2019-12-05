@@ -15,28 +15,17 @@ switchsonoff:
     - switch.sonoffAmbiBany
     - switch.sonoffTVset
     - switch.sonoffBasic
-    
-switchbroadlinkDespatx:
-  name: BroadlinkRMmini3Despatx
-  control: hidden
-  view: no
-  entities:
-    - switch.aire_despatx
-    - switch.musica_despatx
-    - switch.musica_despatxplayBT
-    - switch.musica_despatxSwith2CD
-    - switch.musica_despatxplayCD
-    - switch.musica_despatxpauseCD
-    - switch.musica_despatxstopCD
-    - switch.musica_despatxprevCD
-    - switch.musica_despatxnextCD
-
-switchbroadlinkMenjador:
-  name: BroadlinkRMmini3Menjador
-  control: hidden
-  view: no
-  entities:
-    - switch.aire_menjador
+  
+sonoffMini:
+    - switch.sonoffmini1
+    - switch.sonoffmini2
+    - switch.sonoffmini3
+    - switch.sonoffmini4
+    - switch.sonoffmini5
+    - switch.sonoffmini6
+    - switch.sonoffmini7
+    - switch.sonoffmini8
+    - switch.sonoffmini9
     
 remotecontroller1:
   name: RemoteController_433_1
@@ -83,6 +72,8 @@ meteocarlet:
     name: MeteoCarlet
     view: no
     entities:
+        - sensor.meteocarlet_station
+        - sensor.meteocarlet_date
         - sensor.meteocarlet_temperature_degc        
         - sensor.meteocarlet_forecast
         - sensor.meteocarlet_humidity
@@ -98,6 +89,8 @@ meteoinsti:
     name: MeteoInsti
     view: no
     entities:
+        - sensor.meteoinsti_station
+        - sensor.meteoinsti_date
         - sensor.meteoinsti_temperature_degc        
         - sensor.meteoinsti_forecast
         - sensor.meteoinsti_humidity
@@ -109,56 +102,74 @@ meteoinsti:
         - sensor.meteoinsti_wind_gust_km_h
         - sensor.meteoinsti_wind_speed_km_h
 
-lolin1:
+meteoinsti2:
+    name: MeteoInsti2
+    view: no
+    entities:
+        - sensor.meteoinsti2_station
+        - sensor.meteoinsti2_date
+        - sensor.meteoinsti2_temperature_degc        
+        - sensor.meteoinsti2_forecast
+        - sensor.meteoinsti2_humidity
+        - sensor.meteoinsti2_pressure
+        - sensor.meteoinsti2_rain_rate
+        - sensor.meteoinsti2_daily_rain
+        - sensor.meteoinsti2_symbol
+        - sensor.meteoinsti2_wind_direction
+        - sensor.meteoinsti2_wind_gust_km_h
+        - sensor.meteoinsti2_wind_speed_km_h
+
+esphome1:
     name: Entradeta
     view: no
     control: hidden
     entities:
-        - sensor.lolin1_humidity
-        - sensor.lolin1_ldr
-        - binary_sensor.lolin1_pir
-        - sensor.lolin1_real_feel
-        - sensor.lolin1_temperature
-        - light.lolin1_light
-        - switch.lolin1_relay
+        - binary_sensor.esphome1_motion
+        - light.esphome1_light
+        - sensor.esphome1_brightness
+        - sensor.esphome1_humidity
+        - sensor.esphome1_temperature
+        - switch.esphome1_relay
+        - automation.esphome1_motion_detected
+        - automation.esphome1_led_on_pir
         
-lolin2:
+esphome2:
     name: Despatx
     view: no
     control: hidden
     entities:
-        - sensor.lolin2_humidity
-        - sensor.lolin2_ldr
-        - binary_sensor.lolin2_pir
-        - sensor.lolin2_real_feel
-        - sensor.lolin2_temperature
-        - light.lolin2_light
-        - switch.lolin2_relay
-lolin3:
+        - binary_sensor.esphome2_motion
+        - light.esphome2_light
+        - sensor.esphome2_brightness
+        - sensor.esphome2_humidity
+        - sensor.esphome2_temperature
+        - switch.esphome2_relay
+        - automation.esphome2_led_on_pir        
+esphome3:
     name: Habitacio
     view: no
     control: hidden    
     entities:
-        - sensor.lolin3_humidity
-        - sensor.lolin3_ldr
-        - binary_sensor.lolin3_pir
-        - sensor.lolin3_real_feel
-        - sensor.lolin3_temperature        
-        - light.lolin3_light
-        - switch.lolin3_relay
+        - binary_sensor.esphome3_motion
+        - light.esphome3_light
+        - sensor.esphome3_brightness
+        - sensor.esphome3_humidity
+        - sensor.esphome3_temperature
+        - switch.esphome3_relay
+        - automation.esphome3_led_on_pir         
 
-lolin4:
+esphome4:
     name: Menjador
     view: no
     control: hidden
     entities:
-        - sensor.lolin4_humidity
-        - sensor.lolin4_ldr
-        - binary_sensor.lolin4_pir
-        - sensor.lolin4_real_feel
-        - sensor.lolin4_temperature        
-        - light.lolin4_light
-        - switch.lolin4_relay
+        - binary_sensor.esphome4_motion
+        - light.esphome4_light
+        - sensor.esphome4_brightness
+        - sensor.esphome4_humidity
+        - sensor.esphome4_temperature
+        - switch.esphome4_relay
+        - automation.esphome4_led_on_pir        
         
 lolin5:
     name: Lolin5
@@ -173,18 +184,17 @@ lolin5:
         - light.lolin5_light
         - switch.lolin5_relay
 
-lolin6:
-    name: Lolin6
+esphome6:
+    name: EspHome6
     view: no
     control: hidden
     entities:
-        - sensor.lolin6_humidity
-        - sensor.lolin6_ldr
-        - binary_sensor.lolin6_pir
-        - sensor.lolin6_real_feel
-        - sensor.lolin6_temperature        
-        - light.lolin6_light
-        - switch.lolin6_relay
+        - binary_sensor.esphome6_motion
+        - light.esphome6_light
+        - sensor.esphome6_brightness
+        - sensor.esphome6_humidity
+        - sensor.esphome6_temperature
+        - switch.esphome6_relay
 
 pihole:
     name: Pi-Hole
@@ -226,8 +236,8 @@ presence:
     view: no
     name: presence
     entities:    
-#        - device_tracker.onepluslan_5GH
-        - device_tracker.oneplus
+#        - device_tracker.
+        - device_tracker.dmp8p
         - binary_sensor.pir_kerui_p831_1
         - binary_sensor.pir_kerui_p831_2
         - binary_sensor.pir_kerui_p831_3
@@ -236,7 +246,7 @@ cameras:
     view: no
     name: cameras
     entities:
-        - camera.despatx
+        - camera.octoprint
         - camera.entrada
 
 FrontDoor:
@@ -301,7 +311,7 @@ BliTZW0lF_1:
 ## BliTZW0lF_2
 ##        
 BliTZW0lF_2:
-  name: Computer
+  name: 3dPrint
   #view: yes
   icon: mdi:fish
   control: hidden
@@ -334,7 +344,7 @@ BliTZW0lF_2:
 ## BliTZW0lF_3
 ##        
 BliTZW0lF_3:
-  name: Alexa
+  name: Computer
   #view: yes
   icon: mdi:fish
   control: hidden
@@ -362,7 +372,7 @@ BliTZW0lF_3:
 ## BliTZW0lF_4
 ##        
 BliTZW0lF_4:
-  name: planxa
+  name: MicroOnes
   #view: yes
   icon: mdi:fish
   control: hidden
@@ -385,6 +395,62 @@ BliTZW0lF_4:
     - automation.blitzwolf4_valle
     - automation.blitzwolf4_pico 
 
+##########################################
+## BlitzWolf SHP2
+## BliTZW0lF_5
+##        
+BliTZW0lF_5:
+  name: Roomba
+  #view: yes
+  icon: mdi:fish
+  control: hidden
+  entities:
+    - switch.BliTZW0lF_5
+    - sensor.bw5_power
+    - sensor.bw5_current
+    - sensor.bw5_voltage
+    - sensor.bw5_today
+    - sensor.bw5_totalstarttime
+    - sensor.sensor_bw5_kw_pico
+    - sensor.sensor_bw5_kw_valle
+    - sensor.bw5_total   
+    - sensor.sensor_bw5_eur_pico
+    - sensor.sensor_bw5_eur_valle
+    - sensor.sensor_bw5_total_euro
+    - automation.blitzwolf5_reset
+    - script.blitzwolf5_report
+    - input_number.bw5_partial
+    - automation.blitzwolf5_valle
+    - automation.blitzwolf5_pico 
+
+##########################################
+## BlitzWolf SHP2
+## BliTZW0lF_6
+##        
+BliTZW0lF_6:
+  name: blitz6
+  #view: yes
+  icon: mdi:fish
+  control: hidden
+  entities:
+    - switch.BliTZW0lF_6
+    - sensor.bw6_power
+    - sensor.bw6_current
+    - sensor.bw6_voltage
+    - sensor.bw6_today
+    - sensor.bw6_totalstarttime
+    - sensor.sensor_bw6_kw_pico
+    - sensor.sensor_bw6_kw_valle
+    - sensor.bw6_total   
+    - sensor.sensor_bw6_eur_pico
+    - sensor.sensor_bw6_eur_valle
+    - sensor.sensor_bw6_total_euro
+    - automation.blitzwolf6_reset
+    - script.blitzwolf6_report
+    - input_number.bw6_partial
+    - automation.blitzwolf6_valle
+    - automation.blitzwolf6_pico     
+    
 Gasolineras:
     - sensor.gasolinera1
     - sensor.gasolinera2
@@ -393,3 +459,39 @@ Gasolineras:
     - sensor.gasolinera5
     - sensor.gasolinera6
     - sensor.gasolinera7
+    - sensor.petrol1
+    - sensor.petrol2
+    - sensor.petrol3
+    - sensor.petrol4
+    - sensor.petrol5
+    - sensor.petrol6
+    - sensor.petrol7
+
+    
+Octoprint:
+    - camera.octoprint
+    - binary_sensor.octoprint_printing
+    - binary_sensor.octoprint_printing_error
+    - sensor.octoprint_actual_bed_temp
+    - sensor.octoprint_current_state
+    - sensor.octoprint_job_percentage
+    - sensor.octoprint_target_bed_temp
+    - sensor.octoprint_time_elapsed
+    - sensor.octoprint_time_remaining
+    
+persianes:
+    - cover.50701244500291415e17
+    - input_number.window_position
+    - input_number.window_set_position
+    - timer.window_down
+    - timer.window_up
+    - automation.actualizar_estados_tuya
+    - automation.open_to_off
+    - automation.closed_to_off
+    - automation.window_timer_stopped
+    - automation.button_up
+    - automation.button_down
+    - automation.posicion_arriba
+    - automation.posicion_abajo
+    - automation.set_position_down
+    - automation.set_position_up
