@@ -1,12 +1,4 @@
-##########################################
-## 
-## Yeelight Color 2_1 ## 192.168.0.156
-##
-- platform: yeelight
-  devices: 
-    192.168.0.156:
-      name: "Yeelight_1"
-    
+ 
     
 #light: !include config/lights.yaml
 #light:
@@ -15,75 +7,15 @@
 #      192.168.0.156:
 #        name: Yeelight_1
 #        model: color2
-
-- platform: mqtt
-  schema: json  
-  name: "Lolin1 light"  
-  state_topic: "dmp/lolin1"  
-  command_topic: "dmp/lolin1/light"  
-  assumed_state: false
-  brightness: true  
-  flash: false  
-  rgb: true  
-  optimistic: false
-  qos: 0
-  
-- platform: mqtt
-  schema: json  
-  name: "Lolin2 light"  
-  state_topic: "dmp/lolin2"  
-  command_topic: "dmp/lolin2/light"  
-  brightness: true  
-  assumed_state: false
-  flash: false  
-  rgb: true  
-  optimistic: false
-  qos: 0
-  
-- platform: mqtt
-  schema: json  
-  name: "Lolin3 light"  
-  state_topic: "dmp/lolin3"  
-  command_topic: "dmp/lolin3/light"  
-  assumed_state: false
-  brightness: true  
-  flash: false  
-  rgb: true  
-  optimistic: false
-  qos: 0
-
-- platform: mqtt
-  schema: json  
-  name: "Lolin4 light"  
-  state_topic: "dmp/lolin4"  
-  command_topic: "dmp/lolin4/light"  
-  assumed_state: false
-  brightness: true
-  flash: false  
-  rgb: true  
-  optimistic: false
-  qos: 0
   
 - platform: mqtt
   schema: json  
   name: "Lolin5 light"  
   state_topic: "dmp/lolin5"  
   command_topic: "dmp/lolin5/light"  
-  assumed_state: false
-  brightness: true
-  flash: false  
-  rgb: true  
+  #assumed_state: false
+  #brightness: true
+  #flash: false  
+  #rgb: true  
   optimistic: false
-  qos: 0
-
-- platform: mqtt
-  schema: json  
-  name: "Lolin6 light"  
-  state_topic: "dmp/lolin6"  
-  command_topic: "dmp/lolin6/light"  
-  assumed_state: false
-  brightness: true
-  flash: true  
-  rgb: true  
-  optimistic: false
-  qos: 0
+  qos: 2
