@@ -3,8 +3,8 @@
 #needs .homeassistant/custom_components/sensor/clientraw.py
 #from: https://github.com/pilotak/HomeAssistant-MyConfig/tree/master/custom_components/sensor
 - platform: clientraw
-  name: meteoinsti
-  url: !secret clientrawURL2
+  name: meteoinsti2
+  url: !secret clientrawURL3
   interval: 5
   monitored_conditions:
     - station
