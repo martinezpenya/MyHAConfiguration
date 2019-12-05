@@ -2,6 +2,7 @@
 ## KEYBOARD - Printer
 ##
 - alias: 'TC Printer'
+  initial_state: 'true'
   hide_entity: true
   trigger:
      - platform: event
@@ -9,7 +10,7 @@
        event_data:
          command: '/Printer'
   action:
-     - service: notify.HomeAssistant
+     - service: notify.homeassistant
        data:
          message: 'Select an option'
          data:

@@ -1,8 +1,11 @@
 - alias: 'UpdateAvailable'
+  initial_state: 'true'
   trigger:
-    platform: state
-    entity_id: updater.updater
+    - platform: state
+      entity_id: binary_sensor.updater
+      from: 'off'
+      to: 'on'
   action:
-    service: notify.HomeAssistant
+    service: notify.homeassistant
     data:
-      message: "Ha salido una nueva actualización de Home Assistant\n https://github.com/home-assistant/home-assistant/releases"
+      message: "La nueva versión {{ state_attr('binary_sensor.updater', 'newest_version') }} de Home Assistant está disponible\n Release notes: {{ state_attr('binary_sensor.updater', 'release_notes') }}"

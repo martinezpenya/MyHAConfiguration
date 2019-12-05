@@ -2,6 +2,7 @@
 ## KEYBOARD - waterheater_off
 ##
 - alias: 'TC_waterheater_off'
+  initial_state: 'true'
   hide_entity: true
   trigger:
     platform: event
@@ -9,7 +10,7 @@
     event_data:
       command: '/waterheater_off'
   action:
-    - service: notify.HomeAssistant
+    - service: notify.homeassistant
       data:
         message: "waterheater off"
     - service: switch.turn_off

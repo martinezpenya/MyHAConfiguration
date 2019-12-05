@@ -1,0 +1,20 @@
+##########################################
+## KEYBOARD - switches
+##
+- alias: 'TC switches'
+  initial_state: 'true'
+  hide_entity: true
+  trigger:
+     - platform: event
+       event_type: telegram_command
+       event_data:
+         command: '/computer'
+  action:
+     - service: notify.homeassistant
+       data:
+         message: 'Select an option'
+         data:
+            keyboard:
+            - '/computer_off, /computer_on'
+            - '/start'
+                

@@ -3,6 +3,7 @@
 ## KEYBOARD - ping
 ##
 - alias: 'TC ping'
+  initial_state: 'true'
   hide_entity: true
   trigger:
     platform: event
@@ -10,6 +11,6 @@
     event_data:
       command: '/ping'
   action:
-    - service: notify.HomeAssistant
+    - service: notify.homeassistant
       data:
         message: "pong"

@@ -1,4 +1,5 @@
 - alias: 'PIR motion 1 nothome'
+  initial_state: 'true'
   #hide_entity: true
   trigger:
     platform: state
@@ -8,12 +9,12 @@
 #    condition: and
 #    conditions:
 #      - condition: state
-#        entity_id: device_tracker.onepluslan_5gh
+#        entity_id: device_tracker.
 #        state: 'not_home'
       - condition: state
-        entity_id: device_tracker.oneplus
+        entity_id: device_tracker.dmp8p
         state: 'not_home'
   action:
-    service: notify.HomeAssistant
+    service: notify.homeassistant
     data:
       message: "PIR motion 1 nothome"

@@ -2,6 +2,7 @@
 ## KEYBOARD - status
 ##
 - alias: 'TC status'
+  initial_state: 'true'
   hide_entity: true
   trigger:
     platform: event
@@ -9,7 +10,7 @@
     event_data:
       command: '/status'
   action:
-    - service: notify.HomeAssistant
+    - service: notify.homeassistant
       data_template:
           title: "***Sensors:***"
           message: "{% for state in states.sensor -%}

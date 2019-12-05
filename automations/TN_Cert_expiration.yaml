@@ -1,0 +1,11 @@
+- id: '9050'
+  alias: SSL cert expiration
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.ssl_cert_expiry
+    below: 21 
+  action:
+  - service: notify.homeassistant
+    data:
+      message:
+         "SSL Cert is going to expire in"

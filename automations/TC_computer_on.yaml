@@ -2,6 +2,7 @@
 ## KEYBOARD - computer_on
 ##
 - alias: 'TC_computer_on'
+  initial_state: 'true'
   hide_entity: true
   trigger:
     platform: event
@@ -9,10 +10,10 @@
     event_data:
       command: '/computer_on'
   action:
-    - service: notify.HomeAssistant
+    - service: notify.homeassistant
       data:
         message: "computer on"
     - service: switch.turn_on
       data:
         entity_id:
-          - switch.BliTZW0lF_2
+          - switch.BliTZW0lF_3

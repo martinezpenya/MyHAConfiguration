@@ -5,11 +5,12 @@
 # Button C
 
 - alias: Remote1ButtonC
+  initial_state: 'true'
   trigger:
     platform: state
     entity_id: binary_sensor.Remote1_BtnC
     to: 'on'
   action:
-    - service: notify.HomeAssistant
+    - service: notify.homeassistant
       data:
         message: "Remote1 buttonC pressed"

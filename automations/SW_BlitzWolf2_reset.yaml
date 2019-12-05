@@ -1,5 +1,5 @@
 - alias: 'Blitzwolf2 reset'
-  initial_state: on
+  initial_state: 'true'
   trigger:
     - platform: template
       value_template: '{{ now().strftime("%d") == "01" }}'
@@ -38,7 +38,7 @@
       value_template: '{{ now().strftime("%M") == "00" }}'
   condition:
     - condition: template
-      value_template: '{{ now().strftime("%H") == "13" }}'
+      value_template: '{{ now().strftime("%H") == "12" }}'
   action:
     - service: input_number.set_value
       data_template:
@@ -58,7 +58,7 @@
       value_template: '{{ now().strftime("%M") == "00" }}'
   condition:
     - condition: template
-      value_template: '{{ now().strftime("%H") == "23" }}'
+      value_template: '{{ now().strftime("%H") == "22" }}'
   action:
     - service: input_number.set_value
       data_template:

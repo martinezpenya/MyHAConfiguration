@@ -1,4 +1,5 @@
 - alias: 'It''s raining'
+  initial_state: 'true'
   hide_entity: true
   trigger:   
     - platform: template
@@ -9,7 +10,7 @@
     #entity_id: group.all_devices
     #state: home
   action:
-    service: notify.HomeAssistant
+    service: notify.homeassistant
     data_template:
       title: "It's raining"
       message: "({{ states.sensor.meteocarlet_rain_rate.state }} mm now)\n ({{ states.sensor.meteocarlet_daily_rain.state }} mm today)"

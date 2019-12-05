@@ -1,4 +1,5 @@
 - alias: Select Music Source CD
+  initial_state: 'true'
   trigger:
     - platform: state
       entity_id: input_select.music_source

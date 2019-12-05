@@ -1,18 +1,19 @@
 #- alias: Christmas Lights On lolin1 motion detected
 #  trigger:
 #    - platform: state
-#      entity_id: device_tracker.oneplus
+#      entity_id: device_tracker.
 #      from: 'not_home'
 #      to: 'home'
 #  action:
 #    - service: light.turn_on
 #      data:
 #        entity_id: light.lolin1_light
-- alias: 'Lolin1 motion detected'
-  hide_entity: true
+- alias: 'esphome1 motion detected'
+  initial_state: 'true'
+  hide_entity: false
   trigger:
     platform: state
-    entity_id: 'binary_sensor.lolin1_pir'
+    entity_id: 'binary_sensor.esphome1_motion'
     to: 'on'
   action:       
     - service: script.christmas_tree
@@ -20,7 +21,7 @@
 #- alias: Christmas Lights Off when not home
 #  trigger:
 #    - platform: state
-#      entity_id: device_tracker.oneplus
+#      entity_id: device_tracker.
 #      from: 'home'
 #      to: 'not_home'
 #      for:
