@@ -21,14 +21,14 @@ christmas_tree:
     # Turn the tree lights on
     - service: switch.turn_on
       data:
-        entity_id: switch.lolin1_relay
+        entity_id: switch.esphome1_relay
 
     # Wait 1 minute
     - delay: 00:01:00
         
     - service: switch.turn_off
       data:
-        entity_id: switch.lolin1_relay
+        entity_id: switch.esphome1_relay
 
     # Over ten minutes, turn the lights a little brighter and to a
     # cooler-than-soft-white color.
@@ -141,3 +141,31 @@ blitzwolf4_report:
         € Pico: {{ states.sensor.sensor_bw4_eur_pico.state_with_unit }} \n
         € Vall: {{ states.sensor.sensor_bw4_eur_valle.state_with_unit }} \n
         Total €: {{ states.sensor.sensor_bw4_total_euro.state_with_unit }}\n"        
+        
+blitzwolf5_report:
+  sequence:
+    - service: persistent_notification.create
+      data_template:
+        title: "Blitwolf5 Report"
+        message: "From {{ (states.sensor.bw4_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
+        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
+        KW Pico: {{ states.sensor.sensor_bw5_kw_pico.state_with_unit }} \n
+        KW Vall: {{ states.sensor.sensor_bw5_kw_valle.state_with_unit }} \n
+        Total KW: {{ states.sensor.bw5_total.state_with_unit }}\n\n
+        € Pico: {{ states.sensor.sensor_bw5_eur_pico.state_with_unit }} \n
+        € Vall: {{ states.sensor.sensor_bw5_eur_valle.state_with_unit }} \n
+        Total €: {{ states.sensor.sensor_bw5_total_euro.state_with_unit }}\n"           
+                
+blitzwolf6_report:
+  sequence:
+    - service: persistent_notification.create
+      data_template:
+        title: "Blitwolf6 Report"
+        message: "From {{ (states.sensor.bw4_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
+        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
+        KW Pico: {{ states.sensor.sensor_bw6_kw_pico.state_with_unit }} \n
+        KW Vall: {{ states.sensor.sensor_bw6_kw_valle.state_with_unit }} \n
+        Total KW: {{ states.sensor.bw6_total.state_with_unit }}\n\n
+        € Pico: {{ states.sensor.sensor_bw6_eur_pico.state_with_unit }} \n
+        € Vall: {{ states.sensor.sensor_bw6_eur_valle.state_with_unit }} \n
+        Total €: {{ states.sensor.sensor_bw6_total_euro.state_with_unit }}\n"           
