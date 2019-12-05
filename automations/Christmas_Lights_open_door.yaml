@@ -1,7 +1,7 @@
 #- alias: Christmas Lights On when home
 #  trigger:
 #    - platform: state
-#      entity_id: device_tracker.oneplus
+#      entity_id: device_tracker.
 #      from: 'not_home'
 #      to: 'home'
 #  action:
@@ -9,6 +9,7 @@
 #      data:
 #        entity_id: light.lolin1_light
 - alias: 'Front door open'
+  initial_state: 'true'
   hide_entity: true
   trigger:
     platform: state
@@ -20,7 +21,7 @@
 #- alias: Christmas Lights Off when not home
 #  trigger:
 #    - platform: state
-#      entity_id: device_tracker.oneplus
+#      entity_id: device_tracker.
 #      from: 'home'
 #      to: 'not_home'
 #      for:
