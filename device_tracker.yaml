@@ -19,3 +19,4 @@
 #also ensure that known_devices.yaml is property of homeassistant:homeassistant
 #   sudo chown homeassistant:homeassistant known_devices.yaml
 - platform: bluetooth_tracker
+  consider_home: 180
