@@ -148,49 +148,9 @@
   device_class: problem
   value_template: '{{ value_json.RfReceived.Data }}'
   
-- platform: mqtt  
-  state_topic: "dmp/lolin1"  
-  name: "Lolin1 PIR"  
-  device_class: motion
-  value_template: '{{ value_json.motion }}'  
-  payload_on: "motion detected"
-  payload_off: "standby"
-  
-- platform: mqtt
-  state_topic: "dmp/lolin2"
-  name: "Lolin2 PIR"
-  device_class: motion
-  value_template: '{{ value_json.motion }}'
-  payload_on: "motion detected"
-  payload_off: "standby"
-
-- platform: mqtt
-  state_topic: "dmp/lolin3"
-  name: "Lolin3 PIR"
-  device_class: motion
-  value_template: '{{ value_json.motion }}'
-  payload_on: "motion detected"
-  payload_off: "standby"
-
-- platform: mqtt
-  state_topic: "dmp/lolin4"
-  name: "Lolin4 PIR"
-  device_class: motion
-  value_template: '{{ value_json.motion }}'
-  payload_on: "motion detected"
-  payload_off: "standby"
-  
 - platform: mqtt
   state_topic: "dmp/lolin5"
   name: "Lolin5 PIR"
-  device_class: motion
-  value_template: '{{ value_json.motion }}'
-  payload_on: "motion detected"
-  payload_off: "standby"
-  
-- platform: mqtt
-  state_topic: "dmp/lolin6"
-  name: "Lolin6 PIR"
   device_class: motion
   value_template: '{{ value_json.motion }}'
   payload_on: "motion detected"
