@@ -24,31 +24,58 @@
 
 1. `sudo su`
 2. `curl -sSL https://install.pi-hole.net | bash`
-3. Default installation with static ip and write down your password dySUJlhJ
+3. Default installation with static ip and write down your password XIuwBSDM
 4. You can change your password by: `pihole -a -p`
 5. If you have a previous saved config:
    1. Log onto http://piholeip/admin and restore config by teleporter
    2. restore 02-pihole-dhcp.conf and 04-pihole-static-dhcp.conf manually
 
+To update pihole: `pihole -up`
+
 ## Install HA
 
-Install HOMEASSISTANT (https://www.home-assistant.io/docs/installation/raspberry-pi/)
-set hass to boot on start (https://www.home-assistant.io/docs/autostart/systemd/)
+Install HOMEASSISTANT (https://www.home-assistant.io/docs/installation/raspberry-pi/ )
+set hass to boot on start (https://www.home-assistant.io/docs/autostart/systemd/ )
 
 If you have previous saved homeassistant configuration backup:
 
-1. Restore backup in /home/homeassistant/.homeassistant
-2. sudo chmod g+w /home/homeassistant/.homeassistant -R
-3. sudo usermod -a -G homeassistant pi
+1. sudo chmod g+w /home/homeassistant/.homeassistant -R
+2. sudo usermod -a -G homeassistant pi
+3. Restore backup in /home/homeassistant/.homeassistant
 
 ## Install NetData
 
-1. sudo apt-get install zlib1g-dev uuid-dev gcc make git autoconf autogen automake pkg-config
-2. cd ~
-3. git clone https://github.com/firehol/netdata.git --depth=1
-4. cd netdata
-5. sudo ./netdata-installer.sh --libs-are-really-here
-6. sudo apt-get install net-tools nmap
+1. `sudo apt-get install zlib1g-dev uuid-dev gcc make git autoconf autogen automake pkg-config`
+2. `cd ~`
+3. `git clone https://github.com/firehol/netdata.git --depth=1`
+4. `cd netdata`
+5. `sudo ./netdata-installer.sh --libs-are-really-here`
+
+## Nmap tracker
+
+1. `sudo apt-get install net-tools nmap`
+
+## Bluetooth tracker
+
+Requires installing pybluez:
+
+`sudo apt-get install bluetooth libbluetooth-dev`
+
+`sudo python3 -m pip install pybluez`
+
+also adding pi to bluetooth group:
+
+https://raspberrypi.stackexchange.com/questions/71333/bluetooth-does-not-work-with-raspbian-stretch-and-raspberry-pi-3
+
+`sudo python3 -m pip install pybluez`
+
+also ensure that known_devices.yaml is property of homeassistant:homeassistant
+
+`sudo chown homeassistant:homeassistant /home/homeassistant/.homeassistant/known_devices.yaml`
+
+## Mosquito (MQTT)
+
+`sudo apt install mosquitto`
 
 ## Install ZeroTier
 
@@ -58,6 +85,9 @@ sudo zerotier-cli join <networkid>
 
 ## ACTUALITZAR HASS
 
+```sh
 sudo -u homeassistant -H -s
 source /srv/homeassistant/bin/activate
 pip3 install --upgrade homeassistant
+```
+
