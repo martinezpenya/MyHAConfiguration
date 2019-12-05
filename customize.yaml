@@ -25,6 +25,10 @@ script.blitzwolf3_report:
   icon: mdi:message-reply-text
 script.blitzwolf4_report:
   icon: mdi:message-reply-text  
+script.blitzwolf5_report:
+  icon: mdi:message-reply-text  
+script.blitzwolf6_report:
+  icon: mdi:message-reply-text  
 
 automation.blitzwolf1_reset:
   icon: mdi:restore
@@ -34,6 +38,14 @@ automation.blitzwolf3_reset:
   icon: mdi:restore
 automation.blitzwolf4_reset:
   icon: mdi:restore
+automation.blitzwolf5_reset:
+  icon: mdi:restore
+automation.blitzwolf6_reset:
+  icon: mdi:restore
 
 sensor.gasolinera:
   hidden: true
+
+cover.50701244500291415e17:
+  friendly_name: PersianaDespatx
+  device_class: shutter
