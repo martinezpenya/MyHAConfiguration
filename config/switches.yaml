@@ -8,13 +8,12 @@
   state_topic: "stat/BliTZW0lF_1/POWER"
   command_topic: "cmnd/BliTZW0lF_1/POWER"
   availability_topic: "tele/BliTZW0lF_1/LWT"
-  qos: 1
+  qos: 2
   payload_on: "ON"
   payload_off: "OFF"
   payload_available: "Online"
   payload_not_available: "Offline"
   optimistic: false
-  retain: true
   icon: mdi:speedometer
   
 ##########################################
@@ -27,13 +26,12 @@
   state_topic: "stat/BliTZW0lF_2/POWER"
   command_topic: "cmnd/BliTZW0lF_2/POWER"
   availability_topic: "tele/BliTZW0lF_2/LWT"
-  qos: 1
+  qos: 2
   payload_on: "ON"
   payload_off: "OFF"
   payload_available: "Online"
   payload_not_available: "Offline"
   optimistic: false
-  retain: true
   icon: mdi:speedometer
 
 ##########################################
@@ -46,13 +44,12 @@
   state_topic: "stat/BliTZW0lF_3/POWER"
   command_topic: "cmnd/BliTZW0lF_3/POWER"
   availability_topic: "tele/BliTZW0lF_3/LWT"
-  qos: 1
+  qos: 2
   payload_on: "ON"
   payload_off: "OFF"
   payload_available: "Online"
   payload_not_available: "Offline"
   optimistic: false
-  retain: true
   icon: mdi:speedometer
 
 ##########################################
@@ -65,13 +62,12 @@
   state_topic: "stat/BliTZW0lF_4/POWER"
   command_topic: "cmnd/BliTZW0lF_4/POWER"
   availability_topic: "tele/BliTZW0lF_4/LWT"
-  qos: 1
+  qos: 2
   payload_on: "ON"
   payload_off: "OFF"
   payload_available: "Online"
   payload_not_available: "Offline"
   optimistic: false
-  retain: true
   icon: mdi:speedometer
   
 ###########################################
@@ -94,14 +90,13 @@
 ##
 - platform: mqtt
   name: "sonoffAmbiCorredor"
-  friendly_name: "Ambi Corredor"
+  #friendly_name: "Ambi Corredor"
   state_topic: "stat/sonoffS26_1/POWER"
   command_topic: "cmnd/sonoffS26_1/POWER"
-  qos: 1
+  qos: 2
   payload_on: "ON"
   payload_off: "OFF"
   optimistic: false
-  retain: true
   icon: mdi:power-socket-eu
   
 ##########################################
@@ -110,14 +105,13 @@
 ##
 - platform: mqtt
   name: "sonoffTVset"
-  friendly_name: "TV set"
+  #friendly_name: "TV set"
   state_topic: "stat/sonoffS26_2/POWER"
   command_topic: "cmnd/sonoffS26_2/POWER"
-  qos: 1
+  qos: 2
   payload_on: "ON"
   payload_off: "OFF"
   optimistic: false
-  retain: true
   icon: mdi:power-socket-eu
   
 ##########################################
@@ -126,14 +120,13 @@
 ##
 - platform: mqtt
   name: "sonoffAmbiBany"
-  friendly_name: "Ambi Bany"
+  #friendly_name: "Ambi Bany"
   state_topic: "stat/sonoffS26_3/POWER"
   command_topic: "cmnd/sonoffS26_3/POWER"
-  qos: 1
+  qos: 2
   payload_on: "ON"
   payload_off: "OFF"
   optimistic: false
-  retain: true
   icon: mdi:power-socket-eu
   
     ##########################################
@@ -142,14 +135,13 @@
 ##
 - platform: mqtt
   name: "sonoffBasic"
-  friendly_name: "Proves"
+  #friendly_name: "Proves"
   state_topic: "stat/sonoffBasic_1/POWER"
   command_topic: "cmnd/sonoffBasic_1/POWER"
-  qos: 1
+  qos: 2
   payload_on: "ON"
   payload_off: "OFF"
   optimistic: false
-  retain: true
   icon: mdi:power-socket-eu
   
 ##########################################
@@ -161,7 +153,7 @@
   mac: !secret rm_mini_3_menjador_mac
   timeout: 15
   type: rm_mini
-  name: 'RMmini3 menjador'
+  friendly_name: 'RMmini3 menjador'
   switches:
     aire_menjador:
       friendly_name: "Aire Menjador On/Off"
@@ -177,7 +169,7 @@
   mac: !secret rm_mini_3_despatx_mac
   timeout: 15
   type: rm_mini
-  name: 'RMmini3 despatx'
+  friendly_name: 'RMmini3 despatx'
   switches:
     aire_despatx:
       friendly_name: "Aire Despatx On/Off"
@@ -186,8 +178,7 @@
     musica_despatx:
       friendly_name: "Technics Musica On/Off"
       command_on:  'JgDMAHU3EA4OKw8ODRANDw0QDRANDw0RDRANDw0QDg8NLA8ODQ8OEA0PDQ8ODw4QDSwNEA0sDRENDw0sDw4NEA0PDg8NEA0tDQ8OLA0sDS0OKw4PDg8NLA4PDQ8OLA0tDQ8ODxApDgAJnHM5Dg8PKw4ODw4PDg8ODw4ODg8ODw4ODg8ODw4PKxAMDw4PDw4ODw4PDg4ODyoPDg8qDw8PDg4rDg8ODw8ODg4PDg8qDw4PKg8qDywOKw4PDg4PKw8ODw4PKg4rDw4PDg4rDgANBQAAAAAAAAAAAAAAAA==='
-      command_off: 'JgBmAHU3EA4OKxANDg8NDw4PDg8NDw4QDQ8ODw4PDRAOKxANDg8ODg4PDg8NDw4QDisQDQ4rEA4NDw4sDw0ODw4PDQ8ODw4sEA0NLA8qECoQKg8NDg8OKxANDg8NLA8rEA0ODg4sEAANBQAA==='
-            
+      command_off: 'JgBmAHU3EA4OKxANDg8NDw4PDg8NDw4QDQ8ODw4PDRAOKxANDg8ODg4PDg8NDw4QDisQDQ4rEA4NDw4sDw0ODw4PDQ8ODw4sEA0NLA8qECoQKg8NDg8OKxANDg8NLA8rEA0ODg4sEAANBQAA==='          
 #    musica_despatxplayCD:
 #      friendly_name: "Technics Musica PlayCD"
 #      command_on:  'JgAyAHNzHB0dHB1WHVUeHB0cHVUdVh0cHhwdHB1WHFYdHB4cHVUdVh0cHR0dVR1WHVUdAA0FAAAAAAAA==='
@@ -203,51 +194,62 @@
 #    musica_despatxnextCD:
 #      friendly_name: "Technics Musica NextCD"
 #      command_on:  'JgDMAHM5Dw4OKw8ODg4PDw8ODg4PDg8ODw4PDg4ODw4PKg8ODw0PDw8ODg4PDg8PDisODg8rDw0PDg8ODisOEA4ODw4PDQ8PDyoPDg8qDw4PDg4ODw4PDg8rDg4PDg8ODysPDQ8rDgAJm3M5Dw4PKw4ODw4PDg4ODw4PDg4PDw4PDQ8ODw8OKw4PDg4PDg8ODg4PDg8ODysODg8qDw8PDg8NDysODg8ODw4ODg8PDyoPDg8qDw8ODg8ODw4ODg8qDw4PDg8ODysODg8qDwANBQAAAAAAAAAAAAAAAA==='
-
-- platform: mqtt
-  name: "Lolin1 relay"  
-  state_topic: "dmp/lolin1"  
-  command_topic: "dmp/lolin1/relay"
-  value_template: '{{ value_json.relay }}'  
-  qos: 0
-  retain: true
-
-- platform: mqtt
-  name: "Lolin2 relay"  
-  state_topic: "dmp/lolin2"  
-  command_topic: "dmp/lolin2/relay"
-  value_template: '{{ value_json.relay }}'
-  qos: 0
-  retain: true
-  
-- platform: mqtt
-  name: "Lolin3 relay"  
-  state_topic: "dmp/lolin3"  
-  command_topic: "dmp/lolin3/relay"
-  value_template: '{{ value_json.relay }}'
-  qos: 0
-  retain: true
-  
-- platform: mqtt
-  name: "Lolin4 relay"  
-  state_topic: "dmp/lolin4"  
-  command_topic: "dmp/lolin4/relay"
-  value_template: '{{ value_json.relay }}'
-  qos: 0
-  retain: true
-  
+ 
 - platform: mqtt
   name: "Lolin5 relay"  
   state_topic: "dmp/lolin5"  
   command_topic: "dmp/lolin5/relay"
   value_template: '{{ value_json.relay }}'
-  qos: 0
-  retain: true
+  qos: 2
   
+##########################################
+## sonoffMini1 http://192.168.0./
+## ??
+##
 - platform: mqtt
-  name: "Lolin6 relay"  
-  state_topic: "dmp/lolin6"  
-  command_topic: "dmp/lolin6/relay"
-  value_template: '{{ value_json.relay }}'
-  qos: 0
-  retain: true
+  name: "sonoffMini1"
+  state_topic: "stat/sonoffMini1/POWER"
+  command_topic: "cmnd/sonoffMini1/POWER"
+  qos: 2
+  payload_on: "ON"
+  payload_off: "OFF"
+  icon: mdi:power-socket-eu
+  
+##########################################
+## sonoffMini2 http://192.168.0./
+## ??
+##
+- platform: mqtt
+  name: "sonoffMini2"
+  state_topic: "stat/sonoffMini2/POWER"
+  command_topic: "cmnd/sonoffMini2/POWER"
+  qos: 2
+  payload_on: "ON"
+  payload_off: "OFF"
+  icon: mdi:power-socket-eu
+  
+##########################################
+## sonoffMini3 http://192.168.0./
+## ??
+##
+- platform: mqtt
+  name: "sonoffMini3"
+  state_topic: "stat/sonoffMini3/POWER"
+  command_topic: "cmnd/sonoffMini3/POWER"
+  qos: 2
+  payload_on: "ON"
+  payload_off: "OFF"
+  icon: mdi:power-socket-eu
+  
+##########################################
+## sonoffMini4 http://192.168.0./
+## ??
+##
+- platform: mqtt
+  name: "sonoffMini4"
+  state_topic: "stat/sonoffMini4/POWER"
+  command_topic: "cmnd/sonoffMini4/POWER"
+  qos: 2
+  payload_on: "ON"
+  payload_off: "OFF"
+  icon: mdi:power-socket-eu
