@@ -1,0 +1,142 @@
+- id: '1548790568933'
+  alias: Actualizar Estados Tuya
+  trigger:
+  - platform: time_pattern
+    seconds: /2
+  action:
+  - alias: ''
+    data: {}
+    service: tuya.force_update
+    
+- id: '1548848519050'
+  alias: Open to off
+  trigger:
+  - entity_id: cover.50701244500291415e17
+    from: open
+    platform: state
+    to: unknown
+  action:
+  - service: timer.cancel
+    entity_id: timer.window_up
+      
+- id: '1548848632774'
+  alias: Closed to off
+  trigger:
+  - entity_id: cover.50701244500291415e17
+    from: closed
+    platform: state
+    to: unknown
+  action:
+  - service: timer.cancel
+    entity_id: timer.window_down
+    
+- id: '1548848879275'
+  alias: Window - Timer stopped
+  trigger:
+  - event_data:
+      entity_id: timer.window_down
+    event_type: timer.finished
+    platform: event
+  - event_data:
+      entity_id: timer.window_up
+    event_type: timer.finished
+    platform: event
+  condition: []
+  action:
+  - data:
+      entity_id: cover.50701244500291415e17
+    service: cover.stop_cover
+    
+- id: '1548849447894'
+  alias: Button Up
+  trigger:
+  - entity_id: cover.50701244500291415e17
+    platform: state
+    to: open
+  condition:
+  - condition: template
+    value_template: '{{ as_timestamp(now()) - as_timestamp(states.input_number.window_set_position.last_updated)>3 }}'
+  action:
+  - data:
+      duration: 00:00:28
+      entity_id: timer.window_up
+    service: timer.start
+    
+- id: '1548849728182'
+  alias: Button Down
+  trigger:
+  - entity_id: cover.50701244500291415e17
+    platform: state
+    to: closed
+  condition:
+  - condition: template
+    value_template: '{{ as_timestamp(now()) - as_timestamp(states.input_number.window_set_position.last_updated)> 3 }}'
+  action:
+  - data:
+      duration: 00:00:28
+      entity_id: timer.window_down
+    service: timer.start
+    
+- id: '1548850079399'
+  alias: Posicion Arriba
+  trigger:
+    platform: time_pattern
+    seconds: /1
+  condition:
+  - condition: state
+    entity_id: timer.window_up
+    state: active
+  action:
+  - service: input_number.set_value
+    data_template:
+      entity_id: input_number.window_position
+      value: '{{ (states.input_number.window_position.state | int) + 1 }}'
+    
+- id: '1548850263986'
+  alias: Posicion abajo
+  trigger:
+    platform: time_pattern
+    seconds: /1
+  condition:
+  - condition: state
+    entity_id: timer.window_down
+    state: active
+  action:
+  - service: input_number.set_value
+    data_template:
+      entity_id: input_number.window_position
+      value: '{{ (states.input_number.window_position.state | int) - 1 }}'
+    
+- id: '1548850461000'
+  alias: Set Position Down
+  trigger:
+  - entity_id: input_number.window_set_position
+    platform: state
+  condition:
+  - condition: template
+    value_template: '{{ (states.input_number.window_position.state | int) > ((((states.input_number.window_set_position.state | int ) * 28 )/100) | int) }}'
+  action:
+  - service: timer.start
+    data_template:
+      entity_id: timer.window_down
+      duration: "{{ '00:00:%02d' | format( ((states.input_number.window_position.state | int) - ((((states.input_number.window_set_position.state | int ) * 28 )/100) | int) ) | abs ) }}"
+  - service: cover.close_cover
+    data:
+      entity_id: cover.50701244500291415e17
+      
+- id: '1548850461111'
+  alias: Set Position Up
+  trigger:
+  - entity_id: input_number.window_set_position
+    platform: state
+  condition:
+  - condition: template
+    value_template: '{{ (states.input_number.window_position.state | int) < ((((states.input_number.window_set_position.state | int ) * 28 )/100) | int) }}'
+  action:
+  - service: timer.start
+    data_template:
+      entity_id: timer.window_up
+      duration: "{{ '00:00:%02d' | format( ((states.input_number.window_position.state | int) - ((((states.input_number.window_set_position.state | int ) * 28 )/100) | int) ) | abs ) }}"
+  - service: cover.open_cover
+    data:
+      entity_id: cover.50701244500291415e17
