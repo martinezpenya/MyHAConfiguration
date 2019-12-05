@@ -1,0 +1,35 @@
+- alias: roomba_stop_charge
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.bw5_power
+      #value_template: {{state.sensor.bw5_power.state}}
+      below: 7
+      above: 1
+      for:
+        minutes: 5
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.BliTZW0lF_5
+    - delay: 0:00:05
+    - service: notify.homeassistant
+      data:
+        message: 
+          "Roomba charger is now **{% if is_state('switch.BliTZW0lF_5', 'on') %}ON{% else %}OFF{% endif %}** because is already charged"
+          
+- alias: roomba_charge
+  trigger:
+    - platform: time_pattern
+      hours: "0"
+      minutes: "0"
+  action:
+    - service: switch.turn_on
+      data:
+        entity_id:
+          - switch.BliTZW0lF_5
+    - delay: 0:00:05
+    - service: notify.homeassistant
+      data:
+        message: 
+          "Roomba charger is now **{% if is_state('switch.BliTZW0lF_5', 'on') %}ON{% else %}OFF{% endif %}** to charge roomba daily"          

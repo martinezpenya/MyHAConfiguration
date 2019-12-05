@@ -25,4 +25,3 @@
       data:
          topic: tele/sonoffRF433/RESULT
          payload: '{"RfReceived":{"Data":"FF160Aoff"}}'
-         retain: "true"

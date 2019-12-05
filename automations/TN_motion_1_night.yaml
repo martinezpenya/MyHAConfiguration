@@ -1,4 +1,5 @@
 - alias: 'PIR motion 1_night'
+  initial_state: 'true'
   hide_entity: true
   trigger:
     platform: state
@@ -9,7 +10,7 @@
     entity_id: sun.sun
     state: below_horizon
   action:   
-    #- service: notify.HomeAssistant
+    #- service: notify.homeassistant
     #  data:
     #    message: "PIR motion 1 night"
     - service: script.yeelight_night

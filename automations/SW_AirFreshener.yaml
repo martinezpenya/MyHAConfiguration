@@ -1,24 +1,29 @@
 - alias: AirFresheners on when home
+  initial_state: 'true'
   trigger:
     - platform: state
-      entity_id: device_tracker.oneplus
+      entity_id: device_tracker.dmp8p
       from: 'not_home'
       to: 'home'
   action:
     - service: switch.turn_on
       data:
-        entity_id: switch.sonoffAmbiCorredor
-#    - service: switch.turn_on
-#      data:
-#        entity_id: switch.BliTZW0lF_4        
+        entity_id: switch.sonoffAmbiCorredor   
     - service: switch.turn_on
       data:
         entity_id: switch.sonoffAmbiBany
+    - service: notify.homeassistant
+      data:
+        message: 'Just arrived Home, start computer?'
+        data:
+           inline_keyboard: 
+             - '✔Yes:/TCB_computer_on, ❌No:/TCB_cancel'
         
 - alias: AirFresheners Off when not home
+  initial_state: 'true'
   trigger:
     - platform: state
-      entity_id: device_tracker.oneplus
+      entity_id: device_tracker.dmp8p
       from: 'home'
       to: 'not_home'
       for:

@@ -1,4 +1,5 @@
 - alias: 'Front close open'
+  initial_state: 'true'
   hide_entity: true
   trigger:
     platform: state
@@ -8,12 +9,12 @@
 #    condition: or
 #    conditions:
 #      - condition: state
-#        entity_id: device_tracker.onepluslan_5gh
+#        entity_id: device_tracker.
 #        state: 'home'
 #      - condition: state
-#        entity_id: device_tracker.oneplus
+#        entity_id: device_tracker.
 #        state: 'home'
   action:
-    - service: notify.HomeAssistant
+    - service: notify.homeassistant
       data:
         message: "Front door closed"

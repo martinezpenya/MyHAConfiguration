@@ -15,7 +15,7 @@
 #    platform: event
 #    event_type: botodash
 #  action:
-#    - service: notify.HomeAssistant
+#    - service: notify.homeassistant
 #      data:
 #        message: "dashbutton pressed"
 #    - service: automation.trigger

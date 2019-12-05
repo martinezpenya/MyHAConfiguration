@@ -1,4 +1,5 @@
 - alias: 'Front door open for 5 minutes'
+  initial_state: 'true'
   hide_entity: true
   trigger:
     - platform: state
@@ -32,6 +33,6 @@
       for:
         minutes: 20
   action:
-    - service: notify.HomeAssistant
+    - service: notify.homeassistant
       data:
         message: "Front door Still Open!!!"

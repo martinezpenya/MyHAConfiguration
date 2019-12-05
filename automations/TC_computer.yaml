@@ -2,6 +2,7 @@
 ## KEYBOARD - computer
 ##
 - alias: 'TC computer'
+  initial_state: 'true'
   hide_entity: true
   trigger:
      - platform: event
@@ -9,11 +10,11 @@
        event_data:
          command: '/computer'
   action:
-     - service: notify.HomeAssistant
+     - service: notify.homeassistant
        data:
-         message: 'Select an option'
+         message: "Select an option\nComputer is *** {{states.switch.blitzw0lf_3.state.upper()}} ***"
          data:
-            keyboard:
-            - '/computer_off, /computer_on'
-            - '/start'
+             keyboard:
+               - '/computer_off, /computer_on'
+               - '/start'
                 

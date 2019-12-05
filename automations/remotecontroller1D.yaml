@@ -7,11 +7,12 @@
 #    entity_id: binary_sensor.Remote1_BtnD
 #    to: 'on'
 #  action:
-#    - service: notify.HomeAssistant
+#    - service: notify.homeassistant
 #      data:
 #        message: "Remote1 buttonD pressed"
         
 - alias: Remote1ButtonDon
+  initial_state: 'true'
   trigger:
     platform: state
     entity_id: binary_sensor.Remote1_btnD

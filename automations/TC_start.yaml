@@ -2,14 +2,15 @@
 ## KEYBOARD - start
 ##
 - alias: 'TC start'
-  hide_entity: true
+  initial_state: 'true'
+  hide_entity: false
   trigger:
      - platform: event
        event_type: telegram_command
        event_data:
          command: '/start'
   action:
-     - service: notify.HomeAssistant
+     - service: notify.homeassistant
        data:
          message: 'Select an option'
          data:
@@ -17,5 +18,5 @@
                 - '/status, /gas95, /ping'
                 - '/waterheater, /TVset' 
                 #, /Printer'
-                - '/computer'
+                - '/computer, /3dprinter, /shutter'
                 #- '/alarma, /puertas, /switches'

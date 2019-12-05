@@ -1,0 +1,23 @@
+##########################################
+## KEYBOARD - shutter stop
+##
+- alias: 'TC_shutter_stop'
+  initial_state: 'true'
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/shutter_stop'
+  action:
+    - service: notify.homeassistant
+      data:
+        message: "stop shutters"     
+    - data:
+        entity_id: cover.50701244500291415e17
+      service: cover.stop_cover        
+    - delay: 00:00:01            
+    - service: notify.homeassistant
+      data:
+        message: 
+          "Shutter is in position Shutter is in position ***{{states.input_number.window_position.state}} of 28***"                         

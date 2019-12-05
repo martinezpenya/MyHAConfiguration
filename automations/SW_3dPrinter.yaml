@@ -1,0 +1,13 @@
+- alias: Printig Job finished
+  trigger:
+      platform: state
+      entity_id: sensor.octoprint_current_state
+      from: 'Printing'
+      to: 'Operational'
+  action:
+    - service: notify.homeassistant
+      data:
+        message: '3d printing job just finished, do you want to turn printer off?'
+        data:
+           inline_keyboard: 
+             - '✔Yes:/TCB_3dprinter_off, ❌No:/TCB_cancel'
