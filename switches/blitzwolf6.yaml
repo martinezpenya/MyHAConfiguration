@@ -1,0 +1,17 @@
+##########################################
+## BlitzWolf SHP2 (2.3) http://192.168.0.160
+## BliTZW0lF_5
+##
+
+- platform: mqtt
+  name: "BliTZW0lF_6"
+  state_topic: "stat/BliTZW0lF_6/POWER"
+  command_topic: "cmnd/BliTZW0lF_6/POWER"
+  availability_topic: "tele/BliTZW0lF_6/LWT"
+  qos: 2
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  optimistic: false
+  icon: mdi:speedometer
