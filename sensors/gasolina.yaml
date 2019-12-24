@@ -1,3 +1,11 @@
+#problem with curl and version of ssl in debian:
+#   https://medium.com/@andrewhowdencom/mysterious-ssl-tls-network-connection-failures-in-debian-buster-52c29a661cb3
+# Solution: 
+#   edit /etc/ssl/openssl.cnf
+#   search for "ssl_conf = ssl_sect" line and comment it
+
+
+
 - platform: jsonrest
   resource: !secret clientgasolina
   name: gasolinera
