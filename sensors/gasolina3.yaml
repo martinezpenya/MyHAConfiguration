@@ -1,0 +1,22 @@
+#- platform: rest     
+#  resource: https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/FiltroMunicipioProducto/7051/1
+#  name: gasolinera55
+#  value_template: >
+#    {%- for y in  value_json.ListaEESSPrecio | selectattr('IDEESS', 'in', '12925, 4113, 4114, 4117, 12771, 11656') | list -%}
+#      {{y.IDEESS}}:{{(y.PrecioProducto).replace(',','.')}},
+#    {%- endfor -%}
+#  verify_ssl: false
+#  scan_interval: 86400
+#  timeout: 300
+#
+##- platform: template    
+##  gasolinera11:
+##    friendly_name: Gasolinera11
+##    value_template: >-
+##      {{ states('sensor.gasolinera55') | regex_findall_index("12878:(\d+\.?\d+)") }}
+##    unit_of_measurement: '€/L'
+##  gasolinera21:
+##    friendly_name: Gasolinera21
+##    value_template: >-
+##      {{ states('sensor.gasolinera55') | regex_findall_index("4520:(\d+\.?\d+)") }}
+##    unit_of_measurement: '€/L'
