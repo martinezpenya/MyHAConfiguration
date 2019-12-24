@@ -459,14 +459,6 @@ Gasolineras:
     - sensor.gasolinera5
     - sensor.gasolinera6
     - sensor.gasolinera7
-    - sensor.petrol1
-    - sensor.petrol2
-    - sensor.petrol3
-    - sensor.petrol4
-    - sensor.petrol5
-    - sensor.petrol6
-    - sensor.petrol7
-
     
 Octoprint:
     - camera.octoprint

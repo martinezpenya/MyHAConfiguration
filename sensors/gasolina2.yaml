@@ -1,74 +1,74 @@
-- platform: rest 
-  resource: !secret clientgasolina
-  name: petrol
-  method: GET
-  scan_interval: 3600
-  verify_ssl: false
-  json_attributes:
-    - ListaEESSPrecio
-   
-- platform: template
-  sensors:      
-    petrol3:
-      friendly_name: CAMPSA EXPRESS2
-      value_template: >-
-              {%- for pet in states.sensor.petrol.attributes.ListaEESSPrecio -%}
-                {%- if pet["IDEESS"] | int  == 12925 -%}  
-                  {{ pet["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
-                {%- endif -%}
-              {%- endfor -%}
-      unit_of_measurement: '€/L'
-#    petrol5:
-#      friendly_name: E.S. LA PONDEROSA
+#- platform: rest 
+#  resource: !secret clientgasolina
+#  name: petrol
+#  method: GET
+#  scan_interval: 3600
+#  verify_ssl: false
+#  json_attributes:
+#    - ListaEESSPrecio
+#   
+#- platform: template
+#  sensors:      
+#    petrol3:
+#      friendly_name: CAMPSA EXPRESS2
 #      value_template: >-
 #              {%- for pet in states.sensor.petrol.attributes.ListaEESSPrecio -%}
-#                {%- if pet["IDEESS"] | int  == 4113 -%}  
+#                {%- if pet["IDEESS"] | int  == 12925 -%}  
 #                  {{ pet["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
 #                {%- endif -%}
 #              {%- endfor -%}
 #      unit_of_measurement: '€/L'
-#    petrol1:
-#      friendly_name: E.S. LA REINA
-#      value_template: >-
-#              {%- for pet in states.sensor.petrol.attributes.ListaEESSPrecio -%}
-#                {%- if pet["IDEESS"] | int  == 4117 -%}  
-#                  {{ pet["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
-#                {%- endif -%}
-#              {%- endfor -%}
-#      unit_of_measurement: '€/L' 
-#    petrol7:
-#      friendly_name: COOPCARLET
-#      value_template: >-
-#              {%- for pet in states.sensor.petrol.attributes.ListaEESSPrecio -%}
-#                {%- if pet["IDEESS"] | int  == 11656 -%}  
-#                  {{ pet["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
-#                {%- endif -%}
-#              {%- endfor -%}
-#      unit_of_measurement: '€/L'        
-#    petrol6:
-#      friendly_name: E.S. EL CORTIJO
-#      value_template: >-
-#              {%- for pet in states.sensor.petrol.attributes.ListaEESSPrecio -%}
-#                {%- if pet["IDEESS"] | int  == 4114 -%}  
-#                  {{ pet["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
-#                {%- endif -%}
-#              {%- endfor -%}
-#      unit_of_measurement: '€/L'          
-#    petrol2:
-#      friendly_name: VALCARCE (POLIGONO)
-#      value_template: >-
-#              {%- for pet in states.sensor.petrol.attributes.ListaEESSPrecio -%}
-#                {%- if pet["IDEESS"] | int  == 10530 -%}  
-#                  {{ pet["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
-#                {%- endif -%}
-#              {%- endfor -%}
-#      unit_of_measurement: '€/L'       
-#    petrol4:
-#      friendly_name: GASEXPRESS
-#      value_template: >-
-#              {%- for pet in states.sensor.petrol.attributes.ListaEESSPrecio -%}
-#                {%- if pet["IDEESS"] | int  == 12771 -%}  
-#                  {{ pet["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
-#                {%- endif -%}
-#              {%- endfor -%}
-#      unit_of_measurement: '€/L'
+##    petrol5:
+##      friendly_name: E.S. LA PONDEROSA
+##      value_template: >-
+##              {%- for pet in states.sensor.petrol.attributes.ListaEESSPrecio -%}
+##                {%- if pet["IDEESS"] | int  == 4113 -%}  
+##                  {{ pet["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+##                {%- endif -%}
+##              {%- endfor -%}
+##      unit_of_measurement: '€/L'
+##    petrol1:
+##      friendly_name: E.S. LA REINA
+##      value_template: >-
+##              {%- for pet in states.sensor.petrol.attributes.ListaEESSPrecio -%}
+##                {%- if pet["IDEESS"] | int  == 4117 -%}  
+##                  {{ pet["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+##                {%- endif -%}
+##              {%- endfor -%}
+##      unit_of_measurement: '€/L' 
+##    petrol7:
+##      friendly_name: COOPCARLET
+##      value_template: >-
+##              {%- for pet in states.sensor.petrol.attributes.ListaEESSPrecio -%}
+##                {%- if pet["IDEESS"] | int  == 11656 -%}  
+##                  {{ pet["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+##                {%- endif -%}
+##              {%- endfor -%}
+##      unit_of_measurement: '€/L'        
+##    petrol6:
+##      friendly_name: E.S. EL CORTIJO
+##      value_template: >-
+##              {%- for pet in states.sensor.petrol.attributes.ListaEESSPrecio -%}
+##                {%- if pet["IDEESS"] | int  == 4114 -%}  
+##                  {{ pet["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+##                {%- endif -%}
+##              {%- endfor -%}
+##      unit_of_measurement: '€/L'          
+##    petrol2:
+##      friendly_name: VALCARCE (POLIGONO)
+##      value_template: >-
+##              {%- for pet in states.sensor.petrol.attributes.ListaEESSPrecio -%}
+##                {%- if pet["IDEESS"] | int  == 10530 -%}  
+##                  {{ pet["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+##                {%- endif -%}
+##              {%- endfor -%}
+##      unit_of_measurement: '€/L'       
+##    petrol4:
+##      friendly_name: GASEXPRESS
+##      value_template: >-
+##              {%- for pet in states.sensor.petrol.attributes.ListaEESSPrecio -%}
+##                {%- if pet["IDEESS"] | int  == 12771 -%}  
+##                  {{ pet["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+##                {%- endif -%}
+##              {%- endfor -%}
+##      unit_of_measurement: '€/L'
