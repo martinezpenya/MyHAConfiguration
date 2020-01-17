@@ -1,11 +1,11 @@
 ##########################################
-## sonoffMini5 http://192.168.0./
+## sonoffMini3 http://192.168.0./
 ## ??
 ##
 - platform: mqtt
-  name: "Luz Baño grande"
-  state_topic: "stat/sonoffMini5/POWER"
-  command_topic: "cmnd/sonoffMini5/POWER"
+  name: "Luz PC"
+  state_topic: "stat/sonoffMini3/POWER"
+  command_topic: "cmnd/sonoffMini3/POWER"
   qos: 2
   payload_on: "ON"
   payload_off: "OFF"
