@@ -2,3 +2,8 @@ window_down:
     name: window down
 window_up:
     name: window up
+waterheater:
+    name: water heater
+timer_pir_kerui_p831_2:
+    name: Little WC Light
+    duration: '00:00:5'
