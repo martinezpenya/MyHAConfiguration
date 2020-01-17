@@ -1,21 +1,22 @@
 ##########################################
-## KEYBOARD - waterheater
+## KEYBOARD - lights
 ##
-- alias: 'TC waterheater'
+- alias: 'TC lights'
   initial_state: 'true'
   hide_entity: true
   trigger:
      - platform: event
        event_type: telegram_command
        event_data:
-         command: '/waterheater'
+         command: '/lights'
   action:
      - service: notify.homeassistant
        data:
          message: 'Select an option'
          data:
             keyboard:
-            - '/waterheater_60min, /waterheater_30min, /waterheater_15min'
-            - '/waterheater_off, /waterheater_on'
+            - '/light_pc, /light_Habitacio, /light_Planxa'
+            - '/light_BanyGran, /light_BanyXicotet, /light_Cuina'
+            - '/light_Menjador_TV, /light_menjador_Taula'
             - '/start'
                 
