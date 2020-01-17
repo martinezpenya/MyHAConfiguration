@@ -1,0 +1,11 @@
+         - "{% if is_state('switch.luz_pc', 'on') %} \uD83C\uDF15 PC \uD83D\uDCBB:/TCB_light_pc_off{% else %} \uD83C\uDF11 PC \uD83D\uDCBB:/TCB_light_pc_on{% endif %}"
+         - "{% if is_state('switch.sonoffbasic', 'on') %} \uD83C\uDF15 Balcony \ud83d\udca1:/TCB_light_balcon_off{% else %} \uD83C\uDF11 Balcony \ud83d\udca1:/TCB_light_balcon_on{% endif %},
+            {% if is_state('switch.luz_plancha', 'on') %} \uD83C\uDF15 Ironing \uD83D\uDC54:/TCB_light_plancha_off{% else %} \uD83C\uDF11 Ironing \uD83D\uDC54:/TCB_light_plancha_on{% endif %}"
+         - "{% if is_state('switch.luz_comedor_mesa', 'on') %} \uD83C\uDF15 Living Table 🍽️:/TCB_light_comedor_mesa_off{% else %} \uD83C\uDF11 Living Table 🍽️:/TCB_light_comedor_mesa_on{% endif %}, 
+            {% if is_state('switch.luz_comedor_TV', 'on') %} \uD83C\uDF15 Living TV 🛋️:/TCB_light_comedor_tv_off{% else %} \uD83C\uDF11 Living TV 🛋️:/TCB_light_comedor_tv_on{% endif %}"
+         - "{% if is_state('switch.luz_cocina_1', 'on') %} \uD83C\uDF15 Kitchen \ud83e\udd58:/TCB_light_cocina_1_off{% else %} \uD83C\uDF11 Kitchen \ud83e\udd58:/TCB_light_cocina_1_on{% endif %}, 
+            {% if is_state('switch.luz_habitacion', 'on') %} \uD83C\uDF15 Sleeping \ud83d\udecc:/TCB_light_habitacion_off{% else %} \uD83C\uDF11 Sleeping \ud83d\udecc:/TCB_light_habitacion_on{% endif %}"
+         - "{% if is_state('switch.luz_bano_grande', 'on') %} \uD83C\uDF15 Big WC \ud83d\udebf:/TCB_light_bano_grande_off{% else %} \uD83C\uDF11 Big WC \ud83d\udebf:/TCB_light_bano_grande_on{% endif %},
+            {% if is_state('switch.luz_bano_pequeno', 'on') %} \uD83C\uDF15 Small WC \ud83d\udebd:/TCB_light_bano_pequeno_off{% else %} \uD83C\uDF11 Small WC \ud83d\udebd:/TCB_light_bano_pequeno_on{% endif %}"
+         - "\ud83d\udd04 Refresh:/TCB_lights_refresh,
+            \ud83d\udc48 Back:/TCB_start_menu"
