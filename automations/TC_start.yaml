@@ -16,6 +16,7 @@
          data:
             keyboard:
                 - '/status, /gas95, /ping'
+                - '/lights'
                 - '/waterheater, /TVset' 
                 #, /Printer'
                 - '/computer, /3dprinter, /shutter'
