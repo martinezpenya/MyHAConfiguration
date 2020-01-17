@@ -1,0 +1,11 @@
+         - "{% if is_state('switch.blitzw0lf_1', 'on') %} \uD83C\uDF15 WaterHeater \ud83d\udd25:/TCB_socket_waterheater_off{% else %} \uD83C\uDF11 WaterHeater \ud83d\udd25:/TCB_socket_waterheater_on{% endif %}, 
+            {% if is_state('switch.blitzw0lf_2', 'on') %} \uD83C\uDF15 3dPrinter \ud83d\udda8:/TCB_socket_3dprinter_off{% else %} \uD83C\uDF11 3dPrinter \ud83d\udda8:/TCB_socket_3dprinter_on{% endif %}"
+         - "{% if is_state('switch.blitzw0lf_3', 'on') %} \uD83C\uDF15 PC \ud83d\udda5:/TCB_socket_pc_off{% else %} \uD83C\uDF11 PC \ud83d\udda5:/TCB_socket_pc_on{% endif %},
+            {% if is_state('switch.blitzw0lf_4', 'on') %} \uD83C\uDF15 MicroWave \ud83d\udca5:/TCB_socket_microwave_off{% else %} \uD83C\uDF11 MicroWave \ud83d\udca5:/TCB_socket_microwave_on{% endif %}"
+         - "{% if is_state('switch.blitzw0lf_5', 'on') %} \uD83C\uDF15 Roomba:/TCB_socket_roomba_off{% else %} \uD83C\uDF11 Roomba:/TCB_socket_roomba_on{% endif %},
+            {% if is_state('switch.blitzw0lf_6', 'on') %} \uD83C\uDF15 TVLamp \ud83d\udecb:/TCB_socket_tvlamp_off{% else %} \uD83C\uDF11 TVLamp \ud83d\udecb:/TCB_socket_tvlamp_on{% endif %}"
+         - "{% if is_state('switch.sonoffambibany', 'on') %} \uD83C\uDF15 Ambi Bany \ud83d\udc43:/TCB_socket_ambibany_off{% else %} \uD83C\uDF11 Ambi Bany \ud83d\udc43:/TCB_socket_ambibany_on{% endif %},
+            {% if is_state('switch.sonoffambicorredor', 'on') %} \uD83C\uDF15 Ambi Corredor \ud83d\udc43:/TCB_socket_ambicorredor_off{% else %} \uD83C\uDF11 Ambi Corredor \ud83d\udc43:/TCB_socket_ambicorredor_on{% endif %}"
+         - "{% if is_state('switch.sonofftvset', 'on') %} \uD83C\uDF15 TV Set \ud83d\udcfa:/TCB_socket_tvset_off{% else %} \uD83C\uDF11 TV Set \ud83d\udcfa:/TCB_socket_tvset_on{% endif %}"
+         - "\ud83d\udd04 Refresh:/TCB_sockets_refresh,
+            \ud83d\udc48 Back:/TCB_start_menu"
