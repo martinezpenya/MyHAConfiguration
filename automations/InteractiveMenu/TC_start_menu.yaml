@@ -1,0 +1,16 @@
+##########################################
+## KEYBOARD - start
+##
+- alias: 'TC start menu'
+  initial_state: 'true'
+  hide_entity: false
+  trigger:
+     - platform: event
+       event_type: telegram_command
+       event_data:
+         command: '/start_menu'
+  action:
+     - service: telegram_bot.send_message
+       data_template:
+         message: "\uD83C\uDFE0 ***HA Bot - Main Menu*** \uD83C\uDFE0"
+         inline_keyboard: !include TCB_start_menu_buttons.btn

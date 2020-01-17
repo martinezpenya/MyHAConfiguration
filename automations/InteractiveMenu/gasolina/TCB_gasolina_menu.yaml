@@ -1,0 +1,27 @@
+##########################################
+## INLINE_KEYBOARD - TCB_gasolina_menu
+##
+- alias: 'TCB_gasolina_menu'
+  initial_state: 'true'
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: '/TCB_gasolina_menu'
+  action:
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'Gasolina menu selected'
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: '{{ trigger.event.data.message.message_id }}'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        message: "\ud83d\ude97 ***Gasolina 95 Carlet*** \ud83d\udef5"
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: 'last'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        inline_keyboard: !include TCB_gasolina_menu_buttons.btn
+
