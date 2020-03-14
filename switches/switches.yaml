@@ -129,20 +129,7 @@
   optimistic: false
   icon: mdi:power-socket-eu
   
-    ##########################################
-## Sonoff s26 http://192.168.0.154/
-## proves
-##
-- platform: mqtt
-  name: "sonoffBasic"
-  #friendly_name: "Proves"
-  state_topic: "stat/sonoffBasic_1/POWER"
-  command_topic: "cmnd/sonoffBasic_1/POWER"
-  qos: 2
-  payload_on: "ON"
-  payload_off: "OFF"
-  optimistic: false
-  icon: mdi:power-socket-eu
+
   
 ##########################################
 ## Broadlink RMmini3 192.168.0.168
