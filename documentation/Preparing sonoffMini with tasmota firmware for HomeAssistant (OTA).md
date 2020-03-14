@@ -1,7 +1,7 @@
 # Preparing [sonoffMini](http://https://www.sonoff.in/) with [tasmota](https://github.com/arendst/Sonoff-Tasmota) firmware for [HomeAssistant](https://home-assistant.io/)
 
 ## We will need:
-1. App [eWLink](https://play.google.com/store/apps/details?id=com.coolkit&hl=en_US) (this APP only works with 2,4GHz Wi-Fi, so configure your AP properly).
+1. App [eWLink](https://play.google.com/store/apps/details?id=com.coolkit&hl=en_US) (this APP only works with 2,4GHz Wi-Fi, so configure your AP properly).
 1. A computer with Windows 10 and capable of being a WiFi AP.
 
 ## Update sonoffMini to latest firmware (3.3.0)
@@ -62,6 +62,7 @@
    ButtonRetain off
    PowerOnState 3
    PowerRetain on
+   wificonfig 5
    ```
 
 4. Select [Configure Other] from [Configuration] menú and make sure Activate check button is selected and [Save]
