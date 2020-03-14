@@ -1,0 +1,16 @@
+##########################################
+## 
+##
+- alias: 'SW_Basic2_Big_WC_timer_ended'
+  initial_state: 'true'
+  hide_entity: true
+  trigger:
+  - event_data:
+      entity_id: timer.timer_sonoff_basic_2
+    event_type: timer.finished
+    platform: event
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.ventilador_wc
