@@ -64,7 +64,7 @@ logbook:
 #https://home-assistant.io/components/recorder/
 #The recorder component is storing details in a database which then are handled by the history component.
 recorder:
-  purge_interval: 7
+  purge_interval: 1
   purge_keep_days: 7
 
 # Enables a map showing the location of tracked devices
@@ -76,7 +76,6 @@ sun:
 ###  Sensors  ###
 #  Sensors are anything (hardware or software) that has a state.
 sensor: !include_dir_merge_list sensors
-
 binary_sensor: !include binary_sensors.yaml
 device_tracker: !include device_tracker.yaml
 
@@ -102,6 +101,25 @@ octoprint:
   api_key: 84D89F98C8D040508056E691E4997C4D
   bed: true
 
+cover:
+  platform: mqtt
+  name: "sw_curtain_despatx"
+  availability_topic: "tele/sw_curtain_despatx/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  position_topic: "stat/sw_curtain_despatx/SHUTTER1"
+  position_open: 100
+  position_closed: 0
+  set_position_topic: 'cmnd/sw_curtain_despatx/ShutterPosition1'
+  command_topic: "cmnd/sw_curtain_despatx/Backlog"
+  value_template: ''
+  payload_open: "ShutterOpen1"
+  payload_close: "ShutterClose1"
+  payload_stop: "ShutterStop1"
+  retain: false
+  optimistic: false
+  qos: 1
+  
 smartir:
 
   #!include config/switches.yaml
@@ -205,5 +223,7 @@ alexa:
 system_health:
     
 pi_hole:
-  ssl: false
-  verify_ssl: false
+  - host: 192.168.0.3
+    name: pihole
+    ssl: false
+    verify_ssl: false
