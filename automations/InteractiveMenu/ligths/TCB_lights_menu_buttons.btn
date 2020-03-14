@@ -1,5 +1,6 @@
-         - "{% if is_state('switch.luz_pc', 'on') %} \uD83C\uDF15 PC \uD83D\uDCBB:/TCB_light_pc_off{% else %} \uD83C\uDF11 PC \uD83D\uDCBB:/TCB_light_pc_on{% endif %}"
-         - "{% if is_state('switch.sonoffbasic', 'on') %} \uD83C\uDF15 Balcony \ud83d\udca1:/TCB_light_balcon_off{% else %} \uD83C\uDF11 Balcony \ud83d\udca1:/TCB_light_balcon_on{% endif %},
+         - "{% if is_state('switch.luz_pc', 'on') %} \uD83C\uDF15 PC \uD83D\uDCBB:/TCB_light_pc_off{% else %} \uD83C\uDF11 PC \uD83D\uDCBB:/TCB_light_pc_on{% endif %}, 
+            {% if is_state('switch.luz_despacho', 'on') %} \uD83C\uDF15 Study \u200d\ud83c\udf93:/TCB_light_study_off{% else %} \uD83C\uDF11 Study \u200d\ud83c\udf93:/TCB_light_study_on{% endif %}"
+         - "{% if is_state('switch.luz_balcon', 'on') %} \uD83C\uDF15 Balcony \ud83d\udca1:/TCB_light_balcon_off{% else %} \uD83C\uDF11 Balcony \ud83d\udca1:/TCB_light_balcon_on{% endif %},
             {% if is_state('switch.luz_plancha', 'on') %} \uD83C\uDF15 Ironing \uD83D\uDC54:/TCB_light_plancha_off{% else %} \uD83C\uDF11 Ironing \uD83D\uDC54:/TCB_light_plancha_on{% endif %}"
          - "{% if is_state('switch.luz_comedor_mesa', 'on') %} \uD83C\uDF15 Living Table 🍽️:/TCB_light_comedor_mesa_off{% else %} \uD83C\uDF11 Living Table 🍽️:/TCB_light_comedor_mesa_on{% endif %}, 
             {% if is_state('switch.luz_comedor_TV', 'on') %} \uD83C\uDF15 Living TV 🛋️:/TCB_light_comedor_tv_off{% else %} \uD83C\uDF11 Living TV 🛋️:/TCB_light_comedor_tv_on{% endif %}"

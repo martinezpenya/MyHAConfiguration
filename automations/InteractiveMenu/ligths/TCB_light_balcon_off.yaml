@@ -13,7 +13,7 @@
     - service: switch.turn_off
       data:
         entity_id:
-          - switch.sonoffbasic
+          - switch.luz_balcon
     - delay: 00:00:01
     - service: telegram_bot.answer_callback_query
       data_template:

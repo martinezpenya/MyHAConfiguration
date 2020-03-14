@@ -1,3 +1,5 @@
           - "\uD83D\uDCA1 Lights \uD83D\uDCA1:/TCB_lights_menu, \uD83D\uDD0C Sockets \uD83D\uDD0C:/TCB_sockets_menu"
-          - "\ud83d\udd25 WaterHeater \ud83d\udd25:/TCB_waterheater_menu, \ud83d\udcf6 Shutter \ud83d\udcf6:/TCB_shutter_menu"
-          - "\ud83d\ude97 Gasolina \ud83d\udef5:/TCB_gasolina_menu, \ud83c\udf21 Sensors \ud83c\udf21:/TCB_sensors_menu"
+          - "\ud83d\udd25 WaterHeater \ud83d\udd25:/TCB_waterheater_menu"
+          - "\ud83c\udf00 WC Fan \ud83c\udf00:/TCB_wcfan_menu, \ud83d\udcf6 Shutter \ud83d\udcf6:/TCB_shutter_menu"
+          - "\u26fd Gasolina \u26fd:/TCB_gasolina_menu, \ud83c\udf21 Sensors \ud83c\udf21:/TCB_sensors_menu"
+          - "{% if states.persistent_notification | length >0 %}{{'\ud83d\udceb ' + states.persistent_notification | length | string + ' notifications \ud83d\udceb:/TCB_notifications_menu, '}}{% endif %}\ud83d\udd04 Refresh:/TCB_start_menu"
