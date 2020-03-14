@@ -1,0 +1,7 @@
+         - "\ud83d\udd5b\u002d\ud83d\udd50 2 minutes:/TCB_wcfan_2"
+         - "\ud83d\udd5b\u002d\ud83d\udd67 5 minutes:/TCB_wcfan_5"
+         - "\ud83d\udd5b\u002d\ud83d\udd52 15 minutes:/TCB_wcfan_15"
+         - "{% if is_state('switch.ventilador_wc', 'on') %} \uD83C\uDF15 WC Fan \ud83c\udf00:/TCB_wcfan_off{% else %} \uD83C\uDF11 WC Fan \ud83c\udf00:/TCB_wcfan_on{% endif %}"
+         - "{% if is_state('timer.timer_sonoff_basic_2', 'idle') %} \uD83D\uDEAB No timer set \uD83D\uDEAB:/TCB_wcfan_refresh{% else %}\u23F3 0:{{((as_timestamp(now())-as_timestamp((states.timer.timer_sonoff_basic_2.last_changed))))| timestamp_custom('%M:%S')}} / {{(state_attr('timer.timer_sonoff_basic_2', 'duration'))}} \u23F3:/TCB_wcfan_stoptimer{% endif %}"
+         - "\ud83d\udd04 Refresh:/TCB_wcfan_refresh,
+           \ud83d\udc48 Back:/TCB_start_menu"

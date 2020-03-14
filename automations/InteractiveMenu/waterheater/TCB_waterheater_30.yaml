@@ -22,7 +22,7 @@
     - service: telegram_bot.answer_callback_query
       data_template:
         callback_query_id: '{{ trigger.event.data.id }}'
-        message: 'WaterHeater on for 30 minuts'       
+        message: 'WaterHeater on for 30 minutes'       
     - service: telegram_bot.edit_replymarkup
       data_template:
         message_id: 'last'
