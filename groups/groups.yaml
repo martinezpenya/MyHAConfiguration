@@ -14,9 +14,13 @@ switchsonoff:
     - switch.sonoffAmbiCorredor
     - switch.sonoffAmbiBany
     - switch.sonoffTVset
-    - switch.sonoffBasic
+    - switch.luz_balcon
+    - switch.ventilador_wc
+    - timer.timer_sonoff_basic_2
+    - switch.sonoffBasic_3
   
 sonoffMini:
+    - switch.luz_despacho
     - switch.luz_plancha
     - switch.luz_pc
     - switch.luz_habitacion
@@ -25,6 +29,10 @@ sonoffMini:
     - switch.luz_cocina_1
     - switch.luz_comedor_mesa
     - switch.luz_comedor_TV
+    - switch.mini10
+    - switch.mini11
+    - switch.mini12
+    - switch.mini13
     
 remotecontroller1:
   name: RemoteController_433_1
@@ -91,39 +99,39 @@ meteocarlet:
         - sensor.meteocarlet_wind_gust_km_h
         - sensor.meteocarlet_wind_speed_km_h
         
-meteoinsti:
-    name: MeteoInsti
-    view: no
-    entities:
-        - sensor.meteoinsti_station
-        - sensor.meteoinsti_date
-        - sensor.meteoinsti_temperature_degc        
-        - sensor.meteoinsti_forecast
-        - sensor.meteoinsti_humidity
-        - sensor.meteoinsti_pressure
-        - sensor.meteoinsti_rain_rate
-        - sensor.meteoinsti_daily_rain
-        - sensor.meteoinsti_symbol
-        - sensor.meteoinsti_wind_direction
-        - sensor.meteoinsti_wind_gust_km_h
-        - sensor.meteoinsti_wind_speed_km_h
-
-meteoinsti2:
-    name: MeteoInsti2
-    view: no
-    entities:
-        - sensor.meteoinsti2_station
-        - sensor.meteoinsti2_date
-        - sensor.meteoinsti2_temperature_degc        
-        - sensor.meteoinsti2_forecast
-        - sensor.meteoinsti2_humidity
-        - sensor.meteoinsti2_pressure
-        - sensor.meteoinsti2_rain_rate
-        - sensor.meteoinsti2_daily_rain
-        - sensor.meteoinsti2_symbol
-        - sensor.meteoinsti2_wind_direction
-        - sensor.meteoinsti2_wind_gust_km_h
-        - sensor.meteoinsti2_wind_speed_km_h
+#meteoinsti:
+#    name: MeteoInsti
+#    view: no
+#    entities:
+#        - sensor.meteoinsti_station
+#        - sensor.meteoinsti_date
+#        - sensor.meteoinsti_temperature_degc        
+#        - sensor.meteoinsti_forecast
+#        - sensor.meteoinsti_humidity
+#        - sensor.meteoinsti_pressure
+#        - sensor.meteoinsti_rain_rate
+#        - sensor.meteoinsti_daily_rain
+#        - sensor.meteoinsti_symbol
+#        - sensor.meteoinsti_wind_direction
+#        - sensor.meteoinsti_wind_gust_km_h
+#        - sensor.meteoinsti_wind_speed_km_h
+#
+#meteoinsti2:
+#    name: MeteoInsti2
+#    view: no
+#    entities:
+#        - sensor.meteoinsti2_station
+#        - sensor.meteoinsti2_date
+#        - sensor.meteoinsti2_temperature_degc        
+#        - sensor.meteoinsti2_forecast
+#        - sensor.meteoinsti2_humidity
+#        - sensor.meteoinsti2_pressure
+#        - sensor.meteoinsti2_rain_rate
+#        - sensor.meteoinsti2_daily_rain
+#        - sensor.meteoinsti2_symbol
+#        - sensor.meteoinsti2_wind_direction
+#        - sensor.meteoinsti2_wind_gust_km_h
+#        - sensor.meteoinsti2_wind_speed_km_h
 
 esphome1:
     name: Entradeta
@@ -206,15 +214,15 @@ pihole:
     name: Pi-Hole
     view: no
     entities:
-        - sensor.pi_hole_ads_blocked_today
-        - sensor.pi_hole_ads_percentage_blocked_today
-        - sensor.pi_hole_dns_queries_today
-        - sensor.pi_hole_dns_unique_domains
-        - sensor.pi_hole_dns_queries_cached
-        - sensor.pi_hole_dns_queries_forwarded
-        - sensor.pi_hole_dns_unique_clients
-        - sensor.pi_hole_domains_blocked
-        - sensor.pi_hole_seen_clients
+        - sensor.pihole_ads_blocked_today
+        - sensor.pihole_ads_percentage_blocked_today
+        - sensor.pihole_dns_queries_today
+        - sensor.pihole_dns_unique_domains
+        - sensor.pihole_dns_queries_cached
+        - sensor.pihole_dns_queries_forwarded
+        - sensor.pihole_dns_unique_clients
+        - sensor.pihole_domains_blocked
+        - sensor.pihole_seen_clients
 
 rpimonitor:
     name: Pi monitor
@@ -459,14 +467,30 @@ BliTZW0lF_6:
     - automation.blitzwolf6_valle
     - automation.blitzwolf6_pico     
     
-Gasolineras:
-    - sensor.gasolinera1
-    - sensor.gasolinera2
-    - sensor.gasolinera3
-    - sensor.gasolinera4
-    - sensor.gasolinera5
-    - sensor.gasolinera6
-    - sensor.gasolinera7
+GasolinerasCarlet:
+    name: Carlet
+    entities:
+        - sensor.gasolinera11
+        - sensor.gasolinera12
+        - sensor.gasolinera13
+        - sensor.gasolinera14
+        - sensor.gasolinera15
+        - sensor.gasolinera16
+        - sensor.gasolinera17
+GasolinerasCatadau:
+    name: Catadau
+    entities:
+        - sensor.gasolinera21
+        - sensor.gasolinera22
+GasolinerasAlcudia:
+    name: Alcudia
+    entities:
+        - sensor.gasolinera31
+        - sensor.gasolinera32
+        - sensor.gasolinera33
+        - sensor.gasolinera34
+        - sensor.gasolinera35
+        - sensor.gasolinera36
     
 Octoprint:
     - camera.octoprint
