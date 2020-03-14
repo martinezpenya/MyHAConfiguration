@@ -16,10 +16,12 @@
     - platform: state
       entity_id: binary_sensor.Front_Door_Violation
       from: 'off'
-      to: 'on'
-      for:
-        seconds: 3    
+      to: 'on'  
   action:
+    - service: persistent_notification.create
+      data:
+        message: "Violation"
+        title: "Front Door"
     - service: mqtt.publish
       data:
          topic: tele/sonoffRF433/RESULT

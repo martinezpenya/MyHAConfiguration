@@ -1,0 +1,17 @@
+- alias: MicroWaveOven_Switch_left_on
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.bw4_power
+      below: 10
+      for:
+        minutes: 5
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.BliTZW0lF_4
+    - delay: 0:00:05
+    - service: persistent_notification.create
+      data:
+        message: "Is now **{% if is_state('switch.BliTZW0lF_4', 'on') %}ON{% else %}OFF{% endif %}** because it was left on for 5 minutes"
+        title: "MicroWaveOven"
