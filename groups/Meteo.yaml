@@ -11,6 +11,6 @@ meteo:
     - group.lolin5
     - group.esphome6
     - group.meteocarlet
-    - group.meteoinsti
-    - group.meteoinsti2
+#    - group.meteoinsti
+#    - group.meteoinsti2
     - group.sun
