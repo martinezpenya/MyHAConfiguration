@@ -38,7 +38,7 @@
       value_template: '{{ now().strftime("%M") == "00" }}'
   condition:
     - condition: template
-      value_template: '{{ now().strftime("%H") == "12" }}'
+      value_template: '{{ now().strftime("%H") == "13" }}'
   action:
     - service: input_number.set_value
       data_template:
@@ -57,7 +57,7 @@
       value_template: '{{ now().strftime("%M") == "00" }}'
   condition:
     - condition: template
-      value_template: '{{ now().strftime("%H") == "22" }}'
+      value_template: '{{ now().strftime("%H") == "23" }}'
   action:
     - service: input_number.set_value
       data_template:
