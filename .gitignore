@@ -11,3 +11,5 @@
 /wificheck.old
 /wificheck.sh
 /wificheck.log
+.vscode/settings.json
+.vscode/sftp.json
