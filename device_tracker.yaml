@@ -18,7 +18,9 @@
 #   sudo python3 -m pip install pybluez
 #also ensure that known_devices.yaml is property of homeassistant:homeassistant
 #   sudo chown homeassistant:homeassistant known_devices.yaml
-- platform: bluetooth_tracker
-  consider_home: 180
-  new_device_defaults:
-    track_new_devices: False
+
+# TODO DOCKER
+#- platform: bluetooth_tracker
+#  consider_home: 180
+#  new_device_defaults:
+#    track_new_devices: False
