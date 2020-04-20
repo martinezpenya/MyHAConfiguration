@@ -20,7 +20,7 @@
         chat_id: '{{ trigger.event.data.chat_id }}'
         disable_web_page_preview: yes
         message: >-
-            {{"\U0000u26fd ***Gasolina 95*** \U000026fd\n"}}
+            {{"\U000026fd ***Gasolina 95*** \U000026fd\n"}}
             {{"\n***Carlet*** (" + states.sensor.gasolinera1.attributes.Fecha + ")\n"}}{% for entity_id in states.group.gasolinerascarlet.attributes.entity_id %}{% set domain, device = entity_id.split('.') %}{{"- `" + states[domain][device].state + "` ___(" + states[domain][device].name + ")___ [\U0001f4cd](https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=" + states[domain][device].attributes.latitude + "," + states[domain][device].attributes.longitude + ")\n"}}{% endfor %}
             {{"\n***Catadau*** (" + states.sensor.gasolinera2.attributes.Fecha + ")\n"}}{% for entity_id in states.group.gasolinerascatadau.attributes.entity_id %}{% set domain, device = entity_id.split('.') %}{{"- `" + states[domain][device].state + "` ___(" + states[domain][device].name + ")___ [\U0001f4cd](https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=" + states[domain][device].attributes.latitude + "," + states[domain][device].attributes.longitude + ")\n"}}{% endfor %}
             {{"\n***Alcudia*** (" + states.sensor.gasolinera3.attributes.Fecha + ")\n"}}{% for entity_id in states.group.gasolinerasalcudia.attributes.entity_id %}{% set domain, device = entity_id.split('.') %}{{"- `" + states[domain][device].state + "` ___(" + states[domain][device].name + ")___ [\U0001f4cd](https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=" + states[domain][device].attributes.latitude + "," + states[domain][device].attributes.longitude + ")\n"}}{% endfor %}
