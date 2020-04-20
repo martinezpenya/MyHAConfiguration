@@ -23,12 +23,21 @@ frontend:
 config:
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+#http:
+## SHELDON
+#  base_url: !secret base_url
+#  server_port: 8123
+#  ssl_certificate: !secret ssl_certificate
+#  ssl_key: !secret ssl_key
+
 http:
   base_url: !secret base_url
-  server_port: 8123
-  ssl_certificate: !secret ssl_certificate
-  ssl_key: !secret ssl_key
-  
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - !secret ip_Host_Traefik #Traefik container IP
+  #ip_ban_enabled: true
+  #login_attempts_threshold: 5
+
 # Checks for available updates
 # Note: This component will send some information about your system to
 # the developers to assist with development of Home Assistant.
@@ -45,7 +54,7 @@ discovery:
 
 ##########################################
 ## 
-## Yeelight Color 2_1 ## 192.168.0.156
+## Yeelight Color 2_1 
 ##
 yeelight:
   devices: 
@@ -86,18 +95,16 @@ tts:
 # Cloud
 cloud:
 
-#embeded
-#mqtt:
-#  password: !secret mqttpassword
-  
 #mosquitto
 mqtt:
-  broker: 192.168.0.3
+  broker: !secret mqtthostname
+  username: !secret mqttusername
+  password: !secret mqttpassword
   port: 1883
   discovery: False
 
 octoprint:
-  host: 192.168.0.145
+  host: !secret octopihostname
   api_key: 84D89F98C8D040508056E691E4997C4D
   bed: true
 
@@ -168,20 +175,10 @@ weblink: !include panels/weblinks.yaml
 automation: !include_dir_merge_list automations
 notify: !include_dir_merge_list notify
 script: !include scripts.yaml
-
-##integracio en telegram
-#telegram_bot:
-#- platform: polling
-#  api_key: !secret api_key_telegram
-#  allowed_chat_ids: 
-#   - !secret id_group_telegram
-#   - !secret id_user_telegram
-   
+ 
 telegram_bot:
 - platform: webhooks
-#- platform: polling
   api_key: !secret api_key_telegram
-  #parse_mode: html
   allowed_chat_ids:
     - !secret id_group_telegram
     - !secret id_user_telegram
@@ -223,7 +220,7 @@ alexa:
 system_health:
     
 pi_hole:
-  - host: 192.168.0.3
+  - host: !secret piholehostname
     name: pihole
     ssl: false
     verify_ssl: false
