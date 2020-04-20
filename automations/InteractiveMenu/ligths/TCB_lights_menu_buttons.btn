@@ -1,12 +1,12 @@
-         - "{% if is_state('switch.luz_pc', 'on') %} \uD83C\uDF15 PC \uD83D\uDCBB:/TCB_light_pc_off{% else %} \uD83C\uDF11 PC \uD83D\uDCBB:/TCB_light_pc_on{% endif %}, 
-            {% if is_state('switch.luz_despacho', 'on') %} \uD83C\uDF15 Study \u200d\ud83c\udf93:/TCB_light_study_off{% else %} \uD83C\uDF11 Study \u200d\ud83c\udf93:/TCB_light_study_on{% endif %}"
-         - "{% if is_state('switch.luz_balcon', 'on') %} \uD83C\uDF15 Balcony \ud83d\udca1:/TCB_light_balcon_off{% else %} \uD83C\uDF11 Balcony \ud83d\udca1:/TCB_light_balcon_on{% endif %},
-            {% if is_state('switch.luz_plancha', 'on') %} \uD83C\uDF15 Ironing \uD83D\uDC54:/TCB_light_plancha_off{% else %} \uD83C\uDF11 Ironing \uD83D\uDC54:/TCB_light_plancha_on{% endif %}"
-         - "{% if is_state('switch.luz_comedor_mesa', 'on') %} \uD83C\uDF15 Living Table 🍽️:/TCB_light_comedor_mesa_off{% else %} \uD83C\uDF11 Living Table 🍽️:/TCB_light_comedor_mesa_on{% endif %}, 
-            {% if is_state('switch.luz_comedor_TV', 'on') %} \uD83C\uDF15 Living TV 🛋️:/TCB_light_comedor_tv_off{% else %} \uD83C\uDF11 Living TV 🛋️:/TCB_light_comedor_tv_on{% endif %}"
-         - "{% if is_state('switch.luz_cocina_1', 'on') %} \uD83C\uDF15 Kitchen \ud83e\udd58:/TCB_light_cocina_1_off{% else %} \uD83C\uDF11 Kitchen \ud83e\udd58:/TCB_light_cocina_1_on{% endif %}, 
-            {% if is_state('switch.luz_habitacion', 'on') %} \uD83C\uDF15 Sleeping \ud83d\udecc:/TCB_light_habitacion_off{% else %} \uD83C\uDF11 Sleeping \ud83d\udecc:/TCB_light_habitacion_on{% endif %}"
-         - "{% if is_state('switch.luz_bano_grande', 'on') %} \uD83C\uDF15 Big WC \ud83d\udebf:/TCB_light_bano_grande_off{% else %} \uD83C\uDF11 Big WC \ud83d\udebf:/TCB_light_bano_grande_on{% endif %},
-            {% if is_state('switch.luz_bano_pequeno', 'on') %} \uD83C\uDF15 Small WC \ud83d\udebd:/TCB_light_bano_pequeno_off{% else %} \uD83C\uDF11 Small WC \ud83d\udebd:/TCB_light_bano_pequeno_on{% endif %}"
-         - "\ud83d\udd04 Refresh:/TCB_lights_refresh,
-            \ud83d\udc48 Back:/TCB_start_menu"
+         - "{% if is_state('switch.luz_pc', 'on') %} \U0001f315 PC \U0001f4bb:/TCB_light_pc_off{% else %} \U0001f311 PC \U0001f4bb:/TCB_light_pc_on{% endif %}, 
+            {% if is_state('switch.luz_despacho', 'on') %} \U0001f315 Study \U0000200d\U0001f393:/TCB_light_study_off{% else %} \U0001f311 Study \U0000200d\U0001f393:/TCB_light_study_on{% endif %}"
+         - "{% if is_state('switch.luz_balcon', 'on') %} \U0001f315 Balcony \U0001f4a1:/TCB_light_balcon_off{% else %} \U0001f311 Balcony \U0001f4a1:/TCB_light_balcon_on{% endif %},
+            {% if is_state('switch.luz_plancha', 'on') %} \U0001f315 Ironing \U0001f454:/TCB_light_plancha_off{% else %} \U0001f311 Ironing \U0001f454:/TCB_light_plancha_on{% endif %}"
+         - "{% if is_state('switch.luz_comedor_mesa', 'on') %} \U0001f315 Living Table \U0001f37d\U0000fe0f:/TCB_light_comedor_mesa_off{% else %} \U0001f311 Living Table \U0001f37d\U0000fe0f:/TCB_light_comedor_mesa_on{% endif %}, 
+            {% if is_state('switch.luz_comedor_TV', 'on') %} \U0001f315 Living TV \U0001f6cb\U0000fe0f:/TCB_light_comedor_tv_off{% else %} \U0001f311 Living TV \U0001f6cb\U0000fe0f:/TCB_light_comedor_tv_on{% endif %}"
+         - "{% if is_state('switch.luz_cocina_1', 'on') %} \U0001f315 Kitchen \U0001f958:/TCB_light_cocina_1_off{% else %} \U0001f311 Kitchen \U0001f958:/TCB_light_cocina_1_on{% endif %}, 
+            {% if is_state('switch.luz_habitacion', 'on') %} \U0001f315 Sleeping \U0001f6cc:/TCB_light_habitacion_off{% else %} \U0001f311 Sleeping \U0001f6cc:/TCB_light_habitacion_on{% endif %}"
+         - "{% if is_state('switch.luz_bano_grande', 'on') %} \U0001f315 Big WC \U0001f6bf:/TCB_light_bano_grande_off{% else %} \U0001f311 Big WC \U0001f6bf:/TCB_light_bano_grande_on{% endif %},
+            {% if is_state('switch.luz_bano_pequeno', 'on') %} \U0001f315 Small WC \U0001f6bd:/TCB_light_bano_pequeno_off{% else %} \U0001f311 Small WC \U0001f6bd:/TCB_light_bano_pequeno_on{% endif %}"
+         - "\U0001f504 Refresh:/TCB_lights_refresh,
+            \U0001f448 Back:/TCB_start_menu"

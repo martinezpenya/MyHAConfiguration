@@ -20,7 +20,7 @@
         chat_id: '{{ trigger.event.data.chat_id }}'
         disable_web_page_preview: yes
         message: >-
-            {{"\ud83d\udceb ***Notifications*** \ud83d\udceb\n\n"}}{% for item in states.persistent_notification %}
+            {{"\U0001f4eb ***Notifications*** \U0001f4eb\n\n"}}{% for item in states.persistent_notification %}
             {{ "`" + as_timestamp(item.last_updated) | timestamp_custom("%H:%M:%S") + "`"}} {{ "***["+item.attributes.title + "]***:\n___" + item.attributes.message + "___\n\n" }}{% endfor %}
     - service: telegram_bot.edit_replymarkup
       data_template:

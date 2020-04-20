@@ -1,8 +1,8 @@
          - " {%- for i in range(1,states('input_number.window_position')|int) -%}_{%- endfor -%}{%- for i in range(states('input_number.window_position')|int,28) -%}*{%- endfor -%} "
-         - "\u23ee :/TCB_shutter_close, 
-            \u23ea :/TCB_shutter_bitopen,
-            \u23f9 :/TCB_shutter_stop,
-            \u23e9 :/TCB_shutter_half,
-            \u23ed :/TCB_shutter_open"        
-         - "\ud83d\udd04 Refresh:/TCB_shutter_refresh,
-           \ud83d\udc48 Back:/TCB_start_menu"
+         - "\U000023ee :/TCB_shutter_close, 
+            \U000023ea :/TCB_shutter_bitopen,
+            \U000023f9 :/TCB_shutter_stop,
+            \U000023e9 :/TCB_shutter_half,
+            \U000023ed :/TCB_shutter_open"        
+         - "\U0001f504 Refresh:/TCB_shutter_refresh,
+           \U0001f448 Back:/TCB_start_menu"

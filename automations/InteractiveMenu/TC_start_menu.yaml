@@ -12,5 +12,6 @@
   action:
      - service: telegram_bot.send_message
        data_template:
-         message: "\uD83C\uDFE0 ***HA Bot - Main Menu*** \uD83C\uDFE0"
-         inline_keyboard: !include TCB_start_menu_buttons.btn
+         message: "\U0001f3e0 ***HA Bot - Main Menu*** \U0001f3e0"
+         inline_keyboard: 
+           !include TCB_start_menu_buttons.btn
