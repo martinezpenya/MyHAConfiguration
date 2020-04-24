@@ -12,7 +12,7 @@
 #        entity_id: device_tracker.
 #        state: 'not_home'
       - condition: state
-        entity_id: device_tracker.dmp8p
+        entity_id: device_tracker.dmp8p_casa
         state: 'not_home'
   action:
     service: notify.homeassistant

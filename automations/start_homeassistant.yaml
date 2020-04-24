@@ -65,3 +65,15 @@
     - service: notify.homeassistant
       data:
         message: "HA has started: Revise status"
+    # - service: tts.google_say
+    #   entity_id: media_player.speaker
+    #   data:
+    #     message: "Achtung!, Achtung!"
+    #     language: 'de' #optional
+    #- delay: 00:00:02
+    - service: tts.google_say
+      entity_id: media_player.speaker
+      data:
+        message: 'Atención David!. "Home assístant" se ha reiniciado, revísalo.'
+        language: 'es' #optional
+

@@ -5,6 +5,7 @@
 /secrets.yaml
 /.storage/
 /known_devices.yaml
+/known_devices_BT.yaml
 /tts/
 /documentation/Configuración HA y Alexa para plugin haaska.md
 /plantillespendents.txt

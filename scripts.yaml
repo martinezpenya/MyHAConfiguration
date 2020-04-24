@@ -147,7 +147,7 @@ blitzwolf5_report:
     - service: persistent_notification.create
       data_template:
         title: "Blitwolf5 Report"
-        message: "From {{ (states.sensor.bw4_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
+        message: "From {{ (states.sensor.bw5_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
         to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
         KW Pico: {{ states.sensor.sensor_bw5_kw_pico.state_with_unit }} \n
         KW Vall: {{ states.sensor.sensor_bw5_kw_valle.state_with_unit }} \n
@@ -161,7 +161,7 @@ blitzwolf6_report:
     - service: persistent_notification.create
       data_template:
         title: "Blitwolf6 Report"
-        message: "From {{ (states.sensor.bw4_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
+        message: "From {{ (states.sensor.bw6_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
         to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
         KW Pico: {{ states.sensor.sensor_bw6_kw_pico.state_with_unit }} \n
         KW Vall: {{ states.sensor.sensor_bw6_kw_valle.state_with_unit }} \n
