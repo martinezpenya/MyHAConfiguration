@@ -6,7 +6,7 @@
     to: 'on'
   condition:
       - condition: state
-        entity_id: device_tracker.dmp8p
+        entity_id: device_tracker.dmp8p_casa
         state: 'home'    
   action:
     - data:

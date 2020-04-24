@@ -251,7 +251,7 @@ presence:
     name: presence
     entities:    
 #        - device_tracker.
-        - device_tracker.dmp8p
+        - device_tracker.dmp8p_casa
         - binary_sensor.pir_kerui_p831_1
         - binary_sensor.pir_kerui_p831_2
         - timer.timer_pir_kerui_p831_2

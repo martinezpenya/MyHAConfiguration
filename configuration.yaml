@@ -35,8 +35,8 @@ http:
   use_x_forwarded_for: true
   trusted_proxies:
     - !secret ip_Host_Traefik #Traefik container IP
-  #ip_ban_enabled: true
-  #login_attempts_threshold: 5
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -91,6 +91,9 @@ device_tracker: !include device_tracker.yaml
 # Text to speech
 tts:
   - platform: google_translate
+    base_url: !secret base_url
+    service_name: google_say
+    language: 'ca'
 
 # Cloud
 cloud:
@@ -167,6 +170,9 @@ media_player:
     tcp_port: !secret kodi_tcp_port
     username: !secret kodi_username
     password: !secret kodi_password
+  - platform: mpd
+    name: speaker
+    host: mopidy
     
 light: !include config/lights.yaml
 group: !include_dir_merge_named groups
@@ -175,6 +181,12 @@ weblink: !include panels/weblinks.yaml
 automation: !include_dir_merge_list automations
 notify: !include_dir_merge_list notify
 script: !include scripts.yaml
+
+alexa_media: 
+  accounts:
+    - email: !secret amazon_email
+      password: !secret amazon_password
+      url: "amazon.es"
  
 telegram_bot:
 - platform: webhooks
@@ -224,3 +236,7 @@ pi_hole:
     name: pihole
     ssl: false
     verify_ssl: false
+
+hacs:
+  token: !secret hacstoken
+
