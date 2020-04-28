@@ -1,5 +1,4 @@
 - alias: 'esphome3 led on pir'
-  hide_entity: false
   trigger:
     platform: state
     entity_id: 'binary_sensor.esphome3_motion'

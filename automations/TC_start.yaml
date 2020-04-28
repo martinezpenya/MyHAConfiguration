@@ -3,7 +3,6 @@
 ##
 - alias: 'TC start'
   initial_state: 'true'
-  hide_entity: false
   trigger:
      - platform: event
        event_type: telegram_command

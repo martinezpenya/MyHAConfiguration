@@ -3,7 +3,6 @@
 ##
 - alias: 'TCB_light_cocina_1_off'
   initial_state: 'true'
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_callback

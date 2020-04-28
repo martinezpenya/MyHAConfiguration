@@ -4,7 +4,6 @@
 ##
 - alias: 'TC ping'
   initial_state: 'true'
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command

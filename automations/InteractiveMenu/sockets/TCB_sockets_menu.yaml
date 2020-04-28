@@ -3,7 +3,6 @@
 ##
 - alias: 'TCB_sockets_menu'
   initial_state: 'true'
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_callback

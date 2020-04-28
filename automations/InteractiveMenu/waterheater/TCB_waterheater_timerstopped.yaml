@@ -3,7 +3,6 @@
 ##
 - alias: 'TCB_waterheater_timerstopped'
   initial_state: 'true'
-  hide_entity: true
   trigger:
   - event_data:
       entity_id: timer.waterheater

@@ -31,7 +31,6 @@
         value: "0"
       
 - alias: 'Blitzwolf1 Valle'
-  hide_entity: true
   initial_state: on
   trigger:
     - platform: template
@@ -51,7 +50,6 @@
 #    - service: script.blitzwolf1_report
 
 - alias: 'Blitzwolf1 Pico'
-  hide_entity: true
   initial_state: on
   trigger:
     - platform: template

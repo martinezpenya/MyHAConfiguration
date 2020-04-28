@@ -10,7 +10,6 @@
 # a los X segundos para simular que lo hace él mismo al apagarse
 
 - alias: mqtt restart Door_Sensor_Front_Battery_off
-  hide_entity: true
   initial_state: true
   trigger:
     - platform: state

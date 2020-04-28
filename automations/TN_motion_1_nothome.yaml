@@ -1,6 +1,5 @@
 - alias: 'PIR motion 1 nothome'
   initial_state: 'true'
-  #hide_entity: true
   trigger:
     platform: state
     entity_id: 'binary_sensor.PIR_kerui_p831_1'

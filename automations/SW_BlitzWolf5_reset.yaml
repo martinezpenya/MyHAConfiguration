@@ -31,7 +31,6 @@
         value: "0"
       
 - alias: 'Blitzwolf5 Valle'
-  hide_entity: true
   initial_state: on
   trigger:
     - platform: template
@@ -50,7 +49,6 @@
         value: "{{ states.sensor.bw5_total.state }}"
 
 - alias: 'Blitzwolf5 Pico'
-  hide_entity: true
   initial_state: on
   trigger:
     - platform: template

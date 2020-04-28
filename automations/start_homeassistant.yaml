@@ -1,6 +1,5 @@
 - alias: "Power state on HA start-up"
   initial_state: 'true'
-  hide_entity: true
   trigger:
     platform: homeassistant
     event: start

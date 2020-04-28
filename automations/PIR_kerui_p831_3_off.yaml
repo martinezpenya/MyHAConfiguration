@@ -11,7 +11,6 @@
 # Al final se manda un código OFF inventado al sensor binario
 # a los X segundos para simular que lo hace él mismo al apagarse
 - alias: mqtt restart PIR_kerui_p831_3_off
-  hide_entity: true
   initial_state: true
   trigger:
     - platform: state
