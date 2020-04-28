@@ -1,15 +1,5 @@
-enllacos:
-  name: Enllacos
-  view: no
-  entities:
-    - weblink.estat_raspberry
-    - weblink.pi_hole
-    - weblink.router
-  
 switchsonoff:
   name: Sonoff
-  control: hidden
-  view: no
   entities:
     - switch.sonoffAmbiCorredor
     - switch.sonoffAmbiBany
@@ -36,7 +26,6 @@ sonoffMini:
     
 remotecontroller1:
   name: RemoteController_433_1
-  view: no
   entities:
     - binary_sensor.Remote1_BtnA
     - binary_sensor.Remote1_BtnB
@@ -45,8 +34,6 @@ remotecontroller1:
     
 Waterheatertimer1:
   name: Timer 1
-  view: no
-  control: hidden
   entities: 
     - automation.Timer1
     - sensor.timer1_time
@@ -58,8 +45,6 @@ Waterheatertimer1:
 
 Waterheatertimer2:
   name: Timer 2
-  view: no
-  control: hidden
   entities: 
     - automation.Timer2
     - sensor.timer2_time
@@ -71,20 +56,16 @@ Waterheatertimer2:
 
 Waterheatertimer:
     name: Menu timer
-    view: no
-    control: hidden
     entities:
       - timer.waterheater
       
 sun:
   name: sun
-  view: no
   entities:
     - sun.sun
     
 meteocarlet:
     name: MeteoCarlet
-    view: no
     entities:
         - sensor.meteocarlet_station
         - sensor.meteocarlet_date
@@ -101,7 +82,6 @@ meteocarlet:
         
 #meteoinsti:
 #    name: MeteoInsti
-#    view: no
 #    entities:
 #        - sensor.meteoinsti_station
 #        - sensor.meteoinsti_date
@@ -118,7 +98,6 @@ meteocarlet:
 #
 #meteoinsti2:
 #    name: MeteoInsti2
-#    view: no
 #    entities:
 #        - sensor.meteoinsti2_station
 #        - sensor.meteoinsti2_date
@@ -135,8 +114,6 @@ meteocarlet:
 
 esphome1:
     name: Entradeta
-    view: no
-    control: hidden
     entities:
         - binary_sensor.esphome1_motion
         - light.esphome1_light
@@ -149,8 +126,6 @@ esphome1:
         
 esphome2:
     name: Despatx
-    view: no
-    control: hidden
     entities:
         - binary_sensor.esphome2_motion
         - light.esphome2_light
@@ -161,8 +136,6 @@ esphome2:
         - automation.esphome2_led_on_pir        
 esphome3:
     name: Habitacio
-    view: no
-    control: hidden    
     entities:
         - binary_sensor.esphome3_motion
         - light.esphome3_light
@@ -174,8 +147,6 @@ esphome3:
 
 esphome4:
     name: Menjador
-    view: no
-    control: hidden
     entities:
         - binary_sensor.esphome4_motion
         - light.esphome4_light
@@ -187,8 +158,6 @@ esphome4:
         
 lolin5:
     name: Lolin5
-    view: no
-    control: hidden
     entities:
         - sensor.lolin5_humidity
         - sensor.lolin5_ldr
@@ -200,8 +169,6 @@ lolin5:
 
 esphome6:
     name: EspHome6
-    view: no
-    control: hidden
     entities:
         - binary_sensor.esphome6_motion
         - light.esphome6_light
@@ -212,7 +179,6 @@ esphome6:
 
 pihole:
     name: Pi-Hole
-    view: no
     entities:
         - sensor.pihole_ads_blocked_today
         - sensor.pihole_ads_percentage_blocked_today
@@ -226,7 +192,6 @@ pihole:
 
 rpimonitor:
     name: Pi monitor
-    view: no
     entities:
         - sensor.netdata_cpu
         - sensor.netdata_load
@@ -237,7 +202,6 @@ rpimonitor:
 #        - sensor.since_last_boot        
 
 datetime:
-    view: no
     name: DateTime
     entities:
         - sensor.date
@@ -247,7 +211,6 @@ datetime:
         - sensor.time_utc
         
 presence:
-    view: no
     name: presence
     entities:    
 #        - device_tracker.
@@ -259,14 +222,12 @@ presence:
         - binary_sensor.pir_kerui_p831_3
         
 cameras:
-    view: no
     name: cameras
     entities:
         - camera.octoprint
         - camera.entrada
 
 FrontDoor:
-    view: no
     name: FrontDoor
     entities:
         - binary_sensor.Front_Door
@@ -274,7 +235,6 @@ FrontDoor:
         - binary_sensor.Front_Door_Violation
 
 AAMenjador:
-    view: no
     name: AAMenjador
     entities:
         - binary_sensor.AA_Menjador
@@ -282,7 +242,6 @@ AAMenjador:
         - binary_sensor.AA_Menjador_Violation
 
 AADespatx:
-    view: no
     name: AADespatx
     entities:
         - binary_sensor.AA_Despatx
@@ -295,9 +254,7 @@ AADespatx:
 ##        
 BliTZW0lF_1:
   name: WaterHeater
-  #view: yes
   icon: mdi:fish
-  control: hidden
   entities:
     - switch.BliTZW0lF_1
     - sensor.bw1_power
@@ -328,9 +285,7 @@ BliTZW0lF_1:
 ##        
 BliTZW0lF_2:
   name: 3dPrint
-  #view: yes
   icon: mdi:fish
-  control: hidden
   entities:
     - switch.BliTZW0lF_2
     - sensor.bw2_power
@@ -361,9 +316,7 @@ BliTZW0lF_2:
 ##        
 BliTZW0lF_3:
   name: Computer
-  #view: yes
   icon: mdi:fish
-  control: hidden
   entities:
     - switch.BliTZW0lF_3
     - sensor.bw3_power
@@ -389,9 +342,7 @@ BliTZW0lF_3:
 ##        
 BliTZW0lF_4:
   name: MicroOnes
-  #view: yes
   icon: mdi:fish
-  control: hidden
   entities:
     - switch.BliTZW0lF_4
     - sensor.bw4_power
@@ -417,9 +368,7 @@ BliTZW0lF_4:
 ##        
 BliTZW0lF_5:
   name: Roomba
-  #view: yes
   icon: mdi:fish
-  control: hidden
   entities:
     - switch.BliTZW0lF_5
     - sensor.bw5_power
@@ -445,9 +394,7 @@ BliTZW0lF_5:
 ##        
 BliTZW0lF_6:
   name: blitz6
-  #view: yes
   icon: mdi:fish
-  control: hidden
   entities:
     - switch.BliTZW0lF_6
     - sensor.bw6_power

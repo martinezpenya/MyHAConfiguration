@@ -12,6 +12,7 @@ homeassistant:
   time_zone: !secret time_zone
   # Customization file
   customize: !include customize.yaml
+  packages: !include_dir_named packages
 
 # Show links to resources in log and frontend
 #introduction:
@@ -24,11 +25,13 @@ config:
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 #http:
-## SHELDON
 #  base_url: !secret base_url
 #  server_port: 8123
 #  ssl_certificate: !secret ssl_certificate
 #  ssl_key: !secret ssl_key
+
+#enable mobile app
+mobile_app:
 
 http:
   base_url: !secret base_url
@@ -88,6 +91,20 @@ sensor: !include_dir_merge_list sensors
 binary_sensor: !include binary_sensors.yaml
 device_tracker: !include device_tracker.yaml
 
+#speedtest.net
+speedtestdotnet:
+  server_id: 16433
+  scan_interval:
+    # At least one of these must be specified:
+    days: 0
+    hours: 0
+    minutes: 60
+    seconds: 0
+    milliseconds: 0
+
+#breaking changes
+breaking_changes:
+
 # Text to speech
 tts:
   - platform: google_translate
@@ -108,7 +125,7 @@ mqtt:
 
 octoprint:
   host: !secret octopihostname
-  api_key: 84D89F98C8D040508056E691E4997C4D
+  api_key: !secret octopitoken
   bed: true
 
 cover:
@@ -176,8 +193,6 @@ media_player:
     
 light: !include config/lights.yaml
 group: !include_dir_merge_named groups
-#panel_iframe: !include panels/panels.yaml
-weblink: !include panels/weblinks.yaml
 automation: !include_dir_merge_list automations
 notify: !include_dir_merge_list notify
 script: !include scripts.yaml
@@ -217,7 +232,9 @@ timer: !include timer.yaml
 cast:
   media_player:
       - host: 192.168.0.108
-      
+
+stream:
+ffmpeg:      
 camera: !include_dir_merge_list cameras
 
 api:

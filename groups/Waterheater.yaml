@@ -1,6 +1,5 @@
 waterheater:
   name: "Waterheater"
-  view: yes
   entities:
     - group.waterheatertimer1 
     - group.waterheatertimer2

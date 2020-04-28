@@ -1,6 +1,5 @@
 viewDoors:
   name: "Doors"
-  view: yes
   entities:
     - group.FrontDoor
     - group.AAMenjador

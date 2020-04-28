@@ -1,1 +1,0 @@
-"""Clientraw weather parser"""

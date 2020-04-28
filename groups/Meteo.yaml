@@ -1,6 +1,5 @@
 meteo:
   name: "Meteo"
-  view: yes
   entities:
     - climate.ac_menjador
     - climate.ac_despatx      

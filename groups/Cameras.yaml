@@ -1,5 +1,4 @@
 viewCameras:
   name: "Cameras"
-  view: yes
   entities:
     - group.cameras

@@ -1,6 +1,5 @@
 pimonitor:
   name: "Pi monitor"
-  view: yes
   entities:
     - group.rpimonitor
     - group.pihole

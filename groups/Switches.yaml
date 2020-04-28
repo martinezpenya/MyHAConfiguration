@@ -1,6 +1,5 @@
 switches:
   name: "Switches"
-  view: yes
   entities:
     - group.switchsonoff
     - group.sonoffMini
