@@ -15,4 +15,4 @@
     - service: switch.turn_on
       data:
         entity_id:
-          - switch.sonoffTVset
+          - switch.blitzw0lf_6

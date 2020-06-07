@@ -12,7 +12,7 @@
     - service: switch.turn_off
       data:
         entity_id:
-          - switch.blitzw0lf_6
+          - switch.sonoffs26_2
     - delay: 00:00:01
     - service: telegram_bot.answer_callback_query
       data_template:
