@@ -3,7 +3,6 @@ switchsonoff:
   entities:
     - switch.sonoffAmbiCorredor
     - switch.sonoffAmbiBany
-    - switch.sonoffTVset
     - switch.luz_balcon
     - switch.ventilador_wc
     - timer.timer_sonoff_basic_2
@@ -335,32 +334,6 @@ BliTZW0lF_3:
     - input_number.bw3_partial
     - automation.blitzwolf3_valle
     - automation.blitzwolf3_pico 
-    
-##########################################
-## BlitzWolf SHP2
-## BliTZW0lF_4
-##        
-BliTZW0lF_4:
-  name: MicroOnes
-  icon: mdi:fish
-  entities:
-    - switch.BliTZW0lF_4
-    - sensor.bw4_power
-    - sensor.bw4_current
-    - sensor.bw4_voltage
-    - sensor.bw4_today
-    - sensor.bw4_totalstarttime
-    - sensor.sensor_bw4_kw_pico
-    - sensor.sensor_bw4_kw_valle
-    - sensor.bw4_total   
-    - sensor.sensor_bw4_eur_pico
-    - sensor.sensor_bw4_eur_valle
-    - sensor.sensor_bw4_total_euro
-    - automation.blitzwolf4_reset
-    - script.blitzwolf4_report
-    - input_number.bw4_partial
-    - automation.blitzwolf4_valle
-    - automation.blitzwolf4_pico 
 
 ##########################################
 ## BlitzWolf SHP2
@@ -387,32 +360,6 @@ BliTZW0lF_5:
     - input_number.bw5_partial
     - automation.blitzwolf5_valle
     - automation.blitzwolf5_pico 
-
-##########################################
-## BlitzWolf SHP2
-## BliTZW0lF_6
-##        
-BliTZW0lF_6:
-  name: blitz6
-  icon: mdi:fish
-  entities:
-    - switch.BliTZW0lF_6
-    - sensor.bw6_power
-    - sensor.bw6_current
-    - sensor.bw6_voltage
-    - sensor.bw6_today
-    - sensor.bw6_totalstarttime
-    - sensor.sensor_bw6_kw_pico
-    - sensor.sensor_bw6_kw_valle
-    - sensor.bw6_total   
-    - sensor.sensor_bw6_eur_pico
-    - sensor.sensor_bw6_eur_valle
-    - sensor.sensor_bw6_total_euro
-    - automation.blitzwolf6_reset
-    - script.blitzwolf6_report
-    - input_number.bw6_partial
-    - automation.blitzwolf6_valle
-    - automation.blitzwolf6_pico     
     
 GasolinerasCarlet:
     name: Carlet
