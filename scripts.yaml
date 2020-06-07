@@ -92,13 +92,13 @@ blitzwolf1_report:
       data_template:
         title: "Blitwolf1 Report"
         message: "From {{ (states.sensor.bw1_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-        KW Pico: {{ states.sensor.sensor_bw1_kw_pico.state_with_unit }} \n
-        KW Vall: {{ states.sensor.sensor_bw1_kw_valle.state_with_unit }} \n
-        Total KW: {{ states.sensor.bw1_total.state_with_unit }}\n\n
-        € Pico: {{ states.sensor.sensor_bw1_eur_pico.state_with_unit }} \n
-        € Vall: {{ states.sensor.sensor_bw1_eur_valle.state_with_unit }} \n
-        Total €: {{ states.sensor.sensor_bw1_total_euro.state_with_unit }}\n"
+                  to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
+                  KW Pico: {{ states.sensor.sensor_bw1_kw_pico.state_with_unit }} \n
+                  KW Vall: {{ states.sensor.sensor_bw1_kw_valle.state_with_unit }} \n
+                  Total KW: {{ states.sensor.bw1_total.state_with_unit }}\n\n
+                  € Pico: {{ states.sensor.sensor_bw1_eur_pico.state_with_unit }} \n
+                  € Vall: {{ states.sensor.sensor_bw1_eur_valle.state_with_unit }} \n
+                  Total €: {{ states.sensor.sensor_bw1_total_euro.state_with_unit }}\n"
 
 blitzwolf2_report:
   sequence:
@@ -106,13 +106,13 @@ blitzwolf2_report:
       data_template:
         title: "Blitwolf2 Report"
         message: "From {{ (states.sensor.bw2_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-        KW Pico: {{ states.sensor.sensor_bw2_kw_pico.state_with_unit }} \n
-        KW Vall: {{ states.sensor.sensor_bw2_kw_valle.state_with_unit }} \n
-        Total KW: {{ states.sensor.bw2_total.state_with_unit }}\n\n
-        € Pico: {{ states.sensor.sensor_bw2_eur_pico.state_with_unit }} \n
-        € Vall: {{ states.sensor.sensor_bw2_eur_valle.state_with_unit }} \n
-        Total €: {{ states.sensor.sensor_bw2_total_euro.state_with_unit }}\n"             
+                  to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
+                  KW Pico: {{ states.sensor.sensor_bw2_kw_pico.state_with_unit }} \n
+                  KW Vall: {{ states.sensor.sensor_bw2_kw_valle.state_with_unit }} \n
+                  Total KW: {{ states.sensor.bw2_total.state_with_unit }}\n\n
+                  € Pico: {{ states.sensor.sensor_bw2_eur_pico.state_with_unit }} \n
+                  € Vall: {{ states.sensor.sensor_bw2_eur_valle.state_with_unit }} \n
+                  Total €: {{ states.sensor.sensor_bw2_total_euro.state_with_unit }}\n"             
 
 blitzwolf3_report:
   sequence:
@@ -120,13 +120,13 @@ blitzwolf3_report:
       data_template:
         title: "Blitwolf3 Report"
         message: "From {{ (states.sensor.bw3_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-        KW Pico: {{ states.sensor.sensor_bw3_kw_pico.state_with_unit }} \n
-        KW Vall: {{ states.sensor.sensor_bw3_kw_valle.state_with_unit }} \n
-        Total KW: {{ states.sensor.bw3_total.state_with_unit }}\n\n
-        € Pico: {{ states.sensor.sensor_bw3_eur_pico.state_with_unit }} \n
-        € Vall: {{ states.sensor.sensor_bw3_eur_valle.state_with_unit }} \n
-        Total €: {{ states.sensor.sensor_bw3_total_euro.state_with_unit }}\n"
+                  to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
+                  KW Pico: {{ states.sensor.sensor_bw3_kw_pico.state_with_unit }} \n
+                  KW Vall: {{ states.sensor.sensor_bw3_kw_valle.state_with_unit }} \n
+                  Total KW: {{ states.sensor.bw3_total.state_with_unit }}\n\n
+                  € Pico: {{ states.sensor.sensor_bw3_eur_pico.state_with_unit }} \n
+                  € Vall: {{ states.sensor.sensor_bw3_eur_valle.state_with_unit }} \n
+                  Total €: {{ states.sensor.sensor_bw3_total_euro.state_with_unit }}\n"
 
 blitzwolf4_report:
   sequence:
@@ -134,13 +134,13 @@ blitzwolf4_report:
       data_template:
         title: "Blitwolf4 Report"
         message: "From {{ (states.sensor.bw4_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-        KW Pico: {{ states.sensor.sensor_bw4_kw_pico.state_with_unit }} \n
-        KW Vall: {{ states.sensor.sensor_bw4_kw_valle.state_with_unit }} \n
-        Total KW: {{ states.sensor.bw4_total.state_with_unit }}\n\n
-        € Pico: {{ states.sensor.sensor_bw4_eur_pico.state_with_unit }} \n
-        € Vall: {{ states.sensor.sensor_bw4_eur_valle.state_with_unit }} \n
-        Total €: {{ states.sensor.sensor_bw4_total_euro.state_with_unit }}\n"        
+                  to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
+                  KW Pico: {{ states.sensor.sensor_bw4_kw_pico.state_with_unit }} \n
+                  KW Vall: {{ states.sensor.sensor_bw4_kw_valle.state_with_unit }} \n
+                  Total KW: {{ states.sensor.bw4_total.state_with_unit }}\n\n
+                  € Pico: {{ states.sensor.sensor_bw4_eur_pico.state_with_unit }} \n
+                  € Vall: {{ states.sensor.sensor_bw4_eur_valle.state_with_unit }} \n
+                  Total €: {{ states.sensor.sensor_bw4_total_euro.state_with_unit }}\n"        
         
 blitzwolf5_report:
   sequence:
@@ -148,24 +148,10 @@ blitzwolf5_report:
       data_template:
         title: "Blitwolf5 Report"
         message: "From {{ (states.sensor.bw5_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-        KW Pico: {{ states.sensor.sensor_bw5_kw_pico.state_with_unit }} \n
-        KW Vall: {{ states.sensor.sensor_bw5_kw_valle.state_with_unit }} \n
-        Total KW: {{ states.sensor.bw5_total.state_with_unit }}\n\n
-        € Pico: {{ states.sensor.sensor_bw5_eur_pico.state_with_unit }} \n
-        € Vall: {{ states.sensor.sensor_bw5_eur_valle.state_with_unit }} \n
-        Total €: {{ states.sensor.sensor_bw5_total_euro.state_with_unit }}\n"           
-                
-blitzwolf6_report:
-  sequence:
-    - service: persistent_notification.create
-      data_template:
-        title: "Blitwolf6 Report"
-        message: "From {{ (states.sensor.bw6_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-        KW Pico: {{ states.sensor.sensor_bw6_kw_pico.state_with_unit }} \n
-        KW Vall: {{ states.sensor.sensor_bw6_kw_valle.state_with_unit }} \n
-        Total KW: {{ states.sensor.bw6_total.state_with_unit }}\n\n
-        € Pico: {{ states.sensor.sensor_bw6_eur_pico.state_with_unit }} \n
-        € Vall: {{ states.sensor.sensor_bw6_eur_valle.state_with_unit }} \n
-        Total €: {{ states.sensor.sensor_bw6_total_euro.state_with_unit }}\n"           
+                  to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
+                  KW Pico: {{ states.sensor.sensor_bw5_kw_pico.state_with_unit }} \n
+                  KW Vall: {{ states.sensor.sensor_bw5_kw_valle.state_with_unit }} \n
+                  Total KW: {{ states.sensor.bw5_total.state_with_unit }}\n\n
+                  € Pico: {{ states.sensor.sensor_bw5_eur_pico.state_with_unit }} \n
+                  € Vall: {{ states.sensor.sensor_bw5_eur_valle.state_with_unit }} \n
+                  Total €: {{ states.sensor.sensor_bw5_total_euro.state_with_unit }}\n"
