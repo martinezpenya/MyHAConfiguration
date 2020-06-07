@@ -13,6 +13,6 @@
       data_template:
           title: "***Sensors:***"
           message: "{% for state in states.sensor -%}
-          {%- if loop.first %}  - {% elif loop.last %} \n - {% else %}\n - {% endif -%}
-            {{ state.name | lower }}: ***{{state.state_with_unit}}***
-          {%- endfor %}"
+                    {%- if loop.first %}  - {% elif loop.last %} \n - {% else %}\n - {% endif -%}
+                      {{ state.name | lower }}: ***{{state.state_with_unit}}***
+                    {%- endfor %}"

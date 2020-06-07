@@ -21,7 +21,7 @@
 #    - service: automation.trigger
 #      data_template:
 #        entity_id: >-
-#          {% if is_state('switch.sonoffTVset', 'on') %}
+#          {% if is_state('switch.sonoffS26_2', 'on') %}
 #            automation.TC_TVset_off
 #          {% else %}
 #            automation.TC_TVset_on

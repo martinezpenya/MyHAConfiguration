@@ -4,12 +4,6 @@
     platform: homeassistant
     event: start
   action:
-#    - service: switch.turn_off
-#      data:
-#        entity_id:
-#          - switch.sonoffwaterheater          
-#          - switch.sonoffTVset
-#          - switch.sonoffPrinter
     - service: mqtt.publish
       data:
         topic: "cmnd/BliTZW0lF_1/state"
@@ -37,6 +31,23 @@
         payload: ""
     - service: mqtt.publish
       data:
+        topic: "cmnd/BliTZW0lF_5/state"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/BliTZW0lF_6/state"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/BliTZW0lF_7/state"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/BliTZW0lF_8/state"
+        payload: ""
+
+    - service: mqtt.publish
+      data:
         topic: cmnd/BliTZW0lF_4/POWER          
 
     - service: mqtt.publish
@@ -61,6 +72,9 @@
       data:
         topic: cmnd/sonoffS26_3/POWER           
 
+    - service: switch.turn_on
+      data:
+        entity_id: switch.sonoffbasic_3
     - service: notify.homeassistant
       data:
         message: "HA has started: Revise status"
@@ -69,10 +83,20 @@
     #   data:
     #     message: "Achtung!, Achtung!"
     #     language: 'de' #optional
-    #- delay: 00:00:02
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 1 #100%    
+    - delay: 00:00:01 #wait for switch
     - service: tts.google_say
       entity_id: media_player.speaker
       data:
         message: 'Atención David!. "Home assístant" se ha reiniciado, revísalo.'
         language: 'es' #optional
+    - delay: 00:00:10 #wait for message
+    - service: switch.turn_off
+      data:
+        entity_id: switch.sonoffbasic_3
+    
+    
 
