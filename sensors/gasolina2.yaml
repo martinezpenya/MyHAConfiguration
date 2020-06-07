@@ -11,7 +11,7 @@
       value_template: >-
               {%- for petrol in states.sensor.gasolinera2.attributes.ListaEESSPrecio -%}
                 {%- if petrol["IDEESS"] | int  == 10671 -%}  
-                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+                  {{ petrol["PrecioProducto"] | capitalize | replace(",",".") }} 
                 {%- endif -%}
               {%- endfor -%}
       unit_of_measurement: '€/L'
@@ -33,7 +33,7 @@
       value_template: >-
               {%- for petrol in states.sensor.gasolinera2.attributes.ListaEESSPrecio -%}
                 {%- if petrol["IDEESS"] | int  == 1898 -%}  
-                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+                  {{ petrol["PrecioProducto"] | capitalize | replace(",",".") }} 
                 {%- endif -%}
               {%- endfor -%}
       unit_of_measurement: '€/L'

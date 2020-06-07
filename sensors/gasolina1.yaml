@@ -17,7 +17,7 @@
       value_template: >-
               {%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio -%}
                 {%- if petrol["IDEESS"] | int  == 12925 -%}  
-                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+                  {{ petrol["PrecioProducto"] | capitalize | replace(",",".") }} 
                 {%- endif -%}
               {%- endfor -%}
       unit_of_measurement: '€/L'
@@ -39,7 +39,7 @@
       value_template: >-
               {%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio -%}
                 {%- if petrol["IDEESS"] | int  == 4113 -%}  
-                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+                  {{ petrol["PrecioProducto"] | capitalize | replace(",",".") }} 
                 {%- endif -%}
               {%- endfor -%}
       unit_of_measurement: '€/L'
@@ -61,7 +61,7 @@
       value_template: >-
               {%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio -%}
                 {%- if petrol["IDEESS"] | int  == 4117 -%}  
-                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+                  {{ petrol["PrecioProducto"] | capitalize | replace(",",".") }} 
                 {%- endif -%}
               {%- endfor -%}
       unit_of_measurement: '€/L'
@@ -83,7 +83,7 @@
       value_template: >-
               {%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio -%}
                 {%- if petrol["IDEESS"] | int  == 11656 -%}  
-                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+                  {{ petrol["PrecioProducto"] | capitalize | replace(",",".") }} 
                 {%- endif -%}
               {%- endfor -%}
       unit_of_measurement: '€/L'
@@ -105,7 +105,7 @@
       value_template: >-
               {%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio -%}
                 {%- if petrol["IDEESS"] | int  == 4114 -%}  
-                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+                  {{ petrol["PrecioProducto"] | capitalize | replace(",",".") }} 
                 {%- endif -%}
               {%- endfor -%}
       unit_of_measurement: '€/L'          
@@ -122,34 +122,34 @@
                   {{petrol["Longitud (WGS84)"]| replace(",",".") }} 
                 {%- endif -%}
               {%- endfor -%}       
-    gasolinera12:
-      friendly_name: Valcarce
-      value_template: >-
-              {%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio -%}
-                {%- if petrol["IDEESS"] | int  == 10530 -%}  
-                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
-                {%- endif -%}
-              {%- endfor -%}
-      unit_of_measurement: '€/L'       
-      attribute_templates:
-          latitude: >-
-              {%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio -%}
-                {%- if petrol["IDEESS"] | int  == 10530 -%}  
-                  {{petrol["Latitud"] | replace(",",".")}} 
-                {%- endif -%}
-              {%- endfor -%}      
-          longitude: >-
-              {%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio -%}
-                {%- if petrol["IDEESS"] | int  == 10530 -%}  
-                  {{petrol["Longitud (WGS84)"]| replace(",",".") }} 
-                {%- endif -%}
-              {%- endfor -%}          
+    # gasolinera12:
+    #   friendly_name: Valcarce
+    #   value_template: >-
+    #           {%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio -%}
+    #             {%- if petrol["IDEESS"] | int  == 10530 -%}  
+    #               {{ petrol["PrecioProducto"] | capitalize | replace(",",".") }} 
+    #             {%- endif -%}
+    #           {%- endfor -%}
+    #   unit_of_measurement: '€/L'       
+    #   attribute_templates:
+    #       latitude: >-
+    #           {%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio -%}
+    #             {%- if petrol["IDEESS"] | int  == 10530 -%}  
+    #               {{petrol["Latitud"] | replace(",",".")}} 
+    #             {%- endif -%}
+    #           {%- endfor -%}      
+    #       longitude: >-
+    #           {%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio -%}
+    #             {%- if petrol["IDEESS"] | int  == 10530 -%}  
+    #               {{petrol["Longitud (WGS84)"]| replace(",",".") }} 
+    #             {%- endif -%}
+    #           {%- endfor -%}
     gasolinera14:
-      friendly_name: Gas Express
+      friendly_name: "Gas Express"
       value_template: >-
               {%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio -%}
                 {%- if petrol["IDEESS"] | int  == 12771 -%}  
-                  {{ petrol["Precio Gasolina 95 Protección"] | capitalize | replace(",",".") }} 
+                  {{ petrol["PrecioProducto"] | capitalize | replace(",",".") }} 
                 {%- endif -%}
               {%- endfor -%}
       unit_of_measurement: '€/L'
