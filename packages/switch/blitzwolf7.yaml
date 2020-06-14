@@ -240,7 +240,7 @@ automation:
     action:
     - data:
         entity_id: input_select.washer_status
-        option: "Wait"
+        option: "Waiting"
       service: input_select.select_option
     - data:
         message: La lavadora ya terminó, pasara a modo espera, cuando llegues a casa
