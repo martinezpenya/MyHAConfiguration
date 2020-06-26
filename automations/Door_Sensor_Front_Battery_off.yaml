@@ -19,6 +19,10 @@
       for:
         seconds: 3    
   action:
+    - service: persistent_notification.create
+      data:
+        message: "Low Battery"
+        title: "Front Door"
     - service: mqtt.publish
       data:
          topic: tele/sonoffRF433/RESULT

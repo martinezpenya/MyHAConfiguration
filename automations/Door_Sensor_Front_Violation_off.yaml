@@ -15,7 +15,9 @@
     - platform: state
       entity_id: binary_sensor.Front_Door_Violation
       from: 'off'
-      to: 'on'  
+      to: 'on'
+      for:
+        seconds: 3       
   action:
     - service: persistent_notification.create
       data:
