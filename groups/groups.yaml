@@ -365,7 +365,7 @@ GasolinerasCarlet:
     name: Carlet
     entities:
         - sensor.gasolinera11
-        - sensor.gasolinera12
+#        - sensor.gasolinera12
         - sensor.gasolinera13
         - sensor.gasolinera14
         - sensor.gasolinera15
