@@ -111,70 +111,15 @@ meteocarlet:
 #        - sensor.meteoinsti2_wind_gust_km_h
 #        - sensor.meteoinsti2_wind_speed_km_h
 
-esphome1:
-    name: Entradeta
+Temperature_sensors:
+    name: "Sensors temperatura"
     entities:
-        - binary_sensor.esphome1_motion
-        - light.esphome1_light
-        - sensor.esphome1_brightness
-        - sensor.esphome1_humidity
         - sensor.esphome1_temperature
-        - switch.esphome1_relay
-        - automation.esphome1_motion_detected
-        - automation.esphome1_led_on_pir
-        
-esphome2:
-    name: Despatx
-    entities:
-        - binary_sensor.esphome2_motion
-        - light.esphome2_light
-        - sensor.esphome2_brightness
-        - sensor.esphome2_humidity
         - sensor.esphome2_temperature
-        - switch.esphome2_relay
-        - automation.esphome2_led_on_pir        
-esphome3:
-    name: Habitacio
-    entities:
-        - binary_sensor.esphome3_motion
-        - light.esphome3_light
-        - sensor.esphome3_brightness
-        - sensor.esphome3_humidity
         - sensor.esphome3_temperature
-        - switch.esphome3_relay
-        - automation.esphome3_led_on_pir         
-
-esphome4:
-    name: Menjador
-    entities:
-        - binary_sensor.esphome4_motion
-        - light.esphome4_light
-        - sensor.esphome4_brightness
-        - sensor.esphome4_humidity
         - sensor.esphome4_temperature
-        - switch.esphome4_relay
-        - automation.esphome4_led_on_pir        
-        
-lolin5:
-    name: Lolin5
-    entities:
-        - sensor.lolin5_humidity
-        - sensor.lolin5_ldr
-        - binary_sensor.lolin5_pir
-        - sensor.lolin5_real_feel
-        - sensor.lolin5_temperature        
-        - light.lolin5_light
-        - switch.lolin5_relay
-
-esphome6:
-    name: EspHome6
-    entities:
-        - binary_sensor.esphome6_motion
-        - light.esphome6_light
-        - sensor.esphome6_brightness
-        - sensor.esphome6_humidity
+        - sensor.esphome5_temperature      
         - sensor.esphome6_temperature
-        - switch.esphome6_relay
 
 pihole:
     name: Pi-Hole

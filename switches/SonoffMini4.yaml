@@ -3,7 +3,7 @@
 ## ??
 ##
 - platform: mqtt
-  name: "Luz Habitación"
+  name: "Luz Dormitorio"
   state_topic: "stat/sonoffMini4/POWER"
   command_topic: "cmnd/sonoffMini4/POWER"
   qos: 2

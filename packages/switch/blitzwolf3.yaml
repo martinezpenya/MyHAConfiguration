@@ -1,0 +1,268 @@
+##########################################
+## BlitzWolf SHP2
+##
+
+homeassistant:
+  customize:
+    switch.BliTZW0lF_3:
+      friendly_name: "Ordenador"
+    script.bw3_report:
+      icon: mdi:message-reply-text  
+      friendly_name: "Report"
+    script.bw3_reset:
+      icon: mdi:restore
+      friendly_name: "Reset"
+    sensor.bw3_power:
+      friendly_name: "Power"
+    sensor.bw3_current:
+      friendly_name: "Current"
+    sensor.bw3_voltage:
+      friendly_name: "Voltage"
+    sensor.bw3_today:
+      friendly_name: "KW Today"
+    sensor.bw3_total:
+      friendly_name: "KW Total"
+    sensor.bw3_totalstarttime:
+      friendly_name: "Last reset"
+
+input_number:
+  bw3_kw_pico:
+    name: 'KW pico'
+    icon: mdi:trending-up
+    unit_of_measurement: "KW"
+    min: 0
+    max: 1000
+    mode: box
+    step: 0.001 
+  bw3_kw_valle:
+    name: 'KW valle'
+    icon: mdi:trending-down
+    unit_of_measurement: "KW"
+    min: 0
+    max: 1000
+    mode: box
+    step: 0.001 
+  bw3_partial:
+    name: partial data
+    icon: mdi:calculator-variant
+    unit_of_measurement: "KW"
+    min: 0
+    max: 1000
+    mode: box
+    step: 0.001  
+
+switch:
+  - platform: mqtt
+    name: "BliTZW0lF_3"
+    state_topic: "stat/BliTZW0lF_3/POWER"
+    command_topic: "cmnd/BliTZW0lF_3/POWER"
+    availability_topic: "tele/BliTZW0lF_3/LWT"
+    qos: 2
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    icon: mdi:speedometer
+
+sensor:
+  - platform: mqtt
+    name: bw3_totalstarttime
+    state_topic: "tele/BliTZW0lF_3/SENSOR"
+    value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S%z')) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
+    unit_of_measurement: ""
+    icon: mdi:update
+    
+  - platform: mqtt
+    name: bw3_total
+    state_topic: "tele/BliTZW0lF_3/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Total }}"
+    unit_of_measurement: "KW"
+    icon: mdi:elevation-rise
+  
+  - platform: mqtt
+    name: bw3_today
+    state_topic: "tele/BliTZW0lF_3/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Today }}"
+    unit_of_measurement: "KW"  
+    icon: mdi:elevation-rise
+    
+  - platform: mqtt
+    name: bw3_power
+    state_topic: "tele/BliTZW0lF_3/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Power }}"
+    unit_of_measurement: "W"
+    icon: mdi:elevation-rise
+
+  - platform: mqtt
+    name: bw3_voltage
+    state_topic: "tele/BliTZW0lF_3/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Voltage }}"
+    unit_of_measurement: "V"
+    icon: mdi:current-ac
+
+  - platform: mqtt
+    name: bw3_current
+    state_topic: "tele/BliTZW0lF_3/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Current }}"
+    unit_of_measurement: "A"
+    icon: mdi:transfer
+
+  - platform: template
+    sensors:
+      bw3_kw_valle:
+        friendly_name: 'KW valle'
+        value_template: '{{ (states("input_number.bw3_kw_valle") | float| round(6)) }}'
+        icon_template: mdi:trending-down
+        unit_of_measurement: "KW"
+      bw3_kw_pico:
+        friendly_name: 'KW pico'
+        value_template: '{{ (states("input_number.bw3_kw_pico") | float | round(6)) }}'
+        icon_template: mdi:trending-up
+        unit_of_measurement: "KW"
+      bw3_eur_valle:
+        friendly_name: '€ valle'
+        value_template: '{{ (states("input_number.bw3_kw_valle") | multiply(0.086565 ) | float | round(2)) }}'
+        unit_of_measurement: "€"
+        icon_template: mdi:progress-download
+      bw3_eur_pico:
+        friendly_name: '€ pico'
+        value_template: '{{ (states("input_number.bw3_kw_pico") | multiply(0.165323) | float | round(2)) }}'
+        icon_template: mdi:progress-upload
+        unit_of_measurement: "€"
+      bw3_total_euro:
+        friendly_name: '€ Total'
+        value_template: '{{(((states.sensor.bw3_eur_valle.state | float) + (states.sensor.bw3_eur_pico.state  | float)) | round(2)) }}'
+        unit_of_measurement: "€"
+        icon_template: mdi:currency-eur   
+
+automation:
+  - alias: 'bw3 reset'
+    initial_state: 'true'
+    trigger:
+      - platform: template
+        value_template: '{{ now().strftime("%d") == "01" }}'
+    action:
+      - service: script.bw3_report
+      - service: script.bw3_reset
+        
+  - alias: 'bw3 Valle'
+    initial_state: on
+    trigger:
+      - platform: template
+        value_template: '{{ now().strftime("%M") == "00" }}'
+    condition:
+      - condition: template
+        value_template: '{{ now().strftime("%H") == "13" }}'
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw3_kw_valle
+          value: "{{ ((states.input_number.bw3_kw_valle.state|float) + ((states.sensor.bw3_total.state|float) - (states.input_number.bw3_partial.state|float))|float) }}"
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw3_partial
+          value: "{{ states.sensor.bw3_total.state }}"          
+
+  - alias: 'bw3 Pico'
+    initial_state: on
+    trigger:
+      - platform: template
+        value_template: '{{ now().strftime("%M") == "00" }}'
+    condition:
+      - condition: template
+        value_template: '{{ now().strftime("%H") == "23" }}'
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw3_kw_pico
+          value: "{{ ((states.input_number.bw3_kw_pico.state|float) + ((states.sensor.bw3_total.state|float) - (states.input_number.bw3_partial.state|float))|float) }}"
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw3_partial
+          value: "{{ states.sensor.bw3_total.state }}"
+
+  - alias: MicroWaveOven_Switch_left_on
+    trigger:
+      - below: 5
+        entity_id: sensor.bw3_power
+        for: 0:01:00
+        platform: numeric_state
+    condition:
+    - condition: state
+      entity_id: switch.BliTZW0lF_3
+      state: 'on'
+    action:
+      - service: switch.turn_off
+        data:
+          entity_id:
+            - switch.BliTZW0lF_3
+      - delay: 0:00:02
+      - service: persistent_notification.create
+        data:
+          message: "Is now **{% if is_state('switch.BliTZW0lF_3', 'on') %}ON{% else %}OFF{% endif %}** because it was left on for 5 minutes"
+          title: "MicroWaveOven"
+
+script:
+  bw3_report:
+    sequence:
+      - service: persistent_notification.create
+        data_template:
+          title: "{{state_attr('switch.BliTZW0lF_3', 'friendly_name')}} Report"
+          message: "From {{ (states.sensor.bw3_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
+            to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
+            KW Pico: {{ states.sensor.bw3_kw_pico.state_with_unit }} \n
+            KW Vall: {{ states.sensor.bw3_kw_valle.state_with_unit }} \n
+            Total KW: {{ states.sensor.bw3_total.state_with_unit }}\n\n
+            € Pico: {{ states.sensor.bw3_eur_pico.state_with_unit }} \n
+            € Vall: {{ states.sensor.bw3_eur_valle.state_with_unit }} \n
+            Total €: {{ states.sensor.bw3_total_euro.state_with_unit }}\n"
+  bw3_reset:
+    sequence:
+      - service: mqtt.publish
+        data_template:
+          topic: "cmnd/BliTZW0lF_3/energyreset1"
+          payload: "0"
+      - service: mqtt.publish
+        data_template:
+          topic: "cmnd/BliTZW0lF_3/energyreset2"
+          payload: "0"
+      - service: mqtt.publish
+        data_template:
+          topic: "cmnd/BliTZW0lF_3/energyreset3"
+          payload: "0"
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw3_Kw_pico
+          value: "0"
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw3_Kw_valle
+          value: "0"
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw3_partial
+          value: "0"
+
+
+
+#########################
+#Lovelace entities Card:#
+#########################
+# entities:
+#   - entity: switch.BliTZW0lF_3
+#   - entity: sensor.bw3_power
+#   - entity: sensor.bw3_current
+#   - entity: sensor.bw3_voltage
+#   - entity: sensor.bw3_totalstarttime
+#   - entity: sensor.bw3_kw_pico
+#   - entity: sensor.bw3_kw_valle
+#   - entity: sensor.bw3_today
+#   - entity: sensor.bw3_total
+#   - entity: sensor.bw3_eur_pico
+#   - entity: sensor.bw3_eur_valle
+#   - entity: sensor.bw3_total_euro
+#   - entity: script.bw3_reset
+#   - entity: script.bw3_report
+# show_header_toggle: false
+# type: entities
