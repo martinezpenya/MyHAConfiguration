@@ -1,4 +1,4 @@
-- alias: 'esphome1 led on pir'
+- alias: 'ESPHome1 led on pir'
   trigger:
     platform: state
     entity_id: 'binary_sensor.esphome1_motion'
