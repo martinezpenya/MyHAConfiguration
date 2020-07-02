@@ -37,7 +37,7 @@ config:
 mobile_app:
 
 http:
-  base_url: !secret base_url
+#  base_url: !secret base_url
   use_x_forwarded_for: true
   trusted_proxies:
     - !secret ip_Host_Traefik #Traefik container IP
@@ -79,7 +79,7 @@ logbook:
 #https://home-assistant.io/components/recorder/
 #The recorder component is storing details in a database which then are handled by the history component.
 recorder:
-  purge_interval: 1
+  #purge_interval: 1
   purge_keep_days: 7
 
 # Enables a map showing the location of tracked devices
@@ -111,7 +111,7 @@ breaking_changes:
 # Text to speech
 tts:
   - platform: google_translate
-    base_url: !secret base_url
+    #base_url: !secret base_url
     service_name: google_say
     language: 'ca'
 
@@ -213,11 +213,11 @@ telegram_bot:
     - !secret id_group_telegram
     - !secret id_user_telegram
 
-tuya:
-  username: !secret tuya_email
-  password: !secret tuya_password
-  country_code: !secret tuya_country
-  platform: smart_life
+#tuya:
+#  username: !secret tuya_email
+#  password: !secret tuya_password
+#  country_code: !secret tuya_country
+#  platform: smart_life
   
 ### Input Boolean ###
 # The input_boolean component allows the user to define boolean values that can be controlled via the frontend and can be used within conditions of automation.

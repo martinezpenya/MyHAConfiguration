@@ -45,14 +45,14 @@ entity_config:
     name: "Calentador"
     description: "Calentador de agua"
     display_categories: SMARTPLUG
-  switch.BliTZW0lF_2:
-    name: "Impresora 3d"
-    description: "Ender 3"
-    display_categories: SMARTPLUG
-  switch.BliTZW0lF_3:
-    name: "Ordenador"
-    description: "Ordenador"
-    display_categories: SMARTPLUG
+  # switch.BliTZW0lF_2:
+  #   name: "Impresora 3d"
+  #   description: "Ender 3"
+  #   display_categories: SMARTPLUG
+  # switch.BliTZW0lF_3:
+  #   name: "Ordenador"
+  #   description: "Ordenador"
+  #   display_categories: SMARTPLUG
   sensor.esphome1_temperature:
     name: "Entrada"
     description: "Entrada"
