@@ -17,7 +17,7 @@
     - service: telegram_bot.answer_callback_query
       data_template:
         callback_query_id: '{{ trigger.event.data.id }}'
-        message: 'Switching Habitación light off'
+        message: 'Switching habitacion light off'
     - service: telegram_bot.edit_replymarkup
       data_template:
         message_id: 'last'

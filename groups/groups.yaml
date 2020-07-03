@@ -111,15 +111,15 @@ meteocarlet:
 #        - sensor.meteoinsti2_wind_gust_km_h
 #        - sensor.meteoinsti2_wind_speed_km_h
 
-Temperature_sensors:
+temperature_sensors:
     name: "Sensors temperatura"
     entities:
-        - sensor.esphome1_temperature
-        - sensor.esphome2_temperature
-        - sensor.esphome3_temperature
-        - sensor.esphome4_temperature
-        - sensor.esphome5_temperature      
-        - sensor.esphome6_temperature
+        - sensor.esphome1_temperature_telegram 
+        - sensor.esphome2_temperature_telegram 
+        - sensor.esphome3_temperature_telegram 
+        - sensor.esphome4_temperature_telegram 
+        - sensor.esphome5_temperature_telegram     
+        - sensor.esphome6_temperature_telegram 
 
 pihole:
     name: Pi-Hole

@@ -1,0 +1,32 @@
+- platform: template
+  sensors:
+    esphome1_temperature_telegram:
+      friendly_name: Entry
+      value_template: "{{ states('sensor.esphome1_temperature') }}"
+      unit_of_measurement: 'ºC'
+      entity_id: sensor.esphome1_temperature
+    esphome2_temperature_telegram:
+      friendly_name: Office
+      value_template: "{{ states('sensor.esphome2_temperature') }}"
+      unit_of_measurement: 'ºC'
+      entity_id: sensor.esphome2_temperature
+    esphome3_temperature_telegram:
+      friendly_name: Sleeping
+      value_template: "{{ states('sensor.esphome3_temperature') }}"
+      unit_of_measurement: 'ºC'
+      entity_id: sensor.esphome3_temperature
+    esphome4_temperature_telegram:
+      friendly_name: Dinning
+      value_template: "{{ states('sensor.esphome4_temperature') }}"
+      unit_of_measurement: 'ºC'
+      entity_id: sensor.esphome4_temperature
+    esphome5_temperature_telegram:
+      friendly_name: Kitchen
+      value_template: "{{ states('sensor.esphome5_temperature') }}"
+      unit_of_measurement: 'ºC'
+      entity_id: sensor.esphome5_temperature
+    esphome6_temperature_telegram:
+      friendly_name: Room
+      value_template: "{{ states('sensor.esphome6_temperature') }}"
+      unit_of_measurement: 'ºC'
+      entity_id: sensor.esphome6_temperature
