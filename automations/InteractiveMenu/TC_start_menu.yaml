@@ -2,7 +2,6 @@
 ## KEYBOARD - start
 ##
 - alias: 'TC start menu'
-  initial_state: 'true'
   trigger:
      - platform: event
        event_type: telegram_command

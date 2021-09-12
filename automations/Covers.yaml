@@ -58,7 +58,7 @@
     value_template: '{{ as_timestamp(now()) - as_timestamp(states.input_number.window_set_position.last_updated)>3 }}'
   action:
   - data:
-      duration: 00:00:28
+      duration: 00:00:25
       entity_id: timer.window_up
     service: timer.start
     
@@ -73,7 +73,7 @@
     value_template: '{{ as_timestamp(now()) - as_timestamp(states.input_number.window_set_position.last_updated)> 3 }}'
   action:
   - data:
-      duration: 00:00:28
+      duration: 00:00:25
       entity_id: timer.window_down
     service: timer.start
     
@@ -114,7 +114,7 @@
     platform: state
   condition:
   - condition: template
-    value_template: '{{ (states.input_number.window_position.state | int) > ((((states.input_number.window_set_position.state | int ) * 28 )/100) | int) }}'
+    value_template: '{{ (states.input_number.window_position.state | int) > ((((states.input_number.window_set_position.state | int ) * 25 )/100) | int) }}'
   action:
   - service: timer.start
     data_template:
@@ -131,7 +131,7 @@
     platform: state
   condition:
   - condition: template
-    value_template: '{{ (states.input_number.window_position.state | int) < ((((states.input_number.window_set_position.state | int ) * 28 )/100) | int) }}'
+    value_template: '{{ (states.input_number.window_position.state | int) < ((((states.input_number.window_set_position.state | int ) * 25 )/100) | int) }}'
   action:
   - service: timer.start
     data_template:

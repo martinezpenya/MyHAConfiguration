@@ -1,0 +1,25 @@
+##########################################
+## INLINE_KEYBOARD - TCB_pipedmusic_menu
+##
+- alias: 'TCB_pipedmusic_menu'
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: '/TCB_pipedmusic_menu'
+  action:
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'Piped music menu selected'
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: '{{ trigger.event.data.message.message_id }}'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        message: "\U0001f4e2 ***Piped music*** \U0001f4e2"
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: 'last'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        inline_keyboard: !include TCB_pipedmusic_menu_buttons.btn
+

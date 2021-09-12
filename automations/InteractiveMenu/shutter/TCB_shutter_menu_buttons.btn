@@ -1,4 +1,4 @@
-         - " {%- for i in range(1,states('input_number.window_position')|int) -%}_{%- endfor -%}{%- for i in range(states('input_number.window_position')|int,28) -%}*{%- endfor -%} "
+         - " {%- for i in range(1,states('input_number.window_position')|int) -%}_{%- endfor -%}{%- for i in range(states('input_number.window_position')|int,25) -%}*{%- endfor -%} "
          - "\U000023ee :/TCB_shutter_close, 
             \U000023ea :/TCB_shutter_bitopen,
             \U000023f9 :/TCB_shutter_stop,

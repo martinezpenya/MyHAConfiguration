@@ -1,0 +1,7 @@
+energy_cost_p:
+  name: KW energy cost pico
+  icon: mdi:currency-eur
+
+energy_cost_v:
+  name: KW energy cost valle
+  icon: mdi:currency-eur

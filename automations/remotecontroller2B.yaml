@@ -1,0 +1,24 @@
+###############################
+# Remote controller 2 (4 buttons)
+
+###############################
+# Button B
+
+- alias: Remote2ButtonB
+  initial_state: 'true'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.Remote2_BtnB
+    to: 'on'
+  action:
+    - service: notify.homeassistant
+      data:
+        message: "Remote2 buttonB pressed"
+    # - service: automation.trigger
+    #   data_template:
+    #     entity_id: >-
+    #       {% if is_state('switch.BliTZW0lF_3', 'on') %}
+    #         automation.TC_computer_off
+    #       {% else %}
+    #         automation.TC_computer_on
+    #       {% endif %}

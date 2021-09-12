@@ -25,7 +25,7 @@ filter:
     - input_number
     - input_boolean
     - binary_sensor
-    - media_player
+    #- media_player
     - timer
     - camera
 entity_config:
@@ -65,6 +65,10 @@ entity_config:
     name: "Persiana despacho"
     description: "Persinana despacho"
     display_categories: INTERIOR_BLIND
+  #media_player.speaker:
+  #  name: "Speaker"
+  #  description: "Mopidi"
+  #  display_categories: SPEAKER
   script.bw7_clothes_hanging:
     name: "La ropa está tendida"
     display_categories: SCENE_TRIGGER

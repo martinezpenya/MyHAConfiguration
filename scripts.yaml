@@ -99,3 +99,130 @@ blitzwolf1_report:
                   € Pico: {{ states.sensor.sensor_bw1_eur_pico.state_with_unit }} \n
                   € Vall: {{ states.sensor.sensor_bw1_eur_valle.state_with_unit }} \n
                   Total €: {{ states.sensor.sensor_bw1_total_euro.state_with_unit }}\n"
+
+goodmorningmusic:
+  alias: bondiamusica
+  sequence: 
+    - service: switch.turn_on
+      data:
+        entity_id: switch.sonoffbasic_3
+    - service: notify.homeassistant
+      data:
+        message: 'Bon dia!, vols parar la música?'
+        data:
+          inline_keyboard: 
+            - '✔Yes:/TCB_speaker_off, ❌No:/TCB_cancel'
+    
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.0 #100%    
+    - delay: 00:00:01 #wait for switch
+    # - service: tts.google_say
+    #   entity_id: media_player.speaker
+    #   data:
+    #     message: 'Atención David!. "Home assístant" se ha reiniciado, revísalo.'
+    #     language: 'es' #optional
+    # - delay: 00:00:10 #wait for message
+    # - service: switch.turn_off
+    #   data:
+    #     entity_id: switch.sonoffbasic_3
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.speaker
+        #media_content_id: http://flucast-m01-05.flumotion.com/cope/rockfm.mp3
+        #media_content_type: music
+        source: RockFM        
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.01
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.02
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.03
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.04
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.05
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.06
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.07
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.08
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.09
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.1
+    - delay: 00:00:10 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.15
+    - delay: 00:00:10 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.20
+
+goodmorninglight:
+  alias: bondiallums
+  sequence: 
+    - service: light.turn_on
+      data:
+        entity_id: light.Yeelight_1
+        effect: Sunrise
+        #transition: 40
+        
+    # - service: light.turn_on
+    #   data:
+    #     entity_id: light.Yeelight_1
+    #     rgb_color: [255,166,0]
+    #     transition: 60
+    # - service: light.turn_on
+    #   data:
+    #     entity_id: light.Yeelight_1
+    #     rgb_color: [255,255,255]
+    #     transition: 30
+    # - service: light.turn_on
+    #   data:
+    #     entity_id: light.Yeelight_1
+    #     effect: "Strobe epilespy!"
+    #     rgb_color: [255,255,255]
+    
+    # # Wait 5 seconds
+    # - delay: 00:01:00
+        
+    # - service: light.turn_off
+    #   data:
+    #     entity_id: light.Yeelight_1
+    #     transition: 40

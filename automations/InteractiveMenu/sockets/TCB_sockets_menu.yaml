@@ -2,7 +2,6 @@
 ## INLINE_KEYBOARD - TCB_sockets_menu
 ##
 - alias: 'TCB_sockets_menu'
-  initial_state: 'true'
   trigger:
     platform: event
     event_type: telegram_callback

@@ -1,0 +1,245 @@
+##########################################
+## BlitzWolf SHP2
+##
+
+homeassistant:
+  customize:
+    switch.BliTZW0lF_10:
+      friendly_name: "Lenovo"
+    script.bw10_report:
+      icon: mdi:message-reply-text  
+      friendly_name: "Report"
+    script.bw10_reset:
+      icon: mdi:restore
+      friendly_name: "Reset"
+    sensor.bw10_power:
+      friendly_name: "Power"
+    sensor.bw10_current:
+      friendly_name: "Current"
+    sensor.bw10_voltage:
+      friendly_name: "Voltage"
+    sensor.bw10_today:
+      friendly_name: "KW Today"
+    sensor.bw10_total:
+      friendly_name: "KW Total"
+    sensor.bw10_totalstarttime:
+      friendly_name: "Last reset"
+
+input_number:
+  bw10_kw_pico:
+    name: 'KW pico'
+    icon: mdi:trending-up
+    unit_of_measurement: "KW"
+    min: 0
+    max: 1000
+    mode: box
+    step: 0.001 
+  bw10_kw_valle:
+    name: 'KW valle'
+    icon: mdi:trending-down
+    unit_of_measurement: "KW"
+    min: 0
+    max: 1000
+    mode: box
+    step: 0.001 
+  bw10_partial:
+    name: partial data
+    icon: mdi:calculator-variant
+    unit_of_measurement: "KW"
+    min: 0
+    max: 1000
+    mode: box
+    step: 0.001  
+
+switch:
+  - platform: mqtt
+    name: "BliTZW0lF_10"
+    state_topic: "stat/BliTZW0lF_10/POWER"
+    command_topic: "cmnd/BliTZW0lF_10/POWER"
+    availability_topic: "tele/BliTZW0lF_10/LWT"
+    qos: 2
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    icon: mdi:speedometer
+
+sensor:
+  - platform: mqtt
+    name: bw10_totalstarttime
+    state_topic: "tele/BliTZW0lF_10/SENSOR"
+    value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S%z')) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
+    unit_of_measurement: ""
+    icon: mdi:update
+    
+  - platform: mqtt
+    name: bw10_total
+    state_topic: "tele/BliTZW0lF_10/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Total }}"
+    unit_of_measurement: "KW"
+    icon: mdi:elevation-rise
+  
+  - platform: mqtt
+    name: bw10_today
+    state_topic: "tele/BliTZW0lF_10/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Today }}"
+    unit_of_measurement: "KW"  
+    icon: mdi:elevation-rise
+    
+  - platform: mqtt
+    name: bw10_power
+    state_topic: "tele/BliTZW0lF_10/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Power }}"
+    unit_of_measurement: "W"
+    icon: mdi:elevation-rise
+
+  - platform: mqtt
+    name: bw10_voltage
+    state_topic: "tele/BliTZW0lF_10/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Voltage }}"
+    unit_of_measurement: "V"
+    icon: mdi:current-ac
+
+  - platform: mqtt
+    name: bw10_current
+    state_topic: "tele/BliTZW0lF_10/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Current }}"
+    unit_of_measurement: "A"
+    icon: mdi:transfer
+
+  - platform: template
+    sensors:
+      bw10_kw_valle:
+        friendly_name: 'KW valle'
+        value_template: '{{ (states("input_number.bw10_kw_valle") | float| round(6)) }}'
+        icon_template: mdi:trending-down
+        unit_of_measurement: "KW"
+      bw10_kw_pico:
+        friendly_name: 'KW pico'
+        value_template: '{{ (states("input_number.bw10_kw_pico") | float | round(6)) }}'
+        icon_template: mdi:trending-up
+        unit_of_measurement: "KW"
+      bw10_eur_valle:
+        friendly_name: '€ valle'
+        value_template: '{{ (states("input_number.bw10_kw_valle") | multiply(states("input_text.energy_cost_v")|float) | float | round(4)) }}'
+        unit_of_measurement: "€"
+        icon_template: mdi:progress-download
+      bw10_eur_pico:
+        friendly_name: '€ pico'
+        value_template: '{{ (states("input_number.bw10_kw_pico") | multiply(states("input_text.energy_cost_p")|float) | float | round(4)) }}'
+        icon_template: mdi:progress-upload
+        unit_of_measurement: "€"
+      bw10_total_euro:
+        friendly_name: '€ Total'
+        value_template: '{{(((states.sensor.bw10_eur_valle.state | float) + (states.sensor.bw10_eur_pico.state  | float)) | round(4)) }}'
+        unit_of_measurement: "€"
+        icon_template: mdi:currency-eur   
+
+automation:
+  - alias: 'bw10 reset'
+    initial_state: 'true'
+    trigger:
+      - platform: template
+        value_template: '{{ now().strftime("%d") == "01" }}'
+    action:
+      - service: script.bw10_report
+      - service: script.bw10_reset
+        
+  - alias: 'bw10 Valle'
+    initial_state: on
+    trigger:
+      - platform: template
+        value_template: '{{ now().strftime("%M") == "00" }}'
+    condition:
+      - condition: template
+        value_template: '{{ now().strftime("%H") == "13" }}'
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw10_kw_valle
+          value: "{{ ((states.input_number.bw10_kw_valle.state|float) + ((states.sensor.bw10_total.state|float) - (states.input_number.bw10_partial.state|float))|float) }}"
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw10_partial
+          value: "{{ states.sensor.bw10_total.state }}"          
+
+  - alias: 'bw10 Pico'
+    initial_state: on
+    trigger:
+      - platform: template
+        value_template: '{{ now().strftime("%M") == "00" }}'
+    condition:
+      - condition: template
+        value_template: '{{ now().strftime("%H") == "23" }}'
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw10_kw_pico
+          value: "{{ ((states.input_number.bw10_kw_pico.state|float) + ((states.sensor.bw10_total.state|float) - (states.input_number.bw10_partial.state|float))|float) }}"
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw10_partial
+          value: "{{ states.sensor.bw10_total.state }}"      
+
+script:
+  bw10_report:
+    sequence:
+      - service: persistent_notification.create
+        data_template:
+          title: "{{state_attr('switch.BliTZW0lF_10', 'friendly_name')}} Report"
+          message: "From {{ (states.sensor.bw10_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
+            to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
+            KW Pico: {{ states.sensor.bw10_kw_pico.state_with_unit }} \n
+            KW Vall: {{ states.sensor.bw10_kw_valle.state_with_unit }} \n
+            Total KW: {{ states.sensor.bw10_total.state_with_unit }}\n\n
+            € Pico: {{ states.sensor.bw10_eur_pico.state_with_unit }} \n
+            € Vall: {{ states.sensor.bw10_eur_valle.state_with_unit }} \n
+            Total €: {{ states.sensor.bw10_total_euro.state_with_unit }}\n"
+  bw10_reset:
+    sequence:
+      - service: mqtt.publish
+        data_template:
+          topic: "cmnd/BliTZW0lF_10/energyreset1"
+          payload: "0"
+      - service: mqtt.publish
+        data_template:
+          topic: "cmnd/BliTZW0lF_10/energyreset2"
+          payload: "0"
+      - service: mqtt.publish
+        data_template:
+          topic: "cmnd/BliTZW0lF_10/energyreset3"
+          payload: "0"
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw10_Kw_pico
+          value: "0"
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw10_Kw_valle
+          value: "0"
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.bw10_partial
+          value: "0"
+
+#########################
+#Lovelace entities Card:#
+#########################
+# entities:
+#   - entity: switch.BliTZW0lF_10
+#   - entity: sensor.bw10_power
+#   - entity: sensor.bw10_current
+#   - entity: sensor.bw10_voltage
+#   - entity: sensor.bw10_totalstarttime
+#   - entity: sensor.bw10_kw_pico
+#   - entity: sensor.bw10_kw_valle
+#   - entity: sensor.bw10_today
+#   - entity: sensor.bw10_total
+#   - entity: sensor.bw10_eur_pico
+#   - entity: sensor.bw10_eur_valle
+#   - entity: sensor.bw10_total_euro
+#   - entity: script.bw10_reset
+#   - entity: script.bw10_report
+# show_header_toggle: false
+# type: entities

@@ -2,7 +2,6 @@
 ## INLINE_KEYBOARD - TCB_sensors_menu
 ##
 - alias: 'TCB_sensors_menu'
-  initial_state: 'true'
   trigger:
     platform: event
     event_type: telegram_callback

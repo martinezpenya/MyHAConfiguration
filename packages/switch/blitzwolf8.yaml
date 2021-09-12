@@ -122,17 +122,17 @@ sensor:
         unit_of_measurement: "KW"
       bw8_eur_valle:
         friendly_name: '€ valle'
-        value_template: '{{ (states("input_number.bw8_kw_valle") | multiply(0.086565 ) | float | round(2)) }}'
+        value_template: '{{ (states("input_number.bw8_kw_valle") | multiply(states("input_text.energy_cost_v")|float) | float | round(4)) }}'
         unit_of_measurement: "€"
         icon_template: mdi:progress-download
       bw8_eur_pico:
         friendly_name: '€ pico'
-        value_template: '{{ (states("input_number.bw8_kw_pico") | multiply(0.165323) | float | round(2)) }}'
+        value_template: '{{ (states("input_number.bw8_kw_pico") | multiply(states("input_text.energy_cost_p")|float) | float | round(4)) }}'
         icon_template: mdi:progress-upload
         unit_of_measurement: "€"
       bw8_total_euro:
         friendly_name: '€ Total'
-        value_template: '{{(((states.sensor.bw8_eur_valle.state | float) + (states.sensor.bw8_eur_pico.state  | float)) | round(2)) }}'
+        value_template: '{{(((states.sensor.bw8_eur_valle.state | float) + (states.sensor.bw8_eur_pico.state  | float)) | round(4)) }}'
         unit_of_measurement: "€"
         icon_template: mdi:currency-eur   
 

@@ -1,0 +1,37 @@
+#turn on music 2 minutes before android alarm
+- id: Good Morning
+  alias: Good Morning
+  trigger:
+    - platform: time_pattern
+      minutes: /1
+  condition:
+    condition: template
+    value_template: >-
+      {{now().strftime("%a %h %d %H:%M %Z %Y") == (((state_attr('sensor.redmi_note_8_pro_next_alarm', 'Time in Milliseconds') | int / 1000) - 1*60 ) | timestamp_custom('%a %h %d %H:%M %Z %Y'))}}
+
+
+#   #     - id: set_next_alarm_time
+#   #     alias: Set Next Alarm Time
+#   #     trigger:
+#   - platform: state
+#     entity_id: sensor.redmi_note_8_pro_next_alarm
+#   condition:
+#   - condition: template
+#     value_template: '{{ trigger.to_state.state not in ["unknown","unavailable"] }}'
+#   action:
+#   - service: input_datetime.set_datetime
+#     data:
+#       timestamp: '{{ as_timestamp(trigger.to_state.state) }}'
+#     entity_id: input_datetime.my_phone_alarm
+#   mode: single
+
+# - id: GMalarm_triggered
+#   alias: Good Morning Alarm Triggered
+#   trigger:
+#   - platform: time
+#     at: input_datetime.my_phone_alarm  
+
+  action:
+    - service: script.goodmorninglight
+    - service: script.goodmorningmusic
+#{{(now().timestamp() | int /100 )| int }} == {{(((state_attr('sensor.redmi_note_8_pro_next_alarm', 'Time in Milliseconds') | int / 1000) - 1*60 ) | int / 100) | int }}

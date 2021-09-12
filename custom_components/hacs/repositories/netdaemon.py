@@ -1,28 +1,28 @@
 """Class for netdaemon apps in HACS."""
-from integrationhelper import Logger
+from custom_components.hacs.enums import HacsCategory
+from custom_components.hacs.exceptions import HacsException
+from custom_components.hacs.helpers.classes.repository import HacsRepository
+from custom_components.hacs.helpers.functions.filters import (
+    get_first_directory_in_directory,
+)
 
-from .repository import HacsRepository
-from ..hacsbase.exceptions import HacsException
 
-from custom_components.hacs.helpers.filters import get_first_directory_in_directory
-
-
-class HacsNetdaemon(HacsRepository):
+class HacsNetdaemonRepository(HacsRepository):
     """Netdaemon apps in HACS."""
 
     def __init__(self, full_name):
         """Initialize."""
         super().__init__()
         self.data.full_name = full_name
-        self.data.category = "netdaemon"
+        self.data.full_name_lower = full_name.lower()
+        self.data.category = HacsCategory.NETDAEMON
         self.content.path.local = self.localpath
         self.content.path.remote = "apps"
-        self.logger = Logger(f"hacs.repository.{self.data.category}.{full_name}")
 
     @property
     def localpath(self):
         """Return localpath."""
-        return f"{self.hacs.system.config_path}/netdaemon/apps/{self.data.name}"
+        return f"{self.hacs.core.config_path}/netdaemon/apps/{self.data.name}"
 
     async def validate_repository(self):
         """Validate."""
@@ -34,16 +34,12 @@ class HacsNetdaemon(HacsRepository):
                 self.content.path.remote = ""
 
         if self.content.path.remote == "apps":
-            self.data.domain = get_first_directory_in_directory(
-                self.tree, self.content.path.remote
-            )
+            self.data.domain = get_first_directory_in_directory(self.tree, self.content.path.remote)
             self.content.path.remote = f"apps/{self.data.name}"
 
         compliant = False
         for treefile in self.treefiles:
-            if treefile.startswith(f"{self.content.path.remote}") and treefile.endswith(
-                ".cs"
-            ):
+            if treefile.startswith(f"{self.content.path.remote}") and treefile.endswith(".cs"):
                 compliant = True
                 break
         if not compliant:
@@ -54,13 +50,14 @@ class HacsNetdaemon(HacsRepository):
         # Handle potential errors
         if self.validate.errors:
             for error in self.validate.errors:
-                if not self.hacs.system.status.startup:
-                    self.logger.error(error)
+                if not self.hacs.status.startup:
+                    self.logger.error("%s %s", self, error)
         return self.validate.success
 
-    async def update_repository(self, ignore_issues=False):
+    async def update_repository(self, ignore_issues=False, force=False):
         """Update."""
-        await self.common_update(ignore_issues)
+        if not await self.common_update(ignore_issues, force):
+            return
 
         # Get appdaemon objects.
         if self.repository_manifest:
@@ -68,9 +65,7 @@ class HacsNetdaemon(HacsRepository):
                 self.content.path.remote = ""
 
         if self.content.path.remote == "apps":
-            self.data.domain = get_first_directory_in_directory(
-                self.tree, self.content.path.remote
-            )
+            self.data.domain = get_first_directory_in_directory(self.tree, self.content.path.remote)
             self.content.path.remote = f"apps/{self.data.name}"
 
         # Set local path
@@ -82,5 +77,5 @@ class HacsNetdaemon(HacsRepository):
             await self.hacs.hass.services.async_call(
                 "hassio", "addon_restart", {"addon": "c6a2317c_netdaemon"}
             )
-        except Exception:  # pylint: disable=broad-except
+        except (Exception, BaseException):  # pylint: disable=broad-except
             pass

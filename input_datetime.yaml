@@ -1,0 +1,5 @@
+my_phone_alarm:
+  name: My Phone Alarm
+  has_time: true
+  has_date: true
+  icon: mdi:android

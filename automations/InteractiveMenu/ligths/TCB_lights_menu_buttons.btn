@@ -3,8 +3,9 @@
          - "{% if is_state('switch.luz_balcon', 'on') %} \U0001f315 Balcony \U0001f4a1:/TCB_light_balcon_off{% else %} \U0001f311 Balcony \U0001f4a1:/TCB_light_balcon_on{% endif %},
             {% if is_state('switch.luz_habitacion', 'on') %} \U0001f315 Ironing \U0001f454:/TCB_light_habitacion_off{% else %} \U0001f311 Ironing \U0001f454:/TCB_light_habitacion_on{% endif %}"
          - "{% if is_state('switch.luz_comedor_mesa', 'on') %} \U0001f315 Living Table \U0001f37d\U0000fe0f:/TCB_light_comedor_mesa_off{% else %} \U0001f311 Living Table \U0001f37d\U0000fe0f:/TCB_light_comedor_mesa_on{% endif %}, 
-            {% if is_state('switch.luz_comedor_TV', 'on') %} \U0001f315 Living TV \U0001f6cb\U0000fe0f:/TCB_light_comedor_tv_off{% else %} \U0001f311 Living TV \U0001f6cb\U0000fe0f:/TCB_light_comedor_tv_on{% endif %}"
-         - "{% if is_state('switch.luz_cocina_1', 'on') %} \U0001f315 Kitchen \U0001f958:/TCB_light_cocina_1_off{% else %} \U0001f311 Kitchen \U0001f958:/TCB_light_cocina_1_on{% endif %}, 
+            {% if is_state('switch.luz_comedor_TV', 'on') %} \U0001f315 Living TV \U0001f6cb\U0000fe0f:/TCB_light_comedor_tv_off{% else %} \U0001f311 Living TV \U0001f6cb\U0000fe0f:/TCB_light_comedor_tv_on{% endif %},
+            {% if is_state('switch.sonoffS26_2', 'on') %} \U0001f315 TVLamp \U0001f6cb:/TCB_light_tvlamp_off{% else %} \U0001f311 TVLamp \U0001f6cb:/TCB_light_tvlamp_on{% endif %}"
+         - "{% if is_state('switch.luz_cocina', 'on') %} \U0001f315 Kitchen \U0001f958:/TCB_light_cocina_off{% else %} \U0001f311 Kitchen \U0001f958:/TCB_light_cocina_on{% endif %}, 
             {% if is_state('switch.luz_dormitorio', 'on') %} \U0001f315 Sleeping \U0001f6cc:/TCB_light_dormitorio_off{% else %} \U0001f311 Sleeping \U0001f6cc:/TCB_light_dormitorio_on{% endif %}"
          - "{% if is_state('switch.luz_bano_grande', 'on') %} \U0001f315 Big WC \U0001f6bf:/TCB_light_bano_grande_off{% else %} \U0001f311 Big WC \U0001f6bf:/TCB_light_bano_grande_on{% endif %},
             {% if is_state('switch.luz_bano_pequeno', 'on') %} \U0001f315 Small WC \U0001f6bd:/TCB_light_bano_pequeno_off{% else %} \U0001f311 Small WC \U0001f6bd:/TCB_light_bano_pequeno_on{% endif %}"

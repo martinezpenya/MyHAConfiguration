@@ -30,7 +30,7 @@
   value_template: '{{ value_json.RfReceived.Data }}'  
   
 ###############################
-# Remote controller 4 buttons
+# Remote controller 1 (4 buttons)
 
 ###############################
 # Button A
@@ -69,6 +69,48 @@
   state_topic: "tele/sonoffRF433/RESULT"
   payload_on: "801D41"
   payload_off: "801D41off"
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+###############################
+# Remote controller 2 (4 buttons)
+
+###############################
+# Button A
+- platform: mqtt
+  name: "Remote2_BtnA"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "5E7B24"
+  payload_off: "5E7B24off"
+  value_template: '{{ value_json.RfReceived.Data }}'
+          
+###############################
+# Button B
+
+- platform: mqtt
+  name: "Remote2_BtnB"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "5E7B28"
+  payload_off: "5E7B28off"
+  value_template: '{{ value_json.RfReceived.Data }}'
+      
+###############################
+# Button C
+
+- platform: mqtt
+  name: "Remote2_BtnC"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "5E7B21"
+  payload_off: "5E7B21off"
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+###############################
+# Button D
+
+- platform: mqtt
+  name: "Remote2_BtnD"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "5E7B22"
+  payload_off: "5E7B22off"
   value_template: '{{ value_json.RfReceived.Data }}'
 
 #Front door Sensor 433
@@ -149,9 +191,32 @@
   value_template: '{{ value_json.RfReceived.Data }}'
   
 - platform: mqtt
-  state_topic: "dmp/lolin5"
-  name: "Lolin5 PIR"
-  device_class: motion
-  value_template: '{{ value_json.motion }}'
-  payload_on: "motion detected"
-  payload_off: "standby"
+  name: "3d printer Door"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "AD6C0A"
+  payload_off: "AD6C0E"
+  device_class: door
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+- platform: mqtt
+  name: "3d printer Door Battery"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "AD6C06"
+  payload_off: "AD6C06off"
+  device_class: battery
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+- platform: mqtt
+  name: "3d printer Door Violation"
+  state_topic: "tele/sonoffRF433/RESULT"
+  payload_on: "AD6C07"
+  payload_off: "AD6C07off"
+  device_class: problem
+  value_template: '{{ value_json.RfReceived.Data }}'
+
+# - platform: template
+#   sensors: 
+#    david_next_alarm:
+#      friendly_name: "David Next Alarm"
+#      value_template: >-
+#        {{now().strftime("%a %h %d %H:%M %Z %Y") == (((state_attr('sensor.redmi_note_8_pro_next_alarm', 'Time in Milliseconds') | int / 1000) - 2*60 ) | timestamp_custom('%a %h %d %H:%M %Z %Y'))}}
