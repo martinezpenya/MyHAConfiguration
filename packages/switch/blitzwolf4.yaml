@@ -2,6 +2,13 @@
 ## BlitzWolf SHP2
 ##
 
+# OLD TEMPLATE
+# {"NAME":"BlitzWolf SHP","GPIO":[321,1,320,1,0,2720,0,0,2624,32,2656,224,0,0],"FLAG":0,"BASE":45}
+
+# NEW TEMPLATE
+
+
+
 homeassistant:
   customize:
     switch.BliTZW0lF_4:
@@ -69,7 +76,7 @@ sensor:
   - platform: mqtt
     name: bw4_totalstarttime
     state_topic: "tele/BliTZW0lF_4/SENSOR"
-    value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S%z')) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
+    value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S%z', now())) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
     unit_of_measurement: ""
     icon: mdi:update
     
@@ -135,6 +142,26 @@ sensor:
         value_template: '{{(((states.sensor.bw4_eur_valle.state | float) + (states.sensor.bw4_eur_pico.state  | float)) | round(4)) }}'
         unit_of_measurement: "€"
         icon_template: mdi:currency-eur   
+      bw4_energy_cost_hour:
+        friendly_name: "bw4_Cost (current hour)"
+        unit_of_measurement: '€'
+        value_template: "{%set IVA = 1.10 |float %}
+          {%set imp_elec = 1.05112696 |float %}
+          {{ (( states('sensor.bw4_hourly_energy') | float * (states('sensor.pvpc') | float) ) * imp_elec * IVA )  | round(3) }}"
+
+utility_meter:
+  bw4_hourly_energy:
+    source: sensor.bw4_today
+    cycle: hourly
+  bw4_daily_energy:
+    source: sensor.bw4_today
+    cycle: daily
+  bw4_monthly_energy:
+    source: sensor.bw4_today
+    cycle: monthly
+  bw4_monthly_energy_cost:
+    source: sensor.bw4_energy_cost_hour
+    cycle: monthly
 
 automation:
   - alias: 'bw4 reset'

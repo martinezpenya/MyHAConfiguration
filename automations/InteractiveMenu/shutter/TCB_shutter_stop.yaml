@@ -10,7 +10,7 @@
       data: '/TCB_shutter_stop'
   action:
     - data:
-        entity_id: cover.50701244500291415e17
+        entity_id: cover.persiana_despatx_curtain #cover.50701244500291415e17
       service: cover.stop_cover        
     - delay: 00:00:01
     - service: telegram_bot.answer_callback_query

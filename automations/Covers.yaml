@@ -1,17 +1,17 @@
-- id: '1548790568933'
-  alias: Actualizar Estados Tuya
-  trigger:
-  - platform: time_pattern
-    seconds: /2
-  action:
-  - alias: ''
-    data: {}
-    service: tuya.force_update
+# - id: '1548790568933'
+#   alias: Actualizar Estados Tuya
+#   trigger:
+#   - platform: time_pattern
+#     seconds: /2
+#   action:
+#   - alias: ''
+#     data: {}
+#     service: tuya.force_update
     
 - id: '1548848519050'
   alias: Open to off
   trigger:
-  - entity_id: cover.50701244500291415e17
+  - entity_id: cover.persiana_despatx_curtain #cover.50701244500291415e17
     from: open
     platform: state
     to: unknown
@@ -22,7 +22,7 @@
 - id: '1548848632774'
   alias: Closed to off
   trigger:
-  - entity_id: cover.50701244500291415e17
+  - entity_id: cover.persiana_despatx_curtain #cover.50701244500291415e17
     from: closed
     platform: state
     to: unknown
@@ -44,13 +44,13 @@
   condition: []
   action:
   - data:
-      entity_id: cover.50701244500291415e17
+      entity_id: cover.persiana_despatx_curtain #cover.50701244500291415e17
     service: cover.stop_cover
     
 - id: '1548849447894'
   alias: Button Up
   trigger:
-  - entity_id: cover.50701244500291415e17
+  - entity_id: cover.persiana_despatx_curtain #cover.50701244500291415e17
     platform: state
     to: open
   condition:
@@ -65,7 +65,7 @@
 - id: '1548849728182'
   alias: Button Down
   trigger:
-  - entity_id: cover.50701244500291415e17
+  - entity_id: cover.persiana_despatx_curtain #cover.50701244500291415e17
     platform: state
     to: closed
   condition:
@@ -122,7 +122,7 @@
       duration: "{{ '00:00:%02d' | format( ((states.input_number.window_position.state | int) - ((((states.input_number.window_set_position.state | int ) * 28 )/100) | int) ) | abs ) }}"
   - service: cover.close_cover
     data:
-      entity_id: cover.50701244500291415e17
+      entity_id: cover.persiana_despatx_curtain #cover.50701244500291415e17
       
 - id: '1548850461111'
   alias: Set Position Up
@@ -139,4 +139,4 @@
       duration: "{{ '00:00:%02d' | format( ((states.input_number.window_position.state | int) - ((((states.input_number.window_set_position.state | int ) * 28 )/100) | int) ) | abs ) }}"
   - service: cover.open_cover
     data:
-      entity_id: cover.50701244500291415e17
+      entity_id: cover.persiana_despatx_curtain #cover.50701244500291415e17

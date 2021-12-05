@@ -8,17 +8,13 @@ switch.aire_menjador:
   icon: mdi:air-conditioner
   assumed_state: false
 switch.sonoffS26_2:
-  friendly_name: "Lámpara comedor"
-
+  friendly_name: Lámpara comedor
 input_number.bw1_partial:
   hidden: true
-
 script.blitzwolf1_report:
   icon: mdi:message-reply-text
-
 automation.blitzwolf1_reset:
   icon: mdi:restore
-
 sensor.gasolinera:
   hidden: true
 sensor.gasolinera1:
@@ -27,7 +23,8 @@ sensor.gasolinera2:
   hidden: true
 sensor.gasolinera3:
   hidden: true
-
-cover.50701244500291415e17:
+cover.persiana_despatx_curtain:
   friendly_name: PersianaDespatx
   device_class: shutter
+switch.blitzw0lf_1:
+  friendly_name: Calentador

@@ -69,7 +69,7 @@ sensor:
   - platform: mqtt
     name: bw2_totalstarttime
     state_topic: "tele/BliTZW0lF_2/SENSOR"
-    value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S%z')) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
+    value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S%z', now())) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
     unit_of_measurement: ""
     icon: mdi:update
     
@@ -135,10 +135,30 @@ sensor:
         value_template: '{{(((states.sensor.bw2_eur_valle.state | float) + (states.sensor.bw2_eur_pico.state  | float)) | round(4)) }}'
         unit_of_measurement: "€"
         icon_template: mdi:currency-eur   
+      bw2_energy_cost_hour:
+        friendly_name: "bw2_Cost (current hour)"
+        unit_of_measurement: '€'
+        value_template: "{%set IVA = 1.10 |float %}
+          {%set imp_elec = 1.05112696 |float %}
+          {{ (( states('sensor.bw2_hourly_energy') | float * (states('sensor.pvpc') | float) ) * imp_elec * IVA )  | round(3) }}"
+
+utility_meter:
+  bw2_hourly_energy:
+    source: sensor.bw2_today
+    cycle: hourly
+  bw2_daily_energy:
+    source: sensor.bw2_today
+    cycle: daily
+  bw2_monthly_energy:
+    source: sensor.bw2_today
+    cycle: monthly
+  bw2_monthly_energy_cost:
+    source: sensor.bw2_energy_cost_hour
+    cycle: monthly
 
 automation:
   - alias: 'bw2 reset'
-    initial_state: 'true'
+    initial_state: true
     trigger:
       - platform: template
         value_template: '{{ now().strftime("%d") == "01" }}'
@@ -188,10 +208,7 @@ automation:
         entity_id: sensor.bw2_power
         for: 0:01:00
         platform: numeric_state
-    condition:
-    - condition: state
-      entity_id: switch.BliTZW0lF_2
-      state: 'on'
+    condition: "{{states.switch.BliTZW0lF_2 == 'on'}}"
     action:
       - service: switch.turn_off
         data:

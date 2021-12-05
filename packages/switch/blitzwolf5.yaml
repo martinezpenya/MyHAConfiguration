@@ -69,7 +69,7 @@ sensor:
   - platform: mqtt
     name: bw5_totalstarttime
     state_topic: "tele/BliTZW0lF_5/SENSOR"
-    value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S%z')) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
+    value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S%z', now())) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
     unit_of_measurement: ""
     icon: mdi:update
     
@@ -135,6 +135,26 @@ sensor:
         value_template: '{{(((states.sensor.bw5_eur_valle.state | float) + (states.sensor.bw5_eur_pico.state  | float)) | round(4)) }}'
         unit_of_measurement: "€"
         icon_template: mdi:currency-eur   
+      bw5_energy_cost_hour:
+        friendly_name: "bw5_Cost (current hour)"
+        unit_of_measurement: '€'
+        value_template: "{%set IVA = 1.10 |float %}
+          {%set imp_elec = 1.05112696 |float %}
+          {{ (( states('sensor.bw5_hourly_energy') | float * (states('sensor.pvpc') | float) ) * imp_elec * IVA )  | round(3) }}"
+
+utility_meter:
+  bw5_hourly_energy:
+    source: sensor.bw5_today
+    cycle: hourly
+  bw5_daily_energy:
+    source: sensor.bw5_today
+    cycle: daily
+  bw5_monthly_energy:
+    source: sensor.bw5_today
+    cycle: monthly
+  bw5_monthly_energy_cost:
+    source: sensor.bw5_energy_cost_hour
+    cycle: monthly
 
 automation:
   - alias: 'bw5 reset'

@@ -192,119 +192,119 @@ AADespatx:
         - binary_sensor.AA_Despatx_Battery
         - binary_sensor.AA_Despatx_Violation
 
-##########################################
-## BlitzWolf SHP2
-## BliTZW0lF_1 
-##        
-BliTZW0lF_1:
-  name: WaterHeater
-  icon: mdi:fish
-  entities:
-    - switch.BliTZW0lF_1
-    - sensor.bw1_power
-    - sensor.bw1_current
-    - sensor.bw1_voltage
-#    - sensor.bw1_factor
-    - sensor.bw1_today
-#    - sensor.bw1_yesterday
-#    - sensor.bw1_yesterday_euro
-    - sensor.bw1_totalstarttime
-    - sensor.sensor_bw1_kw_pico
-    - sensor.sensor_bw1_kw_valle
-    - sensor.bw1_total   
-    - sensor.sensor_bw1_eur_pico
-    - sensor.sensor_bw1_eur_valle
-    - sensor.sensor_bw1_total_euro
-    - automation.blitzwolf1_reset
-    - script.blitzwolf1_report
-#    - input_number.bw1_kw_valle
-#    - input_number.bw1_kw_pico
-    - input_number.bw1_partial
-    - automation.blitzwolf1_valle
-    - automation.blitzwolf1_pico
+# ##########################################
+# ## BlitzWolf SHP2
+# ## BliTZW0lF_1 
+# ##        
+# BliTZW0lF_1:
+#   name: WaterHeater
+#   icon: mdi:fish
+#   entities:
+#     - switch.BliTZW0lF_1
+#     - sensor.bw1_power
+#     - sensor.bw1_current
+#     - sensor.bw1_voltage
+# #    - sensor.bw1_factor
+#     - sensor.bw1_today
+# #    - sensor.bw1_yesterday
+# #    - sensor.bw1_yesterday_euro
+#     - sensor.bw1_totalstarttime
+#     - sensor.sensor_bw1_kw_pico
+#     - sensor.sensor_bw1_kw_valle
+#     - sensor.bw1_total   
+#     - sensor.sensor_bw1_eur_pico
+#     - sensor.sensor_bw1_eur_valle
+#     - sensor.sensor_bw1_total_euro
+#     - automation.blitzwolf1_reset
+#     - script.blitzwolf1_report
+# #    - input_number.bw1_kw_valle
+# #    - input_number.bw1_kw_pico
+#     - input_number.bw1_partial
+#     - automation.blitzwolf1_valle
+#     - automation.blitzwolf1_pico
     
-##########################################
-## BlitzWolf SHP2
-## BliTZW0lF_2
-##        
-BliTZW0lF_2:
-  name: 3dPrint
-  icon: mdi:fish
-  entities:
-    - switch.BliTZW0lF_2
-    - sensor.bw2_power
-    - sensor.bw2_current
-    - sensor.bw2_voltage
-#    - sensor.bw2_factor
-    - sensor.bw2_today
-#    - sensor.bw2_yesterday
-#    - sensor.bw2_yesterday_euro
-    - sensor.bw2_totalstarttime
-    - sensor.sensor_bw2_kw_pico
-    - sensor.sensor_bw2_kw_valle
-    - sensor.bw2_total   
-    - sensor.sensor_bw2_eur_pico
-    - sensor.sensor_bw2_eur_valle
-    - sensor.sensor_bw2_total_euro
-    - automation.blitzwolf2_reset
-    - script.blitzwolf2_report
-#    - input_number.bw2_kw_valle
-#    - input_number.bw2_kw_pico
-    - input_number.bw2_partial
-    - automation.blitzwolf2_valle
-    - automation.blitzwolf2_pico  
+# ##########################################
+# ## BlitzWolf SHP2
+# ## BliTZW0lF_2
+# ##        
+# BliTZW0lF_2:
+#   name: 3dPrint
+#   icon: mdi:fish
+#   entities:
+#     - switch.BliTZW0lF_2
+#     - sensor.bw2_power
+#     - sensor.bw2_current
+#     - sensor.bw2_voltage
+# #    - sensor.bw2_factor
+#     - sensor.bw2_today
+# #    - sensor.bw2_yesterday
+# #    - sensor.bw2_yesterday_euro
+#     - sensor.bw2_totalstarttime
+#     - sensor.sensor_bw2_kw_pico
+#     - sensor.sensor_bw2_kw_valle
+#     - sensor.bw2_total   
+#     - sensor.sensor_bw2_eur_pico
+#     - sensor.sensor_bw2_eur_valle
+#     - sensor.sensor_bw2_total_euro
+#     - automation.blitzwolf2_reset
+#     - script.blitzwolf2_report
+# #    - input_number.bw2_kw_valle
+# #    - input_number.bw2_kw_pico
+#     - input_number.bw2_partial
+#     - automation.blitzwolf2_valle
+#     - automation.blitzwolf2_pico  
     
-##########################################
-## BlitzWolf SHP2
-## BliTZW0lF_3
-##        
-BliTZW0lF_3:
-  name: Computer
-  icon: mdi:fish
-  entities:
-    - switch.BliTZW0lF_3
-    - sensor.bw3_power
-    - sensor.bw3_current
-    - sensor.bw3_voltage
-    - sensor.bw3_today
-    - sensor.bw3_totalstarttime
-    - sensor.sensor_bw3_kw_pico
-    - sensor.sensor_bw3_kw_valle
-    - sensor.bw3_total   
-    - sensor.sensor_bw3_eur_pico
-    - sensor.sensor_bw3_eur_valle
-    - sensor.sensor_bw3_total_euro
-    - automation.blitzwolf3_reset
-    - script.blitzwolf3_report
-    - input_number.bw3_partial
-    - automation.blitzwolf3_valle
-    - automation.blitzwolf3_pico 
+# ##########################################
+# ## BlitzWolf SHP2
+# ## BliTZW0lF_3
+# ##        
+# BliTZW0lF_3:
+#   name: Computer
+#   icon: mdi:fish
+#   entities:
+#     - switch.BliTZW0lF_3
+#     - sensor.bw3_power
+#     - sensor.bw3_current
+#     - sensor.bw3_voltage
+#     - sensor.bw3_today
+#     - sensor.bw3_totalstarttime
+#     - sensor.sensor_bw3_kw_pico
+#     - sensor.sensor_bw3_kw_valle
+#     - sensor.bw3_total   
+#     - sensor.sensor_bw3_eur_pico
+#     - sensor.sensor_bw3_eur_valle
+#     - sensor.sensor_bw3_total_euro
+#     - automation.blitzwolf3_reset
+#     - script.blitzwolf3_report
+#     - input_number.bw3_partial
+#     - automation.blitzwolf3_valle
+#     - automation.blitzwolf3_pico 
 
-##########################################
-## BlitzWolf SHP2
-## BliTZW0lF_5
-##        
-BliTZW0lF_5:
-  name: Roomba
-  icon: mdi:fish
-  entities:
-    - switch.BliTZW0lF_5
-    - sensor.bw5_power
-    - sensor.bw5_current
-    - sensor.bw5_voltage
-    - sensor.bw5_today
-    - sensor.bw5_totalstarttime
-    - sensor.sensor_bw5_kw_pico
-    - sensor.sensor_bw5_kw_valle
-    - sensor.bw5_total   
-    - sensor.sensor_bw5_eur_pico
-    - sensor.sensor_bw5_eur_valle
-    - sensor.sensor_bw5_total_euro
-    - automation.blitzwolf5_reset
-    - script.blitzwolf5_report
-    - input_number.bw5_partial
-    - automation.blitzwolf5_valle
-    - automation.blitzwolf5_pico 
+# ##########################################
+# ## BlitzWolf SHP2
+# ## BliTZW0lF_5
+# ##        
+# BliTZW0lF_5:
+#   name: Roomba
+#   icon: mdi:fish
+#   entities:
+#     - switch.BliTZW0lF_5
+#     - sensor.bw5_power
+#     - sensor.bw5_current
+#     - sensor.bw5_voltage
+#     - sensor.bw5_today
+#     - sensor.bw5_totalstarttime
+#     - sensor.sensor_bw5_kw_pico
+#     - sensor.sensor_bw5_kw_valle
+#     - sensor.bw5_total   
+#     - sensor.sensor_bw5_eur_pico
+#     - sensor.sensor_bw5_eur_valle
+#     - sensor.sensor_bw5_total_euro
+#     - automation.blitzwolf5_reset
+#     - script.blitzwolf5_report
+#     - input_number.bw5_partial
+#     - automation.blitzwolf5_valle
+#     - automation.blitzwolf5_pico 
     
 GasolinerasCarlet:
     name: Carlet
@@ -343,12 +343,13 @@ Octoprint:
     - sensor.octoprint_time_remaining
     
 persianes:
-    - cover.50701244500291415e17
+    #- cover.50701244500291415e17
+    - cover.persiana_despatx_curtain 
     - input_number.window_position
     - input_number.window_set_position
     - timer.window_down
     - timer.window_up
-    - automation.actualizar_estados_tuya
+    #- automation.actualizar_estados_tuya
     - automation.open_to_off
     - automation.closed_to_off
     - automation.window_timer_stopped

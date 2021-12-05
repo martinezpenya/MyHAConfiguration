@@ -61,7 +61,8 @@ entity_config:
     name: "Despacho"
     description: "Despacho"
     display_categories: TEMPERATURE_SENSOR
-  cover.50701244500291415e17:
+  #cover.50701244500291415e17:
+  cover.persiana_despatx_curtain:
     name: "Persiana despacho"
     description: "Persinana despacho"
     display_categories: INTERIOR_BLIND

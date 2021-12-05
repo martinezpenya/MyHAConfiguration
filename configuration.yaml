@@ -54,9 +54,9 @@ updater:
   # include_used_components: true
 
 # Discover some devices automatically
-discovery:
-  ignore:
-    - yeelight    
+#discovery:
+#  ignore:
+#    - yeelight    
 
 ##########################################
 ## 
@@ -66,6 +66,7 @@ yeelight:
   devices: 
     192.168.0.156:
       name: "Yeelight_1"
+      model: color2
   custom_effects:
   - name: 'Sunrise'
     flow_params:
@@ -285,8 +286,9 @@ vacuum:
   - platform: miio2
     host: !secret vacuumhost
     token: !secret vacuumtoken
-    name: Mop pro
+    name: "Robot Aspirador"
 
 hacs:
   token: !secret hacstoken
 
+energy:

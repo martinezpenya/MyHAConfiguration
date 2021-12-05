@@ -1,20 +1,20 @@
-##########################################
-## BlitzWolf SHP2 (2.3) http://192.168.0.160
-## BliTZW0lF_1 
-##
+# ##########################################
+# ## BlitzWolf SHP2 (2.3) http://192.168.0.160
+# ## BliTZW0lF_1 
+# ##
 
-- platform: mqtt
-  name: "BliTZW0lF_1"
-  state_topic: "stat/BliTZW0lF_1/POWER"
-  command_topic: "cmnd/BliTZW0lF_1/POWER"
-  availability_topic: "tele/BliTZW0lF_1/LWT"
-  qos: 2
-  payload_on: "ON"
-  payload_off: "OFF"
-  payload_available: "Online"
-  payload_not_available: "Offline"
-  optimistic: false
-  icon: mdi:speedometer
+# - platform: mqtt
+#   name: "BliTZW0lF_1"
+#   state_topic: "stat/BliTZW0lF_1/POWER"
+#   command_topic: "cmnd/BliTZW0lF_1/POWER"
+#   availability_topic: "tele/BliTZW0lF_1/LWT"
+#   qos: 2
+#   payload_on: "ON"
+#   payload_off: "OFF"
+#   payload_available: "Online"
+#   payload_not_available: "Offline"
+#   optimistic: false
+#   icon: mdi:speedometer
   
 ##########################################
 ## Sonoff s26 http://192.168.0.151/
