@@ -14,7 +14,7 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: binary_sensor.Remote1_BtnA
+      entity_id: binary_sensor.remote1_btna
       from: 'off'
       to: 'on'
       for:
@@ -29,7 +29,7 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: binary_sensor.Remote1_BtnB
+      entity_id: binary_sensor.remote1_btnb
       from: 'off'
       to: 'on'
       for:
@@ -44,7 +44,7 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: binary_sensor.Remote1_BtnC
+      entity_id: binary_sensor.remote1_btnc
       from: 'off'
       to: 'on'
       for:
@@ -59,7 +59,7 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: binary_sensor.Remote1_BtnD
+      entity_id: binary_sensor.remote1_btnd
       from: 'off'
       to: 'on'
       for:

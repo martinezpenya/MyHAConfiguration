@@ -2,7 +2,7 @@
 ## KEYBOARD - waterheater_60min
 ##
 - alias: 'waterheater_60min_pvpc_min'
-  initial_state: true
+  initial_state: false
   trigger:
     - platform: state
       entity_id: sensor.pvpc

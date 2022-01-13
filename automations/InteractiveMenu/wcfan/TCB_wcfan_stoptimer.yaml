@@ -2,7 +2,7 @@
 ## INLINE_KEYBOARD - TCB_wcfan_stoptimer
 ##
 - alias: 'TCB_wcfan_stoptimer'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_callback

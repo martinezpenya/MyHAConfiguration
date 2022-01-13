@@ -2,7 +2,7 @@
 ## INLINE_KEYBOARD - TCB_light_cocina_on
 ##
 - alias: 'TCB_light_cocina_on'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_callback

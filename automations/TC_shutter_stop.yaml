@@ -2,7 +2,7 @@
 ## KEYBOARD - shutter stop
 ##
 - alias: 'TC_shutter_stop'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_command

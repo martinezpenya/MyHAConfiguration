@@ -2,16 +2,19 @@
 ## INLINE_KEYBOARD - TCB_shutter_stop
 ##
 - alias: 'TCB_shutter_stop'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_callback
     event_data:
       data: '/TCB_shutter_stop'
   action:
-    - data:
-        entity_id: cover.persiana_despatx_curtain #cover.50701244500291415e17
-      service: cover.stop_cover        
+    # - data:
+    #     entity_id: cover.persiana_despatx_curtain #cover.50701244500291415e17
+    #   service: cover.stop_cover        
+    - service: cover.stop_cover
+      target:
+        entity_id: cover.sw_curtain_despatx
     - delay: 00:00:01
     - service: telegram_bot.answer_callback_query
       data_template:

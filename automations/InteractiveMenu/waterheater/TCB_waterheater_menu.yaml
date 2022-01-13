@@ -2,7 +2,7 @@
 ## INLINE_KEYBOARD - TCB_waterheater_menu
 ##
 - alias: 'TCB_waterheater_menu'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_callback
@@ -22,5 +22,5 @@
       data_template:
         message_id: 'last'
         chat_id: '{{ trigger.event.data.chat_id }}'
-        inline_keyboard: !include TCB_waterheater_menu_buttons.btn
+        inline_keyboard: !include TCB_waterheater_menu_buttons
 

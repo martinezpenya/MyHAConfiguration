@@ -3,7 +3,7 @@
 ## KEYBOARD - ping
 ##
 - alias: 'TC ping'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_command

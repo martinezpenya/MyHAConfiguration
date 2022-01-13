@@ -1,8 +1,8 @@
 - alias: 'PIR motion 1 nothome'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: state
-    entity_id: 'binary_sensor.PIR_kerui_p831_1'
+    entity_id: 'binary_sensor.pir_kerui_p831_1'
     to: 'on'
   condition:
 #    condition: and

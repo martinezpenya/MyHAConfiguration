@@ -1,5 +1,5 @@
 - alias: 'Big WC Fan on when light go to off'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: state
     entity_id: 'switch.luz_bano_grande'

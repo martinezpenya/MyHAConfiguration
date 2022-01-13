@@ -2,7 +2,7 @@
 ## KEYBOARD - shutter open
 ##
 - alias: 'TC_shutter_open'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_command

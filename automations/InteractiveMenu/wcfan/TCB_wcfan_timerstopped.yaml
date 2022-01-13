@@ -2,7 +2,7 @@
 ## INLINE_KEYBOARD - TCB_wcfan_timerstopped
 ##
 - alias: 'TCB_wcfan_timerstopped'
-  initial_state: 'true'
+  initial_state: true
   trigger:
   - event_data:
       entity_id: timer.timer_sonoff_basic_2

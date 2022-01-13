@@ -1,4 +1,0 @@
-viewCameras:
-  name: "Cameras"
-  entities:
-    - group.cameras

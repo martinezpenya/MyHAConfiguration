@@ -1,0 +1,116 @@
+##########################################
+## ShellyEM
+##
+
+homeassistant:
+   customize:
+     switch.shelly_relay:
+       friendly_name: "Shelly Relay"
+     script.shelly_reset_totals:
+       icon: mdi:restore
+       friendly_name: "Reset Shelly Totals"
+     script.shelly_reset_device_data:
+       icon: mdi:restore
+       friendly_name: "Reset Shelly Device Data"
+
+switch:
+- platform: mqtt
+  name: "Shelly Relay"
+  state_topic: "shellies/shellyem/relay/0" 
+  command_topic: "shellies/shellyem/relay/0/command"
+  payload_on: "on"
+  payload_off: "off"
+
+sensor:
+- platform: mqtt
+  name: "Shelly Voltage"
+  state_topic: "shellies/shellyem/emeter/0/voltage"
+  unit_of_measurement: 'V'
+  device_class: voltage
+- platform: mqtt
+  name: "Shelly Real Power"
+  state_topic: "shellies/shellyem/emeter/0/power"
+  unit_of_measurement: 'W'
+  device_class: power
+
+- platform: mqtt
+  name: "Shelly Reactive Power"
+  state_topic: "shellies/shellyem/emeter/0/reactive_power"
+  unit_of_measurement: 'VAR'
+  
+- platform: mqtt
+  name: Shelly Total
+  state_topic: "shellies/shellyem/emeter/0/total"
+  value_template: "{{ (value  | float /1000) | round(3)  }}"
+  unit_of_measurement: kWh   
+
+- platform: template
+  sensors:
+    shelly_apparent_power:
+      friendly_name: "Shelly Apparent Power"
+      device_class: power
+      value_template: "{{ ((states('sensor.shelly_real_power')|float ** 2) + (states('sensor.shelly_reactive_power')|float ** 2))|sqrt|round(2) }}"
+      unit_of_measurement: 'VA'
+    shelly_power_factor:
+      friendly_name: "Shelly Power Factor"
+      device_class: power_factor
+      value_template: "{{ ((states('sensor.shelly_real_power')|float) / (states('sensor.shelly_apparent_power')|float))|round(2) }}"
+    shelly_current_draw:
+      friendly_name: "Shelly Current Draw"
+      device_class: current
+      value_template: "{{ ((states('sensor.shelly_apparent_power')|float) / (states('sensor.shelly_voltage')|float))|round(2) }}"
+      unit_of_measurement: 'A'
+    shelly_energy:
+      device_class: energy
+      friendly_name: "Energy Shelly"
+      attribute_templates:
+        last_reset: '1970-01-01T00:00:00+00:00'
+        state_class: measurement
+        device_class: energy
+      unit_of_measurement: 'kWh'
+      value_template: "{{ states('sensor.shelly_total') }}"
+      icon_template: mdi:mdi-current-ac
+
+utility_meter:
+  shelly_energy_usage_daily:
+    source: sensor.shelly_total
+    cycle: daily            
+  shelly_energy_usage_monthly:
+    source: sensor.shelly_total
+    cycle: monthly  
+  shelly_energy_usage_yearly:
+    source: sensor.shelly_total
+    cycle: yearly  
+
+script:
+  shelly_reset_totals:
+    sequence:
+      - service: mqtt.publish
+        data_template:
+          topic: "shellies/shellyem/emeter/0/command"
+          payload: "reset_totals"
+  shelly_reset_device_data:
+    sequence:
+      - service: mqtt.publish
+        data_template:
+          topic: "shellies/shellyem/command"
+          payload: "reset_data"
+
+
+
+##LOVELACE##
+# type: entities
+# entities:
+#   - entity: sensor.shelly_total
+#   - entity: sensor.shelly_apparent_power
+#   - entity: sensor.shelly_current_draw
+#   - entity: sensor.shelly_voltage
+#   - entity: sensor.shelly_power_factor
+#   - entity: sensor.shelly_reactive_power
+#   - entity: sensor.shelly_real_power
+#   - entity: sensor.shelly_energy_usage_daily
+#   - entity: sensor.shelly_energy_usage_monthly
+#   - entity: sensor.shelly_energy_usage_yearly
+#   - entity: switch.shelly_relay
+#   - entity: script.shelly_reset_totals
+#   - entity: script.shelly_reset_device_data

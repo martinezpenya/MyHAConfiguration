@@ -2,7 +2,7 @@
 ## INLINE_KEYBOARD - TCB_light_comedor_mesa_off
 ##
 - alias: 'TCB_light_comedor_mesa_off'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_callback

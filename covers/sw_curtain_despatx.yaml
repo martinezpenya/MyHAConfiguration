@@ -1,0 +1,26 @@
+  - platform: mqtt
+    name: "sw_curtain_despatx"
+    availability_topic: "tele/sw_curtain_despatx/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    position_topic: "stat/sw_curtain_despatx/SHUTTER1"
+    position_open: 100
+    position_closed: 0
+    set_position_topic: 'cmnd/sw_curtain_despatx/ShutterPosition1'
+    command_topic: "cmnd/sw_curtain_despatx/Backlog"
+    payload_open: "ShutterOpen1"
+    payload_close: "ShutterClose1"
+    payload_stop: "ShutterStop1"
+    retain: false
+    optimistic: false
+    position_template: |-
+      {% if not state_attr(entity_id, "current_position") %}
+        {{ value }}
+      {% elif state_attr(entity_id, "current_position") < (value | int) %}
+        {{ (value | int + 1) }}
+      {% elif state_attr(entity_id, "current_position") > (value | int) %}
+        {{ (value | int - 1) }}
+      {% else %}
+        {{ value }}
+      {% endif %}    
+    qos: 1

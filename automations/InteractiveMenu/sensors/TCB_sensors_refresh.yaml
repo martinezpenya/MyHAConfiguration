@@ -2,7 +2,7 @@
 ## INLINE_KEYBOARD - TCB_sensors_refresh
 ##
 - alias: 'TCB_sensors_refresh'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_callback

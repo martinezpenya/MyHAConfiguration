@@ -63,11 +63,11 @@
 # ## Broadlink RMmini3 192.168.0.168
 # ## Ir Switch
 # ##
-- platform: broadlink
+##- platform: broadlink
 #  #host: !secret rm_mini_3_menjador_ip
 #  host: 192.168.0.168
 #  #mac: !secret rm_mini_3_menjador_mac
-  mac: 78:0F:77:D6:3A:FC
+##  mac: 78:0F:77:D6:3A:FC
 #   type: rm_mini
 #   friendly_name: 'RMmini3 menjador'
 #   switches:
@@ -80,9 +80,9 @@
 # ## Broadlink RMmini3 192.168.0.169
 # ## Ir Switch
 # ##
-- platform: broadlink
+##- platform: broadlink
 #  host: !secret rm_mini_3_despatx_ip
-  mac: !secret rm_mini_3_despatx_mac
+##  mac: !secret rm_mini_3_despatx_mac
 #   type: rm_mini
 #   friendly_name: 'RMmini3 despatx'
 #   switches:

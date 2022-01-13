@@ -6,14 +6,9 @@ homeassistant:
   customize:
     switch.BliTZW0lF_1:
       friendly_name: "Calentador"
-      state_class : measurement
-      device_class : energy
-      Other :
-        Attribute name = last_reset
-        Attribute Value = 1970-01-01T00:00:00+00:00            
-    script.bw1_report:
-      icon: mdi:message-reply-text  
-      friendly_name: "Report"
+    automation.bw1_switch_left_on:
+      icon: mdi:power-plug-off
+      friendly_name: "Auto power off"
     script.bw1_reset:
       icon: mdi:restore
       friendly_name: "Reset"
@@ -24,37 +19,11 @@ homeassistant:
     sensor.bw1_voltage:
       friendly_name: "Voltage"
     sensor.bw1_today:
-      friendly_name: "KW Today"
+      friendly_name: "kWh Today"
     sensor.bw1_total:
-      friendly_name: "KW Total"
+      friendly_name: "kWh Total"
     sensor.bw1_totalstarttime:
       friendly_name: "Last reset"
-
-input_number:
-  bw1_kw_pico:
-    name: 'KW pico'
-    icon: mdi:trending-up
-    unit_of_measurement: "KW"
-    min: 0
-    max: 1000
-    mode: box
-    step: 0.001 
-  bw1_kw_valle:
-    name: 'KW valle'
-    icon: mdi:trending-down
-    unit_of_measurement: "KW"
-    min: 0
-    max: 1000
-    mode: box
-    step: 0.001 
-  bw1_partial:
-    name: partial data
-    icon: mdi:calculator-variant
-    unit_of_measurement: "KW"
-    min: 0
-    max: 1000
-    mode: box
-    step: 0.001  
 
 switch:
   - platform: mqtt
@@ -82,7 +51,7 @@ sensor:
     name: bw1_total
     state_topic: "tele/BliTZW0lF_1/SENSOR"
     value_template: "{{ value_json['ENERGY'].Total }}"
-    unit_of_measurement: "KW"
+    unit_of_measurement: "kWh"
     icon: mdi:elevation-rise
   
   - platform: mqtt
@@ -115,130 +84,58 @@ sensor:
 
   - platform: template
     sensors:
-      bw1_kw_valle:
-        friendly_name: 'KW valle'
-        value_template: '{{ (states("input_number.bw1_kw_valle") | float| round(6)) }}'
-        icon_template: mdi:trending-down
-        unit_of_measurement: "KW"
-      bw1_kw_pico:
-        friendly_name: 'KW pico'
-        value_template: '{{ (states("input_number.bw1_kw_pico") | float | round(6)) }}'
-        icon_template: mdi:trending-up
-        unit_of_measurement: "KW"
-      bw1_eur_valle:
-        friendly_name: '€ valle'
-        value_template: '{{ (states("input_number.bw1_kw_valle") | multiply(states("input_text.energy_cost_v")|float) | float | round(4)) }}'
-        unit_of_measurement: "€"
-        icon_template: mdi:progress-download
-      bw1_eur_pico:
-        friendly_name: '€ pico'
-        value_template: '{{ (states("input_number.bw1_kw_pico") | multiply(states("input_text.energy_cost_p")|float) | float | round(4)) }}'
-        icon_template: mdi:progress-upload
-        unit_of_measurement: "€"
-      bw1_total_euro:
-        friendly_name: '€ Total'
-        value_template: '{{(((states.sensor.bw1_eur_valle.state | float) + (states.sensor.bw1_eur_pico.state  | float)) | round(4)) }}'
-        unit_of_measurement: "€"
-        icon_template: mdi:currency-eur   
-      bw1_energy_cost_hour:
-        friendly_name: "bw1_Cost (current hour)"
-        unit_of_measurement: '€'
-        value_template: "{%set IVA = 1.10 |float %}
-          {%set imp_elec = 1.05112696 |float %}
-          {{ (( states('sensor.bw1_hourly_energy') | float * (states('sensor.pvpc') | float) ) * imp_elec * IVA )  | round(3) }}"
+      bw1_energy:
+        device_class: energy
+        friendly_name: "Energy {{state_attr('switch.BliTZW0lF_1', 'friendly_name')}}"
+        attribute_templates:
+          last_reset: '1970-01-01T00:00:00+00:00'
+          state_class: measurement
+          device_class: energy
+        unit_of_measurement: 'kWh'
+        value_template: "{{ states('sensor.bw1_total') }}"
+        icon_template: mdi:mdi-current-ac
 
 utility_meter:
   bw1_hourly_energy:
-    source: sensor.bw1_today
+    source: sensor.bw1_total
     cycle: hourly
   bw1_daily_energy:
-    source: sensor.bw1_today
+    source: sensor.bw1_total
     cycle: daily
   bw1_monthly_energy:
-    source: sensor.bw1_today
+    source: sensor.bw1_total
     cycle: monthly
-  bw1_monthly_energy_cost:
-    source: sensor.bw1_energy_cost_hour
-    cycle: monthly
+  bw1_yearly_energy:
+    source: sensor.bw1_total
+    cycle: yearly
 
 automation:
-  - alias: 'bw1 reset'
-    initial_state: true
+  - alias: bw1_switch_left_on
+    initial_state: false
     trigger:
-      - platform: template
-        value_template: '{{ now().strftime("%d") == "01" }}'
+      - platform: numeric_state
+        entity_id: sensor.bw1_power
+        below: 30
+        above: 1
+        for:
+          minutes: 5
     action:
-      - service: script.bw1_report
-      - service: script.bw1_reset
-        
-  - alias: 'bw1 Valle'
-    initial_state: on
-    trigger:
-      - platform: template
-        value_template: '{{ now().strftime("%M") == "00" }}'
-    condition:
-      - condition: template
-        value_template: '{{ now().strftime("%H") == "13" }}'
-    action:
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.bw1_kw_valle
-          value: "{{ ((states.input_number.bw1_kw_valle.state|float) + ((states.sensor.bw1_total.state|float) - (states.input_number.bw1_partial.state|float))|float) }}"
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.bw1_partial
-          value: "{{ states.sensor.bw1_total.state }}"          
-
-  - alias: 'bw1 Pico'
-    initial_state: on
-    trigger:
-      - platform: template
-        value_template: '{{ now().strftime("%M") == "00" }}'
-    condition:
-      - condition: template
-        value_template: '{{ now().strftime("%H") == "23" }}'
-    action:
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.bw1_kw_pico
-          value: "{{ ((states.input_number.bw1_kw_pico.state|float) + ((states.sensor.bw1_total.state|float) - (states.input_number.bw1_partial.state|float))|float) }}"
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.bw1_partial
-          value: "{{ states.sensor.bw1_total.state }}"
-
-  # - alias: MicroWaveOven_Switch_left_on
-  #   trigger:
-  #     - below: 5
-  #       entity_id: sensor.bw1_power
-  #       for: 0:01:00
-  #       platform: numeric_state
-  #   condition: "{{states.switch.BliTZW0lF_1 == 'on'}}"
-  #   action:
-  #     - service: switch.turn_off
-  #       data:
-  #         entity_id:
-  #           - switch.BliTZW0lF_1
-  #     - delay: 0:00:02
-  #     - service: persistent_notification.create
-  #       data:
-  #         message: "Is now **{% if is_state('switch.BliTZW0lF_1', 'on') %}ON{% else %}OFF{% endif %}** because it was left on for 5 minutes"
-  #         title: "MicroWaveOven"
+      - service: switch.turn_off
+        data:
+          entity_id:
+            - switch.BliTZW0lF_1
+      - delay: 0:00:02
+      - service: notify.homeassistant
+        data:
+          message: 
+            "{{state_attr('switch.BliTZW0lF_1', 'friendly_name')}} switch is now **{% if is_state('switch.BliTZW0lF_1', 'on') %}ON{% else %}OFF{% endif %}** because it was consuming less than 30W for 5 minutes"          
+      - delay: 0:00:02
+      - service: persistent_notification.create
+        data:
+          message: "Is now **{% if is_state('switch.BliTZW0lF_1', 'on') %}ON{% else %}OFF{% endif %}** because it was left on for 5 minutes"
+          title: "{{state_attr('switch.BliTZW0lF_1', 'friendly_name')}}"
 
 script:
-  bw1_report:
-    sequence:
-      - service: persistent_notification.create
-        data_template:
-          title: "{{state_attr('switch.BliTZW0lF_1', 'friendly_name')}} Report"
-          message: "From {{ (states.sensor.bw1_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-            to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-            KW Pico: {{ states.sensor.bw1_kw_pico.state_with_unit }} \n
-            KW Vall: {{ states.sensor.bw1_kw_valle.state_with_unit }} \n
-            Total KW: {{ states.sensor.bw1_total.state_with_unit }}\n\n
-            € Pico: {{ states.sensor.bw1_eur_pico.state_with_unit }} \n
-            € Vall: {{ states.sensor.bw1_eur_valle.state_with_unit }} \n
-            Total €: {{ states.sensor.bw1_total_euro.state_with_unit }}\n"
   bw1_reset:
     sequence:
       - service: mqtt.publish
@@ -253,20 +150,6 @@ script:
         data_template:
           topic: "cmnd/BliTZW0lF_1/energyreset3"
           payload: "0"
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.bw1_Kw_pico
-          value: "0"
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.bw1_Kw_valle
-          value: "0"
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.bw1_partial
-          value: "0"
-
-
 
 #########################
 #Lovelace entities Card:#
@@ -277,14 +160,57 @@ script:
 #   - entity: sensor.bw1_current
 #   - entity: sensor.bw1_voltage
 #   - entity: sensor.bw1_totalstarttime
-#   - entity: sensor.bw1_kw_pico
-#   - entity: sensor.bw1_kw_valle
 #   - entity: sensor.bw1_today
 #   - entity: sensor.bw1_total
-#   - entity: sensor.bw1_eur_pico
-#   - entity: sensor.bw1_eur_valle
-#   - entity: sensor.bw1_total_euro
 #   - entity: script.bw1_reset
-#   - entity: script.bw1_report
+#   - entity: automation.bw1_switch_left_on
 # show_header_toggle: false
 # type: entities
+
+
+##REVISAR!!!
+# blitzwolf1_report:
+#   sequence:
+#     - service: persistent_notification.create
+#       data_template:
+#         title: "Blitwolf1 Report"
+#         message: "From {{ (states.sensor.bw1_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
+#                   to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
+#                   KW Pico: {{ states.sensor.sensor_bw1_kw_pico.state_with_unit }} \n
+#                   KW Vall: {{ states.sensor.sensor_bw1_kw_valle.state_with_unit }} \n
+#                   Total KW: {{ states.sensor.bw1_total.state_with_unit }}\n\n
+#                   € Pico: {{ states.sensor.sensor_bw1_eur_pico.state_with_unit }} \n
+#                   € Vall: {{ states.sensor.sensor_bw1_eur_valle.state_with_unit }} \n
+#                   Total €: {{ states.sensor.sensor_bw1_total_euro.state_with_unit }}\n"
+
+# - alias: 'Blitzwolf1 reset'
+#   initial_state: true
+#   trigger:
+#     - platform: template
+#       value_template: '{{ now().strftime("%d") == "01" }}'
+#   action:
+#     - service: script.blitzwolf1_report
+#     - service: mqtt.publish
+#       data_template:
+#         topic: "cmnd/BliTZW0lF_1/energyreset1"
+#         payload: "0"
+#     - service: mqtt.publish
+#       data_template:
+#         topic: "cmnd/BliTZW0lF_1/energyreset2"
+#         payload: "0"
+#     - service: mqtt.publish
+#       data_template:
+#         topic: "cmnd/BliTZW0lF_1/energyreset3"
+#         payload: "0"
+#     - service: input_number.set_value
+#       data_template:
+#         entity_id: input_number.bw1_Kw_pico
+#         value: "0"
+#     - service: input_number.set_value
+#       data_template:
+#         entity_id: input_number.bw1_Kw_valle
+#         value: "0"
+#     - service: input_number.set_value
+#       data_template:
+#         entity_id: input_number.bw1_partial
+#         value: "0"    

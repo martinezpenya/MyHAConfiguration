@@ -1,31 +1,8 @@
-#- alias: Christmas Lights On when home
-#  trigger:
-#    - platform: state
-#      entity_id: device_tracker.
-#      from: 'not_home'
-#      to: 'home'
-#  action:
-#    - service: light.turn_on
-#      data:
-#        entity_id: light.lolin1_light
-- alias: 'Front door open'
-  initial_state: 'true'
+- alias: 'Front door open Christmas Tree'
+  initial_state: true
   trigger:
     platform: state
     entity_id: 'binary_sensor.front_door'
     to: 'on'
   action:       
     - service: script.christmas_tree
-        
-#- alias: Christmas Lights Off when not home
-#  trigger:
-#    - platform: state
-#      entity_id: device_tracker.
-#      from: 'home'
-#      to: 'not_home'
-#      for:
-#        minutes: 5
-#  action:
-#    - service: light.turn_off
-#      data:
-#        entity_id: light.lolin1_light

@@ -107,18 +107,6 @@ sensor: !include_dir_merge_list sensors
 binary_sensor: !include binary_sensors.yaml
 device_tracker: !include device_tracker.yaml
 
-#deprecated
-#speedtest.net
-#speedtestdotnet:
-#  server_id: 16433
-#  scan_interval:
-#    # At least one of these must be specified:
-#    days: 0
-#    hours: 0
-#    minutes: 60
-#    seconds: 0
-#    milliseconds: 0
-
 #breaking changes
 breaking_changes:
 
@@ -140,30 +128,13 @@ mqtt:
   port: 1883
   discovery: False
 
-octoprint:
-  host: !secret octopihostname
-  api_key: !secret octopitoken
-  bed: true
-  number_of_tools: 1
+#REVISAR DEPRECATED!
+#octoprint:
+#  host: !secret octopihostname
+#  api_key: !secret octopitoken
+#  bed: true
+#  number_of_tools: 1
 
-cover:
-  - platform: mqtt
-    name: "sw_curtain_despatx"
-    availability_topic: "tele/sw_curtain_despatx/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    position_topic: "stat/sw_curtain_despatx/SHUTTER1"
-    position_open: 100
-    position_closed: 0
-    set_position_topic: 'cmnd/sw_curtain_despatx/ShutterPosition1'
-    command_topic: "cmnd/sw_curtain_despatx/Backlog"
-    payload_open: "ShutterOpen1"
-    payload_close: "ShutterClose1"
-    payload_stop: "ShutterStop1"
-    retain: false
-    optimistic: false
-    qos: 1
-  
 smartir:
 
 switch: !include_dir_merge_list switches 
@@ -200,11 +171,6 @@ media_player:
     device_code: 1040
     controller_data: !secret rm_mini_3_menjador_ip
     power_sensor: switch.blitzw0lf_6
-  # - platform: kodi
-  #   host: 192.168.0.106
-  #   tcp_port: !secret kodi_tcp_port
-  #   username: !secret kodi_username
-  #   password: !secret kodi_password
   - platform: mpd
     name: speaker
     host: mopidy
@@ -228,12 +194,6 @@ telegram_bot:
     - !secret id_group_telegram
     - !secret id_user_telegram
 
-#tuya:
-#  username: !secret tuya_email
-#  password: !secret tuya_password
-#  country_code: !secret tuya_country
-#  platform: smart_life
-  
 ### Input Boolean ###
 # The input_boolean component allows the user to define boolean values that can be controlled via the frontend and can be used within conditions of automation.
 input_boolean: !include input_boolean.yaml
@@ -256,9 +216,9 @@ utility_meter: !include utility_meter.yaml
 ### Timers ###
 timer: !include timer.yaml
 
-#cast:
-#  media_player:
-#      - host: 192.168.0.108
+### Covers ###
+cover: !include_dir_merge_list covers
+
 
 stream:
 ffmpeg:      
@@ -269,18 +229,8 @@ api:
 alexa:
   smart_home: !include config/alexa.yaml
 
-#logger:
-#  default: debug
-
 #new health system later updates
 system_health:
-
-#deprecated    
-#pi_hole:
-#  - host: !secret piholehostname
-#    name: pihole
-#    ssl: false
-#    verify_ssl: false
 
 vacuum:
   - platform: miio2
@@ -292,3 +242,6 @@ hacs:
   token: !secret hacstoken
 
 energy:
+
+#allows set_state script in python (folder python_scripts)
+python_script:

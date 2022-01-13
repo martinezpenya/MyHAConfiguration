@@ -1,5 +1,5 @@
 - alias: AirFresheners on when home
-  initial_state: 'true'
+  initial_state: true
   trigger:
     - platform: state
       entity_id: device_tracker.dmp8p
@@ -20,7 +20,7 @@
              - '✔Yes:/TCB_computer_on, ❌No:/TCB_cancel'
         
 - alias: AirFresheners Off when not home
-  initial_state: 'true'
+  initial_state: true
   trigger:
     - platform: state
       entity_id: device_tracker.dmp8p

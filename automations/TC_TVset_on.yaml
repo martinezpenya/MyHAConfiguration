@@ -2,7 +2,7 @@
 ## KEYBOARD - TVset_on
 ##
 - alias: 'TC_TVset_on'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_command

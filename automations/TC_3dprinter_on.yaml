@@ -2,7 +2,7 @@
 ## KEYBOARD - 3dprinter_on
 ##
 - alias: 'TC_3dprinter_on'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_command

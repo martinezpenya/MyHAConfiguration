@@ -1,5 +1,5 @@
 - alias: 'UpdateAvailable'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     - platform: state
       entity_id: binary_sensor.updater

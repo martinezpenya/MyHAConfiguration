@@ -1,7 +1,7 @@
 camera:
   - platform: ffmpeg
     name: yi2
-    input: -rtsp_transport tcp -i rtsp://yi2.casa/ch0_0.h264
+    input: -rtsp_transport tcp -i rtsp://yi2.casa/ch0_1.h264
 binary_sensor:
   - platform: mqtt
     state_topic: "yicam2/motion"

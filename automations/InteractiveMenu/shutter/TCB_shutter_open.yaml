@@ -2,22 +2,25 @@
 ## INLINE_KEYBOARD - TCB_shutter_open
 ##
 - alias: 'TCB_shutter_open'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_callback
     event_data:
       data: '/TCB_shutter_open'
   action:
-    - service: input_number.set_value
-      data_template:
-        entity_id: input_number.window_set_position
-        value: 99
-    - delay: 00:00:01            
-    - service: input_number.set_value
-      data_template:
-        entity_id: input_number.window_set_position
-        value: 100
+    # - service: input_number.set_value
+    #   data_template:
+    #     entity_id: input_number.window_set_position
+    #     value: 99
+    # - delay: 00:00:01            
+    # - service: input_number.set_value
+    #   data_template:
+    #     entity_id: input_number.window_set_position
+    #     value: 100
+    - service: cover.open_cover
+      target:
+        entity_id: cover.sw_curtain_despatx
     - delay: 00:00:30
     - service: telegram_bot.answer_callback_query
       data_template:

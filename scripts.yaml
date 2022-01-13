@@ -86,20 +86,6 @@ yeelight_step:
             255
           {% endif %}
 
-blitzwolf1_report:
-  sequence:
-    - service: persistent_notification.create
-      data_template:
-        title: "Blitwolf1 Report"
-        message: "From {{ (states.sensor.bw1_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-                  to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-                  KW Pico: {{ states.sensor.sensor_bw1_kw_pico.state_with_unit }} \n
-                  KW Vall: {{ states.sensor.sensor_bw1_kw_valle.state_with_unit }} \n
-                  Total KW: {{ states.sensor.bw1_total.state_with_unit }}\n\n
-                  € Pico: {{ states.sensor.sensor_bw1_eur_pico.state_with_unit }} \n
-                  € Vall: {{ states.sensor.sensor_bw1_eur_valle.state_with_unit }} \n
-                  Total €: {{ states.sensor.sensor_bw1_total_euro.state_with_unit }}\n"
-
 goodmorningmusic:
   alias: bondiamusica
   sequence: 
@@ -227,11 +213,35 @@ goodmorninglight:
     #     entity_id: light.Yeelight_1
     #     transition: 40
 
-limpia_despacho:
-  alias: "Limpia despacho"
-  sequence:
-    - service: vacuum.send_command
+# limpia_despacho:
+#   alias: "Limpia despacho"
+#   sequence:
+#     - service: vacuum.send_command
+#       data:
+#         entity_id: vacuum.robot_aspirador
+#         command: app_segment_clean
+#         params: [12]
+
+open_street_door:
+  alias: Abrir porteria
+  sequence:      
+    #turn video on
+    - service: switch.turn_on
       data:
-        entity_id: vacuum.robot_aspirador
-        command: app_segment_clean
-        params: [12]    
+        entity_id: switch.esphome8_relay1
+    # Wait 1 second
+    - delay: 00:0:01      
+    #turn video off
+    - service: switch.turn_off
+      data:
+        entity_id: switch.esphome8_relay1 
+    #open door
+    - service: switch.turn_on
+      data:
+        entity_id: switch.esphome8_relay2
+    #wait 1 sec
+    - delay: 00:0:01      
+    #release open door
+    - service: switch.turn_off
+      data:
+        entity_id: switch.esphome8_relay2

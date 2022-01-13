@@ -1,5 +1,5 @@
 - alias: 'Front door open for 5 minutes'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     - platform: state
       entity_id: 'binary_sensor.front_door'

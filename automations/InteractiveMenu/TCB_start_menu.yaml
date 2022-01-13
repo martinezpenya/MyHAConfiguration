@@ -2,7 +2,7 @@
 ## INLINE_KEYBOARD - TCB_start_menu
 ##
 - alias: 'TCB_start_menu'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_callback

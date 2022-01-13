@@ -2,7 +2,7 @@
 ## INLINE_KEYBOARD - TCB_waterheater_timerstopped
 ##
 - alias: 'TCB_waterheater_timerstopped'
-  initial_state: 'true'
+  initial_state: true
   trigger:
   - event_data:
       entity_id: timer.waterheater

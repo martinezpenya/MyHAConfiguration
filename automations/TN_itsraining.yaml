@@ -1,5 +1,5 @@
 - alias: 'It''s raining'
-  initial_state: 'true'
+  initial_state: true
   trigger:   
     - platform: template
       value_template: "{% if states.sensor.meteocarlet_rain_rate.state | float > 0 %} true {% endif %}"

@@ -1,9 +1,0 @@
-viewDoors:
-  name: "Doors"
-  entities:
-    - group.FrontDoor
-    - group.AAMenjador
-    - group.AADespatx
-    - group.switchbroadlinkDespatx
-    - group.switchbroadlinkMenjador
-    - group.persianes

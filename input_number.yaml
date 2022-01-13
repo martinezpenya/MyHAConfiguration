@@ -36,37 +36,3 @@ timer2_duration:
   min: 0
   max: 59
   step: 5
-
-# bw1_kw_pico:
-#   name: Kw pico
-#   icon: mdi:trending-up
-#   unit_of_measurement: "KW"
-#   min: 0
-#   max: 1000
-#   mode: box
-#   step: 0.001 
-# bw1_kw_valle:
-#   name: Kw valle
-#   icon: mdi:trending-down
-#   unit_of_measurement: "KW"
-#   min: 0
-#   max: 1000
-#   mode: box
-#   step: 0.001 
-# bw1_partial:
-#   name: partial data
-#   icon: mdi:calculator-variant
-#   unit_of_measurement: "KW"
-#   min: 0
-#   max: 1000
-#   mode: box
-#   step: 0.001
-
-window_position:
-  name: window position
-  min: 0
-  max: 25
-window_set_position:
-  name: window set position
-  min: 0
-  max: 100

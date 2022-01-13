@@ -213,10 +213,3 @@
   payload_off: "AD6C07off"
   device_class: problem
   value_template: '{{ value_json.RfReceived.Data }}'
-
-# - platform: template
-#   sensors: 
-#    david_next_alarm:
-#      friendly_name: "David Next Alarm"
-#      value_template: >-
-#        {{now().strftime("%a %h %d %H:%M %Z %Y") == (((state_attr('sensor.redmi_note_8_pro_next_alarm', 'Time in Milliseconds') | int / 1000) - 2*60 ) | timestamp_custom('%a %h %d %H:%M %Z %Y'))}}

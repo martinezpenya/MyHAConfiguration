@@ -2,7 +2,7 @@
 ## 
 ##
 - alias: 'SW_Basic2_Big_WC_timer_ended'
-  initial_state: 'true'
+  initial_state: true
   trigger:
   - event_data:
       entity_id: timer.timer_sonoff_basic_2

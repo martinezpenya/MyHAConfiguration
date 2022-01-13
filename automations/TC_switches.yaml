@@ -2,7 +2,7 @@
 ## KEYBOARD - switches
 ##
 - alias: 'TC switches'
-  initial_state: 'true'
+  initial_state: true
   trigger:
      - platform: event
        event_type: telegram_command

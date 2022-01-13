@@ -2,7 +2,7 @@
 ## KEYBOARD - waterheater_30min
 ##
 - alias: 'TC waterheater_30min'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_command

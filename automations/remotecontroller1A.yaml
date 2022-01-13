@@ -5,10 +5,10 @@
 # Button A
 
 - alias: Remote1ButtonA
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: state
-    entity_id: binary_sensor.Remote1_BtnA
+    entity_id: binary_sensor.remote1_btna
     to: 'on'
   action:
     - service: notify.homeassistant

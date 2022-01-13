@@ -1,6 +1,0 @@
-waterheater:
-  name: "Waterheater"
-  entities:
-    - group.waterheatertimer1 
-    - group.waterheatertimer2
-    - group.waterheatertimer

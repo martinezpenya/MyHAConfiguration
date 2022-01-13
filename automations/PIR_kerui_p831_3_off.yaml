@@ -14,7 +14,7 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: binary_sensor.PIR_kerui_p831_3
+      entity_id: binary_sensor.pir_kerui_p831_3
       from: 'off'
       to: 'on'
       for:

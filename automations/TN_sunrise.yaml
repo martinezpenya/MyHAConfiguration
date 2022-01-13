@@ -1,5 +1,5 @@
 - alias: 'Sunrise'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: sun
     event: sunrise

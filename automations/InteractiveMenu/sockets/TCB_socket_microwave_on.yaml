@@ -2,7 +2,7 @@
 ## INLINE_KEYBOARD - TCB_socket_microwave_on
 ##
 - alias: 'TCB_socket_microwave_on'
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_callback
@@ -12,7 +12,7 @@
     - service: switch.turn_on
       data:
         entity_id:
-          - switch.blitzw0lf_4
+          - switch.athom_01
     - delay: 00:00:01
     - service: telegram_bot.answer_callback_query
       data_template:

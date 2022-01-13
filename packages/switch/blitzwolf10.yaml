@@ -158,7 +158,7 @@ utility_meter:
 
 automation:
   - alias: 'bw10 reset'
-    initial_state: 'true'
+    initial_state: true
     trigger:
       - platform: template
         value_template: '{{ now().strftime("%d") == "01" }}'

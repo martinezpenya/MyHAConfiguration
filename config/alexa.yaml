@@ -53,6 +53,11 @@ entity_config:
   #   name: "Ordenador"
   #   description: "Ordenador"
   #   display_categories: SMARTPLUG
+  switch.Athom_01:
+    name: "Microondas"
+    description: "Microondas cocina"
+    display_categories: SMARTPLUG
+
   sensor.esphome1_temperature:
     name: "Entrada"
     description: "Entrada"
@@ -62,9 +67,9 @@ entity_config:
     description: "Despacho"
     display_categories: TEMPERATURE_SENSOR
   #cover.50701244500291415e17:
-  cover.persiana_despatx_curtain:
+  cover.sw_curtain_despatx:
     name: "Persiana despacho"
-    description: "Persinana despacho"
+    description: "Persiana despacho"
     display_categories: INTERIOR_BLIND
   #media_player.speaker:
   #  name: "Speaker"
