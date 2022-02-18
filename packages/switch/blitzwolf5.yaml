@@ -14,6 +14,8 @@ homeassistant:
       friendly_name: "Reset"
     sensor.bw5_power:
       friendly_name: "Power"
+      device_class: power
+      state_class: measurement      
     sensor.bw5_current:
       friendly_name: "Current"
     sensor.bw5_voltage:
@@ -145,8 +147,7 @@ sensor:
         device_class: energy
         friendly_name: "Energy {{state_attr('switch.BliTZW0lF_5', 'friendly_name')}}"
         attribute_templates:
-          last_reset: '1970-01-01T00:00:00+00:00'
-          state_class: measurement
+          state_class: total_increasing
           device_class: energy
         unit_of_measurement: 'kWh'
         value_template: "{{ states('sensor.bw5_total') }}"

@@ -14,6 +14,8 @@ homeassistant:
       friendly_name: "Reset"
     sensor.bw10_power:
       friendly_name: "Power"
+      device_class: power
+      state_class: measurement      
     sensor.bw10_current:
       friendly_name: "Current"
     sensor.bw10_voltage:
