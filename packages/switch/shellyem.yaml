@@ -42,7 +42,9 @@ sensor:
   name: Shelly Total
   state_topic: "shellies/shellyem/emeter/0/total"
   value_template: "{{ (value  | float /1000) | round(3)  }}"
-  unit_of_measurement: kWh   
+  unit_of_measurement: kWh
+  state_class: total_increasing
+  device_class: energy     
 
 - platform: template
   sensors:
