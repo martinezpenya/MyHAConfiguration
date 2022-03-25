@@ -75,6 +75,24 @@
     - service: switch.turn_on
       data:
         entity_id: switch.sonoffbasic_3
+
+    - service: python_script.set_state
+      data:
+        entity_id: 
+          - binary_sensor.pir_kerui_p831_1
+          - binary_sensor.pir_kerui_p831_2
+          - binary_sensor.pir_kerui_p831_3
+          - binary_sensor.remote1_btna
+          - binary_sensor.remote1_btnb
+          - binary_sensor.remote1_btnc
+          - binary_sensor.remote1_btnd
+          - binary_sensor.remote2_btna
+          - binary_sensor.remote2_btnb
+          - binary_sensor.remote2_btnc
+          - binary_sensor.remote2_btnd
+        state: 'off'
+        allow_create: true
+
     - service: notify.homeassistant
       data:
         message: "HA has started: Revise status"

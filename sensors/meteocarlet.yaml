@@ -7,15 +7,41 @@
   url: !secret clientrawURL
   interval: 5
   monitored_conditions:
-    - station
-    - date
+    #- station
+    #- date
+    # - temp
+    # - wind_dir
+    # - wind_gust_kph
+    # - wind_kph
+    # - symbol
+    # - forecast
+    # - rain_rate
+    # - daily_rain
+    # - pressure
+    # - humidity
+    - dewpoint
+    - heat_index
     - temp
+    - temp_indoor
+    - temp_day_max
+    - temp_day_min
+    - humidex
+    - wind_degrees
     - wind_dir
-    - wind_gust_kph
-    - wind_kph
+    - wind_gust_hour
+    - wind_gust_day
+    - wind_speed
+    - wind_speed_avg_10min
     - symbol
-    - forecast
     - rain_rate
     - daily_rain
+    - yesterday_rain
+    - monthly_rain
+    - yearly_rain
     - pressure
     - humidity
+    - humidity_indoor
+    - cloud_height
+    - forecast
+    - station
+    - date

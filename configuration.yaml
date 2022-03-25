@@ -232,11 +232,11 @@ alexa:
 #new health system later updates
 system_health:
 
-vacuum:
-  - platform: miio2
-    host: !secret vacuumhost
-    token: !secret vacuumtoken
-    name: "Robot Aspirador"
+#vacuum:
+#  - platform: miio2
+#    host: !secret vacuumhost
+#    token: !secret vacuumtoken
+#    name: "Robot Aspirador"
 
 hacs:
   token: !secret hacstoken
