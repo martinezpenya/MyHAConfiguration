@@ -1,0 +1,11 @@
+##########################################
+## sonoffMini5 http://192.168.0./
+## ??
+##
+- name: "Luz Comedor TV"
+  state_topic: "stat/sonoffMini9/POWER"
+  command_topic: "cmnd/sonoffMini9/POWER"
+  qos: 2
+  payload_on: "ON"
+  payload_off: "OFF"
+  icon: mdi:power-socket-eu

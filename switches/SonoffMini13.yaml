@@ -1,0 +1,11 @@
+##########################################
+## sonoffMini13 http://192.168.0./
+## ??
+##
+- name: "mini13"
+  state_topic: "stat/sonoffMini13/POWER"
+  command_topic: "cmnd/sonoffMini13/POWER"
+  qos: 2
+  payload_on: "ON"
+  payload_off: "OFF"
+  icon: mdi:power-socket-eu

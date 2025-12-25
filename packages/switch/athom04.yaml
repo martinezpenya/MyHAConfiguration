@@ -1,0 +1,166 @@
+##########################################
+## Athom
+##
+
+homeassistant:
+  customize:
+    switch.athom_04:
+      friendly_name: "Volant"
+    script.athom_04_reset:
+      icon: mdi:restore
+      friendly_name: "Reset"
+    automation.athom_04_switch_left_on:
+      icon: mdi:power-plug-off
+      friendly_name: "Auto power off"
+    sensor.athom_04_power:
+      friendly_name: "Power"
+      device_class: power
+      state_class: measurement      
+    sensor.athom_04_current:
+      friendly_name: "Current"
+    sensor.athom_04_voltage:
+      friendly_name: "Voltage"
+    sensor.athom_04_today:
+      friendly_name: "kWh Today"
+    sensor.athom_04_total:
+      friendly_name: "kWh Total"
+    sensor.athom_04_totalstarttime:
+      friendly_name: "Last reset"
+
+mqtt:
+  switch:
+  - name: "Athom_04"
+    state_topic: "stat/Athom_04/POWER"
+    command_topic: "cmnd/Athom_04/POWER"
+    availability_topic: "tele/Athom_04/LWT"
+    qos: 2
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    icon: mdi:speedometer
+
+  sensor:
+  - name: athom_04_totalstarttime
+    state_topic: "tele/Athom_04/SENSOR"
+  
+    value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S', now())) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
+    unit_of_measurement: ""
+    icon: mdi:update
+    
+  - name: athom_04_total
+    state_topic: "tele/Athom_04/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Total }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:elevation-rise
+  
+  - name: athom_04_today
+    state_topic: "tele/Athom_04/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Today }}"
+    unit_of_measurement: "kWh"  
+    icon: mdi:elevation-rise
+    
+  - name: athom_04_power
+    state_topic: "tele/Athom_04/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Power }}"
+    unit_of_measurement: "W"
+    icon: mdi:elevation-rise
+
+  - name: athom_04_voltage
+    state_topic: "tele/Athom_04/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Voltage }}"
+    unit_of_measurement: "V"
+    icon: mdi:current-ac
+
+  - name: athom_04_current
+    state_topic: "tele/Athom_04/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Current }}"
+    unit_of_measurement: "A"
+    icon: mdi:transfer
+
+# sensor:
+#   - platform: template
+#     sensors:
+#       athom_04_energy:
+#         device_class: energy
+#         friendly_name: "Energy {{state_attr('switch.Athom_04', 'friendly_name')}}"
+#         attribute_templates:
+#           state_class: total_increasing
+#           device_class: energy
+#         unit_of_measurement: 'kWh'
+#         value_template: "{{ states('sensor.athom_04_total') }}"
+#         icon_template: mdi:mdi-current-ac
+
+utility_meter:
+  athom_04_hourly_energy:
+    source: sensor.athom_04_total
+    cycle: hourly
+  athom_04_daily_energy:
+    source: sensor.athom_04_total
+    cycle: daily
+  athom_04_monthly_energy:
+    source: sensor.athom_04_total
+    cycle: monthly
+  athom_04_yearly_energy:
+    source: sensor.athom_04_total
+    cycle: yearly
+
+automation:
+  - alias: athom_04_switch_left_on
+    initial_state: false
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.athom_04_power
+        below: 7
+        above: 1
+        for:
+          minutes: 5
+    action:
+      - service: switch.turn_off
+        data:
+          entity_id:
+            - switch.athom_04
+      - delay: 0:00:02
+      - service: notify.send_message
+        data:
+          entity_id: notify.telegram_bot_701350878_327910374
+          message: 
+            "{{state_attr('switch.athom_04', 'friendly_name')}} switch is now **{% if is_state('switch.athom_04', 'on') %}ON{% else %}OFF{% endif %}** because it was consuming less than 30W for 1 minutes"          
+      - delay: 0:00:02
+      - service: persistent_notification.create
+        data:
+          message: "Is now **{% if is_state('switch.athom_04', 'on') %}ON{% else %}OFF{% endif %}** because it was left on for 1 minutes"
+          title: "{{state_attr('switch.athom_04', 'friendly_name')}}"
+
+script:
+  athom_04_reset:
+    sequence:
+      - service: mqtt.publish
+        data_template:
+          topic: "cmnd/Athom_04/energyreset1"
+          payload: "0"
+      - service: mqtt.publish
+        data_template:
+          topic: "cmnd/Athom_04/energyreset2"
+          payload: "0"
+      - service: mqtt.publish
+        data_template:
+          topic: "cmnd/Athom_04/energyreset3"
+          payload: "0"
+
+#########################
+#Lovelace entities Card:#
+#########################
+# entities:
+#   - entity: switch.athom_04
+#   - entity: sensor.athom_04_power
+#   - entity: sensor.athom_04_current
+#   - entity: sensor.athom_04_voltage
+#   - entity: sensor.athom_04_totalstarttime
+#   - entity: sensor.athom_04_today
+#   - entity: sensor.athom_04_total
+#   - entity: script.athom_04_reset
+#   - entity: automation.athom_04_switch_left_on
+# show_header_toggle: false
+# type: entities

@@ -1,0 +1,19 @@
+##########################################
+## KEYBOARD - waterheater_on
+##
+- alias: 'TC_waterheater_on'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/waterheater_on'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "waterheater on"
+    - service: switch.turn_on
+      data:
+        entity_id:
+          - switch.BliTZW0lF_1

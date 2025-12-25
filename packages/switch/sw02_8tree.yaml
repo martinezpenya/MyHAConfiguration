@@ -1,0 +1,168 @@
+##########################################
+## 8Tree 02
+##
+
+homeassistant:
+  customize:
+    switch.sw02_8tree:
+      friendly_name: "Microondas"
+    script.sw02_8tree_reset:
+      icon: mdi:restore
+      friendly_name: "Reset"
+    automation.sw02_8tree_switch_left_on:
+      icon: mdi:power-plug-off
+      friendly_name: "Auto power off"
+    sensor.sw02_8tree_power:
+      friendly_name: "Power"
+      device_class: power
+      state_class: measurement      
+    sensor.sw02_8tree_current:
+      friendly_name: "Current"
+    sensor.sw02_8tree_voltage:
+      friendly_name: "Voltage"
+    sensor.sw02_8tree_today:
+      friendly_name: "kWh Today"
+    sensor.sw02_8tree_total:
+      friendly_name: "kWh Total"
+      device_class: energy
+    sensor.sw02_8tree_totalstarttime:
+      friendly_name: "Last reset"
+
+mqtt:
+  switch:
+  - name: "sw02_8tree"
+    state_topic: "stat/sw02_8tree/POWER"
+    command_topic: "cmnd/sw02_8tree/POWER"
+    availability_topic: "tele/sw02_8tree/LWT"
+    qos: 2
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    icon: mdi:speedometer
+
+
+#"TotalStartTime":"2024-06-11T10:38:34"
+  sensor:
+  - name: sw02_8tree_totalstarttime
+    state_topic: "tele/sw02_8tree/SENSOR"
+    value_template: "{{as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S', now())) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
+    unit_of_measurement: ""
+    icon: mdi:update
+    
+  - name: sw02_8tree_total
+    state_topic: "tele/sw02_8tree/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Total }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:elevation-rise
+  
+  - name: sw02_8tree_today
+    state_topic: "tele/sw02_8tree/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Today }}"
+    unit_of_measurement: "kWh"  
+    icon: mdi:elevation-rise
+    
+  - name: sw02_8tree_power
+    state_topic: "tele/sw02_8tree/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Power }}"
+    unit_of_measurement: "W"
+    icon: mdi:elevation-rise
+
+  - name: sw02_8tree_voltage
+    state_topic: "tele/sw02_8tree/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Voltage }}"
+    unit_of_measurement: "V"
+    icon: mdi:current-ac
+
+  - name: sw02_8tree_current
+    state_topic: "tele/sw02_8tree/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Current }}"
+    unit_of_measurement: "A"
+    icon: mdi:transfer
+
+# sensor:  
+#   - platform: template
+#     sensors:
+#       sw02_8tree_energy:
+#         device_class: energy
+#         friendly_name: "Energy {{state_attr('switch.sw02_8tree', 'friendly_name')}}"
+#         attribute_templates:
+#           state_class: total_increasing
+#           device_class: energy
+#         unit_of_measurement: 'kWh'
+#         value_template: "{{ states('sensor.sw02_8tree_total') }}"
+#         icon_template: mdi:mdi-current-ac
+
+utility_meter:
+  sw02_8tree_hourly_energy:
+    source: sensor.sw02_8tree_total
+    cycle: hourly
+  sw02_8tree_daily_energy:
+    source: sensor.sw02_8tree_total
+    cycle: daily
+  sw02_8tree_monthly_energy:
+    source: sensor.sw02_8tree_total
+    cycle: monthly
+  sw02_8tree_yearly_energy:
+    source: sensor.sw02_8tree_total
+    cycle: yearly
+
+automation:
+  - alias: sw02_8tree_switch_left_on
+    initial_state: false
+    trigger:
+      - trigger: numeric_state
+        entity_id: sensor.sw02_8tree_power
+        below: 30
+        above: 1
+        for:
+          minutes: 1
+    action:
+      - action: switch.turn_off
+        data:
+          entity_id:
+            - switch.sw02_8tree
+      - delay: 0:00:02
+      - action: notify.send_message
+        data:
+          entity_id: notify.telegram_bot_701350878_327910374
+          message: 
+            "{{state_attr('switch.sw02_8tree', 'friendly_name')}} switch is now **{% if is_state('switch.sw02_8tree', 'on') %}ON{% else %}OFF{% endif %}** because it was consuming less than 30W for 1 minutes"          
+      - delay: 0:00:02
+      - action: persistent_notification.create
+        data:
+          message: "Is now **{% if is_state('switch.sw02_8tree', 'on') %}ON{% else %}OFF{% endif %}** because it was left on for 1 minutes"
+          title: "{{state_attr('switch.sw02_8tree', 'friendly_name')}}"
+
+script:
+  sw02_8tree_reset:
+    sequence:
+      - action: mqtt.publish
+        data_template:
+          topic: "cmnd/sw02_8tree/EnergyToday0"
+          payload: "0"
+      - action: mqtt.publish
+        data_template:
+          topic: "cmnd/sw02_8tree/EnergyTotal0"
+          payload: "0"
+      - action: mqtt.publish
+        data_template:
+          topic: "cmnd/sw02_8tree/EnergyYesterday0"
+          payload: "0"
+
+#########################
+#Lovelace entities Card:#
+#########################
+# entities:
+#   - entity: switch.sw02_8tree
+#   - entity: sensor.sw02_8tree_power
+#   - entity: sensor.sw02_8tree_current
+#   - entity: sensor.sw02_8tree_voltage
+#   - entity: sensor.sw02_8tree_totalstarttime
+#   - entity: sensor.sw02_8tree_today
+#   - entity: sensor.sw02_8tree_total
+#   - entity: script.sw02_8tree_reset
+#   - entity: automation.sw02_8tree_switch_left_on
+# show_header_toggle: false
+# type: entities

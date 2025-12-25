@@ -1,0 +1,25 @@
+###############################
+# Remote controller 2 (4 buttons)
+
+###############################
+# Button A
+
+- alias: Remote2ButtonA
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote2_btna
+    to: 'on'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "Remote2 buttonA pressed"
+    # - service: automation.trigger
+    #   data_template:
+    #     entity_id: >-
+    #       {% if is_state('switch.blitzw0lf_6', 'on') %}
+    #         automation.TC_TVset_off
+    #       {% else %}
+    #         automation.TC_TVset_on
+    #       {% endif %}

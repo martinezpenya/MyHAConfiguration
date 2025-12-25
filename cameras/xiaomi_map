@@ -1,0 +1,6 @@
+- platform: xiaomi_cloud_map_extractor
+  name: "Mapa Mop P"
+  host: !secret vacuumhost
+  token: !secret vacuumtoken
+  username: !secret xiaomi_cloud_username
+  password: !secret xiaomi_cloud_password

@@ -1,0 +1,3 @@
+         - "{% if is_state('binary_sensor.front_door', 'on') %} \U0001f315 Front \U0001f454:/TCB_sensors_frontdoor_off{% else %} \U0001f311 Front \U0001f454:/TCB_sensors_frontdoor_off{% endif %}"
+         - "\U0001f504 Refresh:/TCB_sensors_refresh,
+            \U0001f448 Back:/TCB_start_menu"

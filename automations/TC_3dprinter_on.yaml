@@ -1,0 +1,19 @@
+##########################################
+## KEYBOARD - 3dprinter_on
+##
+- alias: 'TC_3dprinter_on'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/3dprinter_on'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "3dPrinter on"
+    - service: switch.turn_on
+      data:
+        entity_id:
+          - switch.BliTZW0lF_2

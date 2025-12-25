@@ -1,0 +1,10 @@
+# sensor netdata
+- platform: netdata
+  host: !secret netdatahostname
+  resources:
+    load:
+      data_group: system.load
+      element: load15
+    cpu:
+      data_group: system.cpu
+      element: system

@@ -1,0 +1,22 @@
+##########################################
+## KEYBOARD - lights
+##
+- alias: 'TC lights'
+  initial_state: true
+  trigger:
+     - platform: event
+       event_type: telegram_command
+       event_data:
+         command: '/lights'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: 'Select an option'
+        data:
+          keyboard:
+          - '/light_pc, /light_Habitacio, /light_Planxa'
+          - '/light_BanyGran, /light_BanyXicotet, /light_Cuina'
+          - '/light_Menjador_TV, /light_menjador_Taula'
+          - '/start'
+                

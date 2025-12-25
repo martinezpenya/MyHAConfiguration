@@ -1,0 +1,40 @@
+- alias: Timer1
+  trigger:
+    platform: template
+    value_template: "{{ states.sensor.time.state == states.sensor.timer1_time.state }}"
+  condition:
+    condition: or
+    conditions:
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: input_boolean.programweekday1
+            state: 'on'
+          - condition: time
+            weekday:
+              - mon
+              - tue
+              - wed
+              - thu
+              - fri
+      - condition: state
+        entity_id: input_boolean.programweekday1
+        state: 'off'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "Timer 1 - waterheater on"
+    - service: switch.turn_on
+      data:
+        entity_id:
+          - switch.BliTZW0lF_1
+    - delay: "{{states.sensor.timer1_duration.state}}"
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.BliTZW0lF_1          
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "Timer 1 - waterheater off"

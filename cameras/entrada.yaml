@@ -1,0 +1,5 @@
+# config importada a la UI por ha
+#- platform: generic
+#  name: Entrada
+#  still_image_url: http://192.168.0.104:8888/picture/1/current/?_username=admin&_signature=8b644710749e91340408e0f1c28168d0b8d236f8
+#  scan_interval: 1

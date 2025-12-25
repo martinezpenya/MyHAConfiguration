@@ -1,0 +1,5 @@
+          - "\U0001f4a1 Lights \U0001f4a1:/TCB_lights_menu, \U0001f50c Sockets \U0001f50c:/TCB_sockets_menu"
+          - "\U0001f4e2 Piped music \U0001f4e2:/TCB_pipedmusic_menu, \U0001f525 WaterHeater \U0001f525:/TCB_waterheater_menu"
+          - "\U0001f300 WC Fan \U0001f300:/TCB_wcfan_menu, \U0001f4f6 Shutter \U0001f4f6:/TCB_shutter_menu"
+          - "\U000026fd Gasolina \U000026fd:/TCB_gasolina_menu, \U0001f321 Sensors \U0001f321:/TCB_sensors_menu"
+          - "{% if states.persistent_notification | length >0 %}{{'\U0001f4eb ' + states.persistent_notification | length | string + ' notifications \U0001f4eb:/TCB_notifications_menu, '}}{% endif %}\U0001f504 Refresh:/TCB_start_menu"

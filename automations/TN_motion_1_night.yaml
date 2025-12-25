@@ -1,0 +1,16 @@
+- alias: 'PIR motion 1_night'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: 'binary_sensor.pir_kerui_p831_1'
+    to: 'on'
+  condition: 
+    condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:   
+    # - service: notify.send_message
+    #   data:
+    #     entity_id: notify.telegram_bot_701350878_327910374
+    #    message: "PIR motion 1 night"
+    - service: script.yeelight_night

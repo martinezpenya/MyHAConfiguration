@@ -1,0 +1,26 @@
+##########################################
+## INLINE_KEYBOARD - TCB_wcfan_timerstopped
+##
+- alias: 'TCB_wcfan_timerstopped'
+  initial_state: true
+  trigger:
+  - event_data:
+      entity_id: timer.timer_sonoff_basic_2
+    event_type: timer.finished
+    platform: event
+  condition: []
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.ventilador_wc      
+    - delay: 00:00:01
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'WC Fan timer ended'
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: 'last'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        inline_keyboard: !include TCB_wcfan_menu_buttons.btn

@@ -1,0 +1,19 @@
+# ##########################################
+# ## 
+# ##
+# - alias: 'SW_Little_WC_timer_ended'
+#   initial_state: 'true'
+#   trigger:
+#   - event_data:
+#       entity_id: timer.timer_pir_kerui_p831_2
+#     event_type: timer.finished
+#     platform: event
+#   condition:
+#       - condition: state
+#         entity_id: device_tracker.rdm13npp
+#         state: 'home'
+#   action:
+#     - service: switch.turn_off
+#       data:
+#         entity_id:
+#           - switch.luz_bano_pequeno

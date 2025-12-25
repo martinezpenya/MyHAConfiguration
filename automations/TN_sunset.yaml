@@ -1,0 +1,15 @@
+- alias: 'Sunset'
+  initial_state: true
+  trigger:
+    platform: sun
+    event: sunset
+    #offset: "-00:45:00"
+  #condition:
+    #condition: state
+    #entity_id: group.all_devices
+    #state: home
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "Sunset"

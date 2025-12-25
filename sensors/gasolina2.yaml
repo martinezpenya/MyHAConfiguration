@@ -1,0 +1,53 @@
+- platform: jsonrest
+  resource: !secret clientgasolina2
+  name: gasolinera2
+  verify_ssl: true
+  scan_interval: 1800
+
+# - platform: template
+#   sensors:      
+#     gasolinera21:
+#       friendly_name: Santa Barbara
+#       value_template: >-
+#               {%- for petrol in states.sensor.gasolinera2.attributes.ListaEESSPrecio -%}
+#                 {%- if petrol["IDEESS"] | int  == 10671 -%}  
+#                   {{ petrol["PrecioProducto"] | capitalize | replace(",",".") }} 
+#                 {%- endif -%}
+#               {%- endfor -%}
+#       unit_of_measurement: '€/L'
+#       attribute_templates:
+#           latitude: >-
+#               {%- for petrol in states.sensor.gasolinera2.attributes.ListaEESSPrecio -%}
+#                 {%- if petrol["IDEESS"] | int  == 10671 -%}  
+#                   {{petrol["Latitud"] | replace(",",".")}} 
+#                 {%- endif -%}
+#               {%- endfor -%}      
+#           longitude: >-
+#               {%- for petrol in states.sensor.gasolinera2.attributes.ListaEESSPrecio -%}
+#                 {%- if petrol["IDEESS"] | int  == 10671 -%}  
+#                   {{petrol["Longitud (WGS84)"]| replace(",",".") }} 
+#                 {%- endif -%}
+#               {%- endfor -%}      
+#     gasolinera22:
+#       friendly_name: El Regaixo
+#       value_template: >-
+#               {%- for petrol in states.sensor.gasolinera2.attributes.ListaEESSPrecio -%}
+#                 {%- if petrol["IDEESS"] | int  == 1898 -%}  
+#                   {{ petrol["PrecioProducto"] | capitalize | replace(",",".") }} 
+#                 {%- endif -%}
+#               {%- endfor -%}
+#       unit_of_measurement: '€/L'
+#       attribute_templates:
+#           latitude: >-
+#               {%- for petrol in states.sensor.gasolinera2.attributes.ListaEESSPrecio -%}
+#                 {%- if petrol["IDEESS"] | int  == 1898 -%}  
+#                   {{petrol["Latitud"] | replace(",",".")}} 
+#                 {%- endif -%}
+#               {%- endfor -%}      
+#           longitude: >-
+#               {%- for petrol in states.sensor.gasolinera2.attributes.ListaEESSPrecio -%}
+#                 {%- if petrol["IDEESS"] | int  == 1898 -%}  
+#                   {{petrol["Longitud (WGS84)"]| replace(",",".") }} 
+#                 {%- endif -%}
+#               {%- endfor -%}          
+      

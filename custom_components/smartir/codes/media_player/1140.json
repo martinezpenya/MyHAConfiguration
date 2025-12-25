@@ -1,0 +1,30 @@
+{
+    "manufacturer": "Technics",
+    "supportedModels": [
+      "RAK-SC301X"
+    ],
+    "supportedController": "Broadlink",
+    "commandsEncoding": "Base64",
+    "commands": {
+        "off": "JgBmAHU3EA4OKxANDg8NDw4PDg8NDw4QDQ8ODw4PDRAOKxANDg8ODg4PDg8NDw4QDisQDQ4rEA4NDw4sDw0ODw4PDQ8ODw4sEA0NLA8qECoQKg8NDg8OKxANDg8NLA8rEA0ODg4sEAANBQAA===",
+        "on": "JgDMAHU3EA4OKw8ODRANDw0QDRANDw0RDRANDw0QDg8NLA8ODQ8OEA0PDQ8ODw4QDSwNEA0sDRENDw0sDw4NEA0PDg8NEA0tDQ8OLA0sDS0OKw4PDg8NLA4PDQ8OLA0tDQ8ODxApDgAJnHM5Dg8PKw4ODw4PDg8ODw4ODg8ODw4ODg8ODw4PKxAMDw4PDw4ODw4PDg4ODyoPDg8qDw8PDg4rDg8ODw8ODg4PDg8qDw4PKg8qDywOKw4PDg4PKw8ODw4PKg4rDw4PDg4rDgANBQAAAAAAAAAAAAAAAA===",
+        "previousChannel": "JgAaAB0eHB46Hh0eHB4cHh07Ox4cHh0dHTwcAA0FAAAAAAAAAAAAAAAAAAA=",
+        "nextChannel": "JgAaAB0dHR47HR0dHR4dHRw8Ox4cHhweHR0dAA0FAAAAAAAAAAAAAAAAAAA=",
+        "volumeDown": "IBqzQiAas0JXjSkyjQCgIQAAAAAAAAAAAAAAAA===",
+        "volumeUp": "IwN4lcGnLTjd7C8GiA+ryDY6o0Akz5eCCv9P+g===",
+        "mute": "JgAaAB0dOx4cHh0dHR4cHh0dHR4cPBwePDsdAA0FAAAAAAAAAAAAAAAAAAA=",
+        "sources": {
+            "EXT1": "JgAYAB8bHxs9HB4cHzkfHDwcHxsfOjwcHwANBQ==",
+            "EXT2": "JgAaAB8bPRsfHB4cHxsfHB46HxsfHDwcHzkfAA0FAAAAAAAAAAAAAAAAAAA=",
+            "VGA": "JgAaAB8bHxw8HB8bHzoeHB8bHxweHD0bHxsfAA0FAAAAAAAAAAAAAAAAAAA=",
+            "HDMI": "JgAaAB8cHxs9Gx8cHzkfGx8cHhwfGz0cHjofAA0FAAAAAAAAAAAAAAAAAAA=",
+            "HDMI Side": "JgAYAD06PBwfGx85HxwfGx8bHxw9OR8bHwANBQ==",
+            "AV Side": "JgAYAB8bPRwfGx8bHzoeHD0bHxweOh8bPQANBQ==",
+            "Channel 1": "JgAcAB8cPBweHB8bHxweHB4cHxweHB4cHxweOh4ADQUAAAAAAAAAAAAAAAA=",
+            "Channel 11": [
+                "JgAcAB8cPBweHB8bHxweHB4cHxweHB4cHxweOh4ADQUAAAAAAAAAAAAAAAA=",
+                "JgAcAB8cPBweHB8bHxweHB4cHxweHB4cHxweOh4ADQUAAAAAAAAAAAAAAAA="
+            ]
+        }
+    }
+}

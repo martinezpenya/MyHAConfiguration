@@ -1,0 +1,14 @@
+- alias: nfc_mesita
+  initial_state: true
+  trigger:
+    - platform: tag
+      tag_id: f75015d5-cbc9-4bfe-b31b-0fb45ba98510
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "luz pc toggle"
+    - service: switch.toggle
+      data:
+        entity_id:
+          - switch.luz_pc

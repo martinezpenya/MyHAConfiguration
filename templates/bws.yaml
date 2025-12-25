@@ -1,0 +1,90 @@
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.bw1_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.BliTZW0lF_1', 'friendly_name')}}
+    state: '{{ states(''sensor.bw1_total'') }}'
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.bw2_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.BliTZW0lF_2', 'friendly_name')}}
+    state: '{{ states(''sensor.bw2_total'') }}'
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.bw3_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.BliTZW0lF_3', 'friendly_name')}}
+    state: '{{ states(''sensor.bw3_total'') }}'
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.bw4_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.BliTZW0lF_4', 'friendly_name')}}
+    state: '{{ states(''sensor.bw4_total'') }}'
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.bw5_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.BliTZW0lF_5', 'friendly_name')}}
+    state: '{{ states(''sensor.bw5_total'') }}'
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.bw6_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.BliTZW0lF_6', 'friendly_name')}}
+    state: '{{ states(''sensor.bw6_total'') }}'    
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.bw7_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.BliTZW0lF_7', 'friendly_name')}}
+    state: '{{ states(''sensor.bw7_total'') }}'    
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.bw8_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.BliTZW0lF_8', 'friendly_name')}}
+    state: '{{ states(''sensor.bw8_total'') }}'    
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.bw9_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.BliTZW0lF_9', 'friendly_name')}}
+    state: '{{ states(''sensor.bw9_total'') }}'    

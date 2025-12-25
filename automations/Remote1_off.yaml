@@ -1,0 +1,71 @@
+# http://domology.es/tasmotear-sonoff-rf-bridge-y-anadirlo-en-ha/
+# En el caso del PIR como no tiene dos códigos RF 
+# (Uno para activarse y otro cuando esta en standby) 
+# debemos poner un código inventado realizar un automation 
+# para que vuelva al estado original a los x segundos, 
+# de lo contrario siempre nos daría que hay movimiento en 
+# la estancia cuando no lo hubiera:
+# Con esto conseguiríamos que el PIR diera aviso de movimiento 
+# y que a los x segundos restableciera su estado a no detectado.   
+#
+# Al final se manda un código OFF inventado al sensor binario
+# a los X segundos para simular que lo hace él mismo al apagarse
+- alias: mqtt_restart_Remote1_ButtonA
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.remote1_btna
+      # from: 'off'
+      to: 'on'
+      for:
+        seconds: 1
+  action:
+    - service: mqtt.publish
+      data:
+         topic: tele/sonoffRF433/RESULT
+         payload: '{"RfReceived":{"Data":"801D48off"}}'
+
+- alias: mqtt_restart_Remote1_ButtonB
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.remote1_btnb
+      # from: 'off'
+      to: 'on'
+      for:
+        seconds: 1
+  action:
+    - service: mqtt.publish
+      data:
+         topic: tele/sonoffRF433/RESULT
+         payload: '{"RfReceived":{"Data":"801D44off"}}'
+
+- alias: mqtt_restart_Remote1_ButtonC
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.remote1_btnc
+      # from: 'off'
+      to: 'on'
+      for:
+        seconds: 1
+  action:
+    - service: mqtt.publish
+      data:
+         topic: tele/sonoffRF433/RESULT
+         payload: '{"RfReceived":{"Data":"801D42off"}}'
+
+- alias: mqtt_restart_Remote1_ButtonD
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.remote1_btnd
+      # from: 'off'
+      to: 'on'
+      for:
+        seconds: 1
+  action:
+    - service: mqtt.publish
+      data:
+         topic: tele/sonoffRF433/RESULT
+         payload: '{"RfReceived":{"Data":"801D41off"}}'

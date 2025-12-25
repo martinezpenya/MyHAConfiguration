@@ -1,0 +1,11 @@
+##########################################
+## Sonoff Basic 2 http://192.168.0./
+##
+- name: "Ventilador WC"
+  state_topic: "stat/sonoffBasic_2/POWER"
+  command_topic: "cmnd/sonoffBasic_2/POWER"
+  qos: 2
+  payload_on: "ON"
+  payload_off: "OFF"
+  optimistic: false
+  icon: mdi:power-socket-eu

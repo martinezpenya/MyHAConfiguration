@@ -1,0 +1,498 @@
+##########################################
+## BlitzWolf SHP2
+##
+
+homeassistant:
+  customize:
+    switch.BliTZW0lF_7:
+      friendly_name: "Lavadora"
+    automation.bw7_switch_left_on:
+      icon: mdi:power-plug-off
+      friendly_name: "Auto power off"
+    script.bw7_reset:
+      icon: mdi:restore
+      friendly_name: "Reset"
+    script.bw7_clothes_hanging:
+      can_cancel: false
+      icon: mdi:message-reply-text  
+      friendly_name: "The clothes are hanging"
+    sensor.bw7_power:
+      friendly_name: "Power"
+      device_class: power
+      state_class: measurement      
+    sensor.bw7_current:
+      friendly_name: "Current"
+    sensor.bw7_voltage:
+      friendly_name: "Voltage"
+    sensor.bw7_today:
+      friendly_name: "kWh Today"
+    sensor.bw7_total:
+      friendly_name: "kWh Total"
+    sensor.bw7_totalstarttime:
+      friendly_name: "Last reset"
+
+# input_number:
+#   bw7_kw_pico:
+#     name: 'KW pico'
+#     icon: mdi:trending-up
+#     unit_of_measurement: "KW"
+#     min: 0
+#     max: 1000
+#     mode: box
+#     step: 0.001 
+#   bw7_kw_valle:
+#     name: 'KW valle'
+#     icon: mdi:trending-down
+#     unit_of_measurement: "KW"
+#     min: 0
+#     max: 1000
+#     mode: box
+#     step: 0.001 
+#   bw7_partial:
+#     name: partial data
+#     icon: mdi:calculator-variant
+#     unit_of_measurement: "KW"
+#     min: 0
+#     max: 1000
+#     mode: box
+#     step: 0.001  
+
+mqtt:
+  switch:
+  - name: "BliTZW0lF_7"
+    state_topic: "stat/BliTZW0lF_7/POWER"
+    command_topic: "cmnd/BliTZW0lF_7/POWER"
+    availability_topic: "tele/BliTZW0lF_7/LWT"
+    qos: 2
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    icon: mdi:speedometer
+
+  sensor:
+  - name: bw7_totalstarttime
+    state_topic: "tele/BliTZW0lF_7/SENSOR"
+    value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S%z', now())) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
+    unit_of_measurement: ""
+    icon: mdi:update
+    
+  - name: bw7_total
+    state_topic: "tele/BliTZW0lF_7/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Total }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:elevation-rise
+  
+  - name: bw7_today
+    state_topic: "tele/BliTZW0lF_7/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Today }}"
+    unit_of_measurement: "kWh"  
+    icon: mdi:elevation-rise
+    
+  - name: bw7_power
+    state_topic: "tele/BliTZW0lF_7/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Power }}"
+    unit_of_measurement: "W"
+    icon: mdi:elevation-rise
+
+  - name: bw7_voltage
+    state_topic: "tele/BliTZW0lF_7/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Voltage }}"
+    unit_of_measurement: "V"
+    icon: mdi:current-ac
+
+  - name: bw7_current
+    state_topic: "tele/BliTZW0lF_7/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Current }}"
+    unit_of_measurement: "A"
+    icon: mdi:transfer
+
+# sensor:
+#   - platform: template
+#     sensors:
+#       # bw7_kw_valle:
+#       #   friendly_name: 'KW valle'
+#       #   value_template: '{{ (states("input_number.bw7_kw_valle") | float| round(6)) }}'
+#       #   icon_template: mdi:trending-down
+#       #   unit_of_measurement: "KW"
+#       # bw7_kw_pico:
+#       #   friendly_name: 'KW pico'
+#       #   value_template: '{{ (states("input_number.bw7_kw_pico") | float | round(6)) }}'
+#       #   icon_template: mdi:trending-up
+#       #   unit_of_measurement: "KW"
+#       # bw7_eur_valle:
+#       #   friendly_name: '€ valle'
+#       #   value_template: '{{ (states("input_number.bw7_kw_valle") | multiply(states("input_text.energy_cost_v")|float) | float | round(4)) }}'
+#       #   unit_of_measurement: "€"
+#       #   icon_template: mdi:progress-download
+#       # bw7_eur_pico:
+#       #   friendly_name: '€ pico'
+#       #   value_template: '{{ (states("input_number.bw7_kw_pico") | multiply(states("input_text.energy_cost_p")|float) | float | round(4)) }}'
+#       #   icon_template: mdi:progress-upload
+#       #   unit_of_measurement: "€"
+#       # bw7_total_euro:
+#       #   friendly_name: '€ Total'
+#       #   value_template: '{{(((states.sensor.bw7_eur_valle.state | float) + (states.sensor.bw7_eur_pico.state  | float)) | round(4)) }}'
+#       #   unit_of_measurement: "€"
+#       #   icon_template: mdi:currency-eur   
+#       # bw7_energy_cost_hour:
+#       #   friendly_name: "bw7_Cost (current hour)"
+#       #   unit_of_measurement: '€'
+#       #   value_template: "{%set IVA = 1.10 |float %}
+#       #     {%set imp_elec = 1.05112696 |float %}
+#       #     {{ (( states('sensor.bw7_hourly_energy') | float * (states('sensor.pvpc') | float) ) * imp_elec * IVA )  | round(3) }}"
+#       bw7_energy:
+#         device_class: energy
+#         friendly_name: "Energy {{state_attr('switch.BliTZW0lF_7', 'friendly_name')}}"
+#         attribute_templates:
+#           state_class: total_increasing
+#           device_class: energy
+#         unit_of_measurement: 'kWh'
+#         value_template: "{{ states('sensor.bw7_total') }}"
+#         icon_template: mdi:mdi-current-ac
+
+utility_meter:
+  bw7_hourly_energy:
+    source: sensor.bw7_total
+    cycle: hourly
+  bw7_daily_energy:
+    source: sensor.bw7_total
+    cycle: daily
+  bw7_monthly_energy:
+    source: sensor.bw7_total
+    cycle: monthly
+  bw7_yearly_energy:
+    source: sensor.bw7_total
+    cycle: yearly
+  # bw7_monthly_energy_cost:
+  #   source: sensor.bw7_energy_cost_hour
+  #   cycle: monthly
+
+automation:
+  # - alias: 'bw7 reset'
+  #   initial_state: true
+  #   trigger:
+  #     - platform: template
+  #       value_template: '{{ now().strftime("%d") == "01" }}'
+  #   action:
+  #     - service: script.bw7_report
+  #     - service: script.bw7_reset
+
+  # - alias: 'bw7 Valle'
+  #   initial_state: on
+  #   trigger:
+  #     - platform: template
+  #       value_template: '{{ now().strftime("%M") == "00" }}'
+  #   condition:
+  #     - condition: template
+  #       value_template: '{{ now().strftime("%H") == "13" }}'
+  #   action:
+  #     - service: input_number.set_value
+  #       data_template:
+  #         entity_id: input_number.bw7_kw_valle
+  #         value: "{{ ((states.input_number.bw7_kw_valle.state|float) + ((states.sensor.bw7_total.state|float) - (states.input_number.bw7_partial.state|float))|float) }}"
+  #     - service: input_number.set_value
+  #       data_template:
+  #         entity_id: input_number.bw7_partial
+  #         value: "{{ states.sensor.bw7_total.state }}"          
+
+  # - alias: 'bw7 Pico'
+  #   initial_state: on
+  #   trigger:
+  #     - platform: template
+  #       value_template: '{{ now().strftime("%M") == "00" }}'
+  #   condition:
+  #     - condition: template
+  #       value_template: '{{ now().strftime("%H") == "23" }}'
+  #   action:
+  #     - service: input_number.set_value
+  #       data_template:
+  #         entity_id: input_number.bw7_kw_pico
+  #         value: "{{ ((states.input_number.bw7_kw_pico.state|float) + ((states.sensor.bw7_total.state|float) - (states.input_number.bw7_partial.state|float))|float) }}"
+  #     - service: input_number.set_value
+  #       data_template:
+  #         entity_id: input_number.bw7_partial
+  #         value: "{{ states.sensor.bw7_total.state }}"      
+
+  - alias: bw7_switch_left_on
+    initial_state: false
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.bw7_power
+        below: 30
+        above: 1
+        for:
+          minutes: 5
+    action:
+      - service: switch.turn_off
+        data:
+          entity_id:
+            - switch.BliTZW0lF_7
+      - delay: 0:00:02
+      - service: notify.send_message
+        data:
+          entity_id: notify.telegram_bot_701350878_327910374
+          message: 
+            "{{state_attr('switch.BliTZW0lF_7', 'friendly_name')}} switch is now **{% if is_state('switch.BliTZW0lF_7', 'on') %}ON{% else %}OFF{% endif %}** because it was consuming less than 30W for 5 minutes"          
+      - delay: 0:00:02
+      - service: persistent_notification.create
+        data:
+          message: "Is now **{% if is_state('switch.BliTZW0lF_7', 'on') %}ON{% else %}OFF{% endif %}** because it was left on for 5 minutes"
+          title: "{{state_attr('switch.BliTZW0lF_7', 'friendly_name')}}"
+
+  ##### WASHER #####
+  
+  ## washer starts to clean
+  - alias: 'Washer started'
+    trigger:
+    - above: '10'
+      entity_id: sensor.bw7_power
+      platform: numeric_state
+    condition:
+    - condition: state
+      entity_id: input_select.washer_status
+      state: "Off"
+    action:
+    - data:
+        entity_id: input_select.washer_status
+        option: "Cleaning"
+      service: input_select.select_option
+    - service: switch.turn_on
+      data:
+        entity_id: switch.sonoffbasic_3
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "Lavadora en marcha, en cuanto termine, te aviso para tender la ropa"
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 1 #100%    
+    - delay: 00:00:01 #wait for switch
+    - service: tts.google_say
+      entity_id: media_player.speaker
+      data:
+        message: 'Lavadora en marcha, en cuanto termine, te aviso para tender la ropa'
+        language: 'es' #optional
+    - delay: 00:00:10 #wait for message
+    - service: switch.turn_off
+      data:
+        entity_id: switch.sonoffbasic_3
+
+  ## washer ends but there's no one at home change state to wait
+  - alias: 'Washer on wait'
+    trigger:
+    - below: '5'
+      entity_id: sensor.bw7_power
+      for: 0:01:00
+      platform: numeric_state
+    condition:
+    - condition: state
+      entity_id: input_select.washer_status
+      state: "Cleaning"
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: device_tracker.rdm13nppmovil
+          state: 'unavailable'
+        - condition: state
+          entity_id: device_tracker.rdm13nppmovil
+          state: 'not_home'
+    action:
+    - data:
+        entity_id: input_select.washer_status
+        option: "Waiting"
+      service: input_select.select_option
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: La lavadora ya terminó, pasara a modo espera, cuando llegues a casa
+          te lo recordare
+
+## washer was waiting but somebody comes home so changes to Ended
+  - alias: "Washer waiting end"
+    trigger:
+    - entity_id: device_tracker.rdm13nppmovil
+      platform: state
+      to: home
+    condition:
+    - condition: state
+      entity_id: input_select.washer_status
+      state: "Waiting"
+    action:
+    - data:
+        entity_id: input_select.washer_status
+        option: "Ended"
+      service: input_select.select_option
+
+  ## washer ends and I'm home change state to ended
+  - alias: "Washer ended"
+    trigger:
+    - below: 5
+      entity_id: sensor.bw7_power
+      for: 0:01:00
+      platform: numeric_state
+    condition:
+    - condition: state
+      entity_id: device_tracker.rdm13nppmovil
+      state: home
+    - condition: state
+      entity_id: input_select.washer_status
+      state: "Cleaning"
+    action:
+    - data:
+        entity_id: input_select.washer_status
+        option: "Ended"
+      service: input_select.select_option
+
+  # washer is in ended state so starts timer to remind me to hang the clothes every 15 minutes
+  - alias: 'Washer reminder'
+    trigger:
+    - entity_id: input_select.washer_status
+      platform: state
+      to: "Ended"
+    - event_data:
+        entity_id: timer.washer_reminder
+      event_type: timer.finished
+      platform: event
+    condition: []
+    action:
+    - data:
+        entity_id: timer.washer_reminder
+      service: timer.start
+    - service: switch.turn_on
+      data:
+        entity_id: switch.sonoffbasic_3
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: 'La lavadora ya terminó, debes tender la ropa , te lo recordaré 
+            en 15 minutos, a no ser que me avises de que ya lo has hecho'
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 1 #100%    
+    - delay: 00:00:01 #wait for switch
+    - service: tts.google_say
+      entity_id: media_player.speaker
+      data:
+        message: 'La lavadora ya terminó, debes tender la ropa , te lo recordaré 
+            en 15 minutos, a no ser que me avises de que ya lo has hecho'
+        language: 'es' #optional
+    - delay: 00:00:10 #wait for message
+    - service: switch.turn_off
+      data:
+        entity_id: switch.sonoffbasic_3
+
+script:
+  # bw7_report:
+  #   sequence:
+  #     - service: persistent_notification.create
+  #       data_template:
+  #         title: "{{state_attr('switch.BliTZW0lF_7', 'friendly_name')}} Report"
+  #         message: "From {{ (states.sensor.bw7_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
+  #           to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
+  #           KW Pico: {{ states.sensor.bw7_kw_pico.state_with_unit }} \n
+  #           KW Vall: {{ states.sensor.bw7_kw_valle.state_with_unit }} \n
+  #           Total KW: {{ states.sensor.bw7_total.state_with_unit }}\n\n
+  #           € Pico: {{ states.sensor.bw7_eur_pico.state_with_unit }} \n
+  #           € Vall: {{ states.sensor.bw7_eur_valle.state_with_unit }} \n
+  #           Total €: {{ states.sensor.bw7_total_euro.state_with_unit }}\n"
+  bw7_reset:
+    sequence:
+      - service: mqtt.publish
+        data_template:
+          topic: "cmnd/BliTZW0lF_7/energyreset1"
+          payload: "0"
+      - service: mqtt.publish
+        data_template:
+          topic: "cmnd/BliTZW0lF_7/energyreset2"
+          payload: "0"
+      - service: mqtt.publish
+        data_template:
+          topic: "cmnd/BliTZW0lF_7/energyreset3"
+          payload: "0"
+      # - service: input_number.set_value
+      #   data_template:
+      #     entity_id: input_number.bw7_Kw_pico
+      #     value: "0"
+      # - service: input_number.set_value
+      #   data_template:
+      #     entity_id: input_number.bw7_Kw_valle
+      #     value: "0"
+      # - service: input_number.set_value
+      #   data_template:
+      #     entity_id: input_number.bw7_partial
+      #     value: "0"
+
+  #### WASHER ####
+  bw7_clothes_hanging:
+    alias: The clothes are hanging
+    sequence:
+    - data:
+        entity_id: input_select.washer_status
+        option: "Off"
+      service: input_select.select_option
+    - data:
+        entity_id: timer.washer_reminder
+      service: timer.cancel
+    - delay: 00:00:01
+    - service: switch.turn_on
+      data:
+        entity_id: switch.sonoffbasic_3
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "The clothes are hanging"
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 1 #100%    
+    - delay: 00:00:01 #wait for switch
+    - service: tts.google_say
+      entity_id: media_player.speaker
+      data:
+        message: 'Perfecto, gracias por tender la ropa, ya no te lo recordaré más'
+        language: 'es' #optional
+    - delay: 00:00:10 #wait for message
+    - service: switch.turn_off
+      data:
+        entity_id: switch.sonoffbasic_3
+
+#### WASHER
+input_select:
+  washer_status:
+    name: Washer status
+    options:
+     - "Off"
+     - "Cleaning"
+     - "Waiting"
+     - "Ended"
+#    initial: "Off"
+    icon: mdi:washing-machine
+
+timer:
+  washer_reminder:
+    duration: '00:15:00'
+
+
+#########################
+#Lovelace entities Card:#
+#########################
+# entities:
+#   - entity: switch.BliTZW0lF_7
+#   - entity: sensor.bw7_power
+#   - entity: sensor.bw7_current
+#   - entity: sensor.bw7_voltage
+#   - entity: sensor.bw7_totalstarttime
+#   - entity: sensor.bw7_today
+#   - entity: sensor.bw7_total
+#   - entity: script.bw7_reset
+#   - entity: automation.bw7_switch_left_on
+
+
+
+
+# show_header_toggle: false
+# type: entities

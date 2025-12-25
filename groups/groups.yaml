@@ -1,0 +1,9 @@
+temperature_sensors:
+    name: "Sensors temperatura"
+    entities:
+        - sensor.esphome1_temperature_telegram 
+        - sensor.esphome2_temperature_telegram 
+        - sensor.esphome3_temperature_telegram 
+        - sensor.esphome4_temperature_telegram 
+        - sensor.esphome5_temperature_telegram     
+        - sensor.esphome6_temperature_telegram 

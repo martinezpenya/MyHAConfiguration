@@ -1,0 +1,57 @@
+###############################
+# Button D
+
+#- alias: Remote1ButtonD
+#  trigger:
+#    platform: state
+#    entity_id: binary_sensor.Remote1_BtnD
+#    to: 'on'
+#  action:
+    # - service: notify.send_message
+    #   data:
+    #     entity_id: notify.telegram_bot_701350878_327910374
+#        message: "Remote1 buttonD pressed"
+        
+- alias: Remote1ButtonDon
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote1_btnd
+    to: 'on'
+  condition: 
+    condition: state
+    entity_id: light.yeelight_1
+    state: 'off'
+  action:
+    service: light.turn_on
+    data:
+      entity_id: light.Yeelight_1
+      brightness: 10
+
+- alias: Remote1ButtonDstep
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote1_btnd
+    to: 'on'
+  condition: 
+    - condition: numeric_state
+      entity_id: light.yeelight_1
+      value_template: '{% if states.light.Yeelight_1.state == "on"  %}{{ states.light.Yeelight_1.attributes.brightness }}{% else %}0{% endif %}'
+      below: 220
+  action:
+    service: script.yeelight_step     
+    
+- alias: Remote1ButtonDoff
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote1_btnd
+    to: 'on'
+  condition:
+    - condition: numeric_state
+      entity_id: light.yeelight_1
+      value_template: '{% if states.light.Yeelight_1.state == "on"  %}{{ states.light.Yeelight_1.attributes.brightness }}{% else %}0{% endif %}'
+      above: 230
+  action:
+    service: light.turn_off
+    data:
+      entity_id: light.Yeelight_1 

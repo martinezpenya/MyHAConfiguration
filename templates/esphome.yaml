@@ -1,0 +1,30 @@
+- sensor:
+  - unit_of_measurement: ºC
+    default_entity_id: sensor.esphome1_temperature_telegram
+    name: Entry
+    state: '{{ states(''sensor.esphome1_temperature'') }}'
+- sensor:
+  - unit_of_measurement: ºC
+    default_entity_id: sensor.esphome2_temperature_telegram
+    name: Office
+    state: '{{ states(''sensor.esphome2_temperature'') }}'
+- sensor:
+  - unit_of_measurement: ºC
+    default_entity_id: sensor.esphome3_temperature_telegram
+    name: Sleeping
+    state: '{{ states(''sensor.esphome3_temperature'') }}'
+- sensor:
+  - unit_of_measurement: ºC
+    default_entity_id: sensor.esphome4_temperature_telegram
+    name: Dinning
+    state: '{{ states(''sensor.esphome4_temperature'') }}'
+- sensor:
+  - unit_of_measurement: ºC
+    default_entity_id: sensor.esphome5_temperature_telegram
+    name: Kitchen
+    state: '{{ states(''sensor.esphome5_temperature'') }}'
+- sensor:
+  - unit_of_measurement: ºC
+    default_entity_id: sensor.esphome6_temperature_telegram
+    name: Room
+    state: '{{ states(''sensor.esphome6_temperature'') }}'    

@@ -1,0 +1,330 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: !secret elevation
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: !secret time_zone
+  # Customization file
+  customize: !include customize.yaml
+  packages: !include_dir_named packages
+  internal_url: !secret internal_url
+  external_url: !secret external_url
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+  themes: !include_dir_merge_named themes
+
+# Enables configuration UI
+config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+#http:
+#  base_url: !secret base_url
+#  server_port: 8123
+#  ssl_certificate: !secret ssl_certificate
+#  ssl_key: !secret ssl_key
+
+#enable mobile app
+mobile_app:
+
+http:
+#  base_url: !secret base_url
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - !secret ip_Host_Traefik #Traefik container IP
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+
+# Discover some devices automatically
+#discovery:
+#  ignore:
+#    - yeelight    
+
+##########################################
+## 
+## Yeelight Color 2_1 
+##
+yeelight:
+  devices: 
+    192.168.0.156:
+      name: "Yeelight_1"
+      model: color2
+  custom_effects:
+  - name: 'Sunrise'
+    flow_params:
+      count: 1
+      action: stay
+      transitions:
+        - RGBTransition: [255, 0, 0, 5000, 9]
+        - TemperatureTransition: [1700, 25000, 10]
+        - TemperatureTransition: [2700, 25000, 11]
+        - TemperatureTransition: [3700, 25000, 12]
+        - TemperatureTransition: [4700, 25000, 13]
+        - TemperatureTransition: [6500, 25000, 100]
+      
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+#https://home-assistant.io/components/recorder/
+#The recorder component is storing details in a database which then are handled by the history component.
+recorder:
+  #purge_interval: 1
+  purge_keep_days: 7
+
+# Enables a map showing the location of tracked devices
+#map:
+
+# Track the sun
+sun:
+
+###  Sensors  ###
+#  Sensors are anything (hardware or software) that has a state.
+sensor: !include_dir_merge_list sensors
+template: !include_dir_merge_list templates
+      
+device_tracker: !include device_tracker.yaml
+
+#breaking changes
+#breaking_changes:
+
+# Text to speech
+tts:
+  - platform: google_translate
+    #base_url: !secret base_url
+    service_name: google_say
+    language: 'ca'
+
+# Cloud
+cloud:
+
+#mosquitto
+mqtt:
+  #broker: !secret mqtthostname
+  #username: !secret mqttusername
+  #password: !secret mqttpassword
+  #port: 1883
+  #discovery: False
+  cover:
+    !include covers/covers.yaml
+  binary_sensor:
+    !include binary_sensors.yaml
+  switch:
+    !include_dir_merge_list switches
+  sensor:
+    name: "Shutter Office Effect"
+    state_topic: "stat/shutter_office/EFFECT"
+    value_template: "{{ value }}"
+    qos: 1
+
+### Input Boolean ###
+# The input_boolean component allows the user to define boolean values that can be controlled via the frontend and can be used within conditions of automation.
+input_boolean: !include input_boolean.yaml
+
+#light: !include config/lights.yaml
+# light:
+#   - platform: template
+#     lights:
+#       shutter_office_button_led:
+#         friendly_name: "Shutter Office Button LED"
+#         value_template: >-
+#           {% if states('sensor.shutter_office_effect') == '7,1' %}
+#             on
+#           {% else %}
+#             off
+#           {% endif %}
+#         turn_on:
+#           - service: mqtt.publish
+#             data:
+#               topic: "cmnd/shutter_office/TuyaSend4"
+#               payload: "7,1"
+#               qos: 2
+#         turn_off:
+#           - service: mqtt.publish
+#             data:
+#               topic: "cmnd/shutter_office/TuyaSend4"
+#               payload: "7,0"
+#               qos: 2
+#       shutter_dinner_button_led:
+#         friendly_name: "Shutter Dinner Button LED"
+#         value_template: "{{ states('input_boolean.shutter_dinner_led_state') == 'on' }}"
+#         turn_on:
+#           - service: mqtt.publish
+#             data:
+#               topic: "cmnd/shutter_dinner/TuyaSend4"
+#               payload: "7,1"
+#               qos: 2
+#           - service: input_boolean.turn_on
+#             target:
+#               entity_id: input_boolean.shutter_dinner_led_state
+#         turn_off:
+#           - service: mqtt.publish
+#             data:
+#               topic: "cmnd/shutter_dinner/TuyaSend4"
+#               payload: "7,0"
+#               qos: 2
+#           - service: input_boolean.turn_off
+#             target:
+#               entity_id: input_boolean.shutter_dinner_led_state
+#       shutter_sleep_button_led:
+#         friendly_name: "Shutter Sleep Button LED"
+#         value_template: "{{ states('input_boolean.shutter_sleep_led_state') == 'on' }}"
+#         turn_on:
+#           - service: mqtt.publish
+#             data:
+#               topic: "cmnd/shutter_sleep/TuyaSend4"
+#               payload: "7,1"
+#               qos: 2
+#           - service: input_boolean.turn_on
+#             target:
+#               entity_id: input_boolean.shutter_sleep_led_state
+#         turn_off:
+#           - service: mqtt.publish
+#             data:
+#               topic: "cmnd/shutter_sleep/TuyaSend4"
+#               payload: "7,0"
+#               qos: 2
+#           - service: input_boolean.turn_off
+#             target:
+#               entity_id: input_boolean.shutter_sleep_led_state
+#       shutter_room_button_led:
+#         friendly_name: "Shutter Room Button LED"
+#         value_template: "{{ states('input_boolean.shutter_room_led_state') == 'on' }}"
+#         turn_on:
+#           - service: mqtt.publish
+#             data:
+#               topic: "cmnd/shutter_room/TuyaSend4"
+#               payload: "7,1"
+#               qos: 2
+#           - service: input_boolean.turn_on
+#             target:
+#               entity_id: input_boolean.shutter_room_led_state
+#         turn_off:
+#           - service: mqtt.publish
+#             data:
+#               topic: "cmnd/shutter_room/TuyaSend4"
+#               payload: "7,0"
+#               qos: 2
+#           - service: input_boolean.turn_off
+#             target:
+#               entity_id: input_boolean.shutter_room_led_state
+
+#REVISAR DEPRECATED!
+#octoprint:
+#  host: !secret octopihostname
+#  api_key: !secret octopitoken
+#  bed: true
+#  number_of_tools: 1
+
+smartir:
+
+climate:
+  - platform: smartir
+    name: AC Despatx
+    unique_id: ac_despatx
+    device_code: 1080
+    #controller_data: !secret rm_mini_3_despatx_ip
+    controller_data: remote.despatx_remote
+    temperature_sensor: sensor.esphome2_temperature
+    humidity_sensor: sensor.esphome2_humidity
+    power_sensor: binary_sensor.aa_despatx
+  - platform: smartir
+    name: AC Menjador
+    unique_id: ac_menjador
+    device_code: 1080
+    #controller_data: !secret rm_mini_3_menjador_ip
+    controller_data: remote.menjador_remote
+    temperature_sensor: sensor.esphome4_temperature
+    humidity_sensor: sensor.esphome4_humidity
+    power_sensor: binary_sensor.aa_menjador
+
+media_player:
+  - name: Technics Music
+    platform: smartir
+    unique_id: Technics_music
+    device_code: 1140
+    controller_data: !secret rm_mini_3_despatx_ip
+  - name: Living room TV
+    platform: smartir
+    unique_id: living_room_tv
+    device_code: 1040
+    controller_data: !secret rm_mini_3_menjador_ip
+    power_sensor: switch.blitzw0lf_6
+#  - name: speaker
+#    platform: mopidy
+#    host: mopidy
+    
+
+group: !include_dir_merge_named groups
+automation: !include_dir_merge_list automations
+notify: !include_dir_merge_list notify
+script: !include scripts.yaml
+
+#telegram_bot:
+#- platform: webhooks
+#  api_key: !secret api_key_telegram
+#  allowed_chat_ids:
+#    - !secret id_group_telegram
+#    - !secret id_user_telegram
+
+
+### Input Number ###
+input_number: !include input_number.yaml
+
+### Input Text ###
+input_text: !include input_text.yaml
+
+### Input Select ###
+input_select: !include input_select.yaml
+
+### Input Datetime ###
+#input_datetime: !include input_datetime.yaml
+
+### Utility meter ###
+utility_meter: !include utility_meter.yaml
+
+### Timers ###
+timer: !include timer.yaml
+
+
+stream:
+ffmpeg:      
+camera: !include_dir_merge_list cameras
+
+api:
+
+alexa:
+  smart_home: !include config/alexa.yaml
+
+#new health system later updates
+system_health:
+
+#vacuum:
+#  - platform: miio2
+#    host: !secret vacuumhost
+#    token: !secret vacuumtoken
+#    name: "Robot Aspirador"
+
+#hacs:
+#  token: !secret hacstoken
+
+energy:
+
+#allows set_state script in python (folder python_scripts)
+python_script:
+
+media_source:

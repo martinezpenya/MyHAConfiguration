@@ -1,0 +1,122 @@
+    - name: "sw_curtain_despatx"
+      availability_topic: "tele/sw_curtain_despatx/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+      position_topic: "stat/sw_curtain_despatx/SHUTTER1"
+      position_open: 100
+      position_closed: 0
+      set_position_topic: 'cmnd/sw_curtain_despatx/ShutterPosition1'
+      command_topic: "cmnd/sw_curtain_despatx/Backlog"
+      payload_open: "ShutterOpen1"
+      payload_close: "ShutterClose1"
+      payload_stop: "ShutterStop1"
+      retain: false
+      optimistic: false
+      position_template: |-
+        {% if not state_attr(entity_id, "current_position") %}
+          {{ value }}
+        {% elif state_attr(entity_id, "current_position") < (value | int) %}
+          {{ (value | int + 1) }}
+        {% elif state_attr(entity_id, "current_position") > (value | int) %}
+          {{ (value | int - 1) }}
+        {% else %}
+          {{ value }}
+        {% endif %}    
+      qos: 1
+
+    
+    # SOLUCIÓN PROVISIONAL DAVID
+    # - name: "shutter_office"
+    #   unique_id: "shutter_office"
+    #   qos: 1
+    #   command_topic: "cmnd/shutter_office/tuyasend4"
+    #   payload_open: "1,0"
+    #   payload_close: "1,2"
+    #   payload_stop: "1,1"
+    #   set_position_topic: "cmnd/shutter_office/shutterposition"
+    #   set_position_template: "{{value}}"
+    #   position_topic: "stat/shutter_office/SHUTTER"
+    #   position_template: "{{ value_json.Shutter1.Position }}"
+    #   availability_topic: "tele/shutter_office/LWT"
+    #   payload_available: "Online"
+    #   payload_not_available: "Offline"
+
+    
+    #SOLUCIÓN OPTIMA?!
+    - name: "shutter_office"
+      unique_id: "shutter_office"
+      qos: 1
+      command_topic: "cmnd/shutter_office/tuyasend4"
+      payload_open: "1,0"
+      payload_close: "1,2"
+      payload_stop: "1,1"
+      set_position_topic: "cmnd/shutter_office/shutterposition"
+      set_position_template: "{{value}}"
+      position_topic: "stat/shutter_office/VAR"
+      position_template: "{{ value_json.Var4 | int }}"
+      availability_topic: "tele/shutter_office/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+
+
+    # ORIGINAL PROPUESTO
+    # - name: "shutter_office"
+    #   unique_id: "shutter_office"
+    #   qos: 1
+    #   command_topic: "cmnd/shutter_office/tuyasend4"
+    #   payload_open: "1,0"
+    #   payload_close: "1,2"
+    #   payload_stop: "1,1"
+    #   set_position_topic: "cmnd/shutter_office/shutterposition"
+    #   set_position_template: "{{value}}"
+    #   position_topic: "stat/shutter_office/RESULT"
+    #   position_template: "{{ value_json.Shutter1.Position }}"
+    #   availability_topic: "tele/shutter_office/LWT"
+    #   payload_available: "Online"
+    #   payload_not_available: "Offline"
+
+
+    - name: "shutter_dinner"
+      unique_id: "shutter_dinner"
+      qos: 1
+      command_topic: "cmnd/shutter_dinner/tuyasend4"
+      payload_open: "1,0"
+      payload_close: "1,2"
+      payload_stop: "1,1"
+      set_position_topic: "cmnd/shutter_dinner/shutterposition"
+      set_position_template: "{{value}}"
+      position_topic: "stat/shutter_dinner/VAR"
+      position_template: "{{ value_json.Var4 | int }}"
+      availability_topic: "tele/shutter_dinner/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+
+    - name: "shutter_sleep"
+      unique_id: "shutter_sleep"
+      qos: 1
+      command_topic: "cmnd/shutter_sleep/tuyasend4"
+      payload_open: "1,0"
+      payload_close: "1,2"
+      payload_stop: "1,1"
+      set_position_topic: "cmnd/shutter_sleep/shutterposition"
+      set_position_template: "{{value}}"
+      position_topic: "stat/shutter_sleep/VAR"
+      position_template: "{{ value_json.Var4 | int }}"
+      availability_topic: "tele/shutter_sleep/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"
+
+    - name: "shutter_room"
+      unique_id: "shutter_room"
+      qos: 1
+      command_topic: "cmnd/shutter_room/tuyasend4"
+      payload_open: "1,0"
+      payload_close: "1,2"
+      payload_stop: "1,1"
+      set_position_topic: "cmnd/shutter_room/shutterposition"
+      set_position_template: "{{value}}"
+      position_topic: "stat/shutter_room/VAR"
+      position_template: "{{ value_json.Var4 | int }}"
+      availability_topic: "tele/shutter_room/LWT"
+      payload_available: "Online"
+      payload_not_available: "Offline"

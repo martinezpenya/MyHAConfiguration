@@ -1,0 +1,20 @@
+- sensor:
+  - default_entity_id: sensor.timer1_time
+    name: start time
+    state: '{{ "%0.02d:%0.02d" | format(states("input_number.timer1_hour") | int,
+      states("input_number.timer1_minutes") | int) }}'
+- sensor:
+  - default_entity_id: sensor.timer1_duration
+    name: duration
+    state: '{{ "%0.02d:%0.02d" | format(0 | int, states("input_number.timer1_duration")
+      | int) }}'
+- sensor:
+  - default_entity_id: sensor.timer2_time
+    name: start time
+    state: '{{ "%0.02d:%0.02d" | format(states("input_number.timer2_hour") | int,
+      states("input_number.timer2_minutes") | int) }}'
+- sensor:
+  - default_entity_id: sensor.timer2_duration
+    name: duration
+    state: '{{ "%0.02d:%0.02d" | format(0 | int, states("input_number.timer2_duration")
+      | int) }}'      

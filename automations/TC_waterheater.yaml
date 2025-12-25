@@ -1,0 +1,21 @@
+##########################################
+## KEYBOARD - waterheater
+##
+- alias: 'TC waterheater'
+  initial_state: true
+  trigger:
+     - platform: event
+       event_type: telegram_command
+       event_data:
+         command: '/waterheater'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: 'Select an option'
+        data:
+          keyboard:
+          - '/waterheater_60min, /waterheater_30min, /waterheater_15min'
+          - '/waterheater_off, /waterheater_on'
+          - '/start'
+                

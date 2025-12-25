@@ -1,0 +1,20 @@
+##########################################
+## KEYBOARD - status
+##
+- alias: 'TC status'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/status'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+      data_template:
+          title: "***Sensors:***"
+          message: "{% for state in states.sensor -%}
+                    {%- if loop.first %}  - {% elif loop.last %} \n - {% else %}\n - {% endif -%}
+                      {{ state.name | lower }}: ***{{state.state_with_unit}}***
+                    {%- endfor %}"

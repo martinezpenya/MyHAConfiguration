@@ -1,0 +1,240 @@
+yeelight_night:
+  alias: Yeelight night
+  sequence:      
+    # Turn the lights to low brightness at a very warm temperature
+    - service: light.turn_on
+      data:
+        entity_id: light.Yeelight_1
+        rgb_color: [255,0,0]
+
+    # Wait 5 seconds
+    - delay: 00:00:10
+        
+    - service: light.turn_off
+      data:
+        entity_id: light.Yeelight_1
+        transition: 40
+        
+christmas_tree:
+  alias: Christmas tree
+  sequence:      
+    # Turn the tree lights on
+    - service: switch.turn_on
+      data:
+        entity_id: switch.esphome1_relay
+
+    # Wait 1 minute
+    - delay: 00:01:00
+        
+    - service: switch.turn_off
+      data:
+        entity_id: switch.esphome1_relay
+
+    # Over ten minutes, turn the lights a little brighter and to a
+    # cooler-than-soft-white color.
+    #- service: light.turn_on
+    #  data:
+    #    entity_id: light.Yeelight_1
+    #    transition: 600
+    #    brightness: 63
+    #    kelvin: 3600
+
+    # Wait again
+    #- delay: 00:00:05
+
+    # Finally, over fifteen minutes, shift the lights to a cool white at 90%.
+    #- service: light.turn_on
+    #  data:
+    #    entity_id: light.Yeelight_1
+    #    transition: 900
+    #    brightness: 230
+    #    kelvin: 4200
+    
+    
+yeelight_day:
+  alias: Yeelight day
+  sequence:       
+    # Turn the lights to low brightness at a very warm temperature
+    - service: light.turn_on
+      data:
+        entity_id: light.Yeelight_1
+        rgb_color: [255,255,255]
+        brightness_pct: 100
+        
+    # Wait 5 seconds
+    - delay: 00:00:10
+        
+    - service: light.turn_off
+      data:
+        entity_id: light.Yeelight_1
+        transition: 40
+
+yeelight_step:
+  sequence:
+    - service: light.turn_on
+      data_template:
+        entity_id: light.Yeelight_1
+        transition: '1'
+        brightness: >-
+          {%- if states.light.Yeelight_1.attributes.brightness <= 20 %}
+            63
+          {% elif states.light.Yeelight_1.attributes.brightness <= 63 %}
+            127
+          {% elif states.light.Yeelight_1.attributes.brightness <= 127 %}
+            189
+          {% elif states.light.Yeelight_1.attributes.brightness <= 189 %}
+            255
+          {% endif %}
+
+bondiamusica:
+  alias: bondiamusica
+  sequence: 
+    - service: switch.turn_on
+      data:
+        entity_id: switch.sonoffbasic_3
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: 'Bon dia!, vols parar la música?'
+        data:
+          inline_keyboard: 
+            - '✔Yes:/TCB_speaker_off, ❌No:/TCB_cancel'
+    
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.0 #100%    
+    - delay: 00:00:01 #wait for switch
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.speaker
+        #media_content_id: http://flucast-m01-05.flumotion.com/cope/rockfm.mp3
+        #media_content_type: music
+        source: RockFM        
+        #source: KissFM
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.01
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.02
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.03
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.04
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.05
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.06
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.07
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.08
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.09
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.1
+    - delay: 00:00:10 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: 0.15
+
+bondiallums:
+  alias: bondiallums
+  sequence: 
+    - service: light.turn_on
+      data:
+        entity_id: light.Yeelight_1
+        effect: Sunrise
+        #transition: 40
+        
+    # - service: light.turn_on
+    #   data:
+    #     entity_id: light.Yeelight_1
+    #     rgb_color: [255,166,0]
+    #     transition: 60
+    # - service: light.turn_on
+    #   data:
+    #     entity_id: light.Yeelight_1
+    #     rgb_color: [255,255,255]
+    #     transition: 30
+    # - service: light.turn_on
+    #   data:
+    #     entity_id: light.Yeelight_1
+    #     effect: "Strobe epilespy!"
+    #     rgb_color: [255,255,255]
+    
+    # # Wait 5 seconds
+    # - delay: 00:01:00
+        
+    # - service: light.turn_off
+    #   data:
+    #     entity_id: light.Yeelight_1
+    #     transition: 40
+
+# limpia_despacho:
+#   alias: "Limpia despacho"
+#   sequence:
+#     - service: vacuum.send_command
+#       data:
+#         entity_id: vacuum.robot_aspirador
+#         command: app_segment_clean
+#         params: [12]
+
+open_street_door:
+  alias: Abrir porteria
+  sequence:      
+    #turn video on
+    - service: switch.turn_on
+      data:
+        entity_id: switch.esphome8_relay1
+    # Wait 1 second
+    - delay: 00:0:01      
+    #- delay: milliseconds: 500
+    #turn video off
+    - service: switch.turn_off
+      data:
+        entity_id: switch.esphome8_relay1 
+    #leave extra time for video open
+    - delay: 00:0:01      
+    #open door
+    - service: switch.turn_on
+      data:
+        entity_id: switch.esphome8_relay3
+    #wait 1 sec
+    #- delay: 00:0:01      
+    - delay: 
+        milliseconds: 500
+    #release open door
+    - service: switch.turn_off
+      data:
+        entity_id: switch.esphome8_relay3

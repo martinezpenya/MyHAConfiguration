@@ -1,0 +1,30 @@
+##########################################
+## KEYBOARD - shutter half
+##
+- alias: 'TC_shutter_half'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/shutter_half'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "half shutter"
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.window_set_position
+        value: 74
+    - delay: 00:00:01
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.window_set_position
+        value: 75
+    - delay: 00:00:30      
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: 
+          "Shutter is in position Shutter is in position ***{{states.input_number.window_position.state}} of 28***"                         

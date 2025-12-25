@@ -1,0 +1,24 @@
+##########################################
+## KEYBOARD - shutter stop
+##
+- alias: 'TC_shutter_stop'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/shutter_stop'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "stop shutters"     
+    - data:
+        entity_id: cover.persiana_despatx_curtain #cover.50701244500291415e17
+      service: cover.stop_cover        
+    - delay: 00:00:01            
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: 
+          "Shutter is in position Shutter is in position ***{{states.input_number.window_position.state}} of 28***"                         

@@ -1,0 +1,11 @@
+##########################################
+## sonoffMini4 http://192.168.0./
+## ??
+##
+- name: "Luz Dormitorio"
+  state_topic: "stat/sonoffMini4/POWER"
+  command_topic: "cmnd/sonoffMini4/POWER"
+  qos: 2
+  payload_on: "ON"
+  payload_off: "OFF"
+  icon: mdi:power-socket-eu

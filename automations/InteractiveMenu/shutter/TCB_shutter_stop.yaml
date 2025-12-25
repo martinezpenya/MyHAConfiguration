@@ -1,0 +1,27 @@
+##########################################
+## INLINE_KEYBOARD - TCB_shutter_stop
+##
+- alias: 'TCB_shutter_stop'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: '/TCB_shutter_stop'
+  action:
+    # - data:
+    #     entity_id: cover.persiana_despatx_curtain #cover.50701244500291415e17
+    #   service: cover.stop_cover        
+    - service: cover.stop_cover
+      target:
+        entity_id: cover.shutter_office
+    - delay: 00:00:01
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'Switching Shutter to stop'
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: 'last'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        inline_keyboard: !include TCB_shutter_menu_buttons.btn                 

@@ -1,0 +1,11 @@
+- alias: 'ESPHome2 led on pir'
+  trigger:
+    platform: state
+    entity_id: 'binary_sensor.esphome2_motion'
+    to: 'on'
+  action:       
+    - service: light.turn_on
+      data:
+        entity_id: light.esphome2_light
+        brightness: 30
+        rgb_color: [255,0,0]

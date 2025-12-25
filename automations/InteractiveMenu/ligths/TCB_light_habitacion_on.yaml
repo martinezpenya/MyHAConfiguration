@@ -1,0 +1,25 @@
+##########################################
+## INLINE_KEYBOARD - TCB_light_habitacion_on
+##
+- alias: 'TCB_light_habitacion_on'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: '/TCB_light_habitacion_on'
+  action:
+    - service: switch.turn_on
+      data:
+        entity_id:
+          - switch.luz_habitacion
+    - delay: 00:00:01
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'Switching habitacion light on'
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: 'last'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        inline_keyboard: !include TCB_lights_menu_buttons.btn

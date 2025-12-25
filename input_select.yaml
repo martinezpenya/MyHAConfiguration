@@ -1,0 +1,5 @@
+# music_source:
+#   name: Music Source
+#   options:
+#     - "BT" #Bluetooth
+#     - "CD" #CompactDisc

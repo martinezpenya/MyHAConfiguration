@@ -1,0 +1,47 @@
+# #sensor clientraw
+# #reads info from clientraw.txt from meteo stations on Internet from URL.
+# #needs .homeassistant/custom_components/sensor/clientraw.py
+# #from: https://github.com/pilotak/HomeAssistant-MyConfig/tree/master/custom_components/sensor
+# - platform: clientraw
+#   name: meteocarlet
+#   url: !secret clientrawURL
+#   interval: 5
+#   monitored_conditions:
+#     #- station
+#     #- date
+#     # - temp
+#     # - wind_dir
+#     # - wind_gust_kph
+#     # - wind_kph
+#     # - symbol
+#     # - forecast
+#     # - rain_rate
+#     # - daily_rain
+#     # - pressure
+#     # - humidity
+#     - dewpoint
+#     - heat_index
+#     - temp
+#     - temp_indoor
+#     - temp_day_max
+#     - temp_day_min
+#     - humidex
+#     - wind_degrees
+#     - wind_dir
+#     - wind_gust_hour
+#     - wind_gust_day
+#     - wind_speed
+#     - wind_speed_avg_10min
+#     - symbol
+#     - rain_rate
+#     - daily_rain
+#     - yesterday_rain
+#     - monthly_rain
+#     - yearly_rain
+#     - pressure
+#     - humidity
+#     - humidity_indoor
+#     - cloud_height
+#     - forecast
+#     - station
+#     - date

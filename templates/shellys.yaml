@@ -1,0 +1,30 @@
+- sensor:
+  - device_class: power
+    unit_of_measurement: VA
+    default_entity_id: sensor.shelly2_apparent_power
+    name: Shelly2 Apparent Power
+    state: '{{ ((states(''sensor.shelly2_real_power'')|float ** 2) + (states(''sensor.shelly2_reactive_power'')|float
+      ** 2))|sqrt|round(2) }}'
+- sensor:
+  - device_class: power_factor
+    default_entity_id: sensor.shelly2_power_factor
+    name: Shelly2 Power Factor
+    state: '{{ ((states(''sensor.shelly2_real_power'')|float) / (states(''sensor.shelly2_apparent_power'')|float))|round(2)
+      }}'
+- sensor:
+  - device_class: current
+    unit_of_measurement: A
+    default_entity_id: sensor.shelly2_current_draw
+    name: Shelly2 Current Draw
+    state: '{{ ((states(''sensor.shelly2_apparent_power'')|float) / (states(''sensor.shelly2_voltage'')|float))|round(2)
+      }}'
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.shelly2_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy Shelly2
+    state: '{{ states(''sensor.shelly2_total'') }}'      
