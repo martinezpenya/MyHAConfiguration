@@ -1,0 +1,17 @@
+###############################
+# Remote controller 2 (4 buttons)
+
+###############################
+# Button D
+
+- alias: Remote2ButtonD
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote2_btnd
+    to: 'on'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "Remote2 buttonD pressed"

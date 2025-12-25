@@ -1,0 +1,11 @@
+camera:
+  - platform: ffmpeg
+    name: yi1
+    input: -rtsp_transport tcp -i rtsp://yi1.casa/ch0_0.h264
+mqtt:
+  binary_sensor:
+    - name: "yicam1_motion_sensor"
+      state_topic: "yicam1/motion"
+      payload_on: "motion_start"
+      payload_off: "motion_stop"
+      device_class: motion

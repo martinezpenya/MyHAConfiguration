@@ -1,0 +1,19 @@
+- alias: 'Big WC Fan on when light go to off'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: 'switch.luz_bano_grande'
+    from: 'on'
+    to: 'off'
+  condition: 
+    condition: state
+    entity_id: sun.sun
+    state: above_horizon 
+  action:
+    - data:
+        entity_id: switch.ventilador_wc
+      service: switch.turn_on
+    - data:
+        entity_id: timer.timer_sonoff_basic_2
+        duration: 00:01:00
+      service: timer.start

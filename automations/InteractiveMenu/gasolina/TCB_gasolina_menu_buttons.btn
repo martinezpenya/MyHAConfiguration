@@ -1,0 +1,3 @@
+#         -{% for entity_id in states.group.gasolineras.attributes.entity_id %}{% set domain, device = entity_id.split('.') %}{{' "' + states[domain][device].state_with_unit + " (" + states[domain][device].name + "):/TCB_gasolina_refresh"}}{% if not loop.last %}{{'"\n         -'}}{% else %}"{% endif%}{% endfor %}
+         - "\U0001f504 Refresh:/TCB_gasolina_refresh,
+            \U0001f448 Back:/TCB_start_menu"

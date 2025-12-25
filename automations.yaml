@@ -1,0 +1,176 @@
+- id: '1717348247252'
+  alias: DISCO_LLENO
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.disk_use_percent_home
+    from: '83'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 20
+  condition: []
+  action:
+  - service: telegram_bot.send_message
+    metadata: {}
+    data:
+      message: EL DISCO ESTÁ A MÁS DEL 90%
+  mode: single
+- id: '1751824970605'
+  alias: Cover Led off Despatx
+  description: ''
+  triggers:
+  - trigger: event
+    event_type: ''
+  conditions: []
+  actions:
+  - action: mqtt.publish
+    metadata: {}
+    data:
+      qos: '2'
+      retain: false
+      topic: cmnd/shutter_office/TuyaSend4
+      payload: '7.0'
+  mode: single
+- id: '1751825101139'
+  alias: Cover Led Off Despacho
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - action: mqtt.publish
+    metadata: {}
+    data:
+      evaluate_payload: false
+      qos: '2'
+      retain: false
+      topic: cmnd/shutter_office/TuyaSend4
+      payload: '  7.0'
+  mode: single
+- id: '1766351629555'
+  alias: Se escanea la etiqueta Taula despatx
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 2f580916-24a4-4680-a4e6-263d08034f1e
+  conditions: []
+  actions:
+  - action: switch.toggle
+    metadata: {}
+    target:
+      entity_id: switch.blitzw0lf_3
+    data: {}
+  mode: single
+- id: '1766351630899'
+  alias: Se escanea la etiqueta Taula despatx
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 2f580916-24a4-4680-a4e6-263d08034f1e
+  conditions: []
+  actions:
+  - action: switch.toggle
+    metadata: {}
+    target:
+      entity_id: switch.blitzw0lf_3
+    data: {}
+  mode: single
+- id: '1766351632414'
+  alias: Se escanea la etiqueta Taula despatx
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 2f580916-24a4-4680-a4e6-263d08034f1e
+  conditions: []
+  actions:
+  - action: switch.toggle
+    metadata: {}
+    target:
+      entity_id: switch.blitzw0lf_3
+    data: {}
+  mode: single
+- id: '1766351633091'
+  alias: Se escanea la etiqueta Taula despatx
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 2f580916-24a4-4680-a4e6-263d08034f1e
+  conditions: []
+  actions:
+  - action: switch.toggle
+    metadata: {}
+    target:
+      entity_id: switch.blitzw0lf_3
+    data: {}
+  mode: single
+- id: '1766351633696'
+  alias: Se escanea la etiqueta Taula despatx
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 2f580916-24a4-4680-a4e6-263d08034f1e
+  conditions: []
+  actions:
+  - action: switch.toggle
+    metadata: {}
+    target:
+      entity_id: switch.blitzw0lf_3
+    data: {}
+  mode: single
+- id: '1766351634139'
+  alias: Se escanea la etiqueta Taula despatx
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 2f580916-24a4-4680-a4e6-263d08034f1e
+  conditions: []
+  actions:
+  - action: switch.toggle
+    metadata: {}
+    target:
+      entity_id: switch.blitzw0lf_3
+    data: {}
+  mode: single
+- id: '1766356693204'
+  alias: Se escanea la etiqueta Taula despatx
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 2f580916-24a4-4680-a4e6-263d08034f1e
+  conditions: []
+  actions:
+  - action: switch.toggle
+    metadata: {}
+    target:
+      entity_id: switch.blitzw0lf_3
+    data: {}
+  mode: single
+- id: '1766356784910'
+  alias: Se escanea la etiqueta Taula despatx
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 2f580916-24a4-4680-a4e6-263d08034f1e
+  conditions: []
+  actions:
+  - action: switch.toggle
+    metadata: {}
+    target:
+      entity_id: switch.blitzw0lf_3
+    data: {}
+  mode: single
+- id: '1766356884227'
+  alias: Nueva automatización
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: ''
+  conditions: []
+  actions:
+  - action: switch.toggle
+    metadata: {}
+    target:
+      entity_id: switch.blitzw0lf_3
+    data: {}
+  mode: single

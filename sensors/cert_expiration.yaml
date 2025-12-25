@@ -1,0 +1,9 @@
+# requires the installation of ssl-cert-check with:
+#   sudo apt install ssl-cert-check
+
+##Not required after traefik installation with ssl cert automation
+#  - platform: command_line
+#    name: SSL cert expiry
+#    unit_of_measurement: days
+#    scan_interval: 10800
+#    command: !secret ssl_check_command

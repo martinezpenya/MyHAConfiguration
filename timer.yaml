@@ -1,0 +1,8 @@
+waterheater:
+    name: water heater
+# timer_pir_kerui_p831_2:
+#     name: Little WC Light
+#     duration: '00:00:05'
+timer_sonoff_basic_2:
+    name: Big WC Fan
+    duration: '00:01:00'

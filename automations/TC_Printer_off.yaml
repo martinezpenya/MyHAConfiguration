@@ -1,0 +1,19 @@
+##########################################
+## KEYBOARD - Printer_off
+##
+- alias: 'TC_Printer_off'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/Printer_off'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "Printer off"
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.sonoffPrinter

@@ -1,0 +1,29 @@
+# En el caso del Sensor de puerta como no tiene dos códigos RF 
+# (Uno para Violación (apertura forzada) y otro para cuando esta normal) 
+# debemos poner un código inventado realizar un automation 
+# para que vuelva al estado original a los x segundos, 
+# de lo contrario siempre nos daría que ha sido forzado el sensor:
+# Con esto conseguiríamos que el Sensor de aviso de Violación
+# y que a los x segundos restablezca su estado a bateria normal.
+#
+# Al final se manda un código OFF inventado al sensor binario
+# a los X segundos para simular que lo hace él mismo al apagarse
+
+- alias: mqtt restart Door_Sensor_AADespatx_Violation_off
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.AA_Despatx_Violation
+      # from: 'off'
+      to: 'on'
+      for:
+        seconds: 3    
+  action:
+    - service: persistent_notification.create
+      data:
+        message: "Violation"
+        title: "AA Despatx"
+    - service: mqtt.publish
+      data:
+         topic: tele/sonoffRF433/RESULT
+         payload: '{"RfReceived":{"Data":"2BFE07off"}}'

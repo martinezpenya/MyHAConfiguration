@@ -1,0 +1,8 @@
+- alias: 'Front door open Christmas Tree'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: 'binary_sensor.front_door'
+    to: 'on'
+  action:       
+    - service: script.christmas_tree

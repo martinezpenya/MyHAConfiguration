@@ -1,0 +1,89 @@
+- light:
+  - turn_on:
+    - data:
+        topic: cmnd/shutter_office/TuyaSend4
+        payload: 7,1
+        qos: 2
+      action: mqtt.publish
+    turn_off:
+    - data:
+        topic: cmnd/shutter_office/TuyaSend4
+        payload: 7,0
+        qos: 2
+      action: mqtt.publish
+    default_entity_id: light.shutter_office_button_led
+    name: Shutter Office Button LED
+    state: "{% if states('sensor.shutter_office_effect') == '7,1' %}\n  on\n{% else
+      %}\n  off\n{% endif %}"
+- light:
+  - turn_on:
+    - data:
+        topic: cmnd/shutter_dinner/TuyaSend4
+        payload: 7,1
+        qos: 2
+      action: mqtt.publish
+    - target:
+        entity_id:
+        - input_boolean.shutter_dinner_led_state
+      action: input_boolean.turn_on
+    turn_off:
+    - data:
+        topic: cmnd/shutter_dinner/TuyaSend4
+        payload: 7,0
+        qos: 2
+      action: mqtt.publish
+    - target:
+        entity_id:
+        - input_boolean.shutter_dinner_led_state
+      action: input_boolean.turn_off
+    default_entity_id: light.shutter_dinner_button_led
+    name: Shutter Dinner Button LED
+    state: '{{ states(''input_boolean.shutter_dinner_led_state'') == ''on'' }}'
+- light:
+  - turn_on:
+    - data:
+        topic: cmnd/shutter_sleep/TuyaSend4
+        payload: 7,1
+        qos: 2
+      action: mqtt.publish
+    - target:
+        entity_id:
+        - input_boolean.shutter_sleep_led_state
+      action: input_boolean.turn_on
+    turn_off:
+    - data:
+        topic: cmnd/shutter_sleep/TuyaSend4
+        payload: 7,0
+        qos: 2
+      action: mqtt.publish
+    - target:
+        entity_id:
+        - input_boolean.shutter_sleep_led_state
+      action: input_boolean.turn_off
+    default_entity_id: light.shutter_sleep_button_led
+    name: Shutter Sleep Button LED
+    state: '{{ states(''input_boolean.shutter_sleep_led_state'') == ''on'' }}'
+- light:
+  - turn_on:
+    - data:
+        topic: cmnd/shutter_room/TuyaSend4
+        payload: 7,1
+        qos: 2
+      action: mqtt.publish
+    - target:
+        entity_id:
+        - input_boolean.shutter_room_led_state
+      action: input_boolean.turn_on
+    turn_off:
+    - data:
+        topic: cmnd/shutter_room/TuyaSend4
+        payload: 7,0
+        qos: 2
+      action: mqtt.publish
+    - target:
+        entity_id:
+        - input_boolean.shutter_room_led_state
+      action: input_boolean.turn_off
+    default_entity_id: light.shutter_room_button_led
+    name: Shutter Room Button LED
+    state: '{{ states(''input_boolean.shutter_room_led_state'') == ''on'' }}'    

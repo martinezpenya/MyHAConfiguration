@@ -1,0 +1,165 @@
+##########################################
+## Athom
+##
+
+# homeassistant:
+#   customize:
+#     switch.athom_02:
+#       friendly_name: "SheldonOld"
+#     script.athom_02_reset:
+#       icon: mdi:restore
+#       friendly_name: "Reset"
+#     automation.athom_02_switch_left_on:
+#       icon: mdi:power-plug-off
+#       friendly_name: "Auto power off"
+#     sensor.athom_02_power:
+#       friendly_name: "Power"
+#       device_class: power
+#       state_class: measurement      
+#     sensor.athom_02_current:
+#       friendly_name: "Current"
+#     sensor.athom_02_voltage:
+#       friendly_name: "Voltage"
+#     sensor.athom_02_today:
+#       friendly_name: "kWh Today"
+#     sensor.athom_02_total:
+#       friendly_name: "kWh Total"
+#     sensor.athom_02_totalstarttime:
+#       friendly_name: "Last reset"
+
+# mqtt:
+#   switch:
+#   - name: "Athom_02"
+#     state_topic: "stat/Athom_02/POWER"
+#     command_topic: "cmnd/Athom_02/POWER"
+#     availability_topic: "tele/Athom_02/LWT"
+#     qos: 2
+#     payload_on: "ON"
+#     payload_off: "OFF"
+#     payload_available: "Online"
+#     payload_not_available: "Offline"
+#     optimistic: false
+#     icon: mdi:speedometer
+
+#   sensor:
+#   - name: athom_02_totalstarttime
+#     state_topic: "tele/Athom_02/SENSOR"
+#     value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S%z', now())) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
+#     unit_of_measurement: ""
+#     icon: mdi:update
+    
+#   - name: athom_02_total
+#     state_topic: "tele/Athom_02/SENSOR"
+#     value_template: "{{ value_json['ENERGY'].Total }}"
+#     unit_of_measurement: "kWh"
+#     icon: mdi:elevation-rise
+  
+#   - name: athom_02_today
+#     state_topic: "tele/Athom_02/SENSOR"
+#     value_template: "{{ value_json['ENERGY'].Today }}"
+#     unit_of_measurement: "kWh"  
+#     icon: mdi:elevation-rise
+    
+#   - name: athom_02_power
+#     state_topic: "tele/Athom_02/SENSOR"
+#     value_template: "{{ value_json['ENERGY'].Power }}"
+#     unit_of_measurement: "W"
+#     icon: mdi:elevation-rise
+
+#   - name: athom_02_voltage
+#     state_topic: "tele/Athom_02/SENSOR"
+#     value_template: "{{ value_json['ENERGY'].Voltage }}"
+#     unit_of_measurement: "V"
+#     icon: mdi:current-ac
+
+#   - name: athom_02_current
+#     state_topic: "tele/Athom_02/SENSOR"
+#     value_template: "{{ value_json['ENERGY'].Current }}"
+#     unit_of_measurement: "A"
+#     icon: mdi:transfer
+
+# sensor:  
+#   - platform: template
+#     sensors:
+#       athom_02_energy:
+#         device_class: energy
+#         friendly_name: "Energy {{state_attr('switch.Athom_02', 'friendly_name')}}"
+#         attribute_templates:
+#           state_class: total_increasing
+#           device_class: energy
+#         unit_of_measurement: 'kWh'
+#         value_template: "{{ states('sensor.athom_02_total') }}"
+#         icon_template: mdi:mdi-current-ac
+
+# utility_meter:
+#   athom_02_hourly_energy:
+#     source: sensor.athom_02_total
+#     cycle: hourly
+#   athom_02_daily_energy:
+#     source: sensor.athom_02_total
+#     cycle: daily
+#   athom_02_monthly_energy:
+#     source: sensor.athom_02_total
+#     cycle: monthly
+#   athom_02_yearly_energy:
+#     source: sensor.athom_02_total
+#     cycle: yearly
+
+# automation:
+#   - alias: athom_02_switch_left_on
+#     initial_state: false
+#     trigger:
+#       - platform: numeric_state
+#         entity_id: sensor.athom_02_power
+#         below: 30
+#         above: 1
+#         for:
+#           minutes: 1
+#     action:
+#       - service: switch.turn_off
+#         data:
+#           entity_id:
+#             - switch.athom_02
+#       - delay: 0:00:02
+      # - service: notify.send_message
+      #   data:
+      #     entity_id: notify.telegram_bot_701350878_327910374
+#           message: 
+#             "{{state_attr('switch.athom_02', 'friendly_name')}} switch is now **{% if is_state('switch.athom_02', 'on') %}ON{% else %}OFF{% endif %}** because it was consuming less than 30W for 1 minutes"          
+#       - delay: 0:00:02
+#       - service: persistent_notification.create
+#         data:
+#           message: "Is now **{% if is_state('switch.athom_02', 'on') %}ON{% else %}OFF{% endif %}** because it was left on for 1 minutes"
+#           title: "{{state_attr('switch.athom_02', 'friendly_name')}}"
+
+# script:
+#   athom_02_reset:
+#     sequence:
+#       - service: mqtt.publish
+#         data_template:
+#           topic: "cmnd/Athom_02/energyreset1"
+#           payload: "0"
+#       - service: mqtt.publish
+#         data_template:
+#           topic: "cmnd/Athom_02/energyreset2"
+#           payload: "0"
+#       - service: mqtt.publish
+#         data_template:
+#           topic: "cmnd/Athom_02/energyreset3"
+#           payload: "0"
+
+#########################
+#Lovelace entities Card:#
+#########################
+# entities:
+#   - entity: switch.athom_02
+#   - entity: sensor.athom_02_power
+#   - entity: sensor.athom_02_current
+#   - entity: sensor.athom_02_voltage
+#   - entity: sensor.athom_02_totalstarttime
+#   - entity: sensor.athom_02_today
+#   - entity: sensor.athom_02_total
+#   - entity: script.athom_02_reset
+#   - entity: automation.athom_02_switch_left_on
+# show_header_toggle: false
+# type: entities

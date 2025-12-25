@@ -1,0 +1,25 @@
+##########################################
+## INLINE_KEYBOARD - TCB_wcfan_off
+##
+- alias: 'TCB_wcfan_off'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: '/TCB_wcfan_off'
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.ventilador_wc
+    - delay: 00:00:01
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'Switching WC Fan off'
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: 'last'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        inline_keyboard: !include TCB_wcfan_menu_buttons.btn

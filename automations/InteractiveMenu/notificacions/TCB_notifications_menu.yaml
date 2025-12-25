@@ -1,0 +1,28 @@
+##########################################
+## INLINE_KEYBOARD - TCB_notifications_menu
+##
+- alias: 'TCB_notifications_menu'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: '/TCB_notifications_menu'
+  action:
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'Notifications menu selected'
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: '{{ trigger.event.data.message.message_id }}'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        disable_web_page_preview: yes
+        message: >-
+            {{"\U0001f4eb ***Notifications*** \U0001f4eb\n\n"}}{% for item in states.persistent_notification %}
+            {{ "`" + as_timestamp(item.last_updated) | timestamp_custom("%H:%M:%S") + "`"}} {{ "***["+item.attributes.title + "]***:\n___" + item.attributes.message + "___\n\n" }}{% endfor %}
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: 'last'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        inline_keyboard: !include TCB_notifications_menu_buttons.btn

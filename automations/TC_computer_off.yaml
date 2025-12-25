@@ -1,0 +1,19 @@
+##########################################
+## KEYBOARD - computer_off
+##
+- alias: 'TC_computer_off'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/computer_off'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "computer off"
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.BliTZW0lF_3

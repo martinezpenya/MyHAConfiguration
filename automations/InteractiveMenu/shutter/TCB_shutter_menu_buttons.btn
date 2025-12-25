@@ -1,0 +1,8 @@
+         - " {%- for i in range(1,(state_attr('cover.shutter_office','current_position')/4)|int) -%}_{%- endfor -%}{%- for i in range((state_attr('cover.shutter_office','current_position')/4)|int,(100/4)|int) -%}*{%- endfor -%} "
+         - "\U000023ee :/TCB_shutter_close, 
+            \U000023ea :/TCB_shutter_bitopen,
+            \U000023f9 :/TCB_shutter_stop,
+            \U000023e9 :/TCB_shutter_half,
+            \U000023ed :/TCB_shutter_open"        
+         - "\U0001f504 Refresh:/TCB_shutter_refresh,
+           \U0001f448 Back:/TCB_start_menu"

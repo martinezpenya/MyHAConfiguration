@@ -1,0 +1,22 @@
+- alias: 'PIR motion 1_day'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: 'binary_sensor.pir_kerui_p831_1'
+    to: 'on'
+    
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: above_horizon
+      - condition: numeric_state
+        entity_id: sensor.esphome3_brightness
+        below: 5
+  action:
+    # - service: notify.send_message
+    #   data:
+    #     entity_id: notify.telegram_bot_701350878_327910374
+    #    message: "PIR motion 1 day"
+    - service: script.yeelight_day

@@ -1,0 +1,11 @@
+##########################################
+## sonoffMini5 http://192.168.0./
+## ??
+##
+- name: "Luz Baño pequeño"
+  state_topic: "stat/sonoffMini6/POWER"
+  command_topic: "cmnd/sonoffMini6/POWER"
+  qos: 2
+  payload_on: "ON"
+  payload_off: "OFF"
+  icon: mdi:power-socket-eu

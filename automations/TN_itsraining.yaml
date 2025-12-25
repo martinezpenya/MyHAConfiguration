@@ -1,0 +1,17 @@
+- alias: 'It''s raining'
+  initial_state: true
+  trigger:   
+    - platform: template
+      value_template: "{% if states.sensor.meteocarlet_rain_rate.state | float > 0 %} true {% endif %}"
+    #offset: "-00:45:00"
+  #condition:
+    #condition: state
+    #entity_id: group.all_devices
+    #state: home
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+      data_template:
+        title: "It's raining"
+        message: "({{ states.sensor.meteocarlet_rain_rate.state }} mm now)\n ({{ states.sensor.meteocarlet_daily_rain.state }} mm today)"

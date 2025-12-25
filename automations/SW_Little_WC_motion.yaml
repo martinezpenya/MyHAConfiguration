@@ -1,0 +1,17 @@
+# - alias: 'Little WC Light on when motion'
+#   initial_state: 'true'
+#   trigger:
+#     platform: state
+#     entity_id: 'binary_sensor.PIR_kerui_p831_2'
+#     to: 'on'
+#   condition:
+#       - condition: state
+#         entity_id: device_tracker.rdm13npp
+#         state: 'home'    
+#   action:
+#     - data:
+#         entity_id: switch.luz_bano_pequeno
+#       service: switch.turn_on
+#     - data:
+#         entity_id: timer.timer_PIR_kerui_p831_2
+#       service: timer.start

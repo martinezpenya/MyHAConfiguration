@@ -1,0 +1,5 @@
+# config importada a la UI por ha
+#- platform: mjpeg
+#  name: OctoPrint
+#  still_image_url: http://192.168.0.145:8080/?action=snapshot
+#  mjpeg_url: http://192.168.0.145:8080/?action=stream

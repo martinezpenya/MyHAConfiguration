@@ -1,0 +1,10 @@
+         - "{% if is_state('switch.blitzw0lf_1', 'on') %} \U0001f315 WaterHeater \U0001f525:/TCB_socket_waterheater_off{% else %} \U0001f311 WaterHeater \U0001f525:/TCB_socket_waterheater_on{% endif %}, 
+            {% if is_state('switch.blitzw0lf_2', 'on') %} \U0001f315 3dPrinter \U0001f5a8:/TCB_socket_3dprinter_off{% else %} \U0001f311 3dPrinter \U0001f5a8:/TCB_socket_3dprinter_on{% endif %}"
+         - "{% if is_state('switch.blitzw0lf_3', 'on') %} \U0001f315 PC \U0001f5a5:/TCB_socket_pc_off{% else %} \U0001f311 PC \U0001f5a5:/TCB_socket_pc_on{% endif %},
+            {% if is_state('switch.athom_01', 'on') %} \U0001f315 MicroWave \U0001f4a5:/TCB_socket_microwave_off{% else %} \U0001f311 MicroWave \U0001f4a5:/TCB_socket_microwave_on{% endif %}"
+         - "{% if is_state('switch.blitzw0lf_5', 'on') %} \U0001f315 Roomba:/TCB_socket_roomba_off{% else %} \U0001f311 Roomba:/TCB_socket_roomba_on{% endif %}"
+         - "{% if is_state('switch.sonoffambibany', 'on') %} \U0001f315 Ambi Bany \U0001f443:/TCB_socket_ambibany_off{% else %} \U0001f311 Ambi Bany \U0001f443:/TCB_socket_ambibany_on{% endif %},
+            {% if is_state('switch.sonoffambicorredor', 'on') %} \U0001f315 Ambi Corredor \U0001f443:/TCB_socket_ambicorredor_off{% else %} \U0001f311 Ambi Corredor \U0001f443:/TCB_socket_ambicorredor_on{% endif %}"
+         - "{% if is_state('switch.blitzw0lf_6', 'on') %} \U0001f315 TV Set \U0001f4fa:/TCB_socket_tvset_off{% else %} \U0001f311 TV Set \U0001f4fa:/TCB_socket_tvset_on{% endif %}"
+         - "\U0001f504 Refresh:/TCB_sockets_refresh,
+            \U0001f448 Back:/TCB_start_menu"

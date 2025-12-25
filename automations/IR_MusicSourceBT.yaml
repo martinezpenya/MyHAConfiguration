@@ -1,0 +1,10 @@
+- alias: Select Music Source BT
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: input_select.music_source
+      to: "BT"
+  action:
+    - service: switch.broadlink_send_packet_192_168_0_70
+      data:
+        packet: "JgAyAHNzHRwdHB1WHVUdHR1VHVYdHB0cHhwdHB1WHVUdHR0cHVUdHR0cHVUdVh1WHFYdAA0FAAAAAAAA==="

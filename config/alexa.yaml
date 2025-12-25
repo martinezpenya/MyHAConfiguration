@@ -1,0 +1,93 @@
+## alexa categories:
+## https://developer.amazon.com/en-US/docs/alexa/device-apis/alexa-discovery.html#display-categories
+
+## alexa HA config:
+## https://www.home-assistant.io/integrations/alexa.smart_home/
+
+locale: es-ES
+filter:
+  #include_entities:
+  #  - switch.sonoffBasic_3
+  #  - switch.BliTZW0lF_1
+  #  - switch.BliTZW0lF_2
+  #  - switch.BliTZW0lF_3
+  #  - script.bw7_clothes_hanging
+  #include_domains:
+  #  - switch
+  #exclude_entities:
+  #  - switch.outside
+  exclude_domains:
+    - automation
+    - group
+    - input_number
+    - input_boolean
+    - binary_sensor
+    #- media_player
+    - timer
+    - camera
+entity_config:
+  switch.sonoffBasic_3:
+    name: "Hilo musical"
+    description: "Sistema de sonido de casa"
+    display_categories: SMARTPLUG
+  switch.sonoffAmbiCorredor:
+    name: "Ambientador pasillo"
+    description: "Ambientador pasillo"
+    display_categories: SMARTPLUG
+  switch.sonoffAmbiBany:
+    name: "Ambientador baño"
+    description: "Ambientador baño"
+    display_categories: SMARTPLUG
+  switch.BliTZW0lF_1:
+    name: "Calentador"
+    description: "Calentador de agua"
+    display_categories: SMARTPLUG
+  # switch.BliTZW0lF_2:
+  #   name: "Impresora 3d"
+  #   description: "Ender 3"
+  #   display_categories: SMARTPLUG
+  # switch.BliTZW0lF_3:
+  #   name: "Ordenador"
+  #   description: "Ordenador"
+  #   display_categories: SMARTPLUG
+  switch.Athom_01:
+    name: "Microondas"
+    description: "Microondas cocina"
+    display_categories: SMARTPLUG
+
+  sensor.esphome1_temperature:
+    name: "Entrada"
+    description: "Entrada"
+    display_categories: TEMPERATURE_SENSOR  
+  sensor.esphome2_temperature:
+    name: "Despacho"
+    description: "Despacho"
+    display_categories: TEMPERATURE_SENSOR
+  #cover.50701244500291415e17:
+  cover.sw_curtain_despatx:
+    name: "Persiana Vella"
+    description: "Persiana Vella"
+    display_categories: INTERIOR_BLIND
+  cover.shutter_office:
+    name: "Persiana Despacho"
+    description: "Persiana Despacho"
+    display_categories: INTERIOR_BLIND    
+  cover.shutter_dinner:
+    name: "Persiana Comedor"
+    description: "Persiana Comedor"
+    display_categories: INTERIOR_BLIND    
+  cover.shutter_sleep:
+    name: "Persiana Dormitorio"
+    description: "Persiana Dormitorio"
+    display_categories: INTERIOR_BLIND    
+  cover.shutter_room:
+    name: "Persiana Habitación"
+    description: "Persiana Habitación"
+    display_categories: INTERIOR_BLIND    
+  #media_player.speaker:
+  #  name: "Speaker"
+  #  description: "Mopidi"
+  #  display_categories: SPEAKER
+  script.bw7_clothes_hanging:
+    name: "La ropa está tendida"
+    display_categories: SCENE_TRIGGER

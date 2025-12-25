@@ -1,0 +1,20 @@
+##########################################
+## INLINE_KEYBOARD - TCB_pipedmusic_refresh
+##
+- alias: 'TCB_pipedmusic_refresh'
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: '/TCB_pipedmusic_refresh'
+  action:
+    - delay: 00:00:01
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'Refresh piped music menu'
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: 'last'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        inline_keyboard: !include TCB_pipedmusic_menu_buttons.btn

@@ -1,0 +1,10 @@
+- alias: Select Music Source CD
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: input_select.music_source
+      to: "CD"
+  action:
+    - service: switch.broadlink_send_packet_192_168_0_70
+      data:
+        packet: "JgBkAHNyHR0cHR1VH1QeGx0dHVUfGh0dHRwdHB5VHVYcHR0cHVYeVB8bHVUdVh5UHVYdAASod3IdHB0cH1QdVR0dHRwdVhwdHRwdHRwdHVUeVR0cHR0eVB1WHB0dVh1VHVYdVR0ADQUAAAAA==="

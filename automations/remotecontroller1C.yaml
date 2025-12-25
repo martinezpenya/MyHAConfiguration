@@ -1,0 +1,17 @@
+###############################
+# Remote controller 4 buttons
+
+###############################
+# Button C
+
+- alias: Remote1ButtonC
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote1_btnc
+    to: 'on'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "Remote1 buttonC pressed"

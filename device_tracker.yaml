@@ -1,0 +1,26 @@
+#requires nmap on debian:
+# sudo apt-get install net-tools nmap
+
+# - platform: nmap_tracker
+#   hosts: 192.168.0.100
+#   interval_seconds: 20
+#   home_interval: 2
+# #  scan_options: " -F --host-timeout 5s --privileged -sn "
+#   new_device_defaults:
+#       track_new_devices: True
+# #      hide_if_away: False
+
+#requires installing pybluez:
+#   sudo apt-get install bluetooth libbluetooth-dev
+#   sudo python3 -m pip install pybluez
+#also adding pi to bluetooth group:
+#   https://raspberrypi.stackexchange.com/questions/71333/bluetooth-does-not-work-with-raspbian-stretch-and-raspberry-pi-3
+#   sudo python3 -m pip install pybluez
+#also ensure that known_devices.yaml is property of homeassistant:homeassistant
+#   sudo chown homeassistant:homeassistant known_devices.yaml
+
+# TODO DOCKER
+#- platform: bluetooth_tracker
+#  consider_home: 180
+#  new_device_defaults:
+#    track_new_devices: False

@@ -1,0 +1,20 @@
+- alias: 'PIR motion 1 nothome'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: 'binary_sensor.pir_kerui_p831_1'
+    to: 'on'
+  condition:
+   condition: or
+   conditions:
+     - condition: state
+       entity_id: device_tracker.rdm13nppmovil
+       state: 'not_home'
+     - condition: state
+       entity_id: device_tracker.rdm13nppmovil
+       state: 'unavailable'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "PIR motion 1 nothome"

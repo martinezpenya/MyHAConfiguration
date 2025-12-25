@@ -1,0 +1,11 @@
+##########################################
+## Sonoff Basic 1 http://192.168.0.154/
+##
+- name: "Luz Balcon"
+  state_topic: "stat/sonoffBasic_1/POWER"
+  command_topic: "cmnd/sonoffBasic_1/POWER"
+  qos: 2
+  payload_on: "ON"
+  payload_off: "OFF"
+  optimistic: false
+  icon: mdi:power-socket-eu

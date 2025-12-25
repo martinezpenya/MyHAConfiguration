@@ -1,0 +1,38 @@
+- alias: 'Front door open for 5 minutes'
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: 'binary_sensor.front_door'
+      # from: 'off'
+      to: 'on'
+      for:
+        minutes: 1
+    - platform: state
+      entity_id: 'binary_sensor.front_door'
+      # from: 'off'
+      to: 'on'
+      for:
+        minutes: 5
+    - platform: state
+      entity_id: 'binary_sensor.front_door'
+      # from: 'off'
+      to: 'on'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: 'binary_sensor.front_door'
+      # from: 'off'
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: 'binary_sensor.front_door'
+      # from: 'off'
+      to: 'on'
+      for:
+        minutes: 20
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: "Front door Still Open!!!"

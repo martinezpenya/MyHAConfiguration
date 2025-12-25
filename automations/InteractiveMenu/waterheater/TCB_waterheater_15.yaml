@@ -1,0 +1,29 @@
+##########################################
+## INLINE_KEYBOARD - TCB_waterheater_15
+##
+- alias: 'TCB_waterheater_15'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: '/TCB_waterheater_15'
+  action:
+    - data:
+        duration: 00:15:00
+        entity_id: timer.waterheater
+      service: timer.start
+    - service: switch.turn_on
+      data:
+        entity_id:
+          - switch.BliTZW0lF_1    
+    - delay: 00:00:01
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'WaterHeater on for 15 minutes'       
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: 'last'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        inline_keyboard: !include TCB_waterheater_menu_buttons.btn

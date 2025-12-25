@@ -1,0 +1,191 @@
+  ###
+  # Sonoff rf bridge
+  # http://192.168.0.155
+  #PIR p831 1 -> 57180A
+    - name: "PIR_kerui_p831_1"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "57180A"
+      payload_off: "57180Aoff"
+      device_class: motion
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+  #PIR p831 2 -> A0170A
+    - name: "PIR_kerui_p831_2"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "A0170A"
+      payload_off: "A0170Aoff"
+      device_class: motion
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+  #PIR p831 3 -> FF160A
+    - name: "PIR_kerui_p831_3"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "FF160A"
+      payload_off: "FF160Aoff"
+      device_class: motion
+      value_template: '{{ value_json.RfReceived.Data }}'  
+    
+  ###############################
+  # Remote controller 1 (4 buttons)
+
+  ###############################
+  # Button A
+    - name: "Remote1_BtnA"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "801D48"
+      payload_off: "801D48off"
+      value_template: '{{ value_json.RfReceived.Data }}'
+            
+  ###############################
+  # Button B
+
+    - name: "Remote1_BtnB"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "801D44"
+      payload_off: "801D44off"
+      value_template: '{{ value_json.RfReceived.Data }}'
+        
+  ###############################
+  # Button C
+
+    - name: "Remote1_BtnC"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "801D42"
+      payload_off: "801D42off"
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+  ###############################
+  # Button D
+
+    - name: "Remote1_BtnD"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "801D41"
+      payload_off: "801D41off"
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+  ###############################
+  # Remote controller 2 (4 buttons)
+
+  ###############################
+  # Button A
+    - name: "Remote2_BtnA"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "5E7B24"
+      payload_off: "5E7B24off"
+      value_template: '{{ value_json.RfReceived.Data }}'
+            
+  ###############################
+  # Button B
+
+    - name: "Remote2_BtnB"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "5E7B28"
+      payload_off: "5E7B28off"
+      value_template: '{{ value_json.RfReceived.Data }}'
+        
+  ###############################
+  # Button C
+
+    - name: "Remote2_BtnC"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "5E7B21"
+      payload_off: "5E7B21off"
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+  ###############################
+  # Button D
+
+    - name: "Remote2_BtnD"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "5E7B22"
+      payload_off: "5E7B22off"
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+  #Front door Sensor 433
+  #closed: 2D380E
+  #open: 2D380A
+  #tamper: 2D3807
+
+    - name: "Front Door"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "2D380A"
+      payload_off: "2D380E"
+      device_class: door
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+    - name: "Front Door Battery"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "2D3806"
+      payload_off: "2D3806off"
+      device_class: battery
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+    - name: "Front Door Violation"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "2D3807"
+      payload_off: "2D3807off"
+      device_class: problem
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+    - name: "AA Menjador"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "2C660A"
+      payload_off: "2C660E"
+      device_class: lock
+      value_template: '{{ value_json.RfReceived.Data }}'
+    
+    - name: "AA Menjador Battery"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "2C6606"
+      payload_off: "2C6606off"
+      device_class: battery
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+    - name: "AA Menjador Violation"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "2C6607"
+      payload_off: "2C6607off"
+      device_class: problem
+      value_template: '{{ value_json.RfReceived.Data }}'
+    
+    - name: "AA Despatx"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "2BFE0A"
+      payload_off: "2BFE0E"
+      device_class: lock
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+    - name: "AA Despatx Battery"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "2BFE06"
+      payload_off: "2BFE06off"
+      device_class: battery
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+    - name: "AA Despatx Violation"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "2BFE07"
+      payload_off: "2BFE07off"
+      device_class: problem
+      value_template: '{{ value_json.RfReceived.Data }}'
+    
+    - name: "3d printer Door"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "AD6C0A"
+      payload_off: "AD6C0E"
+      device_class: door
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+    - name: "3d printer Door Battery"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "AD6C06"
+      payload_off: "AD6C06off"
+      device_class: battery
+      value_template: '{{ value_json.RfReceived.Data }}'
+
+    - name: "3d printer Door Violation"
+      state_topic: "tele/sonoffRF433/RESULT"
+      payload_on: "AD6C07"
+      payload_off: "AD6C07off"
+      device_class: problem
+      value_template: '{{ value_json.RfReceived.Data }}'

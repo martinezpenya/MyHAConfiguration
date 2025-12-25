@@ -1,0 +1,20 @@
+- alias: 'Front door open'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: 'binary_sensor.front_door'
+    to: 'on'
+#  condition:
+#    condition: or
+#    conditions:
+#      - condition: state
+#        entity_id: device_tracker.
+#        state: 'home'
+#      - condition: state
+#        entity_id: device_tracker.
+#        state: 'home'
+  action:
+    - service: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: 'Front door opened'

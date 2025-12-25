@@ -1,0 +1,14 @@
+         - "{% if is_state('switch.luz_bano_pequeno', 'on') %} \U0001f315 Small WC \U0001f6bd:/TCB_light_bano_pequeno_off{% else %} \U0001f311 Small WC \U0001f6bd:/TCB_light_bano_pequeno_on{% endif %}"
+         - "{% if is_state('switch.luz_cocina', 'on') %} \U0001f315 Kitchen \U0001f958:/TCB_light_cocina_off{% else %} \U0001f311 Kitchen \U0001f958:/TCB_light_cocina_on{% endif %}" 
+         - "{% if is_state('switch.luz_comedor_mesa', 'on') %} \U0001f315 Table \U0001f37d\U0000fe0f:/TCB_light_comedor_mesa_off{% else %} \U0001f311 Table \U0001f37d\U0000fe0f:/TCB_light_comedor_mesa_on{% endif %}, 
+            {% if is_state('switch.luz_comedor_TV', 'on') %} \U0001f315 TV \U0001f4fa:/TCB_light_comedor_tv_off{% else %} \U0001f311 TV \U0001f4fa:/TCB_light_comedor_tv_on{% endif %},
+            {% if is_state('switch.sonoffS26_2', 'on') %} \U0001f315 Lamp \U0001f6cb:/TCB_light_tvlamp_off{% else %} \U0001f311 Lamp \U0001f6cb:/TCB_light_tvlamp_on{% endif %}"
+         - "{% if is_state('switch.luz_pc', 'on') %} \U0001f315PC\U0001f4bb:/TCB_light_pc_off{% else %} \U0001f311PC\U0001f4bb:/TCB_light_pc_on{% endif %}, 
+            {% if is_state('switch.luz_despacho', 'on') %} \U0001f315Study\U0000200d\U0001f393:/TCB_light_study_off{% else %} \U0001f311Study\U0000200d\U0001f393:/TCB_light_study_on{% endif %},
+            {% if is_state('switch.luz_balcon', 'on') %} \U0001f315Balcon\U0001f4a1:/TCB_light_balcon_off{% else %} \U0001f311Balcon\U0001f4a1:/TCB_light_balcon_on{% endif %}"
+         - "{% if is_state('switch.luz_habitacion', 'on') %} \U0001f315 Ironing \U0001f454:/TCB_light_habitacion_off{% else %} \U0001f311 Ironing \U0001f454:/TCB_light_habitacion_on{% endif %}"
+         - "{% if is_state('switch.luz_dormitorio', 'on') %} \U0001f315 Sleep \U0001f6cc:/TCB_light_dormitorio_off{% else %} \U0001f311 Sleep \U0001f6cc:/TCB_light_dormitorio_on{% endif %},
+            {% if is_state('light.yeelight_1', 'on') %} \U0001f315 Lamp \U0001f3ee:/TCB_light_sleeplamp_off{% else %} \U0001f311 Lamp \U0001f3ee:/TCB_light_sleeplamp_on{% endif %},
+            {% if is_state('switch.luz_bano_grande', 'on') %} \U0001f315 WC \U0001f6bf:/TCB_light_bano_grande_off{% else %} \U0001f311 WC \U0001f6bf:/TCB_light_bano_grande_on{% endif %}"
+         - "\U0001f504 Refresh:/TCB_lights_refresh,
+            \U0001f448 Back:/TCB_start_menu"
