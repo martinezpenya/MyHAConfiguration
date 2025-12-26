@@ -7,8 +7,7 @@
   condition:
     condition: template
     value_template: >-
-      {{now().strftime("%a %h %d %H:%M %Z %Y") == (((state_attr('sensor.rdm13npp_next_alarm', 'Time in Milliseconds') | int / 1000) - 1*60 ) | timestamp_custom('%a %h %d %H:%M %Z %Y'))}}
+      {{ now().strftime("%a %h %d %H:%M %Z %Y") == (((state_attr('sensor.rdm13npp_next_alarm', 'Time in Milliseconds') | default(0) | int / 1000) - 60) | timestamp_custom('%a %h %d %H:%M %Z %Y')) }}
   action:
     - service: script.bondiallums
     - service: script.bondiamusica
-#{{(now().timestamp() | int /100 )| int }} == {{(((state_attr('sensor.rdm13npp_next_alarm', 'Time in Milliseconds') | int / 1000) - 1*60 ) | int / 100) | int }}
