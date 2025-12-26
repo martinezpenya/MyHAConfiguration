@@ -1,48 +1,52 @@
-- alias: AirFresheners on when home
+- alias: AirFresheners ON when home
+  id: airfreshners_on_when_home
   initial_state: true
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: device_tracker.rdm13nppmovil
       from: 'not_home'
       to: 'home'
-    - platform: state
+    - trigger: state
       entity_id: device_tracker.rdm13nppmovil
       from: 'unavailable'
       to: 'home'
-  action:
-    - service: switch.turn_on
+  actions:
+    - action: switch.turn_on
       data:
         entity_id: switch.sonoffAmbiCorredor   
-    - service: switch.turn_on
+    - action: switch.turn_on
       data:
         entity_id: switch.sonoffAmbiBany
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+    - action: telegram_bot.send_message
+      data_template:
+        #entity_id: notify.telegram_bot_701350878_327910374
         message: 'Just arrived Home, start computer?'
-        data:
-           inline_keyboard: 
-             - '✔Yes:/TCB_computer_on, ❌No:/TCB_cancel'
-        
-- alias: AirFresheners Off when not home
+        inline_keyboard: 
+        - '✔Yes:/TCB_computer_on, ❌No:/TCB_cancel'
+      
+- alias: AirFresheners OFF when not home
   initial_state: true
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: device_tracker.rdm13nppmovil
       from: 'home'
       to: 'unavailable'
       for:
         minutes: 5
-    - platform: state
+    - trigger: state
       entity_id: device_tracker.rdm13nppmovil
       from: 'home'
       to: 'not_home'
       for:
         minutes: 5
-  action:
-    - service: switch.turn_off
+  actions:
+    - action: switch.turn_off
       data:
         entity_id: switch.sonoffAmbiCorredor
-    - service: switch.turn_off
+    - action: switch.turn_off
       data:
         entity_id: switch.sonoffAmbiBany
+    - action: notify.send_message
+      data:
+        entity_id: notify.telegram_bot_701350878_327910374
+        message: 'You leaved Home, I put the airfresheners off.'

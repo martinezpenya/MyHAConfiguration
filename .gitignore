@@ -15,3 +15,5 @@ core.*
 /wificheck.log
 .vscode/settings.json
 .vscode/sftp.json
+.HA_VERSION
+.ha_run.lock
