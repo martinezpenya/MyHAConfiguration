@@ -12,3 +12,4 @@
 /wificheck.sh
 /wificheck.log
 .cache
+/backups
