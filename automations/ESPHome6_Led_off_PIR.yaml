@@ -1,0 +1,10 @@
+- alias: 'ESPHome6 led off pir'
+  trigger:
+    platform: state
+    entity_id: 'binary_sensor.esphome6_motion'
+    to: 'off'
+  action:       
+    - service: light.turn_off
+      data:
+        entity_id: light.esphome6_light
+        transition: 1

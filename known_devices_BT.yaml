@@ -1,0 +1,352 @@
+
+# android_tv:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_8C:5A:F8:14:3E:95
+#   name: Android TV
+#   picture:
+#   track: false
+
+# dmp8p:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_1C:CC:D6:40:40:29
+#   name: dmp8p
+#   picture:
+#   track: true
+
+# zowi:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_98:D3:71:FD:52:57
+#   name: Zowi
+#   picture:
+#   track: true
+
+# tp_link_music:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_50:3E:AA:5B:6D:DF
+#   name: TP-Link Music
+#   picture:
+#   track: true
+
+# amparo:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_E0:62:67:29:2F:6D
+#   name: Amparo
+#   picture:
+#   track: false
+
+# redmi:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_48:2C:A0:FF:4E:1F
+#   name: Redmi
+#   picture:
+#   track: false
+
+# desktop_untt011:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_00:10:60:AE:BB:9F
+#   name: DESKTOP-UNTT011
+#   picture:
+#   track: false
+
+# huawei_p_smart_2019:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_DC:90:88:0B:1C:7E
+#   name: HUAWEI P smart+ 2019
+#   picture:
+#   track: false
+
+# galaxy_j5_2016:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_C8:38:70:6E:06:10
+#   name: Galaxy J5 (2016)
+#   picture:
+#   track: false
+
+# qcy_t2c_r:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_1C:52:16:39:72:ED
+#   name: QCY-T2C R
+#   picture:
+#   track: true
+
+# mi_telefono:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_70:BB:E9:BA:41:4C
+#   name: Mi Teléfono
+#   picture:
+#   track: false
+
+# redmi_2:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_20:F4:78:D5:A6:7C
+#   name: Redmi
+#   picture:
+#   track: false
+
+# redmi_3:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_B4:C4:FC:69:AF:4E
+#   name: Redmi
+#   picture:
+#   track: false
+
+# redmi_4:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_58:20:59:1B:17:FE
+#   name: Redmi
+#   picture:
+#   track: false
+
+# redmi_5:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_18:01:F1:34:AC:F7
+#   name: Redmi
+#   picture:
+#   track: false
+
+# qcom_btd:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_48:2C:A0:A1:09:30
+#   name: QCOM-BTD
+#   picture:
+#   track: false
+
+# iphone_de_maite:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_C0:9A:D0:A7:23:9A
+#   name: iPhone de Maite
+#   picture:
+#   track: false
+
+# alberto_hp:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_9C:B7:0D:34:A9:FE
+#   name: ALBERTO-HP
+#   picture:
+#   track: false
+
+# echo_0n1:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_3C:5C:C4:10:2D:D4
+#   name: Echo-0N1
+#   picture:
+#   track: true
+
+# huawei_p30_lite:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_14:3C:C3:7D:2E:0A
+#   name: HUAWEI P30 lite
+#   picture:
+#   track: false
+
+# toni:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_2C:61:F6:BB:26:70
+#   name: Toni
+#   picture:
+#   track: false
+
+# redmi_6:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_C4:0B:CB:44:81:48
+#   name: Redmi
+#   picture:
+#   track: false
+
+# laptop_1tlelq34:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_70:1C:E7:5C:2A:37
+#   name: LAPTOP-1TLELQ34
+#   picture:
+#   track: false
+
+# magnussen_m7:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_00:00:00:00:28:2B
+#   name: MAGNUSSEN M7
+#   picture:
+#   track: false
+
+# oneplus_3:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_C0:EE:FB:D5:01:E1
+#   name: OnePlus 3
+#   picture:
+#   track: false
+
+# galaxy_tab_a_2016:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_90:06:28:18:AB:CA
+#   name: Galaxy Tab A (2016)
+#   picture:
+#   track: false
+
+# jorquera:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_94:87:E0:CC:53:90
+#   name: Jorquera
+#   picture:
+#   track: false
+
+# mi_telefono_2:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_AC:C1:EE:13:A5:CA
+#   name: Mi Teléfono
+#   picture:
+#   track: false
+
+# sunny:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_F4:60:E2:A6:85:A7
+#   name: Sunny
+#   picture:
+#   track: false
+
+# huawei_p10_lite:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_5C:03:39:F8:3B:08
+#   name: HUAWEI P10 lite
+#   picture:
+#   track: false
+
+# mac_gregor:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_9C:2E:A1:5A:65:F1
+#   name: Mac Gregor
+#   picture:
+#   track: false
+
+# esther_mv:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_E0:DC:FF:F5:39:E6
+#   name: Esther mv
+#   picture:
+#   track: false
+
+# qcom_btd_2:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_E0:DC:FF:F9:A9:D8
+#   name: QCOM-BTD
+#   picture:
+#   track: false
+
+# redmi_7:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_20:34:FB:B6:13:E0
+#   name: Redmi
+#   picture:
+#   track: false
+
+# mi_telefono_3:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_BC:7F:A4:00:7D:94
+#   name: Mi Teléfono
+#   picture:
+#   track: false
+
+# qcy_t2c_l:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_1C:52:16:39:99:19
+#   name: QCY-T2C L
+#   picture:
+#   track: false
+
+# galaxy_a50:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_D4:11:A3:51:91:6E
+#   name: Galaxy A50
+#   picture:
+#   track: false
+
+# ls_k088:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_D8:7C:E8:81:BF:64
+#   name: LS-K088
+#   picture:
+#   track: false
+
+# paco_solution:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_94:D0:0D:15:B0:DE
+#   name: Paco Solution
+#   picture:
+#   track: false
+
+# huawei_p20_lite:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_90:2B:D2:F1:D7:84
+#   name: HUAWEI P20 lite
+#   picture:
+#   track: false
+
+# rmd002:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_FD:95:7A:9E:9A:6C
+#   name: RMD002
+#   picture:
+#   track: false
+
+# vane:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_68:A0:3E:57:44:01
+#   name: 'Vane '
+#   picture:
+#   track: false
+
+# amazfit_33c1:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_D8:80:3C:1E:33:C1
+#   name: Amazfit-33C1
+#   picture:
+#   track: false
+
+# huawei_p30_pro:
+#   hide_if_away: false
+#   icon:
+#   mac: BT_2C:78:0E:78:92:67
+#   name: HUAWEI P30 Pro
+#   picture:
+#   track: false

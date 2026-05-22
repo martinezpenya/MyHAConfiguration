@@ -1,0 +1,74 @@
+- sensor:
+  - unit_of_measurement: €/L
+    default_entity_id: sensor.gasolinera11
+    attributes:
+      latitude: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 4117 -%}  \n    {{petrol[\"Latitud\"]
+        | replace(\",\",\".\")}} \n  {%- endif -%}\n{%- endfor -%}"
+      longitude: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 4117 -%}  \n    {{petrol[\"Longitud
+        (WGS84)\"]| replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"
+    name: La Reina
+    state: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+      -%}\n  {%- if petrol[\"IDEESS\"] | int  == 4117 -%}  \n    {{ petrol[\"PrecioProducto\"]
+      | capitalize | replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"
+
+- sensor:
+  - unit_of_measurement: €/L
+    default_entity_id: sensor.gasolinera15
+    attributes:
+      latitude: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 4113 -%}  \n    {{petrol[\"Latitud\"]
+        | replace(\",\",\".\")}} \n  {%- endif -%}\n{%- endfor -%}"
+      longitude: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 4113 -%}  \n    {{petrol[\"Longitud
+        (WGS84)\"]| replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"
+    name: La Ponderosa
+    state: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+      -%}\n  {%- if petrol[\"IDEESS\"] | int  == 4113 -%}  \n    {{ petrol[\"PrecioProducto\"]
+      | capitalize | replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"
+
+- sensor:
+  - unit_of_measurement: €/L
+    default_entity_id: sensor.gasolinera17
+    attributes:
+      latitude: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 11656 -%}  \n    {{petrol[\"Latitud\"]
+        | replace(\",\",\".\")}} \n  {%- endif -%}\n{%- endfor -%}"
+      longitude: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 11656 -%}  \n    {{petrol[\"Longitud
+        (WGS84)\"]| replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"
+    name: Coop. Carlet
+    state: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+      -%}\n  {%- if petrol[\"IDEESS\"] | int  == 11656 -%}  \n    {{ petrol[\"PrecioProducto\"]
+      | capitalize | replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"
+
+- sensor:
+  - unit_of_measurement: €/L
+    default_entity_id: sensor.gasolinera16
+    attributes:
+      latitude: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 4114 -%}  \n    {{petrol[\"Latitud\"]
+        | replace(\",\",\".\")}} \n  {%- endif -%}\n{%- endfor -%}"
+      longitude: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 4114 -%}  \n    {{petrol[\"Longitud
+        (WGS84)\"]| replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"
+    name: El Cortijo
+    state: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+      -%}\n  {%- if petrol[\"IDEESS\"] | int  == 4114 -%}  \n    {{ petrol[\"PrecioProducto\"]
+      | capitalize | replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"
+      
+- sensor:
+  - unit_of_measurement: €/L
+    default_entity_id: sensor.gasolinera14
+    attributes:
+      latitude: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 12771 -%}  \n    {{petrol[\"Latitud\"]
+        | replace(\",\",\".\")}} \n  {%- endif -%}\n{%- endfor -%}"
+      longitude: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 12771 -%}  \n    {{petrol[\"Longitud
+        (WGS84)\"]| replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"
+    name: Gas Express
+    state: "{%- for petrol in states.sensor.gasolinera1.attributes.ListaEESSPrecio
+      -%}\n  {%- if petrol[\"IDEESS\"] | int  == 12771 -%}  \n    {{ petrol[\"PrecioProducto\"]
+      | capitalize | replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"

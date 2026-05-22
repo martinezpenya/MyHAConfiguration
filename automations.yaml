@@ -1,0 +1,2039 @@
+- alias: Front door open Christmas Tree
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.front_door
+    to: 'on'
+  action:
+  - service: script.christmas_tree
+  id: c628469c15b846aaae1e47a5cb688b6d
+- alias: mqtt restart Door_Sensor_AADespatx_Battery_off
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.AA_Despatx_Battery
+    to: 'on'
+    for:
+      seconds: 3
+  action:
+  - service: persistent_notification.create
+    data:
+      message: Low Battery
+      title: AA Despatx
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"2BFE06off"}}'
+  id: 879826dd9e8944d388e0bf57f487d722
+- alias: mqtt restart Door_Sensor_AADespatx_Violation_off
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.AA_Despatx_Violation
+    to: 'on'
+    for:
+      seconds: 3
+  action:
+  - service: persistent_notification.create
+    data:
+      message: Violation
+      title: AA Despatx
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"2BFE07off"}}'
+  id: 26c050fb20e4461e957dfa716f26b680
+- alias: mqtt restart Door_Sensor_AAMenjador_Battery_off
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.AA_Menjador_Battery
+    to: 'on'
+    for:
+      seconds: 3
+  action:
+  - service: persistent_notification.create
+    data:
+      message: Low Battery
+      title: AA Menjador
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"2C6606off"}}'
+  id: 04c9f72c47394949b7ac46abad1bf78b
+- alias: mqtt restart Door_Sensor_AAMenjador_Violation_off
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.AA_Menjador_Violation
+    to: 'on'
+    for:
+      seconds: 3
+  action:
+  - service: persistent_notification.create
+    data:
+      message: Violation
+      title: AA Despatx
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"2C6607off"}}'
+  id: 9a6cff61056b4538aeca6abd68ea7750
+- alias: mqtt restart Door_Sensor_Front_Battery_off
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.Front_Door_Battery
+    to: 'on'
+    for:
+      seconds: 3
+  action:
+  - service: persistent_notification.create
+    data:
+      message: Low Battery
+      title: Front Door
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"2D3806off"}}'
+  id: 4bdfe1b24c144913b51038c640598c95
+- alias: mqtt restart Door_Sensor_Front_Violation_off
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.Front_Door_Violation
+    to: 'on'
+    for:
+      seconds: 3
+  action:
+  - service: persistent_notification.create
+    data:
+      message: Violation
+      title: Front Door
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"2D3807off"}}'
+  id: bc723394b9fc4e8fae44676fcabd03da
+- alias: ESPHome1 led on pir
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome1_motion
+    to: 'off'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.esphome1_light
+      transition: 1
+  id: a176948da91748e9878aa795df33dacb
+- alias: ESPHome1 led on pir
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome1_motion
+    to: 'on'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.esphome1_light
+      brightness: 30
+      rgb_color:
+      - 255
+      - 0
+      - 0
+  id: 134181ef9dd948b7bb56d29839248145
+- alias: ESPHome1 Christmas Tree on motion
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome1_motion
+    to: 'on'
+  action:
+  - service: script.christmas_tree
+  id: 9ea98f954bd344df999768647d612efb
+- alias: ESPHome2 led off pir
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome2_motion
+    to: 'off'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.esphome2_light
+      transition: 1
+  id: 6dc82e99a4194a2887ae9e4476a8fbdf
+- alias: ESPHome2 led on pir
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome2_motion
+    to: 'on'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.esphome2_light
+      brightness: 30
+      rgb_color:
+      - 255
+      - 0
+      - 0
+  id: 8e5562f2dc074d65b8baa65d885f3986
+- alias: ESPHome3 led off pir
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome3_motion
+    to: 'off'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.esphome3_light
+      transition: 1
+  id: 8b14d60b6ce54a2ca8524f0f3d113afd
+- alias: ESPHome3 led on pir
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome3_motion
+    to: 'on'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.esphome3_light
+      brightness: 30
+      rgb_color:
+      - 255
+      - 0
+      - 0
+  id: 54a74059494f43c194a7d562278eba7c
+- alias: ESPHome4 led off pir
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome4_motion
+    to: 'off'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.esphome4_light
+      transition: 1
+  id: 85dd0a20600540c4a5a8d66aa2c3c4e8
+- alias: ESPHome4 led on pir
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome4_motion
+    to: 'on'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.esphome4_light
+      brightness: 30
+      rgb_color:
+      - 255
+      - 0
+      - 0
+  id: 13276c931b094b5e8d6bbca3b792b772
+- alias: ESPHome5 led off pir
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome5_motion
+    to: 'off'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.esphome5_light
+      transition: 1
+  id: 42791e6f5904458fa78f7ba29d8627cb
+- alias: ESPHome5 led on pir
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome5_motion
+    to: 'on'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.esphome5_light
+      brightness: 30
+      rgb_color:
+      - 255
+      - 0
+      - 0
+  id: 79d1a9147f7b406f92126f2bfee3501e
+- alias: ESPHome6 led off pir
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome6_motion
+    to: 'off'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.esphome6_light
+      transition: 1
+  id: e9084e8a4a284ca18bc64b523b80a723
+- alias: ESPHome6 led on pir
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome6_motion
+    to: 'on'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.esphome6_light
+      brightness: 30
+      rgb_color:
+      - 255
+      - 0
+      - 0
+  id: beee6300f6784e1684c6a0a80fccc4ac
+- id: Good Morning
+  alias: Good Morning
+  trigger:
+  - platform: time_pattern
+    minutes: /1
+  condition:
+    condition: template
+    value_template: '{{ now().strftime("%a %h %d %H:%M %Z %Y") == (((state_attr(''sensor.rdm13npp_next_alarm'',
+      ''Time in Milliseconds'') | default(0) | int / 1000) - 60) | timestamp_custom(''%a
+      %h %d %H:%M %Z %Y'')) }}'
+  action:
+  - service: script.bondiallums
+  - service: script.bondiamusica
+- alias: Select Music Source BT
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: input_select.music_source
+    to: BT
+  action:
+  - service: switch.broadlink_send_packet_192_168_0_70
+    data:
+      packet: JgAyAHNzHRwdHB1WHVUdHR1VHVYdHB0cHhwdHB1WHVUdHR0cHVUdHR0cHVUdVh1WHFYdAA0FAAAAAAAA===
+  id: 67438364810a4319a46263c13269f4e4
+- alias: Select Music Source CD
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: input_select.music_source
+    to: CD
+  action:
+  - service: switch.broadlink_send_packet_192_168_0_70
+    data:
+      packet: JgBkAHNyHR0cHR1VH1QeGx0dHVUfGh0dHRwdHB5VHVYcHR0cHVYeVB8bHVUdVh5UHVYdAASod3IdHB0cH1QdVR0dHRwdVhwdHRwdHRwdHVUeVR0cHR0eVB1WHB0dVh1VHVYdVR0ADQUAAAAA===
+  id: 3221dda0379e41898bb27bf4a0e01478
+- alias: mqtt restart PIR_kerui_p831_1_off
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.pir_kerui_p831_1
+    to: 'on'
+    for:
+      seconds: 3
+  action:
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"57180Aoff"}}'
+  id: fe72b2da54304c8ab9f0d7f1a52e4986
+- alias: mqtt restart PIR_kerui_p831_2_off
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.pir_kerui_p831_2
+    to: 'on'
+    for:
+      seconds: 3
+  action:
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"A0170Aoff"}}'
+  id: d937b4a9c3e1423f9eb735ba8df1900b
+- alias: mqtt restart PIR_kerui_p831_3_off
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.pir_kerui_p831_3
+    to: 'on'
+    for:
+      seconds: 3
+  action:
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"FF160Aoff"}}'
+  id: fc1058a2b80b40c3a89f698d8c4a77b3
+- alias: mqtt_restart_Remote1_ButtonA
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.remote1_btna
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"801D48off"}}'
+  id: c28322483c34429bbf82c68ccc239357
+- alias: mqtt_restart_Remote1_ButtonB
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.remote1_btnb
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"801D44off"}}'
+  id: 8289a9316e2c4e70b6533de26773b3eb
+- alias: mqtt_restart_Remote1_ButtonC
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.remote1_btnc
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"801D42off"}}'
+  id: d4c1900080cc4a8e85647273032d5ee8
+- alias: mqtt_restart_Remote1_ButtonD
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.remote1_btnd
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"801D41off"}}'
+  id: bae9efe102eb46c5911a2e5a5161e743
+- alias: mqtt_restart_Remote2_ButtonA
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.remote2_btna
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"5E7B24off"}}'
+  id: c7bd74ffe7614c578970d0706e798bda
+- alias: mqtt_restart_Remote2_ButtonB
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.remote2_btnb
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"5E7B28off"}}'
+  id: 34f3f81588764db7b178b64db81098f6
+- alias: mqtt_restart_Remote2_ButtonC
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.remote2_btnc
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"5E7B21off"}}'
+  id: 02afedf835094f96b92e7e6752f98fef
+- alias: mqtt_restart_Remote2_ButtonD
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.remote2_btnd
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: tele/sonoffRF433/RESULT
+      payload: '{"RfReceived":{"Data":"5E7B22off"}}'
+  id: a679d328df174bc6ac99aecb530cc48e
+- alias: Remote1ButtonA
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote1_btna
+    to: 'on'
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Remote1 buttonA pressed
+  - service: automation.trigger
+    data_template:
+      entity_id: "{% if is_state('switch.blitzw0lf_6', 'on') %}\n  automation.TC_TVset_off\n{%
+        else %}\n  automation.TC_TVset_on\n{% endif %}"
+  id: af38d3f7696c40c695c2fa93f09603fd
+- alias: Remote1ButtonB
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote1_btnb
+    to: 'on'
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Remote1 buttonB pressed
+  - service: automation.trigger
+    data_template:
+      entity_id: "{% if is_state('switch.sw03_8tree', 'on') %}\n  automation.TC_computer_off\n{%
+        else %}\n  automation.TC_computer_on\n{% endif %}"
+  id: 5794c9b112b94918837f9368cdb4e81e
+- alias: Remote1ButtonC
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote1_btnc
+    to: 'on'
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Remote1 buttonC pressed
+  id: 069d6cf0623a43ee8bbdfd9493d6d310
+- alias: Remote1ButtonDon
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote1_btnd
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.yeelight_1
+    state: 'off'
+  action:
+    service: light.turn_on
+    data:
+      entity_id: light.Yeelight_1
+      brightness: 10
+  id: 8f87687c1f844e62a290e45273ff860c
+- alias: Remote1ButtonDstep
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote1_btnd
+    to: 'on'
+  condition:
+  - condition: numeric_state
+    entity_id: light.yeelight_1
+    value_template: '{% if states.light.Yeelight_1.state == "on"  %}{{ states.light.Yeelight_1.attributes.brightness
+      }}{% else %}0{% endif %}'
+    below: 220
+  action:
+    service: script.yeelight_step
+  id: 26157b4127184a13b0a8517752f2da0f
+- alias: Remote1ButtonDoff
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote1_btnd
+    to: 'on'
+  condition:
+  - condition: numeric_state
+    entity_id: light.yeelight_1
+    value_template: '{% if states.light.Yeelight_1.state == "on"  %}{{ states.light.Yeelight_1.attributes.brightness
+      }}{% else %}0{% endif %}'
+    above: 230
+  action:
+    service: light.turn_off
+    data:
+      entity_id: light.Yeelight_1
+  id: 8f80231eec034d65b410d86face841cf
+- alias: Remote2ButtonA
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote2_btna
+    to: 'on'
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Remote2 buttonA pressed
+  id: 9cddc7211b614c12bd357d7ba783294d
+- alias: Remote2ButtonB
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote2_btnb
+    to: 'on'
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Remote2 buttonB pressed
+  id: e26b216f9cdd4ce5aac74b8f4faf6471
+- alias: Remote2ButtonC
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote2_btnc
+    to: 'on'
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Remote2 buttonC pressed
+  id: be1f5ecd166e4e08ba8bff35eb41504b
+- alias: Remote2ButtonD
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.remote2_btnd
+    to: 'on'
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Remote2 buttonD pressed
+  id: a06315cc58db4e589399aa27b6f7b931
+- alias: Shutter button LEDs when home and dark
+  id: shutter_button_leds_home_dark
+  initial_state: true
+  triggers:
+  - trigger: homeassistant
+    event: start
+    id: start
+  - trigger: state
+    entity_id: sun.sun
+    to: below_horizon
+    id: sunset
+  - trigger: state
+    entity_id: sun.sun
+    to: above_horizon
+    id: sunrise
+  - trigger: state
+    entity_id: device_tracker.rdm13nppmovil
+    to: home
+    id: arrive_home
+  - trigger: state
+    entity_id: device_tracker.rdm13nppmovil
+    to: not_home
+    for:
+      minutes: 5
+    id: leave_home
+  - trigger: state
+    entity_id: device_tracker.rdm13nppmovil
+    to: unavailable
+    for:
+      minutes: 5
+    id: leave_home_unavailable
+  variables:
+    should_turn_on: '{{ is_state(''device_tracker.rdm13nppmovil'', ''home'') and is_state(''sun.sun'',
+      ''below_horizon'') }}'
+  actions:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ should_turn_on }}'
+      sequence:
+      - action: light.turn_on
+        target:
+          entity_id:
+          - light.shutter_office_button_led
+          - light.shutter_dinner_button_led
+          - light.shutter_sleep_button_led
+          - light.shutter_room_button_led
+      - action: telegram_bot.send_message
+        data_template:
+          message: The shutter button LEDs have been turned on.
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.id != ''start'' }}'
+      sequence:
+      - action: light.turn_off
+        target:
+          entity_id:
+          - light.shutter_office_button_led
+          - light.shutter_dinner_button_led
+          - light.shutter_sleep_button_led
+          - light.shutter_room_button_led
+      - action: telegram_bot.send_message
+        data_template:
+          message: The shutter button LEDs have been turned off.
+    default:
+    - action: light.turn_off
+      target:
+        entity_id:
+        - light.shutter_office_button_led
+        - light.shutter_dinner_button_led
+        - light.shutter_sleep_button_led
+        - light.shutter_room_button_led
+  mode: single
+- alias: Shutter LEDs refresh on HA start
+  triggers:
+  - trigger: homeassistant
+    event: start
+  actions:
+  - delay: 00:00:20
+  - action: mqtt.publish
+    data:
+      topic: cmnd/shutter_office/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/shutter_dinner/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/shutter_sleep/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/shutter_room/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/shutter_office/tuyasend0
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/shutter_dinner/tuyasend0
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/shutter_sleep/tuyasend0
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/shutter_room/tuyasend0
+      payload: ''
+  mode: single
+  id: a6297a1609634837a34ba1b9d0aea819
+- alias: Shutter LEDs sync input_boolean from MQTT
+  triggers:
+  - trigger: mqtt
+    topic: stat/shutter_office/EFFECT
+    payload: 7,1
+    id: office_on
+  - trigger: mqtt
+    topic: stat/shutter_office/EFFECT
+    payload: 7,0
+    id: office_off
+  - trigger: mqtt
+    topic: stat/shutter_dinner/EFFECT
+    payload: 7,1
+    id: dinner_on
+  - trigger: mqtt
+    topic: stat/shutter_dinner/EFFECT
+    payload: 7,0
+    id: dinner_off
+  - trigger: mqtt
+    topic: stat/shutter_sleep/EFFECT
+    payload: 7,1
+    id: sleep_on
+  - trigger: mqtt
+    topic: stat/shutter_sleep/EFFECT
+    payload: 7,0
+    id: sleep_off
+  - trigger: mqtt
+    topic: stat/shutter_room/EFFECT
+    payload: 7,1
+    id: room_on
+  - trigger: mqtt
+    topic: stat/shutter_room/EFFECT
+    payload: 7,0
+    id: room_off
+  - trigger: mqtt
+    topic: stat/shutter_office/RESULT
+    id: office_result
+  - trigger: mqtt
+    topic: stat/shutter_dinner/RESULT
+    id: dinner_result
+  - trigger: mqtt
+    topic: stat/shutter_sleep/RESULT
+    id: sleep_result
+  - trigger: mqtt
+    topic: stat/shutter_room/RESULT
+    id: room_result
+  variables:
+    effect_value: "{% if trigger.topic.endswith('/EFFECT') %}\n  {{ trigger.payload
+      | trim }}\n{% elif trigger.topic.endswith('/RESULT') %}\n  {% set result = trigger.payload
+      | from_json(default={}) %}\n  {% set tuya = result.get('TuyaReceived', {}) %}\n
+      \ {% set dp = tuya.get('7') %}\n  {% if dp is not none %}\n    {{ '7,' ~ dp
+      }}\n  {% else %}\n    unknown\n  {% endif %}\n{% else %}\n  unknown\n{% endif
+      %}"
+  actions:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.topic.startswith(''stat/shutter_office/'') and
+          effect_value == ''7,1'' }}'
+      sequence:
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.shutter_office_led_state
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.topic.startswith(''stat/shutter_office/'') and
+          effect_value == ''7,0'' }}'
+      sequence:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.shutter_office_led_state
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.topic.startswith(''stat/shutter_dinner/'') and
+          effect_value == ''7,1'' }}'
+      sequence:
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.shutter_dinner_led_state
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.topic.startswith(''stat/shutter_dinner/'') and
+          effect_value == ''7,0'' }}'
+      sequence:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.shutter_dinner_led_state
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.topic.startswith(''stat/shutter_sleep/'') and
+          effect_value == ''7,1'' }}'
+      sequence:
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.shutter_sleep_led_state
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.topic.startswith(''stat/shutter_sleep/'') and
+          effect_value == ''7,0'' }}'
+      sequence:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.shutter_sleep_led_state
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.topic.startswith(''stat/shutter_room/'') and effect_value
+          == ''7,1'' }}'
+      sequence:
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.shutter_room_led_state
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.topic.startswith(''stat/shutter_room/'') and effect_value
+          == ''7,0'' }}'
+      sequence:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.shutter_room_led_state
+  mode: queued
+  id: c3c9672fc1d240b09a72bbf2cf3602a2
+- alias: Power state on HA start-up
+  initial_state: true
+  triggers:
+  - trigger: homeassistant
+    event: start
+  actions:
+  - action: mqtt.publish
+    data:
+      topic: cmnd/BliTZW0lF_1/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/BliTZW0lF_1/POWER
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/BliTZW0lF_2/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/BliTZW0lF_2/POWER
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/sw01_8tree/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/sw01_8tree/POWER
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/sw02_8tree/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/sw02_8tree/POWER
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/sw03_8tree/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/sw03_8tree/POWER
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/BliTZW0lF_4/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/BliTZW0lF_4/POWER
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/BliTZW0lF_5/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/BliTZW0lF_6/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/BliTZW0lF_7/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/BliTZW0lF_8/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/sonoffS26_1/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/sonoffS26_1/POWER
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/sonoffS26_2/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/sonoffS26_2/POWER
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/sonoffS26_3/state
+      payload: ''
+  - action: mqtt.publish
+    data:
+      topic: cmnd/sonoffS26_3/POWER
+      payload: ''
+  - action: switch.turn_on
+    data:
+      entity_id: switch.sonoffbasic_3
+  - action: python_script.set_state
+    data:
+      entity_id:
+      - binary_sensor.pir_kerui_p831_1
+      - binary_sensor.pir_kerui_p831_2
+      - binary_sensor.pir_kerui_p831_3
+      - binary_sensor.remote1_btna
+      - binary_sensor.remote1_btnb
+      - binary_sensor.remote1_btnc
+      - binary_sensor.remote1_btnd
+      - binary_sensor.remote2_btna
+      - binary_sensor.remote2_btnb
+      - binary_sensor.remote2_btnc
+      - binary_sensor.remote2_btnd
+      state:
+      - 'off'
+      allow_create: true
+  - action: telegram_bot.send_message
+    data:
+      message: 'HA has started: Revise status'
+  - action: media_player.volume_set
+    data:
+      entity_id: media_player.speaker
+      volume_level: '{{ ((states(''input_number.notification_max_volume'') | float(1))
+        * (0.5 if (now().hour >= (states(''input_number.notification_night_start_hour'')
+        | int) or now().hour < (states(''input_number.notification_night_end_hour'')
+        | int)) else 1)) | round(3) }}'
+  - delay: 00:00:01
+  - action: tts.google_say
+    target:
+      entity_id: media_player.speaker
+    data:
+      message: Atención David!. "Home assístant" se ha reiniciado, revísalo.
+      language: es
+  - delay: 00:00:10
+  - action: switch.turn_off
+    data:
+      entity_id: switch.sonoffbasic_3
+  mode: single
+  id: 0c9f5d71d0154c228547f604ac56f6f0
+- alias: Printig Job finished
+  trigger:
+    platform: state
+    entity_id: binary_sensor.octoprint_printing
+    from: 'on'
+    to: 'off'
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: 3d printing job just finished, do you want to turn printer off?
+      inline_keyboard:
+      - ✔Yes:/TCB_3dprinter_off, ❌No:/TCB_cancel
+  id: 4dc7b5c627a44dc880a424331e7f0bbd
+- alias: AirFresheners ON when home
+  id: airfreshners_on_when_home
+  initial_state: true
+  triggers:
+  - trigger: state
+    entity_id: device_tracker.rdm13nppmovil
+    from: not_home
+    to: home
+  - trigger: state
+    entity_id: device_tracker.rdm13nppmovil
+    from: unavailable
+    to: home
+  actions:
+  - action: switch.turn_on
+    data:
+      entity_id: switch.sonoffAmbiCorredor
+  - action: switch.turn_on
+    data:
+      entity_id: switch.sonoffAmbiBany
+  - action: telegram_bot.send_message
+    data_template:
+      message: Just arrived Home, start computer?
+      inline_keyboard:
+      - ✔Yes:/TCB_computer_on, ❌No:/TCB_cancel
+- alias: AirFresheners OFF when not home
+  initial_state: true
+  triggers:
+  - trigger: state
+    entity_id: device_tracker.rdm13nppmovil
+    from: home
+    to: unavailable
+    for:
+      minutes: 5
+  - trigger: state
+    entity_id: device_tracker.rdm13nppmovil
+    from: home
+    to: not_home
+    for:
+      minutes: 5
+  actions:
+  - action: switch.turn_off
+    data:
+      entity_id: switch.sonoffAmbiCorredor
+  - action: switch.turn_off
+    data:
+      entity_id: switch.sonoffAmbiBany
+  - action: telegram_bot.send_message
+    data_template:
+      message: You leaved Home, I put the airfresheners off.
+  id: 5e89acced7e9492ab879058f4f55ec45
+- alias: Big WC Fan on when light go to off
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: switch.luz_bano_grande
+    from: 'on'
+    to: 'off'
+  condition:
+    condition: state
+    entity_id: sun.sun
+    state: above_horizon
+  action:
+  - data:
+      entity_id: switch.ventilador_wc
+    service: switch.turn_on
+  - data:
+      entity_id: timer.timer_sonoff_basic_2
+      duration: 00:01:00
+    service: timer.start
+  id: 682173aa008f44eabe2cf45cc97617af
+- alias: SW_Basic2_Big_WC_timer_ended
+  initial_state: true
+  trigger:
+  - event_data:
+      entity_id: timer.timer_sonoff_basic_2
+    event_type: timer.finished
+    platform: event
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id:
+      - switch.ventilador_wc
+  id: 6f2c6b4b4fe843809d42e04d93d9f2bf
+- alias: TC_3dprinter_off
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /3dprinter_off
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: 3dPrinter off
+  - service: switch.turn_off
+    data:
+      entity_id:
+      - switch.BliTZW0lF_2
+  id: b3c49ed089304056ba47f2a26b422e90
+- alias: TC_3dprinter_on
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /3dprinter_on
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: 3dPrinter on
+  - action: switch.turn_on
+    data:
+      entity_id:
+      - switch.BliTZW0lF_2
+  id: 4aaab523691841b98ff181f6f07f9b85
+- alias: TC 3dprinter
+  initial_state: true
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /3dprinter
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Select an option
+      keyboard:
+      - /3dprinter_off, /3dprinter_on
+      - /start
+  id: b902db08206b4090a69696b17c8a0729
+- alias: TCB_3dprinter_off
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: /TCB_3dprinter_off
+  actions:
+  - action: switch.turn_off
+    data:
+      entity_id:
+      - switch.BliTZW0lF_2
+  - action: telegram_bot.answer_callback_query
+    data_template:
+      callback_query_id: '{{ trigger.event.data.id }}'
+      message: Powering down 3d printer
+  - action: telegram_bot.delete_message
+    data_template:
+      message_id: '{{ trigger.event.data.message.message_id }}'
+      chat_id: '{{ trigger.event.data.chat_id }}'
+  - action: telegram_bot.send_message
+    data_template:
+      message: 3d printer powered down after printing job
+  id: b1f730bd7826437ba98f194c264c6fe9
+- alias: TCB_cancel
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: /TCB_cancel
+  actions:
+  - action: telegram_bot.answer_callback_query
+    data_template:
+      callback_query_id: '{{ trigger.event.data.id }}'
+      message: Nothing to do
+      show_alert: false
+  - action: telegram_bot.delete_message
+    data_template:
+      message_id: '{{ trigger.event.data.message.message_id }}'
+      chat_id: '{{ trigger.event.data.chat_id }}'
+  - action: telegram_bot.send_message
+    data_template:
+      message: You've answered not, maybe next time. Bye.
+  id: 197c3c00fd3543b9a33416b28088b869
+- alias: TCB_computer_on
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: /TCB_computer_on
+  actions:
+  - service: switch.turn_on
+    data:
+      entity_id:
+      - switch.sw03_8tree
+  - service: telegram_bot.answer_callback_query
+    data_template:
+      callback_query_id: '{{ trigger.event.data.id }}'
+      message: Starting computer
+  - service: telegram_bot.delete_message
+    data_template:
+      message_id: '{{ trigger.event.data.message.message_id }}'
+      chat_id: '{{ trigger.event.data.chat_id }}'
+  - delay: 00:00:01
+  - action: telegram_bot.send_message
+    data_template:
+      message: 'Computer started after arriving home
+
+        Computer is **{% if is_state(''switch.sw03_8tree'', ''on'') %}ON{% else %}OFF{%
+        endif %}**'
+  id: c93666f2b1314e2ba326d4ec44af3bb2
+- alias: TCB_speaker_off
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: /TCB_speaker_off
+  actions:
+  - action: switch.turn_off
+    data:
+      entity_id:
+      - switch.sonoffbasic_3
+  - action: telegram_bot.answer_callback_query
+    data_template:
+      callback_query_id: '{{ trigger.event.data.id }}'
+      message: Powering off speaker
+  - action: telegram_bot.delete_message
+    data_template:
+      message_id: '{{ trigger.event.data.message.message_id }}'
+      chat_id: '{{ trigger.event.data.chat_id }}'
+  - action: media_player.media_stop
+    data:
+      entity_id: media_player.speaker
+  - delay: 00:00:01
+  - action: telegram_bot.send_message
+    data_template:
+      message: 'Speaker turned off after Good Morning script
+
+        Speaker is **{% if is_state(''switch.sonoffbasic_3'', ''on'') %}ON{% else
+        %}OFF{% endif %}**'
+  id: 99c7207bcbcb41e091399cbf1914765d
+- alias: TC_computer_off
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /computer_off
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: computer off
+  - action: switch.turn_off
+    data:
+      entity_id:
+      - switch.sw03_8tree
+  id: 1a654d27551f467ba382745ede2e8d39
+- alias: TC_computer_on
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /computer_on
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: computer on
+  - service: switch.turn_on
+    data:
+      entity_id:
+      - switch.sw03_8tree
+  id: fafd9ded7e20418989493b7ba021c4f4
+- alias: TC computer
+  initial_state: true
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /computer
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: 'Select an option
+
+        Computer is *** {{states.switch.sw03_8tree.state.upper()}} ***'
+      keyboard:
+      - /computer_off, /computer_on
+      - /start
+  id: 9cd51c5df3c5466fad16886881229fc4
+- alias: TC gas95
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /gas95
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      title: '***Gasolina 95 en Carlet:***'
+      message: '{% for entity_id in states.group.gasolineras.attributes.entity_id
+        %}{% set domain, device = entity_id.split(''.'') %}{{''*'' + states[domain][device].state_with_unit
+        | replace(''.'','','') + ''* ('' + states[domain][device].name + '')
+
+        ''}}{% endfor %}'
+  id: fa9fc38c63274137a7eebe34220b2543
+- alias: TC_light_pc_off
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /light_pc_off
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: light pc off
+  - action: switch.turn_off
+    data:
+      entity_id:
+      - switch.luz_pc
+  id: 1b0e96bf8faf4d98be641c173b10cea8
+- alias: TC_light_pc_on
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /light_pc_on
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: light pc on
+  - action: switch.turn_on
+    data:
+      entity_id:
+      - switch.luz_pc
+  id: 7b1192426b7040b6b887a872e7c663f9
+- alias: TC light PC
+  initial_state: true
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /light_pc
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Select an option
+      keyboard:
+      - /light_pc_off, /light_pc_on
+      - /start
+  id: e1eff997aea2496e9fb484322757ccfe
+- alias: TC lights
+  initial_state: true
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /lights
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Select an option
+      keyboard:
+      - /light_pc, /light_Habitacio, /light_Planxa
+      - /light_BanyGran, /light_BanyXicotet, /light_Cuina
+      - /light_Menjador_TV, /light_menjador_Taula
+      - /start
+  id: 68720d2a68214d1fb514bf351a8dd40d
+- alias: TC ping
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /ping
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: pong
+  id: b42e0be109ea4e42ab21e4723cfbcbe8
+- alias: TC_Printer_off
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /Printer_off
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Printer off
+  - action: switch.turn_off
+    data:
+      entity_id:
+      - switch.sonoffPrinter
+  id: 96c15b3554f64a5992141be55e5c494c
+- alias: TC_Printer_on
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /Printer_on
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Printer on
+  - action: switch.turn_on
+    data:
+      entity_id:
+      - switch.sonoffPrinter
+  id: 84a5874781c24e47bc2ffc7df5bd1e2f
+- alias: TC Printer
+  initial_state: true
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /Printer
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Select an option
+      keyboard:
+      - /Printer_on, /Printer_off
+      - /start
+  id: dd976c2af70e4bf7b1b324541b1a46ea
+- alias: TC_shutter_bit_open
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /shutter_bit_open
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: shutter bit open
+  - action: input_number.set_value
+    data_template:
+      entity_id: input_number.window_set_position
+      value: 32
+  - delay: 00:00:01
+  - action: input_number.set_value
+    data_template:
+      entity_id: input_number.window_set_position
+      value: 33
+  - delay: 00:00:30
+  - action: telegram_bot.send_message
+    data_template:
+      message: Shutter is in position Shutter is in position ***{{states.input_number.window_position.state}}
+        of 28***
+  id: 415c337602154076b80d29111745f290
+- alias: TC_shutter_close
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /shutter_close
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: close shutters
+  - action: input_number.set_value
+    data_template:
+      entity_id: input_number.window_set_position
+      value: 1
+  - delay: 00:00:01
+  - action: input_number.set_value
+    data_template:
+      entity_id: input_number.window_set_position
+      value: 0
+  - delay: 00:00:30
+  - action: telegram_bot.send_message
+    data_template:
+      message: Shutter is in position Shutter is in position ***{{states.input_number.window_position.state}}
+        of 28***
+  id: 95a5678bc20d40a2bc51678de08f9381
+- alias: TC_shutter_half
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /shutter_half
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: half shutter
+  - action: input_number.set_value
+    data_template:
+      entity_id: input_number.window_set_position
+      value: 74
+  - delay: 00:00:01
+  - action: input_number.set_value
+    data_template:
+      entity_id: input_number.window_set_position
+      value: 75
+  - delay: 00:00:30
+  - action: telegram_bot.send_message
+    data_template:
+      message: Shutter is in position Shutter is in position ***{{states.input_number.window_position.state}}
+        of 28***
+  id: 75d91819e3be4a29866ee850ba500873
+- alias: TC_shutter_open
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /shutter_open
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: open shutters
+  - action: input_number.set_value
+    data_template:
+      entity_id: input_number.window_set_position
+      value: 99
+  - delay: 00:00:01
+  - action: input_number.set_value
+    data_template:
+      entity_id: input_number.window_set_position
+      value: 100
+  - delay: 00:00:30
+  - action: telegram_bot.send_message
+    data_template:
+      message: Shutter is in position Shutter is in position ***{{states.input_number.window_position.state}}
+        of 28***
+  id: f24d09bddd9a44079777bfa1c05e6f0f
+- alias: TC_shutter_stop
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /shutter_stop
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: stop shutters
+  - data:
+      entity_id: cover.persiana_despatx_curtain
+    service: cover.stop_cover
+  - delay: 00:00:01
+  - action: telegram_bot.send_message
+    data_template:
+      message: Shutter is in position Shutter is in position ***{{states.input_number.window_position.state}}
+        of 28***
+  id: 6dbce051bdd94287822ff41a27d54d3b
+- alias: TC shutter
+  initial_state: true
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /shutter
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: 'Select an option
+
+        Shutter is in position *** {{states.input_number.window_position.state}} of
+        28***'
+      keyboard:
+      - /shutter_close, /shutter_open
+      - /shutter_bit_open, /shutter_half
+      - /shutter_stop
+      - /start
+  id: 651dd723cdcf4d9783cef951e84a00b0
+- alias: TC start
+  initial_state: true
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /start
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Select an option
+      keyboard:
+      - /status, /gas95, /ping
+      - /lights
+      - /waterheater, /TVset
+      - /computer, /3dprinter, /shutter
+  id: 23470ac0a78c46959802576ce75f5241
+- alias: TC status
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /status
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      title: '***Sensors:***'
+      message: "{% for state in states.sensor -%} {%- if loop.first %}  - {% elif
+        loop.last %} \n - {% else %}\n - {% endif -%} {{ state.name | lower }}: ***{{state.state_with_unit}}***
+        {%- endfor %}"
+  id: e62874222e6646b4814a83b85d45007b
+- alias: TC switches
+  initial_state: true
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /computer
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Select an option
+      data:
+        keyboard:
+        - /computer_off, /computer_on
+        - /start
+  id: 1018e9b10b5245dda41473805cffc5aa
+- alias: TC_TVset_off
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /TVset_off
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: TVset off
+  - service: switch.turn_off
+    data:
+      entity_id:
+      - switch.blitzw0lf_6
+  id: 708e6247c2224ad998f28f6008e170fa
+- alias: TC_TVset_on
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /TVset_on
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: TVset on
+  - service: switch.turn_on
+    data:
+      entity_id:
+      - switch.blitzw0lf_6
+  id: df96a79245d741149cad782ba714326f
+- alias: TC TVset
+  initial_state: true
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /TVset
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Select an option
+      data:
+        keyboard:
+        - /TVset_on, /TVset_off
+        - /start
+  id: dacb07610b9943458b3c3685977de607
+- alias: TC waterheater_15min
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /waterheater_15min
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: waterheater on for 15 minutes - start
+  - service: switch.turn_on
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  - delay: 00:15:00
+  - service: switch.turn_off
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  - action: telegram_bot.send_message
+    data_template:
+      message: waterheater on for 15 minutes - end
+  id: 1dd88d3ef79f4b75882e3ecc33972bab
+- alias: TC waterheater_30min
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /waterheater_30min
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: waterheater on for 30 minutes - start
+  - service: switch.turn_on
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  - delay: 00:30:00
+  - service: switch.turn_off
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  - action: telegram_bot.send_message
+    data_template:
+      message: waterheater on for 30 minutes - end
+  id: 80b1ee516d834fdf9cbb9ae5cb387501
+- alias: TC waterheater_60min
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /waterheater_60min
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: waterheater on for 60 minutes - start
+  - service: switch.turn_on
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  - delay: 01:00:00
+  - service: switch.turn_off
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  - action: telegram_bot.send_message
+    data_template:
+      message: waterheater on for 60 minutes - end
+  id: c3eafe900d5d4cb88fed29f9a6a7738c
+- alias: TC_waterheater_off
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /waterheater_off
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: waterheater off
+  - service: switch.turn_off
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  id: 5ccad84d31bf4d0f8c03d065c8274cc4
+- alias: TC_waterheater_on
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /waterheater_on
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: waterheater on
+  - service: switch.turn_on
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  id: 8178ebe3a2854c4e906e2eeaab1eaff9
+- alias: TC waterheater
+  initial_state: true
+  trigger:
+  - platform: event
+    event_type: telegram_command
+    event_data:
+      command: /waterheater
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Select an option
+      keyboard:
+      - /waterheater_60min, /waterheater_30min, /waterheater_15min
+      - /waterheater_off, /waterheater_on
+      - /start
+  id: fd3b51fc15a443e08071b3641d02a215
+- alias: Front close open
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.front_door
+    to: 'off'
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Front door closed
+  id: dfeb29e6fbc04fdcba647e7e10355f4c
+- alias: Front door open for 5 minutes
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.front_door
+    to: 'on'
+    for:
+      minutes: 1
+  - platform: state
+    entity_id: binary_sensor.front_door
+    to: 'on'
+    for:
+      minutes: 5
+  - platform: state
+    entity_id: binary_sensor.front_door
+    to: 'on'
+    for:
+      minutes: 10
+  - platform: state
+    entity_id: binary_sensor.front_door
+    to: 'on'
+    for:
+      minutes: 15
+  - platform: state
+    entity_id: binary_sensor.front_door
+    to: 'on'
+    for:
+      minutes: 20
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Front door Still Open!!!
+  id: da3abe723f7e441cb206773f6e50046d
+- alias: Front door open
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.front_door
+    to: 'on'
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Front door opened
+  id: b7f5dd900912412199808523cecf3490
+- alias: It's raining
+  initial_state: true
+  trigger:
+  - platform: template
+    value_template: '{% if states.sensor.meteocarlet_rain_rate.state | float > 0 %}
+      true {% endif %}'
+  action:
+  - action: telegram_bot.send_message
+    data_template:
+      title: It's raining
+      message: "({{ states.sensor.meteocarlet_rain_rate.state }} mm now)\n ({{ states.sensor.meteocarlet_daily_rain.state
+        }} mm today)"
+  id: 80c989006ae741ca9bb0dac44df16de9
+- alias: PIR motion 1_day
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.pir_kerui_p831_1
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: sun.sun
+      state: above_horizon
+    - condition: numeric_state
+      entity_id: sensor.esphome3_brightness
+      below: 5
+  action:
+  - service: script.yeelight_day
+  id: 05b9c1ee3f784c0eaa3c306fce7a2f89
+- alias: PIR motion 1_night
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.pir_kerui_p831_1
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:
+  - action: script.yeelight_night
+  id: 5404d021089f49dab8683994a7f7930e
+- alias: PIR motion 1 nothome
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.pir_kerui_p831_1
+    to: 'on'
+  condition:
+    condition: or
+    conditions:
+    - condition: state
+      entity_id: device_tracker.rdm13nppmovil
+      state: not_home
+    - condition: state
+      entity_id: device_tracker.rdm13nppmovil
+      state: unavailable
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: PIR motion 1 nothome
+  id: e3647ab3b611456e8d35bebefc1673ad
+- alias: Sunrise
+  initial_state: true
+  trigger:
+    platform: sun
+    event: sunrise
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Sunrise
+  id: 5fb71f5820ee47c199b467495c0c0c47
+- alias: Sunset
+  initial_state: true
+  trigger:
+    platform: sun
+    event: sunset
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Sunset
+  id: b87510ef67ea43fd9c704b55afd63210
+- alias: UpdateAvailable
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.docker_hub_update_available
+    to: 'on'
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: "La nueva versión {{ state_attr('binary_sensor.docker_hub_update_available',
+        'newest_version') }} de Home Assistant está disponible\n Release notes: {{
+        state_attr('binary_sensor.docker_hub_update_available', 'release_notes') }}"
+  id: f28fc0005bfb435cbe25efd7f2f6da91
+- alias: waterheater_60min_pvpc_min
+  initial_state: false
+  trigger:
+  - platform: state
+    entity_id: sensor.pvpc
+  condition: '{{ states.sensor.pvpc.state |float == states.sensor.pvpc.attributes.min_price
+    |float}}'
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: waterheater on for 60 minutes - start
+  - service: switch.turn_on
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  - delay: 01:00:00
+  - service: switch.turn_off
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  - action: telegram_bot.send_message
+    data_template:
+      message: waterheater on for 60 minutes - end
+  id: fd4805b8c7dc422582feade437db2bc3
+- alias: Timer1
+  trigger:
+    platform: template
+    value_template: '{{ states.sensor.time.state == states.sensor.timer1_time.state
+      }}'
+  condition:
+    condition: or
+    conditions:
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: input_boolean.programweekday1
+        state: 'on'
+      - condition: time
+        weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+    - condition: state
+      entity_id: input_boolean.programweekday1
+      state: 'off'
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Timer 1 - waterheater on
+  - action: switch.turn_on
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  - delay: '{{states.sensor.timer1_duration.state}}'
+  - action: switch.turn_off
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  - action: telegram_bot.send_message
+    data_template:
+      message: Timer 1 - waterheater off
+  id: 9a0abae8a30340a682f1234389328728
+- alias: Timer2
+  trigger:
+    platform: template
+    value_template: '{{ states.sensor.time.state == states.sensor.timer2_time.state
+      }}'
+  condition:
+    condition: or
+    conditions:
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: input_boolean.programweekday2
+        state: 'on'
+      - condition: time
+        weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+    - condition: state
+      entity_id: input_boolean.programweekday2
+      state: 'off'
+  actions:
+  - action: telegram_bot.send_message
+    data_template:
+      message: Timer 2 - waterheater on
+  - service: switch.turn_on
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  - delay: '{{states.sensor.timer2_duration.state}}'
+  - service: switch.turn_off
+    data:
+      entity_id:
+      - switch.BliTZW0lF_1
+  - action: telegram_bot.send_message
+    data_template:
+      message: Timer 2 - waterheater off
+  id: c5e2acf40ed349f594ce879405f0205f
+- id: '1779360293570'
+  alias: TestDespatx
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: b6cab00d-5d6f-4829-97ac-a0523df514f4
+  conditions: []
+  actions:
+  - action: switch.toggle
+    metadata: {}
+    target:
+      entity_id: switch.luz_pc
+    data: {}
+  mode: single
