@@ -1,14 +1,12 @@
 - alias: Printig Job finished
   trigger:
       platform: state
-      entity_id: sensor.octoprint_current_state
-      from: 'Printing'
-      to: 'Operational'
-  action:
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+      entity_id: binary_sensor.octoprint_printing
+      from: 'on'
+      to: 'off'
+  actions:
+    - action: telegram_bot.send_message
+      data_template:
         message: '3d printing job just finished, do you want to turn printer off?'
-        data:
-           inline_keyboard: 
-             - '✔Yes:/TCB_3dprinter_off, ❌No:/TCB_cancel'
+        inline_keyboard: 
+          - '✔Yes:/TCB_3dprinter_off, ❌No:/TCB_cancel'

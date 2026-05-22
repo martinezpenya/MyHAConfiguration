@@ -1,17 +1,3 @@
-###############################
-# Button D
-
-#- alias: Remote1ButtonD
-#  trigger:
-#    platform: state
-#    entity_id: binary_sensor.Remote1_BtnD
-#    to: 'on'
-#  action:
-    # - service: notify.send_message
-    #   data:
-    #     entity_id: notify.telegram_bot_701350878_327910374
-#        message: "Remote1 buttonD pressed"
-        
 - alias: Remote1ButtonDon
   initial_state: true
   trigger:

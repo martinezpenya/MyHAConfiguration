@@ -1,7 +1,7 @@
 ##########################################
 ## Sonoff Basic 1 http://192.168.0.154/
 ##
-- name: "Luz Balcon"
+- name: "Luz Balcon Vieja"
   state_topic: "stat/sonoffBasic_1/POWER"
   command_topic: "cmnd/sonoffBasic_1/POWER"
   qos: 2

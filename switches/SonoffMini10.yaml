@@ -2,7 +2,7 @@
 ## sonoffMini10 http://192.168.0./
 ## ??
 ##
-- name: "mini10"
+- name: "Luz Balcon"
   state_topic: "stat/sonoffMini10/POWER"
   command_topic: "cmnd/sonoffMini10/POWER"
   qos: 2

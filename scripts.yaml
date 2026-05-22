@@ -92,81 +92,75 @@ bondiamusica:
     - service: switch.turn_on
       data:
         entity_id: switch.sonoffbasic_3
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+    - service: telegram_bot.send_message
+      data_template:
         message: 'Bon dia!, vols parar la música?'
-        data:
-          inline_keyboard: 
-            - '✔Yes:/TCB_speaker_off, ❌No:/TCB_cancel'
-    
+        inline_keyboard: 
+        - '✔Yes:/TCB_speaker_off, ❌No:/TCB_cancel'
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 0.0 #100%    
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.0 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:01 #wait for switch
     - service: media_player.select_source
       data:
         entity_id: media_player.speaker
-        #media_content_id: http://flucast-m01-05.flumotion.com/cope/rockfm.mp3
-        #media_content_type: music
         source: RockFM        
-        #source: KissFM
     - delay: 00:00:05 
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 0.01
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.01 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:05 
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 0.02
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.02 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:05 
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 0.03
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.03 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:05 
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 0.04
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.04 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:05 
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 0.05
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.05 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:05 
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 0.06
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.06 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:05 
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 0.07
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.07 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:05 
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 0.08
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.08 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:05 
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 0.09
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.09 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:05 
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 0.1
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.1 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:10 
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 0.15
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.15 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
 
 bondiallums:
   alias: bondiallums

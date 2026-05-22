@@ -9,13 +9,11 @@
        event_data:
          command: '/shutter'
   action:
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+    - action: telegram_bot.send_message
+      data_template:
         message: "Select an option\nShutter is in position *** {{states.input_number.window_position.state}} of 28***"
-        data:
-          keyboard:
-            - '/shutter_close, /shutter_open'
-            - '/shutter_bit_open, /shutter_half'
-            - '/shutter_stop'
-            - '/start'
+        keyboard:
+          - '/shutter_close, /shutter_open'
+          - '/shutter_bit_open, /shutter_half'
+          - '/shutter_stop'
+          - '/start'

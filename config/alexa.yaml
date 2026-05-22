@@ -10,7 +10,7 @@ filter:
   #  - switch.sonoffBasic_3
   #  - switch.BliTZW0lF_1
   #  - switch.BliTZW0lF_2
-  #  - switch.BliTZW0lF_3
+  #  - switch.sw03_8tree
   #  - script.bw7_clothes_hanging
   #include_domains:
   #  - switch
@@ -46,7 +46,7 @@ entity_config:
   #   name: "Impresora 3d"
   #   description: "Ender 3"
   #   display_categories: SMARTPLUG
-  # switch.BliTZW0lF_3:
+  # switch.sw03_8tree:
   #   name: "Ordenador"
   #   description: "Ordenador"
   #   display_categories: SMARTPLUG

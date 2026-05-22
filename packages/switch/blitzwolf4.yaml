@@ -199,9 +199,8 @@ automation:
           entity_id:
             - switch.BliTZW0lF_4
       - delay: 0:00:02
-      - service: notify.send_message
-        data:
-          entity_id: notify.telegram_bot_701350878_327910374
+      - action: telegram_bot.send_message
+        data_template:
           message: 
             "{{state_attr('switch.BliTZW0lF_4', 'friendly_name')}} switch is now **{% if is_state('switch.BliTZW0lF_4', 'on') %}ON{% else %}OFF{% endif %}** because it was consuming less than 30W for 5 minutes"          
       - delay: 0:00:02

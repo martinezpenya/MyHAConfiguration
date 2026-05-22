@@ -1,0 +1,73 @@
+- alias: Shutter button LEDs when home and dark
+  id: shutter_button_leds_home_dark
+  initial_state: true
+  triggers:
+    - trigger: homeassistant
+      event: start
+      id: start
+    - trigger: state
+      entity_id: sun.sun
+      to: "below_horizon"
+      id: sunset
+    - trigger: state
+      entity_id: sun.sun
+      to: "above_horizon"
+      id: sunrise
+    - trigger: state
+      entity_id: device_tracker.rdm13nppmovil
+      to: "home"
+      id: arrive_home
+    - trigger: state
+      entity_id: device_tracker.rdm13nppmovil
+      to: "not_home"
+      for:
+        minutes: 5
+      id: leave_home
+    - trigger: state
+      entity_id: device_tracker.rdm13nppmovil
+      to: "unavailable"
+      for:
+        minutes: 5
+      id: leave_home_unavailable
+  variables:
+    should_turn_on: >-
+      {{ is_state('device_tracker.rdm13nppmovil', 'home') and is_state('sun.sun', 'below_horizon') }}
+  actions:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ should_turn_on }}"
+          sequence:
+            - action: light.turn_on
+              target:
+                entity_id:
+                  - light.shutter_office_button_led
+                  - light.shutter_dinner_button_led
+                  - light.shutter_sleep_button_led
+                  - light.shutter_room_button_led
+            - action: telegram_bot.send_message
+              data_template:
+                message: 'The shutter button LEDs have been turned on.'
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.id != 'start' }}"
+          sequence:
+            - action: light.turn_off
+              target:
+                entity_id:
+                  - light.shutter_office_button_led
+                  - light.shutter_dinner_button_led
+                  - light.shutter_sleep_button_led
+                  - light.shutter_room_button_led
+            - action: telegram_bot.send_message
+              data_template:
+                message: 'The shutter button LEDs have been turned off.'
+      default:
+        - action: light.turn_off
+          target:
+            entity_id:
+              - light.shutter_office_button_led
+              - light.shutter_dinner_button_led
+              - light.shutter_sleep_button_led
+              - light.shutter_room_button_led
+  mode: single

@@ -18,7 +18,7 @@
       value_template: '{{ value_json.RfReceived.Data }}'
 
   #PIR p831 3 -> FF160A
-    - name: "PIR_kerui_p831_3"
+    - name: "PIR_kerui_p831_3" 
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "FF160A"
       payload_off: "FF160Aoff"

@@ -17,3 +17,7 @@ core.*
 .vscode/sftp.json
 .HA_VERSION
 .ha_run.lock
+.cache/
+.cloud/
+.vscode/
+backups/
