@@ -12,4 +12,7 @@
 /wificheck.sh
 /wificheck.log
 .cache
-/backups
+backups
+custom_componentsbackups/
+backups/
+*.tar
