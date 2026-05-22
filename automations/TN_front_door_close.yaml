@@ -14,7 +14,6 @@
 #        entity_id: device_tracker.
 #        state: 'home'
   action:
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+    - action: telegram_bot.send_message
+      data_template:
         message: "Front door closed"

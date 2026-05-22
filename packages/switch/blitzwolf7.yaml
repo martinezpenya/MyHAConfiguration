@@ -31,7 +31,6 @@ homeassistant:
     sensor.bw7_totalstarttime:
       friendly_name: "Last reset"
 
-# input_number:
 #   bw7_kw_pico:
 #     name: 'KW pico'
 #     icon: mdi:trending-up
@@ -230,9 +229,8 @@ automation:
           entity_id:
             - switch.BliTZW0lF_7
       - delay: 0:00:02
-      - service: notify.send_message
-        data:
-          entity_id: notify.telegram_bot_701350878_327910374
+      - action: telegram_bot.send_message
+        data_template:
           message: 
             "{{state_attr('switch.BliTZW0lF_7', 'friendly_name')}} switch is now **{% if is_state('switch.BliTZW0lF_7', 'on') %}ON{% else %}OFF{% endif %}** because it was consuming less than 30W for 5 minutes"          
       - delay: 0:00:02
@@ -261,14 +259,13 @@ automation:
     - service: switch.turn_on
       data:
         entity_id: switch.sonoffbasic_3
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+    - action: telegram_bot.send_message
+      data_template:
         message: "Lavadora en marcha, en cuanto termine, te aviso para tender la ropa"
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 1 #100%    
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:01 #wait for switch
     - service: tts.google_say
       entity_id: media_player.speaker
@@ -304,9 +301,8 @@ automation:
         entity_id: input_select.washer_status
         option: "Waiting"
       service: input_select.select_option
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+    - action: telegram_bot.send_message
+      data_template:
         message: La lavadora ya terminó, pasara a modo espera, cuando llegues a casa
           te lo recordare
 
@@ -364,15 +360,14 @@ automation:
     - service: switch.turn_on
       data:
         entity_id: switch.sonoffbasic_3
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+    - action: telegram_bot.send_message
+      data_template:
         message: 'La lavadora ya terminó, debes tender la ropa , te lo recordaré 
             en 15 minutos, a no ser que me avises de que ya lo has hecho'
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 1 #100%    
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:01 #wait for switch
     - service: tts.google_say
       entity_id: media_player.speaker
@@ -441,14 +436,13 @@ script:
     - service: switch.turn_on
       data:
         entity_id: switch.sonoffbasic_3
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+    - action: telegram_bot.send_message
+      data_template:
         message: "The clothes are hanging"
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 1 #100%    
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
     - delay: 00:00:01 #wait for switch
     - service: tts.google_say
       entity_id: media_player.speaker

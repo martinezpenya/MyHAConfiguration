@@ -8,13 +8,11 @@
        event_type: telegram_command
        event_data:
          command: '/computer'
-  action:
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
-        message: "Select an option\nComputer is *** {{states.switch.blitzw0lf_3.state.upper()}} ***"
-        data:
-            keyboard:
-              - '/computer_off, /computer_on'
-              - '/start'
+  actions:
+    - action: telegram_bot.send_message
+      data_template:
+        message: "Select an option\nComputer is *** {{states.switch.sw03_8tree.state.upper()}} ***"
+        keyboard:
+          - '/computer_off, /computer_on'
+          - '/start'
                 

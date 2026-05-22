@@ -5,7 +5,7 @@
 homeassistant:
   customize:
     switch.BliTZW0lF_3:
-      friendly_name: "Ordenador"
+      friendly_name: "OrdenadorViejo"
     automation.bw3_switch_left_on:
       icon: mdi:power-plug-off
       friendly_name: "Auto power off"
@@ -228,9 +228,8 @@ automation:
           entity_id:
             - switch.BliTZW0lF_3
       - delay: 0:00:02
-      - service: notify.send_message
-        data:
-          entity_id: notify.telegram_bot_701350878_327910374
+      - action: telegram_bot.send_message
+        data_template:
           message: 
             "{{state_attr('switch.BliTZW0lF_3', 'friendly_name')}} switch is now **{% if is_state('switch.BliTZW0lF_3', 'on') %}ON{% else %}OFF{% endif %}** because it was consuming less than 30W for 5 minutes"          
       - delay: 0:00:02

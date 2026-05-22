@@ -124,9 +124,8 @@ automation:
           entity_id:
             - switch.sw02_8tree
       - delay: 0:00:02
-      - action: notify.send_message
-        data:
-          entity_id: notify.telegram_bot_701350878_327910374
+      - action: telegram_bot.send_message
+        data_template:
           message: 
             "{{state_attr('switch.sw02_8tree', 'friendly_name')}} switch is now **{% if is_state('switch.sw02_8tree', 'on') %}ON{% else %}OFF{% endif %}** because it was consuming less than 30W for 1 minutes"          
       - delay: 0:00:02

@@ -1,4 +1,30 @@
 #input for timers
+notification_max_volume:
+  name: Notification max volume
+  icon: mdi:volume-high
+  min: 0
+  max: 1
+  step: 0.01
+  mode: slider
+
+notification_night_start_hour:
+  name: Notification night start hour
+  icon: mdi:weather-night
+  min: 0
+  max: 23
+  step: 1
+  mode: box
+  #initial: 21
+
+notification_night_end_hour:
+  name: Notification night end hour
+  icon: mdi:white-balance-sunny
+  min: 0
+  max: 23
+  step: 1
+  mode: box
+  #initial: 7
+
 timer1_hour:
   name: Hour
   icon: mdi:timer

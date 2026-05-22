@@ -26,7 +26,7 @@
     attributes:
       state_class: total_increasing
       device_class: energy
-    name: Energy {{state_attr('switch.BliTZW0lF_3', 'friendly_name')}}
+    name: Energy {{state_attr('switch.bw3', 'friendly_name')}}
     state: '{{ states(''sensor.bw3_total'') }}'
 - sensor:
   - device_class: energy

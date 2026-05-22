@@ -192,7 +192,7 @@ class MopidyQueue:
         elif (self._current_track_is_stream):
             image_url = None
         else:
-            _LOGGER.warning("No image_url found for %s", uri)
+            _LOGGER.info("No image_url found for %s", uri)
             image_url = None
 
         return image_url
@@ -251,7 +251,7 @@ class MopidyQueue:
             track_info["uri"] = track.uri
             track_info["source"] = track.uri.partition(":")[0]
 
-        if hasattr(track, "track_no"):
+        if hasattr(track, "track_no") and track.track_no is not None:
             track_info["number"] = int(track.track_no)
 
         if hasattr(track, "length"):

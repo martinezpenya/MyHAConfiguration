@@ -19,7 +19,6 @@
         entity_id: switch.sonoffAmbiBany
     - action: telegram_bot.send_message
       data_template:
-        #entity_id: notify.telegram_bot_701350878_327910374
         message: 'Just arrived Home, start computer?'
         inline_keyboard: 
         - '✔Yes:/TCB_computer_on, ❌No:/TCB_cancel'
@@ -46,7 +45,6 @@
     - action: switch.turn_off
       data:
         entity_id: switch.sonoffAmbiBany
-    - action: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+    - action: telegram_bot.send_message
+      data_template:
         message: 'You leaved Home, I put the airfresheners off.'

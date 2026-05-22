@@ -9,9 +9,8 @@
        event_data:
          command: '/TVset'
   action:
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+    - action: telegram_bot.send_message
+      data_template:
         message: 'Select an option'
         data:
           keyboard:

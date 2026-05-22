@@ -8,12 +8,11 @@
     event_type: telegram_command
     event_data:
       command: '/light_pc_off'
-  action:
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+  actions:
+    - action: telegram_bot.send_message
+      data_template:
         message: "light pc off"
-    - service: switch.turn_off
+    - action: switch.turn_off
       data:
         entity_id:
           - switch.luz_pc

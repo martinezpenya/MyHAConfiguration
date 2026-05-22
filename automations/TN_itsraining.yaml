@@ -9,9 +9,7 @@
     #entity_id: group.all_devices
     #state: home
   action:
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+    - action: telegram_bot.send_message
       data_template:
         title: "It's raining"
         message: "({{ states.sensor.meteocarlet_rain_rate.state }} mm now)\n ({{ states.sensor.meteocarlet_daily_rain.state }} mm today)"

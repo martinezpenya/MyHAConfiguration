@@ -9,9 +9,8 @@
     event_data:
       command: '/waterheater_15min'
   action:
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+    - action: telegram_bot.send_message
+      data_template:
         message: "waterheater on for 15 minutes - start"  
     - service: switch.turn_on
       data:
@@ -22,7 +21,6 @@
       data:
         entity_id:
           - switch.BliTZW0lF_1          
-    - service: notify.send_message
-      data:
-        entity_id: notify.telegram_bot_701350878_327910374
+    - action: telegram_bot.send_message
+      data_template:
         message: "waterheater on for 15 minutes - end"

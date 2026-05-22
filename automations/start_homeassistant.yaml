@@ -1,84 +1,103 @@
 - alias: "Power state on HA start-up"
   initial_state: true
-  trigger:
-    platform: homeassistant
-    event: start
-  action:
-    - service: mqtt.publish
+  triggers:
+    - trigger: homeassistant
+      event: start
+  actions:
+    - action: mqtt.publish
       data:
         topic: "cmnd/BliTZW0lF_1/state"
         payload: ""
-    - service: mqtt.publish
+    - action: mqtt.publish
       data:
-        topic: cmnd/BliTZW0lF_1/POWER          
-    - service: mqtt.publish
+        topic: "cmnd/BliTZW0lF_1/POWER"
+        payload: ""
+    - action: mqtt.publish
       data:
         topic: "cmnd/BliTZW0lF_2/state"
         payload: ""
-    - service: mqtt.publish
+    - action: mqtt.publish
       data:
-        topic: cmnd/BliTZW0lF_2/POWER          
-    - service: mqtt.publish
-      data:
-        topic: "cmnd/BliTZW0lF_3/state"
+        topic: "cmnd/BliTZW0lF_2/POWER"
         payload: ""
-    - service: mqtt.publish
+    - action: mqtt.publish
       data:
-        topic: cmnd/BliTZW0lF_3/POWER          
-    - service: mqtt.publish
+        topic: "cmnd/sw01_8tree/state"
+        payload: ""
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/sw01_8tree/POWER"
+        payload: ""
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/sw02_8tree/state"
+        payload: ""
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/sw02_8tree/POWER"
+        payload: ""
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/sw03_8tree/state"
+        payload: ""
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/sw03_8tree/POWER"
+        payload: ""
+    - action: mqtt.publish
       data:
         topic: "cmnd/BliTZW0lF_4/state"
         payload: ""
-    - service: mqtt.publish
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/BliTZW0lF_4/POWER"
+        payload: ""
+    - action: mqtt.publish
       data:
         topic: "cmnd/BliTZW0lF_5/state"
         payload: ""
-    - service: mqtt.publish
+    - action: mqtt.publish
       data:
         topic: "cmnd/BliTZW0lF_6/state"
         payload: ""
-    - service: mqtt.publish
+    - action: mqtt.publish
       data:
         topic: "cmnd/BliTZW0lF_7/state"
         payload: ""
-    - service: mqtt.publish
+    - action: mqtt.publish
       data:
         topic: "cmnd/BliTZW0lF_8/state"
         payload: ""
-
-    - service: mqtt.publish
-      data:
-        topic: cmnd/BliTZW0lF_4/POWER          
-
-    - service: mqtt.publish
+    - action: mqtt.publish
       data:
         topic: "cmnd/sonoffS26_1/state"
         payload: ""
-    - service: mqtt.publish
+    - action: mqtt.publish
       data:
-        topic: cmnd/sonoffS26_1/POWER   
-    - service: mqtt.publish
+        topic: "cmnd/sonoffS26_1/POWER"
+        payload: ""
+    - action: mqtt.publish
       data:
         topic: "cmnd/sonoffS26_2/state"
         payload: ""
-    - service: mqtt.publish
+    - action: mqtt.publish
       data:
-        topic: cmnd/sonoffS26_2/POWER   
-    - service: mqtt.publish
+        topic: "cmnd/sonoffS26_2/POWER"
+        payload: ""
+    - action: mqtt.publish
       data:
         topic: "cmnd/sonoffS26_3/state"
         payload: ""
-    - service: mqtt.publish
+    - action: mqtt.publish
       data:
-        topic: cmnd/sonoffS26_3/POWER           
-
-    - service: switch.turn_on
+        topic: "cmnd/sonoffS26_3/POWER"
+        payload: ""
+    - action: switch.turn_on
       data:
         entity_id: switch.sonoffbasic_3
-
-    - service: python_script.set_state
+    - action: python_script.set_state
       data:
-        entity_id: 
+        entity_id:
           - binary_sensor.pir_kerui_p831_1
           - binary_sensor.pir_kerui_p831_2
           - binary_sensor.pir_kerui_p831_3
@@ -90,28 +109,31 @@
           - binary_sensor.remote2_btnb
           - binary_sensor.remote2_btnc
           - binary_sensor.remote2_btnd
-        state: 
+        state:
           - 'off'
         allow_create: true
-
-    - service: notify.send_message
+    - action: telegram_bot.send_message
       data:
-        entity_id: notify.telegram_bot_701350878_327910374
         message: 'HA has started: Revise status'
-    - service: media_player.volume_set
+    - action: media_player.volume_set
       data:
         entity_id: media_player.speaker
-        volume_level: 1 #100%    
-    - delay: 00:00:01 #wait for switch
-    - service: tts.google_say
-      entity_id: media_player.speaker
+        volume_level: '{{ ((states(''input_number.notification_max_volume'') | float(1))
+                * (0.5 if (now().hour >= (states(''input_number.notification_night_start_hour'')
+                | int) or now().hour < (states(''input_number.notification_night_end_hour'')
+                | int)) else 1)) | round(3) }}'
+    - delay: 00:00:01
+    - action: tts.google_say
+      target:
+        entity_id: media_player.speaker
       data:
         message: 'Atención David!. "Home assístant" se ha reiniciado, revísalo.'
-        language: 'es' #optional
-    - delay: 00:00:10 #wait for message
-    - service: switch.turn_off
+        language: 'es'
+    - delay: 00:00:10
+    - action: switch.turn_off
       data:
         entity_id: switch.sonoffbasic_3
+  mode: single
     
     
 
