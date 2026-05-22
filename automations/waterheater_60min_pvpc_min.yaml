@@ -1,0 +1,25 @@
+##########################################
+## KEYBOARD - waterheater_60min
+##
+- alias: 'waterheater_60min_pvpc_min'
+  initial_state: false
+  trigger:
+    - platform: state
+      entity_id: sensor.pvpc
+  condition: '{{ states.sensor.pvpc.state |float == states.sensor.pvpc.attributes.min_price |float}}'
+  actions:
+    - action: telegram_bot.send_message
+      data_template:
+        message: "waterheater on for 60 minutes - start"  
+    - service: switch.turn_on
+      data:
+        entity_id:
+          - switch.BliTZW0lF_1
+    - delay: "01:00:00"
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.BliTZW0lF_1
+    - action: telegram_bot.send_message
+      data_template:
+        message: "waterheater on for 60 minutes - end"

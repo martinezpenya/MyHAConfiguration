@@ -1,0 +1,20 @@
+{
+    "config_flow": true,
+    "codeowners": [
+        "@bushvin"
+    ],
+    "domain": "mopidy",
+    "documentation": "https://github.com/bushvin/hass-integrations#mopidy",
+    "issue_tracker": "https://github.com/bushvin/hass-integrations/issues",
+    "name": "Mopidy",
+    "requirements": [
+        "mopidyapi>=1.1.0",
+        "spotifyaio>=2.0,<3.0"
+    ],
+    "version": "2.4.2",
+    "zeroconf": [
+        {
+            "type": "_mopidy-http._tcp.local."
+        }
+    ]
+}

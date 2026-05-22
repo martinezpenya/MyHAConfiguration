@@ -1,7 +1,0 @@
-viewGasolina:
-  name: "Gasolina"
-  view: yes
-  entities:
-    - group.GasolinerasCarlet
-    - group.GasolinerasCatadau
-    - group.GasolinerasAlcudia

@@ -1,0 +1,20 @@
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.athom_03_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.Athom_03', 'friendly_name')}}
+    state: '{{ states(''sensor.athom_03_total'') }}'
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.athom_04_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.Athom_04', 'friendly_name')}}
+    state: '{{ states(''sensor.athom_04_total'') }}'    

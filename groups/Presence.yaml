@@ -1,5 +1,0 @@
-viewpresence:
-  name: "Presence"
-  view: yes
-  entities:
-    - group.presence

@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.yaml": "home-assistant"
+    },
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true
+}

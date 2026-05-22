@@ -1,0 +1,13 @@
+##########################################
+## Octoprint Enclosure plugin Light
+##
+##TODO: REVISAR!
+# - platform: command_line
+#   scan_interval: 5
+#   switches:
+#     light_power:
+#       friendly_name: "Octoprint Light"
+#       command_on: "curl 'http://octopi.casa/plugin/enclosure/setIO?status=true&index_id=1&apikey=84D89F98C8D040508056E691E4997C4D' > /dev/null"
+#       command_off: "curl 'http://octopi.casa/plugin/enclosure/setIO?status=false&index_id=1&apikey=84D89F98C8D040508056E691E4997C4D' > /dev/null"
+#       command_state: "curl 'http://octopi.casa/plugin/enclosure/getOutputStatus?apikey=84D89F98C8D040508056E691E4997C4D' > /dev/null"
+#       value_template: "{{  (value_json[0].status==1) }}"  

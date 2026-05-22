@@ -1,0 +1,132 @@
+# daily_bw1_energy:
+#   source: sensor.bw1_today
+#   cycle: daily
+#   tariffs:
+#     - pico
+#     - valle
+# monthly_bw1_energy:
+#   source: sensor.bw1_today
+#   cycle: monthly
+#   tariffs:
+#     - pico
+#     - valle
+# daily_bw2_energy:
+#   source: sensor.bw2_today
+#   cycle: daily
+#   tariffs:
+#     - pico
+#     - valle
+# monthly_bw2_energy:
+#   source: sensor.bw2_today
+#   cycle: monthly
+#   tariffs:
+#     - pico
+#     - valle
+# daily_bw3_energy:
+#   source: sensor.bw3_today
+#   cycle: daily
+#   tariffs:
+#     - pico
+#     - valle
+# monthly_bw3_energy:
+#   source: sensor.bw3_today
+#   cycle: monthly
+#   tariffs:
+#     - pico
+#     - valle
+# daily_bw4_energy:
+#   source: sensor.bw4_today
+#   cycle: daily
+#   tariffs:
+#     - pico
+#     - valle
+# monthly_bw4_energy:
+#   source: sensor.bw4_today
+#   cycle: monthly
+#   tariffs:
+#     - pico
+#     - valle
+# daily_bw5_energy:
+#   source: sensor.bw5_today
+#   cycle: daily
+#   tariffs:
+#     - pico
+#     - valle
+# monthly_bw5_energy:
+#   source: sensor.bw5_today
+#   cycle: monthly
+#   tariffs:
+#     - pico
+#     - valle    
+# daily_bw6_energy:
+#   source: sensor.bw6_today
+#   cycle: daily
+#   tariffs:
+#     - pico
+#     - valle
+# monthly_bw6_energy:
+#   source: sensor.bw6_today
+#   cycle: monthly
+#   tariffs:
+#     - pico
+#     - valle
+# daily_bw7_energy:
+#   source: sensor.bw7_today
+#   cycle: daily
+#   tariffs:
+#     - pico
+#     - valle
+# monthly_bw7_energy:
+#   source: sensor.bw7_today
+#   cycle: monthly
+#   tariffs:
+#     - pico
+#     - valle    
+# daily_bw8_energy:
+#   source: sensor.bw8_today
+#   cycle: daily
+#   tariffs:
+#     - pico
+#     - valle
+# monthly_bw8_energy:
+#   source: sensor.bw8_today
+#   cycle: monthly
+#   tariffs:
+#     - pico
+#     - valle
+# daily_bw9_energy:
+#   source: sensor.bw9_today
+#   cycle: daily
+#   tariffs:
+#     - pico
+#     - valle
+# monthly_bw9_energy:
+#   source: sensor.bw9_today
+#   cycle: monthly
+#   tariffs:
+#     - pico
+#     - valle
+# daily_bw10_energy:
+#   source: sensor.bw10_today
+#   cycle: daily
+#   tariffs:
+#     - pico
+#     - valle
+# monthly_bw10_energy:
+#   source: sensor.bw10_today
+#   cycle: monthly
+#   tariffs:
+#     - pico
+#     - valle        
+# bw3_hourly_energy:
+#   source: sensor.bw3_today
+#   cycle: hourly
+# bw3_daily_energy:
+#   source: sensor.bw3_today
+#   cycle: daily
+# bw3_monthly_energy:
+#     source: sensor.bw3_today
+#     cycle: monthly
+# bw3_monthly_energy_cost:
+#     source: sensor.bw3_energy_cost_hour
+#     cycle: monthly

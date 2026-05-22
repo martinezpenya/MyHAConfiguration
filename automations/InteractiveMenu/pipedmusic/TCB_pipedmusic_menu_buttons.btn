@@ -1,0 +1,12 @@
+         - " {% if is_state('switch.sonoffbasic_3', 'on') %} \U0001f315 Music Central \U0001f4e2:/TCB_socket_musiccentral_off{% else %} \U0001f311 Music Central \U0001f4e2:/TCB_socket_musiccentral_on{% endif %}"
+         - "{% if state_attr('media_player.speaker', 'source')=='RockFM' %} \U0001f315 Rock FM \U0001f4fb:/ {% else %} \U0001f311 Rock FM \U0001f4fb:/TCB_pipedmusic_rockfm_on{% endif %}"
+         - "{% if state_attr('media_player.speaker', 'source')=='KissFM' %} \U0001f315 Kiss FM \U0001f4fb:/ {% else %} \U0001f311 Kiss FM \U0001f4fb:/TCB_pipedmusic_kissfm_on{% endif %}"
+         - "{% if state_attr('media_player.speaker', 'source')=='BBC-World-Service-English' %} \U0001f315 BBC English \U0001f4fb:/ {% else %} \U0001f311 BBC English \U0001f4fb:/TCB_pipedmusic_bbcen_on{% endif %}"
+         - "{% if is_state('media_player.speaker', 'playing') %} \U0001f6d1 {{state_attr('media_player.speaker', 'media_title')}} \U0001f6d1:/TCB_pipedmusic_source_stop {% else %} \U0001f507 Not Playing \U0001f507:/{% endif %}"
+         - " {% if is_state('media_player.speaker', 'playing') %}{%- for i in range(0,(state_attr('media_player.speaker', 'volume_level')*40)|int) -%}*{%- endfor -%}{%- for i in range((state_attr('media_player.speaker', 'volume_level')*40)|int,40) -%}_{%- endfor -%}:/{% else %}:/{% endif %}"
+         - "\U0001f509\U0001f509 :/TCB_pipedmusic_volume_down_down, 
+            \U0001f509 :/TCB_pipedmusic_volume_down,{% if state_attr('media_player.speaker', 'is_volume_muted')==False %}\U0001f507 :/TCB_pipedmusic_volume_mute{% else %} \U0001f508 :/TCB_pipedmusic_volume_unmute{% endif %},
+            \U0001f50a :/TCB_pipedmusic_volume_up,
+            \U0001f50a\U0001f50a :/TCB_pipedmusic_volume_up_up"
+         - "\U0001f504 Refresh:/TCB_pipedmusic_refresh,
+            \U0001f448 Back:/TCB_start_menu"

@@ -1,0 +1,32 @@
+# Octprint Enclosure Plugin
+#TODO: REVISAR!
+# - platform: rest
+#   name: printer_enclosure_temp
+#   device_class: temperature
+#   unit_of_measurement: "°C"
+#   resource: !secret octopienclosure
+#   value_template: '{{ value_json.temp_sensor_temp }}'
+#   headers:
+#       Authorization: !secret octopitoken
+# - platform: rest
+#   name: printer_enclosure_hum
+#   device_class: humidity
+#   unit_of_measurement: "%"
+#   resource: !secret octopienclosure
+#   value_template: '{{ value_json.temp_sensor_humidity }}'
+#   headers:
+#       Authorization: !secret octopitoken
+
+  ## REVISAR!!
+  # switch:
+  # - platform: rest
+  #   name: Enclosure Lights
+  #   resource: http:/<octoprint_ip>/plugin/enclosure/outputs/<enclosure_id>
+  #   method: PATCH
+  #   verify_ssl: false
+  #   headers:
+  #     X-Api-Key: "<Octoprint_API_key>"
+  #     Content-Type: "application/json"
+  #   body_on: '{"status":true}'
+  #   body_off: '{"status":false}'
+  #   is_on_template: "{{ value_json.current_value }}"

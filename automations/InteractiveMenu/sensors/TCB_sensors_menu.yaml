@@ -1,0 +1,27 @@
+##########################################
+## INLINE_KEYBOARD - TCB_sensors_menu
+##
+- alias: 'TCB_sensors_menu'
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: '/TCB_sensors_menu'
+  action:
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'Sensors menu selected'
+    - service: telegram_bot.edit_message
+      data_template:
+        message_id: 'last' 
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        disable_web_page_preview: yes
+        message: >-
+            {{"\U0001f321 ***Temp Sensors*** \U0001f321\n"}}
+            {{"\n"}}{% for entity_id in states.group.temperature_sensors.attributes.entity_id %}{% set domain, device = entity_id.split('.') %}{{"- `" + states[domain][device].state_with_unit + " ` ___(" + states[domain][device].name + ")___ \n"}}{% endfor %}
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: 'last'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        inline_keyboard: !include TCB_sensors_menu_buttons.btn

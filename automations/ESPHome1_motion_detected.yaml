@@ -1,0 +1,8 @@
+- alias: 'ESPHome1 Christmas Tree on motion'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: 'binary_sensor.esphome1_motion'
+    to: 'on'
+  action:       
+    - service: script.christmas_tree

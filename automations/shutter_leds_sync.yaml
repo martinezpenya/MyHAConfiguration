@@ -1,0 +1,162 @@
+- alias: "Shutter LEDs refresh on HA start"
+  triggers:
+    - trigger: homeassistant
+      event: start
+  actions:
+    # Give MQTT and Tasmota devices time to reconnect after HA startup.
+    - delay: "00:00:20"
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/shutter_office/state"
+        payload: ""
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/shutter_dinner/state"
+        payload: ""
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/shutter_sleep/state"
+        payload: ""
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/shutter_room/state"
+        payload: ""
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/shutter_office/tuyasend0"
+        payload: ""
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/shutter_dinner/tuyasend0"
+        payload: ""
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/shutter_sleep/tuyasend0"
+        payload: ""
+    - action: mqtt.publish
+      data:
+        topic: "cmnd/shutter_room/tuyasend0"
+        payload: ""
+  mode: single
+
+- alias: "Shutter LEDs sync input_boolean from MQTT"
+  triggers:
+    - trigger: mqtt
+      topic: "stat/shutter_office/EFFECT"
+      payload: "7,1"
+      id: office_on
+    - trigger: mqtt
+      topic: "stat/shutter_office/EFFECT"
+      payload: "7,0"
+      id: office_off
+    - trigger: mqtt
+      topic: "stat/shutter_dinner/EFFECT"
+      payload: "7,1"
+      id: dinner_on
+    - trigger: mqtt
+      topic: "stat/shutter_dinner/EFFECT"
+      payload: "7,0"
+      id: dinner_off
+    - trigger: mqtt
+      topic: "stat/shutter_sleep/EFFECT"
+      payload: "7,1"
+      id: sleep_on
+    - trigger: mqtt
+      topic: "stat/shutter_sleep/EFFECT"
+      payload: "7,0"
+      id: sleep_off
+    - trigger: mqtt
+      topic: "stat/shutter_room/EFFECT"
+      payload: "7,1"
+      id: room_on
+    - trigger: mqtt
+      topic: "stat/shutter_room/EFFECT"
+      payload: "7,0"
+      id: room_off
+    - trigger: mqtt
+      topic: "stat/shutter_office/RESULT"
+      id: office_result
+    - trigger: mqtt
+      topic: "stat/shutter_dinner/RESULT"
+      id: dinner_result
+    - trigger: mqtt
+      topic: "stat/shutter_sleep/RESULT"
+      id: sleep_result
+    - trigger: mqtt
+      topic: "stat/shutter_room/RESULT"
+      id: room_result
+  variables:
+    effect_value: >-
+      {% if trigger.topic.endswith('/EFFECT') %}
+        {{ trigger.payload | trim }}
+      {% elif trigger.topic.endswith('/RESULT') %}
+        {% set result = trigger.payload | from_json(default={}) %}
+        {% set tuya = result.get('TuyaReceived', {}) %}
+        {% set dp = tuya.get('7') %}
+        {% if dp is not none %}
+          {{ '7,' ~ dp }}
+        {% else %}
+          unknown
+        {% endif %}
+      {% else %}
+        unknown
+      {% endif %}
+  actions:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.topic.startswith('stat/shutter_office/') and effect_value == '7,1' }}"
+          sequence:
+            - action: input_boolean.turn_on
+              target:
+                entity_id: input_boolean.shutter_office_led_state
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.topic.startswith('stat/shutter_office/') and effect_value == '7,0' }}"
+          sequence:
+            - action: input_boolean.turn_off
+              target:
+                entity_id: input_boolean.shutter_office_led_state
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.topic.startswith('stat/shutter_dinner/') and effect_value == '7,1' }}"
+          sequence:
+            - action: input_boolean.turn_on
+              target:
+                entity_id: input_boolean.shutter_dinner_led_state
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.topic.startswith('stat/shutter_dinner/') and effect_value == '7,0' }}"
+          sequence:
+            - action: input_boolean.turn_off
+              target:
+                entity_id: input_boolean.shutter_dinner_led_state
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.topic.startswith('stat/shutter_sleep/') and effect_value == '7,1' }}"
+          sequence:
+            - action: input_boolean.turn_on
+              target:
+                entity_id: input_boolean.shutter_sleep_led_state
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.topic.startswith('stat/shutter_sleep/') and effect_value == '7,0' }}"
+          sequence:
+            - action: input_boolean.turn_off
+              target:
+                entity_id: input_boolean.shutter_sleep_led_state
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.topic.startswith('stat/shutter_room/') and effect_value == '7,1' }}"
+          sequence:
+            - action: input_boolean.turn_on
+              target:
+                entity_id: input_boolean.shutter_room_led_state
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.topic.startswith('stat/shutter_room/') and effect_value == '7,0' }}"
+          sequence:
+            - action: input_boolean.turn_off
+              target:
+                entity_id: input_boolean.shutter_room_led_state
+  mode: queued

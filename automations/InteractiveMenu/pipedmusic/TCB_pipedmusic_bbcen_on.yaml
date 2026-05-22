@@ -1,0 +1,24 @@
+##########################################
+## INLINE_KEYBOARD - TCB_pipedmusic_bbcen_on
+##
+- alias: 'TCB_pipedmusic_bbcen_on'
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: '/TCB_pipedmusic_bbcen_on'
+  action:
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.speaker
+        source: BBC-World-Service-English      
+    - delay: 00:00:07
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'Switching pipedmusic to BBC English'
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: 'last'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        inline_keyboard: !include TCB_pipedmusic_menu_buttons.btn

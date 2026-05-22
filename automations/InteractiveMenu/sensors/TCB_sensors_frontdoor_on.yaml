@@ -1,0 +1,24 @@
+##########################################
+## INLINE_KEYBOARD - TCB_sensors_frontdoor_on
+##
+- alias: 'TCB_sensors_frontdoor_on'
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: '/TCB_sensors_frontdoor_on'
+  action:
+    - service: python_script.set_state
+      data_template:
+        entity_id: binary_sensor.front_door
+        state: 'on'
+    - delay: 00:00:01
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'Switching Sensor front door on'
+    - service: telegram_bot.edit_replymarkup
+      data_template:
+        message_id: 'last'
+        chat_id: '{{ trigger.event.data.chat_id }}'
+        inline_keyboard: !include TCB_sensors_menu_buttons.btn

@@ -1,0 +1,19 @@
+# - alias: utility_meter_tariff
+#   trigger:
+#     - platform: time
+#       at: '12:00:00'
+#     - platform: time
+#       at: '22:00:00'
+#   action:
+#     - service: utility_meter.next_tariff
+#       entity_id: 
+#         - utility_meter.daily_bw1_energy
+#         - utility_meter.daily_bw2_energy
+#         - utility_meter.daily_bw3_energy
+#         - utility_meter.daily_bw4_energy
+#         - utility_meter.daily_bw5_energy
+#         - utility_meter.daily_bw6_energy
+#         - utility_meter.daily_bw7_energy
+#         - utility_meter.daily_bw8_energy
+#         - utility_meter.daily_bw9_energy
+#         - utility_meter.daily_bw10_energy
