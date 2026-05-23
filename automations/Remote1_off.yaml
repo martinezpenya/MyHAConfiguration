@@ -12,60 +12,60 @@
 # a los X segundos para simular que lo hace él mismo al apagarse
 - alias: mqtt_restart_Remote1_ButtonA
   initial_state: true
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.remote1_btna
       # from: 'off'
       to: 'on'
       for:
         seconds: 1
-  action:
-    - service: mqtt.publish
+  actions:
+    - action: mqtt.publish
       data:
          topic: tele/sonoffRF433/RESULT
          payload: '{"RfReceived":{"Data":"801D48off"}}'
 
 - alias: mqtt_restart_Remote1_ButtonB
   initial_state: true
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.remote1_btnb
       # from: 'off'
       to: 'on'
       for:
         seconds: 1
-  action:
-    - service: mqtt.publish
+  actions:
+    - action: mqtt.publish
       data:
          topic: tele/sonoffRF433/RESULT
          payload: '{"RfReceived":{"Data":"801D44off"}}'
 
 - alias: mqtt_restart_Remote1_ButtonC
   initial_state: true
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.remote1_btnc
       # from: 'off'
       to: 'on'
       for:
         seconds: 1
-  action:
-    - service: mqtt.publish
+  actions:
+    - action: mqtt.publish
       data:
          topic: tele/sonoffRF433/RESULT
          payload: '{"RfReceived":{"Data":"801D42off"}}'
 
 - alias: mqtt_restart_Remote1_ButtonD
   initial_state: true
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.remote1_btnd
       # from: 'off'
       to: 'on'
       for:
         seconds: 1
-  action:
-    - service: mqtt.publish
+  actions:
+    - action: mqtt.publish
       data:
          topic: tele/sonoffRF433/RESULT
          payload: '{"RfReceived":{"Data":"801D41off"}}'

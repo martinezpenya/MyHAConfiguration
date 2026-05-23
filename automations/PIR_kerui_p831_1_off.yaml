@@ -11,16 +11,16 @@
 # Al final se manda un código OFF inventado al sensor binario
 # a los X segundos para simular que lo hace él mismo al apagarse
 - alias: mqtt restart PIR_kerui_p831_1_off
+  id: mqtt_restart_pir_kerui_p831_1_off
   initial_state: true
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.pir_kerui_p831_1
-#      from: 'off'
       to: 'on'
       for:
         seconds: 3    
-  action:
-    - service: mqtt.publish
+  actions:
+    - action: mqtt.publish
       data:
          topic: tele/sonoffRF433/RESULT
          payload: '{"RfReceived":{"Data":"57180Aoff"}}'
