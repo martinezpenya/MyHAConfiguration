@@ -31,7 +31,12 @@
       id: leave_home_unavailable
   variables:
     should_turn_on: >-
-      {{ is_state('device_tracker.rdm13nppmovil', 'home') and is_state('sun.sun', 'below_horizon') }}
+      {{ is_state('device_tracker.rdm13nppmovil', 'home') and is_state('sun.sun', 'below_horizon') and (
+        is_state('light.shutter_office_button_led', 'off') or
+        is_state('light.shutter_dinner_button_led', 'off') or
+        is_state('light.shutter_sleep_button_led', 'off') or
+        is_state('light.shutter_room_button_led', 'off')
+      ) }}
   actions:
     - choose:
         - conditions:
@@ -50,7 +55,13 @@
                 message: 'The shutter button LEDs have been turned on.'
         - conditions:
             - condition: template
-              value_template: "{{ trigger.id != 'start' }}"
+              value_template: >-
+                {{ trigger.id != 'start' and (
+                  is_state('light.shutter_office_button_led', 'on') or
+                  is_state('light.shutter_dinner_button_led', 'on') or
+                  is_state('light.shutter_sleep_button_led', 'on') or
+                  is_state('light.shutter_room_button_led', 'on')
+                ) }}
           sequence:
             - action: light.turn_off
               target:

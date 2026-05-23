@@ -1,3 +1,20 @@
+# - light:
+#   - turn_on:
+#     - data:
+#         topic: cmnd/shutter_office/TuyaSend4
+#         payload: 7,1
+#         qos: 2
+#       action: mqtt.publish
+#     turn_off:
+#     - data:
+#         topic: cmnd/shutter_office/TuyaSend4
+#         payload: 7,0
+#         qos: 2
+#       action: mqtt.publish
+#     default_entity_id: light.shutter_office_button_led
+#     name: Shutter Office Button LED
+#     state: "{% if states('sensor.shutter_office_effect') == '7,1' %}\n  on\n{% else
+#       %}\n  off\n{% endif %}"
 - light:
   - turn_on:
     - data:
@@ -5,16 +22,23 @@
         payload: 7,1
         qos: 2
       action: mqtt.publish
+    - target:
+        entity_id:
+        - input_boolean.shutter_office_led_state
+      action: input_boolean.turn_on
     turn_off:
     - data:
         topic: cmnd/shutter_office/TuyaSend4
         payload: 7,0
         qos: 2
       action: mqtt.publish
+    - target:
+        entity_id:
+        - input_boolean.shutter_office_led_state
+      action: input_boolean.turn_off
     default_entity_id: light.shutter_office_button_led
     name: Shutter Office Button LED
-    state: "{% if states('sensor.shutter_office_effect') == '7,1' %}\n  on\n{% else
-      %}\n  off\n{% endif %}"
+    state: '{{ states(''input_boolean.shutter_office_led_state'') == ''on'' }}'
 - light:
   - turn_on:
     - data:
