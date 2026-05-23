@@ -97,6 +97,12 @@ bondiamusica:
         message: 'Bon dia!, vols parar la música?'
         inline_keyboard: 
         - '✔Yes:/TCB_speaker_off, ❌No:/TCB_cancel'
+    - delay: 00:00:01
+    - service: telegram_bot.send_message
+      data_template:
+        message: 'Bon dia!, vols canviar la posició de les persianes?'
+        inline_keyboard:
+        - 'No:/TCB_cancel, Open:/TCB_shutter_open_all, Low:/TCB_shutter_low'
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker

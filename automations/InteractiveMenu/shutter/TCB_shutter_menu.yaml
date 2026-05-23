@@ -23,4 +23,3 @@
         message_id: 'last'
         chat_id: '{{ trigger.event.data.chat_id }}'
         inline_keyboard: !include TCB_shutter_menu_buttons.btn
-
