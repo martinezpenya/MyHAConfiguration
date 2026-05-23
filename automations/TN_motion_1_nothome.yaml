@@ -1,4 +1,5 @@
 - alias: 'PIR motion 1 nothome'
+  id: pir_motion_1_nothome
   initial_state: true
   trigger:
     platform: state

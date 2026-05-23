@@ -24,6 +24,7 @@
         - '✔Yes:/TCB_computer_on, ❌No:/TCB_cancel'
       
 - alias: AirFresheners OFF when not home
+  id: airfresheners_off_when_not_home
   initial_state: true
   triggers:
     - trigger: state
