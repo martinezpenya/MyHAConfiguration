@@ -362,8 +362,9 @@ automation:
         entity_id: switch.sonoffbasic_3
     - action: telegram_bot.send_message
       data_template:
-        message: 'La lavadora ya terminó, debes tender la ropa , te lo recordaré 
-            en 15 minutos, a no ser que me avises de que ya lo has hecho'
+        message: 'La lavadora ya terminó, debes tender la ropa. ¿Has tendido la ropa?'
+        inline_keyboard:
+          - '✔ SI:/bw7_clothes_hanging_yes, ❌ NO:/TCB_cancel'
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
@@ -372,13 +373,25 @@ automation:
     - service: tts.google_say
       entity_id: media_player.speaker
       data:
-        message: 'La lavadora ya terminó, debes tender la ropa , te lo recordaré 
-            en 15 minutos, a no ser que me avises de que ya lo has hecho'
+        message: 'La lavadora ya terminó, debes tender la ropa , te lo recordaré en 15 minutos, a no ser que me avises de que ya lo has hecho'
         language: 'es' #optional
     - delay: 00:00:10 #wait for message
     - service: switch.turn_off
       data:
         entity_id: switch.sonoffbasic_3
+
+  - alias: 'Washer hanging yes'
+    trigger:
+    - platform: event
+      event_type: telegram_callback
+      event_data:
+        data: '/bw7_clothes_hanging_yes'
+    action:
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'Perfecto, entonces ya no te lo recordaré más'
+    - service: script.bw7_clothes_hanging
 
 script:
   # bw7_report:

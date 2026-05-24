@@ -1,25 +1,25 @@
-         - "\U0001F3E2 Office :/TCB_shutter_label"
+         - "{% if is_state('light.shutter_office_button_led', 'on') %} \U0001F3E2 Office \U0001f315:/TCB_shutter_toggle_led_office{% else %} \U0001F3E2 Office \U0001f311:/TCB_shutter_toggle_led_office{% endif %}"
          - " {%- for i in range(1,(state_attr('cover.shutter_office','current_position')/4)|int) -%}_{%- endfor -%}{%- for i in range((state_attr('cover.shutter_office','current_position')/4)|int,(100/4)|int) -%}*{%- endfor -%} "
          - "\U000023ee :/TCB_shutter_close, 
             \U000023ea :/TCB_shutter_bitopen,
             \U000023f9 :/TCB_shutter_stop,
             \U000023e9 :/TCB_shutter_half,
             \U000023ed :/TCB_shutter_open"        
-         - "\U0001F37D Dinner :/TCB_shutter_label"
+         - "{% if is_state('light.shutter_dinner_button_led', 'on') %} \U0001F37D Dinner \U0001f315:/TCB_shutter_toggle_led_dinner{% else %} \U0001F37D Dinner \U0001f311:/TCB_shutter_toggle_led_dinner{% endif %}"
          - " {%- for i in range(1,(state_attr('cover.shutter_dinner','current_position')/4)|int) -%}_{%- endfor -%}{%- for i in range((state_attr('cover.shutter_dinner','current_position')/4)|int,(100/4)|int) -%}*{%- endfor -%} "
          - "\U000023ee :/TCB_shutter_dinner_close, 
             \U000023ea :/TCB_shutter_dinner_bitopen,
             \U000023f9 :/TCB_shutter_dinner_stop,
             \U000023e9 :/TCB_shutter_dinner_half,
             \U000023ed :/TCB_shutter_dinner_open"
-         - "\U0001F6CF Sleep :/TCB_shutter_label"
+         - "{% if is_state('light.shutter_sleep_button_led', 'on') %} \U0001F6CF Sleep \U0001f315:/TCB_shutter_toggle_led_sleep{% else %} \U0001F6CF Sleep \U0001f311:/TCB_shutter_toggle_led_sleep{% endif %}"
          - " {%- for i in range(1,(state_attr('cover.shutter_sleep','current_position')/4)|int) -%}_{%- endfor -%}{%- for i in range((state_attr('cover.shutter_sleep','current_position')/4)|int,(100/4)|int) -%}*{%- endfor -%} "
          - "\U000023ee :/TCB_shutter_sleep_close, 
             \U000023ea :/TCB_shutter_sleep_bitopen,
             \U000023f9 :/TCB_shutter_sleep_stop,
             \U000023e9 :/TCB_shutter_sleep_half,
             \U000023ed :/TCB_shutter_sleep_open"
-         - "\U0001F6AA Room :/TCB_shutter_label"
+         - "{% if is_state('light.shutter_room_button_led', 'on') %} \U0001F6AA Room \U0001f315:/TCB_shutter_toggle_led_room{% else %} \U0001F6AA Room \U0001f311:/TCB_shutter_toggle_led_room{% endif %}"
          - " {%- for i in range(1,(state_attr('cover.shutter_room','current_position')/4)|int) -%}_{%- endfor -%}{%- for i in range((state_attr('cover.shutter_room','current_position')/4)|int,(100/4)|int) -%}*{%- endfor -%} "
          - "\U000023ee :/TCB_shutter_room_close, 
             \U000023ea :/TCB_shutter_room_bitopen,

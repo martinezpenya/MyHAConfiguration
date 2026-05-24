@@ -1,0 +1,30 @@
+##########################################
+## INLINE_KEYBOARD - launcher
+## Publica un boton fijo para abrir el menu principal.
+## Se envia al iniciar HA y bajo demanda con /menu_launcher.
+##
+- alias: 'TC menu launcher'
+  initial_state: true
+  triggers:
+    - trigger: homeassistant
+      id: ha_start
+      event: start
+    - trigger: event
+      id: manual
+      event_type: telegram_command
+      event_data:
+        command: '/menu_launcher'
+  actions:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.id == 'ha_start' }}"
+          sequence:
+            - delay: '00:00:20'
+    - action: telegram_bot.send_message
+      data:
+        target:
+          - !secret id_group_telegram
+        message: "\U0001F4CC *Launcher del menu*\nPulsa el boton para abrir el menu principal."
+        inline_keyboard:
+          - '🏠 Menu principal:/TCB_start_menu'
