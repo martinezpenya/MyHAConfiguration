@@ -7,6 +7,14 @@
        event_type: telegram_command
        event_data:
          command: '/start_menu'
+     - platform: event
+       event_type: telegram_command
+       event_data:
+         command: '/menu'
+     - platform: event
+       event_type: telegram_command
+       event_data:
+         command: '/ha_menu'
   action:
      - service: telegram_bot.send_message
        data_template:
