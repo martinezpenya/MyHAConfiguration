@@ -303,9 +303,23 @@ timer: !include timer.yaml
 
 stream:
 ffmpeg:      
-camera: !include_dir_merge_list cameras
+# camera: 
+#   - platform: xiaomi_cloud_map_extractor
+#     host: !secret xiaomi_vacuum_host
+#     token: !secret xiaomi_vacuum_token
+#     username: !secret xiaomi_cloud_username
+#     password: !secret xiaomi_cloud_password
+#     country: cn
+#     draw: ['all']
+#     attributes:
+#       - calibration_points
 
 api:
+
+logger:
+  default: warning
+  logs:
+    custom_components.xiaomi_cloud_map_extractor: debug
 
 alexa:
   smart_home: !include config/alexa.yaml

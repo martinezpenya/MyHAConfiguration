@@ -17,6 +17,7 @@
     - action: switch.turn_on
       data:
         entity_id: switch.sonoffAmbiBany
+    - action: script.benvingut_a_casa
     - action: telegram_bot.send_message
       data_template:
         message: 'Just arrived Home, start computer?'

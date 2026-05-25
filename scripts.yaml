@@ -101,8 +101,8 @@ bondiamusica:
     - service: telegram_bot.send_message
       data_template:
         message: 'Bon dia!, vols canviar la posició de les persianes?'
-        inline_keyboard:
-        - 'No:/TCB_cancel, Open:/TCB_shutter_open_all, Low:/TCB_shutter_low'
+        inline_keyboard: 
+        - '🏠 Open:/TCB_shutter_open_all, 💡 Low:/TCB_shutter_low, ❌No:/TCB_cancel'
     - service: media_player.volume_set
       data:
         entity_id: media_player.speaker
@@ -167,6 +167,15 @@ bondiamusica:
       data:
         entity_id: media_player.speaker
         volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.15 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
+
+benvingut_a_casa:
+  alias: benvingut_a_casa
+  sequence: 
+    - service: telegram_bot.send_message
+      data_template:
+        message: 'Benvingut a casa!, vols canviar la posició de les persianes?'
+        inline_keyboard: 
+        - '🏠 Open:/TCB_shutter_open_all, 💡 Low:/TCB_shutter_low, ❌No:/TCB_cancel'
 
 bondiallums:
   alias: bondiallums
