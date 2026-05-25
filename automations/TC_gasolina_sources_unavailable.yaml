@@ -1,0 +1,60 @@
+##########################################
+## ALERTA - fuentes gasolina no disponibles
+##
+- alias: 'TC gasolina sources unavailable'
+  id: tc_gasolina_sources_unavailable
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id:
+        - sensor.gasolinera11
+        - sensor.gasolinera14
+        - sensor.gasolinera15
+        - sensor.gasolinera16
+        - sensor.gasolinera17
+        - sensor.gasolinera21
+        - sensor.gasolinera22
+        - sensor.gasolinera31
+        - sensor.gasolinera32
+        - sensor.gasolinera33
+        - sensor.gasolinera34
+        - sensor.gasolinera35
+        - sensor.gasolinera36
+      to: 'unavailable'
+      for: '00:20:00'
+  action:
+    - service: telegram_bot.send_message
+      data_template:
+        chat_id: !secret id_group_telegram
+        parse_mode: markdown
+        message: >-
+          ⛽ *Alerta gasolina*: {{ trigger.to_state.name }} lleva 20 min en `unavailable`.
+          Revisa conectividad/API.
+
+- alias: 'TC gasolina sources recovered'
+  id: tc_gasolina_sources_recovered
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id:
+        - sensor.gasolinera11
+        - sensor.gasolinera14
+        - sensor.gasolinera15
+        - sensor.gasolinera16
+        - sensor.gasolinera17
+        - sensor.gasolinera21
+        - sensor.gasolinera22
+        - sensor.gasolinera31
+        - sensor.gasolinera32
+        - sensor.gasolinera33
+        - sensor.gasolinera34
+        - sensor.gasolinera35
+        - sensor.gasolinera36
+      from: 'unavailable'
+  action:
+    - service: telegram_bot.send_message
+      data_template:
+        chat_id: !secret id_group_telegram
+        parse_mode: markdown
+        message: >-
+          ✅ *Gasolina recuperada*: {{ trigger.entity_id }} vuelve a `{{ states(trigger.entity_id) }}`.

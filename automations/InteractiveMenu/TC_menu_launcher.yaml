@@ -23,8 +23,7 @@
             - delay: '00:00:20'
     - action: telegram_bot.send_message
       data:
-        target:
-          - !secret id_group_telegram
+        chat_id: !secret id_group_telegram
         message: "\U0001F4CC *Launcher del menu*\nPulsa el boton para abrir el menu principal."
         inline_keyboard:
           - '🏠 Menu principal:/TCB_start_menu'
