@@ -21,3 +21,4 @@ core.*
 .cloud/
 .vscode/
 backups/
+.ha_run.lock
