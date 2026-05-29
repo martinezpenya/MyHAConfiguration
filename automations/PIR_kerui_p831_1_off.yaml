@@ -13,14 +13,14 @@
 - alias: mqtt restart PIR_kerui_p831_1_off
   id: mqtt_restart_pir_kerui_p831_1_off
   initial_state: true
-  triggers:
-    - trigger: state
+  trigger:
+    - platform: state
       entity_id: binary_sensor.pir_kerui_p831_1
       to: 'on'
       for:
         seconds: 3    
-  actions:
-    - action: mqtt.publish
+  action:
+    - service: mqtt.publish
       data:
          topic: tele/sonoffRF433/RESULT
          payload: '{"RfReceived":{"Data":"57180Aoff"}}'

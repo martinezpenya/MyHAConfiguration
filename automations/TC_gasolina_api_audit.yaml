@@ -1,0 +1,79 @@
+##########################################
+## AUDIT - API gasolina (fuentes REST)
+##
+- alias: 'TC gasolina API unavailable'
+  id: tc_gasolina_api_unavailable
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id:
+        - sensor.gasolinera1
+        - sensor.gasolinera2
+        - sensor.gasolinera3
+      to: 'unavailable'
+      for: '00:05:00'
+  action:
+    - service: telegram_bot.send_message
+      data_template:
+        chat_id: !secret id_group_telegram
+        parse_mode: markdown
+        message: >-
+          ⛽ *Fuente gasolina no disponible*:
+          {{ trigger.entity_id }} lleva 5 min en `unavailable`.
+          fecha_api: {{ state_attr(trigger.entity_id, 'Fecha') }}
+          items: {{ (state_attr(trigger.entity_id, 'ListaEESSPrecio') | count) if state_attr(trigger.entity_id, 'ListaEESSPrecio') is iterable else 0 }}
+          last_changed: {{ trigger.to_state.last_changed }}
+
+- alias: 'TC gasolina API recovered'
+  id: tc_gasolina_api_recovered
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id:
+        - sensor.gasolinera1
+        - sensor.gasolinera2
+        - sensor.gasolinera3
+      from: 'unavailable'
+  action:
+    - service: telegram_bot.send_message
+      data_template:
+        chat_id: !secret id_group_telegram
+        parse_mode: markdown
+        message: >-
+          ✅ *Fuente gasolina recuperada*:
+          {{ trigger.entity_id }} => `{{ states(trigger.entity_id) }}`
+          fecha_api: {{ state_attr(trigger.entity_id, 'Fecha') }}
+          items: {{ (state_attr(trigger.entity_id, 'ListaEESSPrecio') | count) if state_attr(trigger.entity_id, 'ListaEESSPrecio') is iterable else 0 }}
+
+- alias: 'TC gasolina refresh on HA start'
+  id: tc_gasolina_refresh_on_start
+  initial_state: true
+  trigger:
+    - platform: event
+      event_type: homeassistant_start
+  action:
+    - delay: '00:00:45'
+    - service: homeassistant.update_entity
+      target:
+        entity_id:
+          - sensor.gasolinera1
+          - sensor.gasolinera2
+          - sensor.gasolinera3
+    - delay: '00:01:00'
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: >-
+                {{ states('sensor.gasolinera1') in ['unknown','unavailable']
+                   or states('sensor.gasolinera2') in ['unknown','unavailable']
+                   or states('sensor.gasolinera3') in ['unknown','unavailable'] }}
+          sequence:
+            - service: telegram_bot.send_message
+              data_template:
+                chat_id: !secret id_group_telegram
+                parse_mode: markdown
+                message: >-
+                  ⚠️ *Gasolina tras arranque HA*: hay fuentes sin actualizar.
+                  g1={{ states('sensor.gasolinera1') }} (items={{ (state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | count) if state_attr('sensor.gasolinera1', 'ListaEESSPrecio') is iterable else 0 }})
+                  g2={{ states('sensor.gasolinera2') }} (items={{ (state_attr('sensor.gasolinera2', 'ListaEESSPrecio') | count) if state_attr('sensor.gasolinera2', 'ListaEESSPrecio') is iterable else 0 }})
+                  g3={{ states('sensor.gasolinera3') }} (items={{ (state_attr('sensor.gasolinera3', 'ListaEESSPrecio') | count) if state_attr('sensor.gasolinera3', 'ListaEESSPrecio') is iterable else 0 }})
