@@ -10,4 +10,4 @@
     entity_id: sun.sun
     state: below_horizon
   action:   
-    - action: script.yeelight_night
+    - service: script.yeelight_night

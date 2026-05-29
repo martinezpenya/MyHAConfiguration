@@ -18,11 +18,11 @@ automation.blitzwolf1_reset:
 sensor.gasolinera:
   hidden: true
 sensor.gasolinera1:
-  hidden: true
+  hidden: false
 sensor.gasolinera2:
-  hidden: true
+  hidden: false
 sensor.gasolinera3:
-  hidden: true
+  hidden: false
 cover.persiana_despatx_curtain:
   friendly_name: Persiana vella
   device_class: shutter
