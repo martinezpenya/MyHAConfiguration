@@ -72,3 +72,33 @@
     state: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
       -%}\n  {%- if petrol[\"IDEESS\"] | int  == 12771 -%}  \n    {{ petrol[\"PrecioProducto\"]
       | capitalize | replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"
+
+- sensor:
+  - unit_of_measurement: €/L
+    default_entity_id: sensor.gasolinera12
+    attributes:
+      latitude: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 10530 -%}  \n    {{petrol[\"Latitud\"]
+        | replace(\",\",\".\")}} \n  {%- endif -%}\n{%- endfor -%}"
+      longitude: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 10530 -%}  \n    {{petrol[\"Longitud
+        (WGS84)\"]| replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"
+    name: Valcarce
+    state: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
+      -%}\n  {%- if petrol[\"IDEESS\"] | int  == 10530 -%}  \n    {{ petrol[\"PrecioProducto\"]
+      | capitalize | replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"
+
+- sensor:
+  - unit_of_measurement: €/L
+    default_entity_id: sensor.gasolinera13
+    attributes:
+      latitude: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 15560 -%}  \n    {{petrol[\"Latitud\"]
+        | replace(\",\",\".\")}} \n  {%- endif -%}\n{%- endfor -%}"
+      longitude: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
+        -%}\n  {%- if petrol[\"IDEESS\"] | int  == 15560 -%}  \n    {{petrol[\"Longitud
+        (WGS84)\"]| replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"
+    name: Plenergy
+    state: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
+      -%}\n  {%- if petrol[\"IDEESS\"] | int  == 15560 -%}  \n    {{ petrol[\"PrecioProducto\"]
+      | capitalize | replace(\",\",\".\") }} \n  {%- endif -%}\n{%- endfor -%}"

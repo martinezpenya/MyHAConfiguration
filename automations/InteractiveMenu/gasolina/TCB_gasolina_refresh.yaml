@@ -27,20 +27,27 @@
           {% endfor %}
           {{"\n"}}
           {% set zones = [
-            ('Carlet', ['sensor.gasolinera11','sensor.gasolinera14','sensor.gasolinera15','sensor.gasolinera16','sensor.gasolinera17']),
+            ('Carlet', ['sensor.gasolinera11','sensor.gasolinera12','sensor.gasolinera13','sensor.gasolinera14','sensor.gasolinera15','sensor.gasolinera16','sensor.gasolinera17']),
             ('Catadau', ['sensor.gasolinera21','sensor.gasolinera22']),
             ('Alcudia', ['sensor.gasolinera31','sensor.gasolinera32','sensor.gasolinera33','sensor.gasolinera34','sensor.gasolinera35','sensor.gasolinera36'])
           ] %}
           {% for zone_name, stations in zones %}
           {{"\n*" + zone_name + "*\n"}}
+          {% set ns = namespace(priced=[], nodata=[]) %}
           {% for entity_id in stations %}
           {% set label = state_attr(entity_id, 'friendly_name') | default(entity_id, true) %}
           {% set value = states(entity_id) %}
           {% if value in ['unknown', 'unavailable', 'none', 'None', ''] %}
-          {{"- `N/D` ___(" + label + ")___\n"}}
+          {% set ns.nodata = ns.nodata + [{'label': label}] %}
           {% else %}
-          {{"- `" + (value | replace('.', ',')) + " €/L` ___(" + label + ")___\n"}}
+          {% set ns.priced = ns.priced + [{'label': label, 'value': (value | float(0)), 'display': (value | replace('.', ','))}] %}
           {% endif %}
+          {% endfor %}
+          {% for item in ns.priced | sort(attribute='value') %}
+          {{"- `" + item.display + " €/L` ___(" + item.label + ")___\n"}}
+          {% endfor %}
+          {% for item in ns.nodata %}
+          {{"- `N/D` ___(" + item.label + ")___\n"}}
           {% endfor %}
           {% endfor %}
     - service: telegram_bot.edit_replymarkup
