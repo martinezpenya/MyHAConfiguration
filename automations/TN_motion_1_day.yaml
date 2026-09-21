@@ -17,3 +17,4 @@
         below: 5
   action:
     - service: script.yeelight_day
+  mode: restart

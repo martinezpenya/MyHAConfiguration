@@ -53,7 +53,8 @@
       set_position_topic: "cmnd/shutter_office/shutterposition"
       set_position_template: "{{value}}"
       position_topic: "stat/shutter_office/VAR"
-      position_template: "{{ value_json.Var4 | int }}"
+      position_template: >-
+        {% if 'Var4' in value_json %}{{ value_json.Var4 | int }}{% else %}{{ state_attr(entity_id, 'current_position') }}{% endif %}
       availability_topic: "tele/shutter_office/LWT"
       payload_available: "Online"
       payload_not_available: "Offline"
@@ -86,7 +87,8 @@
       set_position_topic: "cmnd/shutter_dinner/shutterposition"
       set_position_template: "{{value}}"
       position_topic: "stat/shutter_dinner/VAR"
-      position_template: "{{ value_json.Var4 | int }}"
+      position_template: >-
+        {% if 'Var4' in value_json %}{{ value_json.Var4 | int }}{% else %}{{ state_attr(entity_id, 'current_position') }}{% endif %}
       availability_topic: "tele/shutter_dinner/LWT"
       payload_available: "Online"
       payload_not_available: "Offline"
@@ -101,7 +103,8 @@
       set_position_topic: "cmnd/shutter_sleep/shutterposition"
       set_position_template: "{{value}}"
       position_topic: "stat/shutter_sleep/VAR"
-      position_template: "{{ value_json.Var4 | int }}"
+      position_template: >-
+        {% if 'Var4' in value_json %}{{ value_json.Var4 | int }}{% else %}{{ state_attr(entity_id, 'current_position') }}{% endif %}
       availability_topic: "tele/shutter_sleep/LWT"
       payload_available: "Online"
       payload_not_available: "Offline"
@@ -116,7 +119,8 @@
       set_position_topic: "cmnd/shutter_room/shutterposition"
       set_position_template: "{{value}}"
       position_topic: "stat/shutter_room/VAR"
-      position_template: "{{ value_json.Var4 | int }}"
+      position_template: >-
+        {% if 'Var4' in value_json %}{{ value_json.Var4 | int }}{% else %}{{ state_attr(entity_id, 'current_position') }}{% endif %}
       availability_topic: "tele/shutter_room/LWT"
       payload_available: "Online"
       payload_not_available: "Offline"

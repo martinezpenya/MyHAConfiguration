@@ -9,5 +9,6 @@
     condition: state
     entity_id: sun.sun
     state: below_horizon
-  action:   
+  action:
     - service: script.yeelight_night
+  mode: restart

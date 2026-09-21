@@ -95,9 +95,8 @@
     - action: switch.turn_on
       data:
         entity_id: switch.sonoffbasic_3
-    - action: python_script.set_state
-      data:
-        entity_id:
+    - repeat:
+        for_each:
           - binary_sensor.pir_kerui_p831_1
           - binary_sensor.pir_kerui_p831_2
           - binary_sensor.pir_kerui_p831_3
@@ -109,9 +108,11 @@
           - binary_sensor.remote2_btnb
           - binary_sensor.remote2_btnc
           - binary_sensor.remote2_btnd
-        state:
-          - 'off'
-        allow_create: true
+        sequence:
+          - action: python_script.set_state
+            data:
+              entity_id: "{{ repeat.item }}"
+              state: 'off'
     - action: telegram_bot.send_message
       data:
         message: 'HA has started: Revise status'

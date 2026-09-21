@@ -8,6 +8,7 @@
       device_class: energy
     name: Energy {{state_attr('switch.sw01_8tree', 'friendly_name')}}
     state: '{{ states(''sensor.sw01_8tree_total'') }}'
+    availability: '{{ has_value(''sensor.sw01_8tree_total'') }}'
 - sensor:
   - device_class: energy
     unit_of_measurement: kWh
@@ -18,6 +19,7 @@
       device_class: energy
     name: Energy {{state_attr('switch.sw02_8tree', 'friendly_name')}}
     state: '{{ states(''sensor.sw02_8tree_total'') }}'
+    availability: '{{ has_value(''sensor.sw02_8tree_total'') }}'
 - sensor:
   - device_class: energy
     unit_of_measurement: kWh
@@ -28,6 +30,7 @@
       device_class: energy
     name: Energy {{state_attr('switch.sw03_8tree', 'friendly_name')}}
     state: '{{ states(''sensor.sw03_8tree_total'') }}'
+    availability: '{{ has_value(''sensor.sw03_8tree_total'') }}'
 - sensor:
   - device_class: energy
     unit_of_measurement: kWh
@@ -37,4 +40,5 @@
       state_class: total_increasing
       device_class: energy
     name: Energy {{state_attr('switch.sw04_8tree', 'friendly_name')}}
-    state: '{{ states(''sensor.sw04_8tree_total'') }}'    
+    state: '{{ states(''sensor.sw04_8tree_total'') }}'
+    availability: '{{ has_value(''sensor.sw04_8tree_total'') }}'

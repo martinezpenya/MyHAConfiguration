@@ -75,7 +75,7 @@ utility_meter:
     source: sensor.shelly2_total
     cycle: daily
   shelly2_energy_usage_monthly:
-    source: ssensor.shelly2_total
+    source: sensor.shelly2_total
     cycle: monthly
   shelly2_energy_usage_yearly:
     source: sensor.shelly2_total

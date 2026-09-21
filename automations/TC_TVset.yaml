@@ -12,8 +12,7 @@
     - action: telegram_bot.send_message
       data_template:
         message: 'Select an option'
-        data:
-          keyboard:
-          - '/TVset_on, /TVset_off'
-          - '/start'
+        keyboard:
+        - '/TVset_on, /TVset_off'
+        - '/start'
                 

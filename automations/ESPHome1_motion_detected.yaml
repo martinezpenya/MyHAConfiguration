@@ -4,5 +4,6 @@
     platform: state
     entity_id: 'binary_sensor.esphome1_motion'
     to: 'on'
-  action:       
+  action:
     - service: script.christmas_tree
+  mode: restart
