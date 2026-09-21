@@ -114,10 +114,10 @@ automation:
     trigger:
       - platform: numeric_state
         entity_id: sensor.sw04_8tree_power
-        below: 30
+        below: 7
         above: 1
         for:
-          minutes: 1
+          minutes: 5
     action:
       - service: switch.turn_off
         data:
@@ -126,12 +126,12 @@ automation:
       - delay: 0:00:02
       - action: telegram_bot.send_message
         data_template:
-          message: 
-            "{{state_attr('switch.sw04_8tree', 'friendly_name')}} switch is now **{% if is_state('switch.sw04_8tree', 'on') %}ON{% else %}OFF{% endif %}** because it was consuming less than 30W for 1 minutes"          
+          message:
+            "{{state_attr('switch.sw04_8tree', 'friendly_name')}} switch is now **{% if is_state('switch.sw04_8tree', 'on') %}ON{% else %}OFF{% endif %}** because it was consuming less than 7W for 5 minutes"
       - delay: 0:00:02
       - service: persistent_notification.create
         data:
-          message: "Is now **{% if is_state('switch.sw04_8tree', 'on') %}ON{% else %}OFF{% endif %}** because it was left on for 1 minutes"
+          message: "Is now **{% if is_state('switch.sw04_8tree', 'on') %}ON{% else %}OFF{% endif %}** because it was left on for 5 minutes"
           title: "{{state_attr('switch.sw04_8tree', 'friendly_name')}}"
 
 script:

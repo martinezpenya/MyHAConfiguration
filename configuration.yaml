@@ -84,11 +84,6 @@ sun:
 #  Sensors are anything (hardware or software) that has a state.
 sensor: !include_dir_merge_list sensors
 template: !include_dir_merge_list templates
-      
-device_tracker: !include device_tracker.yaml
-
-#breaking changes
-#breaking_changes:
 
 # Text to speech
 tts:
@@ -165,17 +160,11 @@ script: !include scripts.yaml
 ### Input Number ###
 input_number: !include input_number.yaml
 
-### Input Text ###
-input_text: !include input_text.yaml
-
 ### Input Select ###
 input_select: !include input_select.yaml
 
 ### Input Datetime ###
 #input_datetime: !include input_datetime.yaml
-
-### Utility meter ###
-utility_meter: !include utility_meter.yaml
 
 ### Timers ###
 timer: !include timer.yaml
