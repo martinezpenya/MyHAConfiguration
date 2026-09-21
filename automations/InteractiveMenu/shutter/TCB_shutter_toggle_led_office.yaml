@@ -9,11 +9,11 @@
     - service: light.toggle
       data:
         entity_id: light.shutter_office_button_led
-    - delay: 00:00:01
     - service: telegram_bot.answer_callback_query
       data_template:
         callback_query_id: '{{ trigger.event.data.id }}'
         message: 'LED Office toggled'
+    - delay: 00:00:01
     - service: telegram_bot.edit_replymarkup
       data_template:
         message_id: 'last'

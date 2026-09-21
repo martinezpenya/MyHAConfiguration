@@ -8,6 +8,10 @@
     event_data:
       data: '/TCB_pipedmusic_volume_up_up'
   action:
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'Volume up up'
     - service: media_player.volume_up
       data:
         entity_id: media_player.speaker
@@ -18,10 +22,6 @@
       data:
         entity_id: media_player.speaker
     - delay: 00:00:01
-    - service: telegram_bot.answer_callback_query
-      data_template:
-        callback_query_id: '{{ trigger.event.data.id }}'
-        message: 'Volume up up'
     - service: telegram_bot.edit_replymarkup
       data_template:
         message_id: 'last'

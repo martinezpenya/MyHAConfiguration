@@ -9,6 +9,10 @@
     event_data:
       data: '/TCB_wcfan_15'
   action:
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'WC Fan on for 15 minutes'       
     - data:
         duration: 00:15:00
         entity_id: timer.timer_sonoff_basic_2
@@ -18,10 +22,6 @@
         entity_id:
           - switch.ventilador_wc    
     - delay: 00:00:01
-    - service: telegram_bot.answer_callback_query
-      data_template:
-        callback_query_id: '{{ trigger.event.data.id }}'
-        message: 'WC Fan on for 15 minutes'       
     - service: telegram_bot.edit_replymarkup
       data_template:
         message_id: 'last'

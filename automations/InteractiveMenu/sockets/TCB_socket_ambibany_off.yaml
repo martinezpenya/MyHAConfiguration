@@ -9,15 +9,15 @@
     event_data:
       data: '/TCB_socket_ambibany_off'
   action:
+    - service: telegram_bot.answer_callback_query
+      data_template:
+        callback_query_id: '{{ trigger.event.data.id }}'
+        message: 'Switching Ambi bany socket off'
     - service: switch.turn_off
       data:
         entity_id:
           - switch.sonoffambibany
     - delay: 00:00:01
-    - service: telegram_bot.answer_callback_query
-      data_template:
-        callback_query_id: '{{ trigger.event.data.id }}'
-        message: 'Switching Ambi bany socket off'
     - service: telegram_bot.edit_replymarkup
       data_template:
         message_id: 'last'
