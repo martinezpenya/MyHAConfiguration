@@ -3,6 +3,7 @@
 ## ??
 ##
 - name: "Luz Comedor mesa"
+  unique_id: "luz_comedor_mesa"
   state_topic: "stat/sonoffMini8/POWER"
   command_topic: "cmnd/sonoffMini8/POWER"
   qos: 2

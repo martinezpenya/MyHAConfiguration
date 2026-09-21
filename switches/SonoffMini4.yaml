@@ -3,6 +3,7 @@
 ## ??
 ##
 - name: "Luz Dormitorio"
+  unique_id: "luz_dormitorio"
   state_topic: "stat/sonoffMini4/POWER"
   command_topic: "cmnd/sonoffMini4/POWER"
   qos: 2

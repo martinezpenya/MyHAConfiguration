@@ -3,6 +3,7 @@
 ## ??
 ##
 - name: "Luz PC"
+  unique_id: "luz_pc"
   state_topic: "stat/sonoffMini3/POWER"
   command_topic: "cmnd/sonoffMini3/POWER"
   qos: 2

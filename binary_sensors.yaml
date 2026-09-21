@@ -3,6 +3,7 @@
   # http://192.168.0.155
   #PIR p831 1 -> 57180A
     - name: "PIR_kerui_p831_1"
+      unique_id: "pir_kerui_p831_1"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "57180A"
       payload_off: "57180Aoff"
@@ -11,6 +12,7 @@
 
   #PIR p831 2 -> A0170A
     - name: "PIR_kerui_p831_2"
+      unique_id: "pir_kerui_p831_2"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "A0170A"
       payload_off: "A0170Aoff"
@@ -19,6 +21,7 @@
 
   #PIR p831 3 -> FF160A
     - name: "PIR_kerui_p831_3" 
+      unique_id: "pir_kerui_p831_3"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "FF160A"
       payload_off: "FF160Aoff"
@@ -31,6 +34,7 @@
   ###############################
   # Button A
     - name: "Remote1_BtnA"
+      unique_id: "remote1_btna"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "801D48"
       payload_off: "801D48off"
@@ -40,6 +44,7 @@
   # Button B
 
     - name: "Remote1_BtnB"
+      unique_id: "remote1_btnb"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "801D44"
       payload_off: "801D44off"
@@ -49,6 +54,7 @@
   # Button C
 
     - name: "Remote1_BtnC"
+      unique_id: "remote1_btnc"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "801D42"
       payload_off: "801D42off"
@@ -58,6 +64,7 @@
   # Button D
 
     - name: "Remote1_BtnD"
+      unique_id: "remote1_btnd"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "801D41"
       payload_off: "801D41off"
@@ -69,6 +76,7 @@
   ###############################
   # Button A
     - name: "Remote2_BtnA"
+      unique_id: "remote2_btna"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "5E7B24"
       payload_off: "5E7B24off"
@@ -78,6 +86,7 @@
   # Button B
 
     - name: "Remote2_BtnB"
+      unique_id: "remote2_btnb"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "5E7B28"
       payload_off: "5E7B28off"
@@ -87,6 +96,7 @@
   # Button C
 
     - name: "Remote2_BtnC"
+      unique_id: "remote2_btnc"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "5E7B21"
       payload_off: "5E7B21off"
@@ -96,6 +106,7 @@
   # Button D
 
     - name: "Remote2_BtnD"
+      unique_id: "remote2_btnd"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "5E7B22"
       payload_off: "5E7B22off"
@@ -107,6 +118,7 @@
   #tamper: 2D3807
 
     - name: "Front Door"
+      unique_id: "front_door"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "2D380A"
       payload_off: "2D380E"
@@ -114,6 +126,7 @@
       value_template: '{{ value_json.RfReceived.Data }}'
 
     - name: "Front Door Battery"
+      unique_id: "front_door_battery"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "2D3806"
       payload_off: "2D3806off"
@@ -121,6 +134,7 @@
       value_template: '{{ value_json.RfReceived.Data }}'
 
     - name: "Front Door Violation"
+      unique_id: "front_door_violation"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "2D3807"
       payload_off: "2D3807off"
@@ -128,6 +142,7 @@
       value_template: '{{ value_json.RfReceived.Data }}'
 
     - name: "AA Menjador"
+      unique_id: "aa_menjador"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "2C660A"
       payload_off: "2C660E"
@@ -135,6 +150,7 @@
       value_template: '{{ value_json.RfReceived.Data }}'
     
     - name: "AA Menjador Battery"
+      unique_id: "aa_menjador_battery"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "2C6606"
       payload_off: "2C6606off"
@@ -142,6 +158,7 @@
       value_template: '{{ value_json.RfReceived.Data }}'
 
     - name: "AA Menjador Violation"
+      unique_id: "aa_menjador_violation"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "2C6607"
       payload_off: "2C6607off"
@@ -149,6 +166,7 @@
       value_template: '{{ value_json.RfReceived.Data }}'
     
     - name: "AA Despatx"
+      unique_id: "aa_despatx"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "2BFE0A"
       payload_off: "2BFE0E"
@@ -156,6 +174,7 @@
       value_template: '{{ value_json.RfReceived.Data }}'
 
     - name: "AA Despatx Battery"
+      unique_id: "aa_despatx_battery"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "2BFE06"
       payload_off: "2BFE06off"
@@ -163,6 +182,7 @@
       value_template: '{{ value_json.RfReceived.Data }}'
 
     - name: "AA Despatx Violation"
+      unique_id: "aa_despatx_violation"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "2BFE07"
       payload_off: "2BFE07off"
@@ -170,6 +190,7 @@
       value_template: '{{ value_json.RfReceived.Data }}'
     
     - name: "3d printer Door"
+      unique_id: "3d_printer_door"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "AD6C0A"
       payload_off: "AD6C0E"
@@ -177,6 +198,7 @@
       value_template: '{{ value_json.RfReceived.Data }}'
 
     - name: "3d printer Door Battery"
+      unique_id: "3d_printer_door_battery"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "AD6C06"
       payload_off: "AD6C06off"
@@ -184,6 +206,7 @@
       value_template: '{{ value_json.RfReceived.Data }}'
 
     - name: "3d printer Door Violation"
+      unique_id: "3d_printer_door_violation"
       state_topic: "tele/sonoffRF433/RESULT"
       payload_on: "AD6C07"
       payload_off: "AD6C07off"

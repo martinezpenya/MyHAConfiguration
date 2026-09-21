@@ -2,6 +2,7 @@
 ## Sonoff Basic 2 http://192.168.0./
 ##
 - name: "Ventilador WC"
+  unique_id: "ventilador_wc"
   state_topic: "stat/sonoffBasic_2/POWER"
   command_topic: "cmnd/sonoffBasic_2/POWER"
   qos: 2

@@ -3,6 +3,7 @@
 ## ??
 ##
 - name: "Luz Baño pequeño"
+  unique_id: "luz_ba_o_peque_o"
   state_topic: "stat/sonoffMini6/POWER"
   command_topic: "cmnd/sonoffMini6/POWER"
   qos: 2

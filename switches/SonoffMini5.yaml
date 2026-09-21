@@ -3,6 +3,7 @@
 ## ??
 ##
 - name: "Luz Baño grande"
+  unique_id: "luz_ba_o_grande"
   state_topic: "stat/sonoffMini5/POWER"
   command_topic: "cmnd/sonoffMini5/POWER"
   qos: 2

@@ -5,6 +5,7 @@ camera:
 mqtt:
   binary_sensor:
     - name: "yicam1_motion_sensor"
+      unique_id: "yicam1_motion_sensor"
       state_topic: "yicam1/motion"
       payload_on: "motion_start"
       payload_off: "motion_stop"

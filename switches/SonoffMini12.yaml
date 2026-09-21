@@ -3,6 +3,7 @@
 ## ??
 ##
 - name: "mini12"
+  unique_id: "mini12"
   state_topic: "stat/sonoffMini12/POWER"
   command_topic: "cmnd/sonoffMini12/POWER"
   qos: 2

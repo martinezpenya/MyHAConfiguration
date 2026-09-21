@@ -59,6 +59,7 @@ homeassistant:
 mqtt:
   switch:
   - name: "BliTZW0lF_7"
+    unique_id: "blitzw0lf_7"
     state_topic: "stat/BliTZW0lF_7/POWER"
     command_topic: "cmnd/BliTZW0lF_7/POWER"
     availability_topic: "tele/BliTZW0lF_7/LWT"
@@ -72,36 +73,42 @@ mqtt:
 
   sensor:
   - name: bw7_totalstarttime
+    unique_id: "bw7_totalstarttime"
     state_topic: "tele/BliTZW0lF_7/SENSOR"
     value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S%z', now())) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
     unit_of_measurement: ""
     icon: mdi:update
     
   - name: bw7_total
+    unique_id: "bw7_total"
     state_topic: "tele/BliTZW0lF_7/SENSOR"
     value_template: "{{ value_json['ENERGY'].Total }}"
     unit_of_measurement: "kWh"
     icon: mdi:elevation-rise
   
   - name: bw7_today
+    unique_id: "bw7_today"
     state_topic: "tele/BliTZW0lF_7/SENSOR"
     value_template: "{{ value_json['ENERGY'].Today }}"
     unit_of_measurement: "kWh"  
     icon: mdi:elevation-rise
     
   - name: bw7_power
+    unique_id: "bw7_power"
     state_topic: "tele/BliTZW0lF_7/SENSOR"
     value_template: "{{ value_json['ENERGY'].Power }}"
     unit_of_measurement: "W"
     icon: mdi:elevation-rise
 
   - name: bw7_voltage
+    unique_id: "bw7_voltage"
     state_topic: "tele/BliTZW0lF_7/SENSOR"
     value_template: "{{ value_json['ENERGY'].Voltage }}"
     unit_of_measurement: "V"
     icon: mdi:current-ac
 
   - name: bw7_current
+    unique_id: "bw7_current"
     state_topic: "tele/BliTZW0lF_7/SENSOR"
     value_template: "{{ value_json['ENERGY'].Current }}"
     unit_of_measurement: "A"

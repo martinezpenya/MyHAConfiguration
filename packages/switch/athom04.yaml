@@ -30,6 +30,7 @@ homeassistant:
 mqtt:
   switch:
   - name: "Athom_04"
+    unique_id: "athom_04"
     state_topic: "stat/Athom_04/POWER"
     command_topic: "cmnd/Athom_04/POWER"
     availability_topic: "tele/Athom_04/LWT"
@@ -43,6 +44,7 @@ mqtt:
 
   sensor:
   - name: athom_04_totalstarttime
+    unique_id: "athom_04_totalstarttime"
     state_topic: "tele/Athom_04/SENSOR"
   
     value_template: "{{ as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S', now())) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
@@ -50,30 +52,35 @@ mqtt:
     icon: mdi:update
     
   - name: athom_04_total
+    unique_id: "athom_04_total"
     state_topic: "tele/Athom_04/SENSOR"
     value_template: "{{ value_json['ENERGY'].Total }}"
     unit_of_measurement: "kWh"
     icon: mdi:elevation-rise
   
   - name: athom_04_today
+    unique_id: "athom_04_today"
     state_topic: "tele/Athom_04/SENSOR"
     value_template: "{{ value_json['ENERGY'].Today }}"
     unit_of_measurement: "kWh"  
     icon: mdi:elevation-rise
     
   - name: athom_04_power
+    unique_id: "athom_04_power"
     state_topic: "tele/Athom_04/SENSOR"
     value_template: "{{ value_json['ENERGY'].Power }}"
     unit_of_measurement: "W"
     icon: mdi:elevation-rise
 
   - name: athom_04_voltage
+    unique_id: "athom_04_voltage"
     state_topic: "tele/Athom_04/SENSOR"
     value_template: "{{ value_json['ENERGY'].Voltage }}"
     unit_of_measurement: "V"
     icon: mdi:current-ac
 
   - name: athom_04_current
+    unique_id: "athom_04_current"
     state_topic: "tele/Athom_04/SENSOR"
     value_template: "{{ value_json['ENERGY'].Current }}"
     unit_of_measurement: "A"

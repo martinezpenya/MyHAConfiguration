@@ -3,6 +3,7 @@
 ## AmbiCorredor
 ##
 - name: "sonoffAmbiCorredor"
+  unique_id: "sonoffambicorredor"
   #friendly_name: "Ambi Corredor"
   state_topic: "stat/sonoffS26_1/POWER"
   command_topic: "cmnd/sonoffS26_1/POWER"
@@ -17,6 +18,7 @@
 ## Lampara Menjador
 ##
 - name: "sonoffS26_2"
+  unique_id: "sonoffs26_2"
   state_topic: "stat/sonoffS26_2/POWER"
   command_topic: "cmnd/sonoffS26_2/POWER"
   qos: 2
@@ -30,6 +32,7 @@
 ## AmbiBany
 ##
 - name: "sonoffAmbiBany"
+  unique_id: "sonoffambibany"
   state_topic: "stat/sonoffS26_3/POWER"
   command_topic: "cmnd/sonoffS26_3/POWER"
   qos: 2

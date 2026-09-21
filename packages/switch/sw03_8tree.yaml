@@ -31,6 +31,7 @@ homeassistant:
 mqtt:
   switch:
   - name: "sw03_8tree"
+    unique_id: "sw03_8tree"
     state_topic: "stat/sw03_8tree/POWER"
     command_topic: "cmnd/sw03_8tree/POWER"
     availability_topic: "tele/sw03_8tree/LWT"
@@ -46,36 +47,42 @@ mqtt:
 #"TotalStartTime":"2024-06-11T10:38:34"
   sensor:
   - name: sw03_8tree_totalstarttime
+    unique_id: "sw03_8tree_totalstarttime"
     state_topic: "tele/sw03_8tree/SENSOR"
     value_template: "{{as_timestamp(strptime(value_json['ENERGY'].TotalStartTime, '%Y-%m-%dT%H:%M:%S', now())) | timestamp_custom('%d/%m/%Y %H:%M:%S' ) }}"
     unit_of_measurement: ""
     icon: mdi:update
     
   - name: sw03_8tree_total
+    unique_id: "sw03_8tree_total"
     state_topic: "tele/sw03_8tree/SENSOR"
     value_template: "{{ value_json['ENERGY'].Total }}"
     unit_of_measurement: "kWh"
     icon: mdi:elevation-rise
   
   - name: sw03_8tree_today
+    unique_id: "sw03_8tree_today"
     state_topic: "tele/sw03_8tree/SENSOR"
     value_template: "{{ value_json['ENERGY'].Today }}"
     unit_of_measurement: "kWh"  
     icon: mdi:elevation-rise
     
   - name: sw03_8tree_power
+    unique_id: "sw03_8tree_power"
     state_topic: "tele/sw03_8tree/SENSOR"
     value_template: "{{ value_json['ENERGY'].Power }}"
     unit_of_measurement: "W"
     icon: mdi:elevation-rise
 
   - name: sw03_8tree_voltage
+    unique_id: "sw03_8tree_voltage"
     state_topic: "tele/sw03_8tree/SENSOR"
     value_template: "{{ value_json['ENERGY'].Voltage }}"
     unit_of_measurement: "V"
     icon: mdi:current-ac
 
   - name: sw03_8tree_current
+    unique_id: "sw03_8tree_current"
     state_topic: "tele/sw03_8tree/SENSOR"
     value_template: "{{ value_json['ENERGY'].Current }}"
     unit_of_measurement: "A"

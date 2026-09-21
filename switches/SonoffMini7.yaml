@@ -3,6 +3,7 @@
 ## ??
 ##
 - name: "Luz Cocina"
+  unique_id: "luz_cocina"
   state_topic: "stat/sonoffMini7/POWER"
   command_topic: "cmnd/sonoffMini7/POWER"
   qos: 2

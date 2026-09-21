@@ -16,6 +16,7 @@ homeassistant:
 mqtt:
   switch:
   - name: "Shelly2 Relay"
+    unique_id: "shelly2_relay"
     state_topic: "shellies/shellyem2/relay/0" 
     command_topic: "shellies/shellyem2/relay/0/command"
     payload_on: "on"
@@ -23,20 +24,24 @@ mqtt:
 
   sensor:
   - name: "Shelly2 Voltage"
+    unique_id: "shelly2_voltage"
     state_topic: "shellies/shellyem2/emeter/0/voltage"
     unit_of_measurement: 'V'
     device_class: voltage
   
   - name: "Shelly2 Real Power"
+    unique_id: "shelly2_real_power"
     state_topic: "shellies/shellyem2/emeter/0/power"
     unit_of_measurement: 'W'
     device_class: power
 
   - name: "Shelly2 Reactive Power"
+    unique_id: "shelly2_reactive_power"
     state_topic: "shellies/shellyem2/emeter/0/reactive_power"
     unit_of_measurement: 'VAR'
     
   - name: Shelly2 Total
+    unique_id: "shelly2_total"
     state_topic: "shellies/shellyem2/emeter/0/total"
     value_template: "{{ (value  | float ) | round(3)  }}"
     unit_of_measurement: W

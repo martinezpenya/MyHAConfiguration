@@ -3,6 +3,7 @@
 ## ??
 ##
 - name: "Luz Comedor TV"
+  unique_id: "luz_comedor_tv"
   state_topic: "stat/sonoffMini9/POWER"
   command_topic: "cmnd/sonoffMini9/POWER"
   qos: 2

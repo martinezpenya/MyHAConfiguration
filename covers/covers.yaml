@@ -1,4 +1,5 @@
     - name: "sw_curtain_despatx"
+      unique_id: "sw_curtain_despatx"
       availability_topic: "tele/sw_curtain_despatx/LWT"
       payload_available: "Online"
       payload_not_available: "Offline"
