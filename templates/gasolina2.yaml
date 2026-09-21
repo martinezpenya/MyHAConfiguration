@@ -1,6 +1,7 @@
 - sensor:
   - unit_of_measurement: €/L
     default_entity_id: sensor.gasolinera21
+    unique_id: gasolinera21
     attributes:
       latitude: "{%- for petrol in state_attr('sensor.gasolinera2', 'ListaEESSPrecio') | default([], true)
         -%}\n  {%- if petrol[\"IDEESS\"] | int  == 10671 -%}  \n    {{petrol[\"Latitud\"]
@@ -15,6 +16,7 @@
 - sensor:
   - unit_of_measurement: €/L
     default_entity_id: sensor.gasolinera22
+    unique_id: gasolinera22
     attributes:
       latitude: "{%- for petrol in state_attr('sensor.gasolinera2', 'ListaEESSPrecio') | default([], true)
         -%}\n  {%- if petrol[\"IDEESS\"] | int  == 1898 -%}  \n    {{petrol[\"Latitud\"]
@@ -29,6 +31,7 @@
 - sensor:
   - unit_of_measurement: €/L
     default_entity_id: sensor.gasolinera31
+    unique_id: gasolinera31
     attributes:
       latitude: "{%- for petrol in state_attr('sensor.gasolinera3', 'ListaEESSPrecio') | default([], true)
         -%}\n  {%- if petrol[\"IDEESS\"] | int  == 12939 -%}  \n    {{petrol[\"Latitud\"]
@@ -43,6 +46,7 @@
 - sensor:
   - unit_of_measurement: €/L
     default_entity_id: sensor.gasolinera32
+    unique_id: gasolinera32
     attributes:
       latitude: "{%- for petrol in state_attr('sensor.gasolinera3', 'ListaEESSPrecio') | default([], true)
         -%}\n  {%- if petrol[\"IDEESS\"] | int  == 12323 -%}  \n    {{petrol[\"Latitud\"]
@@ -57,6 +61,7 @@
 - sensor:
   - unit_of_measurement: €/L
     default_entity_id: sensor.gasolinera33
+    unique_id: gasolinera33
     attributes:
       latitude: "{%- for petrol in state_attr('sensor.gasolinera3', 'ListaEESSPrecio') | default([], true)
         -%}\n  {%- if petrol[\"IDEESS\"] | int  == 1913 -%}  \n    {{petrol[\"Latitud\"]
@@ -71,6 +76,7 @@
 - sensor:
   - unit_of_measurement: €/L
     default_entity_id: sensor.gasolinera34
+    unique_id: gasolinera34
     attributes:
       latitude: "{%- for petrol in state_attr('sensor.gasolinera3', 'ListaEESSPrecio') | default([], true)
         -%}\n  {%- if petrol[\"IDEESS\"] | int  == 3761 -%}  \n    {{petrol[\"Latitud\"]

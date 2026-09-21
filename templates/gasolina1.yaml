@@ -1,6 +1,7 @@
 - sensor:
   - unit_of_measurement: €/L
     default_entity_id: sensor.gasolinera11
+    unique_id: gasolinera11
     attributes:
       latitude: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
         -%}\n  {%- if petrol[\"IDEESS\"] | int  == 4117 -%}  \n    {{petrol[\"Latitud\"]
@@ -16,6 +17,7 @@
 - sensor:
   - unit_of_measurement: €/L
     default_entity_id: sensor.gasolinera15
+    unique_id: gasolinera15
     attributes:
       latitude: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
         -%}\n  {%- if petrol[\"IDEESS\"] | int  == 4113 -%}  \n    {{petrol[\"Latitud\"]
@@ -31,6 +33,7 @@
 - sensor:
   - unit_of_measurement: €/L
     default_entity_id: sensor.gasolinera17
+    unique_id: gasolinera17
     attributes:
       latitude: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
         -%}\n  {%- if petrol[\"IDEESS\"] | int  == 11656 -%}  \n    {{petrol[\"Latitud\"]
@@ -46,6 +49,7 @@
 - sensor:
   - unit_of_measurement: €/L
     default_entity_id: sensor.gasolinera16
+    unique_id: gasolinera16
     attributes:
       latitude: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
         -%}\n  {%- if petrol[\"IDEESS\"] | int  == 4114 -%}  \n    {{petrol[\"Latitud\"]
@@ -61,6 +65,7 @@
 - sensor:
   - unit_of_measurement: €/L
     default_entity_id: sensor.gasolinera14
+    unique_id: gasolinera14
     attributes:
       latitude: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
         -%}\n  {%- if petrol[\"IDEESS\"] | int  == 12771 -%}  \n    {{petrol[\"Latitud\"]
@@ -76,6 +81,7 @@
 - sensor:
   - unit_of_measurement: €/L
     default_entity_id: sensor.gasolinera12
+    unique_id: gasolinera12
     attributes:
       latitude: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
         -%}\n  {%- if petrol[\"IDEESS\"] | int  == 10530 -%}  \n    {{petrol[\"Latitud\"]
@@ -91,6 +97,7 @@
 - sensor:
   - unit_of_measurement: €/L
     default_entity_id: sensor.gasolinera13
+    unique_id: gasolinera13
     attributes:
       latitude: "{%- for petrol in state_attr('sensor.gasolinera1', 'ListaEESSPrecio') | default([], true)
         -%}\n  {%- if petrol[\"IDEESS\"] | int  == 15560 -%}  \n    {{petrol[\"Latitud\"]

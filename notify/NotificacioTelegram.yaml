@@ -1,4 +1,0 @@
-- name: HomeAssistant
-  platform: telegram
-  api_key: !secret api_key_telegram
-  chat_id: !secret id_group_telegram

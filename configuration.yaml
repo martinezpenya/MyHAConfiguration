@@ -27,28 +27,15 @@ frontend:
 # Enables configuration UI
 config:
 
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-#http:
-#  base_url: !secret base_url
-#  server_port: 8123
-#  ssl_certificate: !secret ssl_certificate
-#  ssl_key: !secret ssl_key
-
 #enable mobile app
 mobile_app:
 
 http:
-#  base_url: !secret base_url
   use_x_forwarded_for: true
   trusted_proxies:
     - !secret ip_Host_Traefik #Traefik container IP
   ip_ban_enabled: true
   login_attempts_threshold: 5
-
-# Discover some devices automatically
-#discovery:
-#  ignore:
-#    - yeelight    
 
 ##########################################
 ## 
@@ -115,11 +102,6 @@ cloud:
 
 #mosquitto
 mqtt:
-  #broker: !secret mqtthostname
-  #username: !secret mqttusername
-  #password: !secret mqttpassword
-  #port: 1883
-  #discovery: False
   cover:
     !include covers/covers.yaml
   binary_sensor:
@@ -135,101 +117,6 @@ mqtt:
 ### Input Boolean ###
 # The input_boolean component allows the user to define boolean values that can be controlled via the frontend and can be used within conditions of automation.
 input_boolean: !include input_boolean.yaml
-
-#light: !include config/lights.yaml
-# light:
-#   - platform: template
-#     lights:
-#       shutter_office_button_led:
-#         friendly_name: "Shutter Office Button LED"
-#         value_template: >-
-#           {% if states('sensor.shutter_office_effect') == '7,1' %}
-#             on
-#           {% else %}
-#             off
-#           {% endif %}
-#         turn_on:
-#           - service: mqtt.publish
-#             data:
-#               topic: "cmnd/shutter_office/TuyaSend4"
-#               payload: "7,1"
-#               qos: 2
-#         turn_off:
-#           - service: mqtt.publish
-#             data:
-#               topic: "cmnd/shutter_office/TuyaSend4"
-#               payload: "7,0"
-#               qos: 2
-#       shutter_dinner_button_led:
-#         friendly_name: "Shutter Dinner Button LED"
-#         value_template: "{{ states('input_boolean.shutter_dinner_led_state') == 'on' }}"
-#         turn_on:
-#           - service: mqtt.publish
-#             data:
-#               topic: "cmnd/shutter_dinner/TuyaSend4"
-#               payload: "7,1"
-#               qos: 2
-#           - service: input_boolean.turn_on
-#             target:
-#               entity_id: input_boolean.shutter_dinner_led_state
-#         turn_off:
-#           - service: mqtt.publish
-#             data:
-#               topic: "cmnd/shutter_dinner/TuyaSend4"
-#               payload: "7,0"
-#               qos: 2
-#           - service: input_boolean.turn_off
-#             target:
-#               entity_id: input_boolean.shutter_dinner_led_state
-#       shutter_sleep_button_led:
-#         friendly_name: "Shutter Sleep Button LED"
-#         value_template: "{{ states('input_boolean.shutter_sleep_led_state') == 'on' }}"
-#         turn_on:
-#           - service: mqtt.publish
-#             data:
-#               topic: "cmnd/shutter_sleep/TuyaSend4"
-#               payload: "7,1"
-#               qos: 2
-#           - service: input_boolean.turn_on
-#             target:
-#               entity_id: input_boolean.shutter_sleep_led_state
-#         turn_off:
-#           - service: mqtt.publish
-#             data:
-#               topic: "cmnd/shutter_sleep/TuyaSend4"
-#               payload: "7,0"
-#               qos: 2
-#           - service: input_boolean.turn_off
-#             target:
-#               entity_id: input_boolean.shutter_sleep_led_state
-#       shutter_room_button_led:
-#         friendly_name: "Shutter Room Button LED"
-#         value_template: "{{ states('input_boolean.shutter_room_led_state') == 'on' }}"
-#         turn_on:
-#           - service: mqtt.publish
-#             data:
-#               topic: "cmnd/shutter_room/TuyaSend4"
-#               payload: "7,1"
-#               qos: 2
-#           - service: input_boolean.turn_on
-#             target:
-#               entity_id: input_boolean.shutter_room_led_state
-#         turn_off:
-#           - service: mqtt.publish
-#             data:
-#               topic: "cmnd/shutter_room/TuyaSend4"
-#               payload: "7,0"
-#               qos: 2
-#           - service: input_boolean.turn_off
-#             target:
-#               entity_id: input_boolean.shutter_room_led_state
-
-#REVISAR DEPRECATED!
-#octoprint:
-#  host: !secret octopihostname
-#  api_key: !secret octopitoken
-#  bed: true
-#  number_of_tools: 1
 
 smartir:
 
@@ -275,14 +162,6 @@ automation: !include_dir_merge_list automations
 notify: !include_dir_merge_list notify
 script: !include scripts.yaml
 
-#telegram_bot:
-#- platform: webhooks
-#  api_key: !secret api_key_telegram
-#  allowed_chat_ids:
-#    - !secret id_group_telegram
-#    - !secret id_user_telegram
-
-
 ### Input Number ###
 input_number: !include input_number.yaml
 
@@ -303,39 +182,18 @@ timer: !include timer.yaml
 
 
 stream:
-ffmpeg:      
-# camera: 
-#   - platform: xiaomi_cloud_map_extractor
-#     host: !secret xiaomi_vacuum_host
-#     token: !secret xiaomi_vacuum_token
-#     username: !secret xiaomi_cloud_username
-#     password: !secret xiaomi_cloud_password
-#     country: cn
-#     draw: ['all']
-#     attributes:
-#       - calibration_points
+ffmpeg:
 
 api:
 
 logger:
   default: warning
-  logs:
-    custom_components.xiaomi_cloud_map_extractor: debug
 
 alexa:
   smart_home: !include config/alexa.yaml
 
 #new health system later updates
 system_health:
-
-#vacuum:
-#  - platform: miio2
-#    host: !secret vacuumhost
-#    token: !secret vacuumtoken
-#    name: "Robot Aspirador"
-
-#hacs:
-#  token: !secret hacstoken
 
 energy:
 
