@@ -2,7 +2,7 @@
   initial_state: true
   trigger:   
     - platform: template
-      value_template: "{% if states.sensor.meteocarlet_rain_rate.state | float > 0 %} true {% endif %}"
+      value_template: "{% if states('sensor.meteocarlet_rain_rate') | float(0) > 0 %} true {% endif %}"
     #offset: "-00:45:00"
   #condition:
     #condition: state
