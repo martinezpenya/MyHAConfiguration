@@ -5,7 +5,7 @@
 homeassistant:
   customize:
     switch.athom_04:
-      friendly_name: "Volant"
+      friendly_name: "Athom 04 (libre)"
     script.athom_04_reset:
       icon: mdi:restore
       friendly_name: "Reset"

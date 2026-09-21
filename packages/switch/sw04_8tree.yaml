@@ -5,7 +5,7 @@
 homeassistant:
   customize:
     switch.sw04_8tree:
-      friendly_name: "SW04"
+      friendly_name: "Volant"
     script.sw04_8tree_reset:
       icon: mdi:restore
       friendly_name: "Reset"
