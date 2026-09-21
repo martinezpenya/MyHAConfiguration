@@ -5,19 +5,19 @@
 # Button A
 
 - alias: Remote1ButtonA
-  initial_state: 'true'
+  initial_state: true
   trigger:
     platform: state
-    entity_id: binary_sensor.Remote1_BtnA
+    entity_id: binary_sensor.remote1_btna
     to: 'on'
   action:
-    - service: notify.homeassistant
-      data:
+    - action: telegram_bot.send_message
+      data_template:
         message: "Remote1 buttonA pressed"
     - service: automation.trigger
       data_template:
         entity_id: >-
-          {% if is_state('switch.sonoffTVset', 'on') %}
+          {% if is_state('switch.blitzw0lf_6', 'on') %}
             automation.TC_TVset_off
           {% else %}
             automation.TC_TVset_on

@@ -1,0 +1,27 @@
+command_line:
+  - sensor:
+      name: gasolinera1
+      unique_id: gasolinera1_source
+      command: !secret gasolinera1_command
+      value_template: "{{ value_json.Fecha | default('unknown') }}"
+      json_attributes:
+        - ListaEESSPrecio
+      scan_interval: 1800
+
+  - sensor:
+      name: gasolinera2
+      unique_id: gasolinera2_source
+      command: !secret gasolinera2_command
+      value_template: "{{ value_json.Fecha | default('unknown') }}"
+      json_attributes:
+        - ListaEESSPrecio
+      scan_interval: 1800
+
+  - sensor:
+      name: gasolinera3
+      unique_id: gasolinera3_source
+      command: !secret gasolinera3_command
+      value_template: "{{ value_json.Fecha | default('unknown') }}"
+      json_attributes:
+        - ListaEESSPrecio
+      scan_interval: 1800

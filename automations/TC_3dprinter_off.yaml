@@ -2,16 +2,15 @@
 ## KEYBOARD - 3dprinter_off
 ##
 - alias: 'TC_3dprinter_off'
-  initial_state: 'true'
-  hide_entity: true
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_command
     event_data:
       command: '/3dprinter_off'
-  action:
-    - service: notify.homeassistant
-      data:
+  actions:
+    - action: telegram_bot.send_message
+      data_template:
         message: "3dPrinter off"
     - service: switch.turn_off
       data:

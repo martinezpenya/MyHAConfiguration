@@ -2,8 +2,7 @@
 ## sonoffMini11 http://192.168.0./
 ## ??
 ##
-- platform: mqtt
-  name: "mini11"
+- name: "mini11"
   state_topic: "stat/sonoffMini11/POWER"
   command_topic: "cmnd/sonoffMini11/POWER"
   qos: 2

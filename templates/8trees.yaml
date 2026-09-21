@@ -1,0 +1,40 @@
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.sw01_8tree_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.sw01_8tree', 'friendly_name')}}
+    state: '{{ states(''sensor.sw01_8tree_total'') }}'
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.sw02_8tree_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.sw02_8tree', 'friendly_name')}}
+    state: '{{ states(''sensor.sw02_8tree_total'') }}'
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.sw03_8tree_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.sw03_8tree', 'friendly_name')}}
+    state: '{{ states(''sensor.sw03_8tree_total'') }}'
+- sensor:
+  - device_class: energy
+    unit_of_measurement: kWh
+    default_entity_id: sensor.sw04_8tree_energy
+    icon: mdi:mdi-current-ac
+    attributes:
+      state_class: total_increasing
+      device_class: energy
+    name: Energy {{state_attr('switch.sw04_8tree', 'friendly_name')}}
+    state: '{{ states(''sensor.sw04_8tree_total'') }}'    

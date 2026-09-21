@@ -2,8 +2,7 @@
 ## sonoffMini5 http://192.168.0./
 ## ??
 ##
-- platform: mqtt
-  name: "Luz Baño pequeño"
+- name: "Luz Baño pequeño"
   state_topic: "stat/sonoffMini6/POWER"
   command_topic: "cmnd/sonoffMini6/POWER"
   qos: 2

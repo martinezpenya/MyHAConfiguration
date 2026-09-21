@@ -1,22 +1,41 @@
 """Class for themes in HACS."""
-from integrationhelper import Logger
-from .repository import HacsRepository
-from ..hacsbase.exceptions import HacsException
-from ..helpers.information import find_file_name
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from homeassistant.exceptions import HomeAssistantError
+
+from ..enums import HacsCategory, HacsDispatchEvent
+from ..exceptions import HacsException
+from ..utils.decorator import concurrent
+from .base import HacsRepository
+
+if TYPE_CHECKING:
+    from ..base import HacsBase
 
 
-class HacsTheme(HacsRepository):
+class HacsThemeRepository(HacsRepository):
     """Themes in HACS."""
 
-    def __init__(self, full_name):
+    def __init__(self, hacs: HacsBase, full_name: str):
         """Initialize."""
-        super().__init__()
+        super().__init__(hacs=hacs)
         self.data.full_name = full_name
-        self.data.category = "theme"
+        self.data.full_name_lower = full_name.lower()
+        self.data.category = HacsCategory.THEME
         self.content.path.remote = "themes"
-        self.content.path.local = f"{self.hacs.system.config_path}/themes/"
+        self.content.path.local = self.localpath
         self.content.single = False
-        self.logger = Logger(f"hacs.repository.{self.data.category}.{full_name}")
+
+    @property
+    def localpath(self):
+        """Return localpath."""
+        return f"{self.hacs.core.config_path}/themes/{self.data.file_name.replace('.yaml', '')}"
+
+    async def async_post_installation(self):
+        """Run post installation steps."""
+        await self._reload_frontend_themes()
 
     async def validate_repository(self):
         """Validate."""
@@ -31,42 +50,70 @@ class HacsTheme(HacsRepository):
                 break
         if not compliant:
             raise HacsException(
-                f"Repostitory structure for {self.ref.replace('tags/','')} is not compliant"
+                f"{self.string} Repository structure for {self.ref.replace('tags/','')} is not compliant"
             )
 
-        if self.data.content_in_root:
+        if self.repository_manifest.content_in_root:
             self.content.path.remote = ""
 
         # Handle potential errors
         if self.validate.errors:
             for error in self.validate.errors:
-                if not self.hacs.system.status.startup:
-                    self.logger.error(error)
+                if not self.hacs.status.startup:
+                    self.logger.error("%s %s", self.string, error)
         return self.validate.success
 
-    async def registration(self):
+    async def async_post_registration(self):
         """Registration."""
-        if not await self.validate_repository():
-            return False
-
-        # Run common registration steps.
-        await self.common_registration()
-
         # Set name
-        find_file_name(self)
-        self.content.path.local = f"{self.hacs.system.config_path}/themes/{self.data.file_name.replace('.yaml', '')}"
+        self.update_filenames()
+        self.content.path.local = self.localpath
 
-    async def update_repository(self):  # lgtm[py/similar-function]
+        if self.hacs.system.action:
+            await self.hacs.validation.async_run_repository_checks(self)
+
+    async def _reload_frontend_themes(self) -> None:
+        """Reload frontend themes."""
+        self.logger.debug("%s Reloading frontend themes", self.string)
+        try:
+            await self.hacs.hass.services.async_call("frontend", "reload_themes", {})
+        except HomeAssistantError as exception:
+            self.logger.exception("%s %s", self.string, exception)
+
+    async def async_post_uninstall(self) -> None:
+        """Run post uninstall steps."""
+        await self._reload_frontend_themes()
+
+    @concurrent(concurrenttasks=10, backoff_time=5)
+    async def update_repository(self, ignore_issues=False, force=False):
         """Update."""
-        if self.hacs.github.ratelimits.remaining == 0:
+        if not await self.common_update(ignore_issues, force) and not force:
             return
-        # Run common update steps.
-        await self.common_update()
 
         # Get theme objects.
-        if self.data.content_in_root:
+        if self.repository_manifest.content_in_root:
             self.content.path.remote = ""
 
         # Update name
-        find_file_name(self)
-        self.content.path.local = f"{self.hacs.system.config_path}/themes/{self.data.file_name.replace('.yaml', '')}"
+        self.update_filenames()
+        self.content.path.local = self.localpath
+
+        # Signal frontend to refresh
+        if self.data.installed:
+            self.hacs.async_dispatch(
+                HacsDispatchEvent.REPOSITORY,
+                {
+                    "id": 1337,
+                    "action": "update",
+                    "repository": self.data.full_name,
+                    "repository_id": self.data.id,
+                },
+            )
+
+    def update_filenames(self) -> None:
+        """Get the filename to target."""
+        for treefile in self.tree:
+            if treefile.full_path.startswith(
+                self.content.path.remote
+            ) and treefile.full_path.endswith(".yaml"):
+                self.data.file_name = treefile.filename

@@ -7,45 +7,44 @@ switch.musica_despatx:
 switch.aire_menjador:
   icon: mdi:air-conditioner
   assumed_state: false
-
+switch.sonoffS26_2:
+  friendly_name: Lámpara comedor
 input_number.bw1_partial:
   hidden: true
-input_number.bw2_partial:
-  hidden: true
-input_number.bw3_partial:
-  hidden: true
-input_number.bw4_partial:
-  hidden: true
-
 script.blitzwolf1_report:
   icon: mdi:message-reply-text
-script.blitzwolf2_report:
-  icon: mdi:message-reply-text  
-script.blitzwolf3_report:
-  icon: mdi:message-reply-text
-script.blitzwolf4_report:
-  icon: mdi:message-reply-text  
-script.blitzwolf5_report:
-  icon: mdi:message-reply-text  
-script.blitzwolf6_report:
-  icon: mdi:message-reply-text  
-
 automation.blitzwolf1_reset:
   icon: mdi:restore
-automation.blitzwolf2_reset:
-  icon: mdi:restore
-automation.blitzwolf3_reset:
-  icon: mdi:restore
-automation.blitzwolf4_reset:
-  icon: mdi:restore
-automation.blitzwolf5_reset:
-  icon: mdi:restore
-automation.blitzwolf6_reset:
-  icon: mdi:restore
-
 sensor.gasolinera:
   hidden: true
-
-cover.50701244500291415e17:
-  friendly_name: PersianaDespatx
+sensor.gasolinera1:
+  hidden: false
+sensor.gasolinera2:
+  hidden: false
+sensor.gasolinera3:
+  hidden: false
+cover.persiana_despatx_curtain:
+  friendly_name: Persiana vella
   device_class: shutter
+cover.shutter_office:
+  friendly_name: Persiana despacho
+  device_class: shutter  
+cover.shutter_dinner:
+  friendly_name: Persiana comedor
+  device_class: shutter  
+cover.shutter_sleep:
+  friendly_name: Persiana dormitorio
+  device_class: shutter  
+cover.shutter_room:
+  friendly_name: Persiana habitación
+  device_class: shutter  
+switch.blitzw0lf_1:
+  friendly_name: Calentador
+switch.sw04_8tree:
+  assumed_state: false
+switch.sw03_8tree:
+  assumed_state: true
+switch.sw02_8tree:
+  assumed_state: false
+switch.sw01_8tree:
+  assumed_state: true

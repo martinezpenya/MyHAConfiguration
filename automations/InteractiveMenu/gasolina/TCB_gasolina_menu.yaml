@@ -2,8 +2,7 @@
 ## INLINE_KEYBOARD - TCB_gasolina_menu
 ##
 - alias: 'TCB_gasolina_menu'
-  initial_state: 'true'
-  hide_entity: true
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_callback
@@ -16,21 +15,52 @@
         message: 'Gasolina menu selected'
     - service: telegram_bot.edit_message
       data_template:
-        message_id: '{{ trigger.event.data.message.message_id }}'
+        message_id: 'last' 
+#{{ trigger.event.data.message.message_id }}'
         chat_id: '{{ trigger.event.data.chat_id }}'
         disable_web_page_preview: yes
         message: >-
-            {{"\U000026fd ***Gasolina 95*** \U000026fd\n"}}
-            {{"\n***Carlet*** (" + states.sensor.gasolinera1.attributes.Fecha + ")\n"}}{% for entity_id in states.group.gasolinerascarlet.attributes.entity_id %}{% set domain, device = entity_id.split('.') %}{{"- `" + states[domain][device].state + "` ___(" + states[domain][device].name + ")___ [\U0001f4cd](https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=" + states[domain][device].attributes.latitude + "," + states[domain][device].attributes.longitude + ")\n"}}{% endfor %}
-            {{"\n***Catadau*** (" + states.sensor.gasolinera2.attributes.Fecha + ")\n"}}{% for entity_id in states.group.gasolinerascatadau.attributes.entity_id %}{% set domain, device = entity_id.split('.') %}{{"- `" + states[domain][device].state + "` ___(" + states[domain][device].name + ")___ [\U0001f4cd](https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=" + states[domain][device].attributes.latitude + "," + states[domain][device].attributes.longitude + ")\n"}}{% endfor %}
-            {{"\n***Alcudia*** (" + states.sensor.gasolinera3.attributes.Fecha + ")\n"}}{% for entity_id in states.group.gasolinerasalcudia.attributes.entity_id %}{% set domain, device = entity_id.split('.') %}{{"- `" + states[domain][device].state + "` ___(" + states[domain][device].name + ")___ [\U0001f4cd](https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=" + states[domain][device].attributes.latitude + "," + states[domain][device].attributes.longitude + ")\n"}}{% endfor %}
-        
+          {{"\U000026fd ***Gasolina 95*** \U000026fd\n"}}
+          {% set zones = [
+            ('Carlet', 'sensor.gasolinera1', ['sensor.gasolinera11','sensor.gasolinera12','sensor.gasolinera13','sensor.gasolinera14','sensor.gasolinera15','sensor.gasolinera16','sensor.gasolinera17']),
+            ('Catadau', 'sensor.gasolinera2', ['sensor.gasolinera21','sensor.gasolinera22']),
+            ('Alcudia', 'sensor.gasolinera3', ['sensor.gasolinera31','sensor.gasolinera32','sensor.gasolinera33','sensor.gasolinera34','sensor.gasolinera35','sensor.gasolinera36'])
+          ] %}
+          {%- for zone_name, source_sensor, stations in zones %}
+          {{"\n*" + zone_name + "* (`" + states(source_sensor) + "`)\n"}}
+          {%- set ns = namespace(priced=[], nodata=[]) -%}
+          {%- for entity_id in stations %}
+          {%- set label = state_attr(entity_id, 'friendly_name') | default(entity_id, true) -%}
+          {%- set value = states(entity_id) -%}
+          {%- if value in ['unknown', 'unavailable', 'none', 'None', ''] -%}
+          {%- set ns.nodata = ns.nodata + [{'label': label, 'entity_id': entity_id}] -%}
+          {%- else -%}
+          {%- set ns.priced = ns.priced + [{'label': label, 'entity_id': entity_id, 'value': (value | float(0)), 'display': (value | replace('.', ','))}] -%}
+          {%- endif -%}
+          {%- endfor %}
+          {%- for item in ns.priced | sort(attribute='value') %}
+          {%- set lat = state_attr(item.entity_id, 'latitude') -%}
+          {%- set lon = state_attr(item.entity_id, 'longitude') -%}
+          {%- if lat is not none and lon is not none -%}
+          {%- set map = " [🧭](https://www.google.com/maps/search/?api=1&query=" + (lat | string) + "," + (lon | string) + ")" -%}
+          {%- else -%}
+          {%- set map = '' -%}
+          {%- endif -%}
+          {{"\t- `" + item.display + " €/L` ___(" + item.label + ")___" + map + "\n"}}
+          {%- endfor %}
+          {%- for item in ns.nodata %}
+          {%- set lat = state_attr(item.entity_id, 'latitude') -%}
+          {%- set lon = state_attr(item.entity_id, 'longitude') -%}
+          {%- if lat is not none and lon is not none -%}
+          {%- set map = " [🧭](https://www.google.com/maps/search/?api=1&query=" + (lat | string) + "," + (lon | string) + ")" -%}
+          {%- else -%}
+          {%- set map = '' -%}
+          {%- endif -%}
+          {{"\t- `N/D` ___(" + item.label + ")___" + map + "\n"}}
+          {%- endfor %}
+          {%- endfor %}
     - service: telegram_bot.edit_replymarkup
       data_template:
         message_id: 'last'
         chat_id: '{{ trigger.event.data.chat_id }}'
         inline_keyboard: !include TCB_gasolina_menu_buttons.btn
-
-#            {{"\n***Catadau*** ("}}{{states.sensor.gasolinera2.attributes.Fecha}}{{")\n"}}{% for entity_id in states.group.gasolinerascatadau.attributes.entity_id %}{% set domain, device = entity_id.split('.') %}{{'- `' + states[domain][device].state_with_unit + "` ___(" + states[domain][device].name + ")___"}}{{"[link](https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=" + states[domain][device].attributes.latitude +"," + states[domain][device].attributes.longitude + ")\n"}}{% endfor %}
-#            {{"\n***Alcudia*** ("}}{{states.sensor.gasolinera3.attributes.Fecha}}{{")\n"}}{% for entity_id in states.group.gasolinerasalcudia.attributes.entity_id %}{% set domain, device = entity_id.split('.') %}{{'- `' + states[domain][device].state_with_unit + "` ___(" + states[domain][device].name + ")___"}}{{"[\Ud83d\Udccd](https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=" + states[domain][device].attributes.latitude +"," + states[domain][device].attributes.longitude + ")\n"}}{% endfor %}
-

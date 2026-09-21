@@ -2,19 +2,17 @@
 ## KEYBOARD - Printer
 ##
 - alias: 'TC Printer'
-  initial_state: 'true'
-  hide_entity: true
+  initial_state: true
   trigger:
      - platform: event
        event_type: telegram_command
        event_data:
          command: '/Printer'
-  action:
-     - service: notify.homeassistant
-       data:
-         message: 'Select an option'
-         data:
-            keyboard:
-            - '/Printer_on, /Printer_off'
-            - '/start'
+  actions:
+    - action: telegram_bot.send_message
+      data_template:
+        message: 'Select an option'
+        keyboard:
+        - '/Printer_on, /Printer_off'
+        - '/start'
                 

@@ -10,16 +10,19 @@
 # a los X segundos para simular que lo hace él mismo al apagarse
 
 - alias: mqtt restart Door_Sensor_AAMenjador_Battery_off
-  hide_entity: true
   initial_state: true
   trigger:
     - platform: state
       entity_id: binary_sensor.AA_Menjador_Battery
-      from: 'off'
+      # from: 'off'
       to: 'on'
       for:
         seconds: 3    
   action:
+    - service: persistent_notification.create
+      data:
+        message: "Low Battery"
+        title: "AA Menjador"
     - service: mqtt.publish
       data:
          topic: tele/sonoffRF433/RESULT

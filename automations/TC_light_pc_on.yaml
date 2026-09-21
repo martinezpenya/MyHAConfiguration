@@ -2,18 +2,17 @@
 ## KEYBOARD - light_pc_on
 ##
 - alias: 'TC_light_pc_on'
-  initial_state: 'true'
-  hide_entity: true
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_command
     event_data:
       command: '/light_pc_on'
-  action:
-    - service: notify.homeassistant
-      data:
+  actions:
+    - action: telegram_bot.send_message
+      data_template:
         message: "light pc on"
-    - service: switch.turn_on
+    - action: switch.turn_on
       data:
         entity_id:
           - switch.luz_pc

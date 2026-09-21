@@ -2,16 +2,15 @@
 ## KEYBOARD - waterheater_on
 ##
 - alias: 'TC_waterheater_on'
-  initial_state: 'true'
-  hide_entity: true
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_command
     event_data:
       command: '/waterheater_on'
   action:
-    - service: notify.homeassistant
-      data:
+    - action: telegram_bot.send_message
+      data_template:
         message: "waterheater on"
     - service: switch.turn_on
       data:

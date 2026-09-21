@@ -1,21 +1,31 @@
- 
-    
-#light: !include config/lights.yaml
-#light:
-#  - platform: yeelight
-#    devices: 
-#      192.168.0.156:
-#        name: Yeelight_1
-#        model: color2
-  
 - platform: mqtt
-  schema: json  
-  name: "Lolin5 light"  
-  state_topic: "dmp/lolin5"  
-  command_topic: "dmp/lolin5/light"  
-  #assumed_state: false
-  #brightness: true
-  #flash: false  
-  #rgb: true  
-  optimistic: false
+  name: "Shutter Office LED"
+  command_topic: "cmnd/shutter_office/shutterposition"
+  payload_on: "7,1"
+  payload_off: "7,0"
   qos: 2
+  retain: false
+
+- platform: mqtt
+  name: "Shutter Dinner LED"
+  command_topic: "cmnd/shutter_dinner/shutterposition"
+  payload_on: "7,1"
+  payload_off: "7,0"
+  qos: 2
+  retain: false
+
+- platform: mqtt
+  name: "Shutter Sleep LED"
+  command_topic: "cmnd/shutter_sleep/shutterposition"
+  payload_on: "7,1"
+  payload_off: "7,0"
+  qos: 2
+  retain: false        
+
+- platform: mqtt
+  name: "Shutter Room LED"
+  command_topic: "cmnd/shutter_room/shutterposition"
+  payload_on: "7,1"
+  payload_off: "7,0"
+  qos: 2
+  retain: false    

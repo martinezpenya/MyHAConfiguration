@@ -1,27 +1,40 @@
 """Class for plugins in HACS."""
-import json
-from integrationhelper import Logger
 
-from .repository import HacsRepository
-from ..hacsbase.exceptions import HacsException
+from __future__ import annotations
 
-from custom_components.hacs.helpers.information import find_file_name
+import re
+from typing import TYPE_CHECKING
+
+from ..enums import HacsCategory, HacsDispatchEvent
+from ..exceptions import HacsException
+from ..utils.decorator import concurrent
+from ..utils.json import json_loads
+from .base import HacsRepository
+
+HACSTAG_REPLACER = re.compile(r"\D+")
+
+if TYPE_CHECKING:
+    from homeassistant.components.lovelace.resources import ResourceStorageCollection
+
+    from ..base import HacsBase
 
 
-class HacsPlugin(HacsRepository):
+class HacsPluginRepository(HacsRepository):
     """Plugins in HACS."""
 
-    def __init__(self, full_name):
+    def __init__(self, hacs: HacsBase, full_name: str):
         """Initialize."""
-        super().__init__()
+        super().__init__(hacs=hacs)
         self.data.full_name = full_name
+        self.data.full_name_lower = full_name.lower()
         self.data.file_name = None
-        self.data.category = "plugin"
-        self.information.javascript_type = None
-        self.content.path.local = (
-            f"{self.hacs.system.config_path}/www/community/{full_name.split('/')[-1]}"
-        )
-        self.logger = Logger(f"hacs.repository.{self.data.category}.{full_name}")
+        self.data.category = HacsCategory.PLUGIN
+        self.content.path.local = self.localpath
+
+    @property
+    def localpath(self):
+        """Return localpath."""
+        return f"{self.hacs.core.config_path}/www/community/{self.data.full_name.split('/')[-1]}"
 
     async def validate_repository(self):
         """Validate."""
@@ -29,11 +42,11 @@ class HacsPlugin(HacsRepository):
         await self.common_validate()
 
         # Custom step 1: Validate content.
-        find_file_name(self)
+        self.update_filenames()
 
         if self.content.path.remote is None:
             raise HacsException(
-                f"Repostitory structure for {self.ref.replace('tags/','')} is not compliant"
+                f"{self.string} Repository structure for {self.ref.replace('tags/','')} is not compliant"
             )
 
         if self.content.path.remote == "release":
@@ -42,66 +55,192 @@ class HacsPlugin(HacsRepository):
         # Handle potential errors
         if self.validate.errors:
             for error in self.validate.errors:
-                if not self.hacs.system.status.startup:
-                    self.logger.error(error)
+                if not self.hacs.status.startup:
+                    self.logger.error("%s %s", self.string, error)
         return self.validate.success
 
-    async def registration(self):
-        """Registration."""
-        if not await self.validate_repository():
-            return False
+    async def async_post_installation(self):
+        """Run post installation steps."""
+        await self.hacs.async_setup_frontend_endpoint_plugin()
+        await self.update_dashboard_resources()
 
-        # Run common registration steps.
-        await self.common_registration()
+    async def async_post_uninstall(self):
+        """Run post uninstall steps."""
+        await self.remove_dashboard_resources()
 
-    async def update_repository(self):
+    @concurrent(concurrenttasks=10, backoff_time=5)
+    async def update_repository(self, ignore_issues=False, force=False):
         """Update."""
-        if self.hacs.github.ratelimits.remaining == 0:
+        if not await self.common_update(ignore_issues, force) and not force:
             return
-        # Run common update steps.
-        await self.common_update()
 
         # Get plugin objects.
-        find_file_name(self)
-
-        # Get JS type
-        await self.parse_readme_for_jstype()
+        self.update_filenames()
 
         if self.content.path.remote is None:
-            self.validate.errors.append("Repostitory structure not compliant")
+            self.validate.errors.append(
+                f"{self.string} Repository structure for {self.ref.replace('tags/','')} is not compliant"
+            )
 
         if self.content.path.remote == "release":
             self.content.single = True
 
+        # Signal frontend to refresh
+        if self.data.installed:
+            self.hacs.async_dispatch(
+                HacsDispatchEvent.REPOSITORY,
+                {
+                    "id": 1337,
+                    "action": "update",
+                    "repository": self.data.full_name,
+                    "repository_id": self.data.id,
+                },
+            )
+
     async def get_package_content(self):
         """Get package content."""
         try:
-            package = await self.repository_object.get_contents("package.json")
-            package = json.loads(package.content)
+            package = await self.repository_object.get_contents("package.json", self.ref)
+            package = json_loads(package.content)
 
             if package:
                 self.data.authors = package["author"]
-        except Exception:  # pylint: disable=broad-except
+        except BaseException:  # lgtm [py/catch-base-exception] pylint: disable=broad-except
             pass
 
-    async def parse_readme_for_jstype(self):
-        """Parse the readme looking for js type."""
-        readme = None
-        readme_files = ["readme", "readme.md"]
-        root = await self.repository_object.get_contents("")
-        for file in root:
-            if file.name.lower() in readme_files:
-                readme = await self.repository_object.get_contents(file.name)
-                break
+    def update_filenames(self) -> None:
+        """Get the filename to target."""
+        content_in_root = self.repository_manifest.content_in_root
+        if specific_filename := self.repository_manifest.filename:
+            valid_filenames = (specific_filename,)
+        else:
+            valid_filenames = (
+                f"{self.data.name.replace('lovelace-', '')}.js",
+                f"{self.data.name}.js",
+                f"{self.data.name}.umd.js",
+                f"{self.data.name}-bundle.js",
+            )
 
-        if readme is None:
+        if not content_in_root:
+            if self.releases.objects:
+                release = self.releases.objects[0]
+                if release.assets:
+                    if assetnames := [
+                        filename
+                        for filename in valid_filenames
+                        for asset in release.assets
+                        if filename == asset.name
+                    ]:
+                        self.data.file_name = assetnames[0]
+                        self.content.path.remote = "release"
+                        return
+
+        all_paths = {x.full_path for x in self.tree}
+        for filename in valid_filenames:
+            if filename in all_paths:
+                self.data.file_name = filename
+                self.content.path.remote = ""
+                return
+            if not content_in_root and f"dist/{filename}" in all_paths:
+                self.data.file_name = filename.split("/")[-1]
+                self.content.path.remote = "dist"
+                return
+
+    def generate_dashboard_resource_hacstag(self) -> str:
+        """Get the HACS tag used by dashboard resources."""
+        version = (
+            self.display_installed_version
+            or self.data.selected_tag
+            or self.display_available_version
+        )
+        return f"{self.data.id}{HACSTAG_REPLACER.sub('', version)}"
+
+    def generate_dashboard_resource_namespace(self) -> str:
+        """Get the dashboard resource namespace."""
+        return f"/hacsfiles/{self.data.full_name.split("/")[1]}"
+
+    def generate_dashboard_resource_url(self) -> str:
+        """Get the dashboard resource namespace."""
+        filename = self.data.file_name
+        if "/" in filename:
+            self.logger.warning("%s have defined an invalid file name %s", self.string, filename)
+            filename = filename.split("/")[-1]
+        return (
+            f"{self.generate_dashboard_resource_namespace()}/{filename}"
+            f"?hacstag={self.generate_dashboard_resource_hacstag()}"
+        )
+
+    def _get_resource_handler(self) -> ResourceStorageCollection | None:
+        """Get the resource handler."""
+        resources: ResourceStorageCollection | None
+        if not (hass_data := self.hacs.hass.data):
+            self.logger.error("%s Can not access the hass data", self.string)
             return
 
-        readme = readme.content
-        for line in readme.splitlines():
-            if "type: module" in line:
-                self.information.javascript_type = "module"
-                break
-            elif "type: js" in line:
-                self.information.javascript_type = "js"
-                break
+        if (lovelace_data := hass_data.get("lovelace")) is None:
+            self.logger.warning("%s Can not access the lovelace integration data", self.string)
+            return
+
+        if self.hacs.core.ha_version > "2025.1.99":
+            # Changed to 2025.2.0
+            # Changed in https://github.com/home-assistant/core/pull/136313
+            resources = lovelace_data.resources
+        else:
+            resources = lovelace_data.get("resources")
+
+        if resources is None:
+            self.logger.warning("%s Can not access the dashboard resources", self.string)
+            return
+
+        if not hasattr(resources, "store") or resources.store is None:
+            self.logger.info("%s YAML mode detected, can not update resources", self.string)
+            return
+
+        if resources.store.key != "lovelace_resources" or resources.store.version != 1:
+            self.logger.warning("%s Can not use the dashboard resources", self.string)
+            return
+
+        return resources
+
+    async def update_dashboard_resources(self) -> None:
+        """Update dashboard resources."""
+        if not (resources := self._get_resource_handler()):
+            return
+
+        if not resources.loaded:
+            await resources.async_load()
+
+        namespace = self.generate_dashboard_resource_namespace()
+        url = self.generate_dashboard_resource_url()
+
+        for entry in resources.async_items():
+            if (entry_url := entry["url"]).startswith(namespace):
+                if entry_url != url:
+                    self.logger.info(
+                        "%s Updating existing dashboard resource from %s to %s",
+                        self.string,
+                        entry_url,
+                        url,
+                    )
+                    await resources.async_update_item(entry["id"], {"url": url})
+                return
+
+        # Nothing was updated, add the resource
+        self.logger.info("%s Adding dashboard resource %s", self.string, url)
+        await resources.async_create_item({"res_type": "module", "url": url})
+
+    async def remove_dashboard_resources(self) -> None:
+        """Remove dashboard resources."""
+        if not (resources := self._get_resource_handler()):
+            return
+
+        if not resources.loaded:
+            await resources.async_load()
+
+        namespace = self.generate_dashboard_resource_namespace()
+
+        for entry in resources.async_items():
+            if entry["url"].startswith(namespace):
+                self.logger.info("%s Removing dashboard resource %s", self.string, entry["url"])
+                await resources.async_delete_item(entry["id"])
+                return

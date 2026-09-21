@@ -2,16 +2,15 @@
 ## KEYBOARD - waterheater_30min
 ##
 - alias: 'TC waterheater_30min'
-  initial_state: 'true'
-  hide_entity: true
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_command
     event_data:
       command: '/waterheater_30min'
-  action:
-    - service: notify.homeassistant
-      data:
+  actions:
+    - action: telegram_bot.send_message
+      data_template:
         message: "waterheater on for 30 minutes - start"  
     - service: switch.turn_on
       data:
@@ -22,6 +21,6 @@
       data:
         entity_id:
           - switch.BliTZW0lF_1          
-    - service: notify.homeassistant
-      data:
+    - action: telegram_bot.send_message
+      data_template:
         message: "waterheater on for 30 minutes - end"

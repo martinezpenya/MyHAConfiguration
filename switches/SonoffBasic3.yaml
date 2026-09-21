@@ -1,8 +1,7 @@
 ##########################################
 ## Sonoff Basic 3 http://192.168.0./
 ##
-- platform: mqtt
-  name: "sonoffBasic_3"
+- name: "sonoffBasic_3"
   state_topic: "stat/sonoffBasic_3/POWER"
   command_topic: "cmnd/sonoffBasic_3/POWER"
   qos: 2

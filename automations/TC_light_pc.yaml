@@ -2,18 +2,16 @@
 ## KEYBOARD - light_PC
 ##
 - alias: 'TC light PC'
-  initial_state: 'true'
-  hide_entity: true
+  initial_state: true
   trigger:
      - platform: event
        event_type: telegram_command
        event_data:
          command: '/light_pc'
-  action:
-     - service: notify.homeassistant
-       data:
-         message: 'Select an option'
-         data:
-            keyboard:
-            - '/light_pc_off, /light_pc_on'
-            - '/start'
+  actions:
+    - action: telegram_bot.send_message
+      data_template:
+        message: 'Select an option'
+        keyboard:
+        - '/light_pc_off, /light_pc_on'
+        - '/start'

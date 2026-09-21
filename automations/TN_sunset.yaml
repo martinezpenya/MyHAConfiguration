@@ -1,6 +1,5 @@
 - alias: 'Sunset'
-  initial_state: 'true'
-  hide_entity: true
+  initial_state: true
   trigger:
     platform: sun
     event: sunset
@@ -9,7 +8,7 @@
     #condition: state
     #entity_id: group.all_devices
     #state: home
-  action:
-    service: notify.homeassistant
-    data:
-      message: "Sunset"
+  actions:
+    - action: telegram_bot.send_message
+      data_template:
+        message: "Sunset"

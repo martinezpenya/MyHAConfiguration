@@ -2,22 +2,20 @@
 ## KEYBOARD - start
 ##
 - alias: 'TC start'
-  initial_state: 'true'
-  hide_entity: false
+  initial_state: true
   trigger:
      - platform: event
        event_type: telegram_command
        event_data:
          command: '/start'
-  action:
-     - service: notify.homeassistant
-       data:
-         message: 'Select an option'
-         data:
-            keyboard:
-                - '/status, /gas95, /ping'
-                - '/lights'
-                - '/waterheater, /TVset' 
-                #, /Printer'
-                - '/computer, /3dprinter, /shutter'
-                #- '/alarma, /puertas, /switches'
+  actions:
+    - action: telegram_bot.send_message
+      data_template:
+        message: 'Select an option'
+        keyboard:
+          - '/status, /gas95, /ping'
+          - '/lights'
+          - '/waterheater, /TVset' 
+          #, /Printer'
+          - '/computer, /3dprinter, /shutter'
+          #- '/alarma, /puertas, /switches'

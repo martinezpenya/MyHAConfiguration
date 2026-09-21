@@ -1,0 +1,7 @@
+         - "\U0001f55b\U0000002d\U0001f550 60 minuts:/TCB_waterheater_60"
+         - "\U0001f55b\U0000002d\U0001f567 30 minuts:/TCB_waterheater_30"
+         - "\U0001f55b\U0000002d\U0001f552 15 minuts:/TCB_waterheater_15"
+         - "{% if is_state('switch.blitzw0lf_1', 'on') %} \U0001f315 WaterHeater \U0001f315:/TCB_waterheater_off{% else %} \U0001f311 WaterHeater \U0001f311:/TCB_waterheater_on{% endif %}"
+         - "{% if is_state('timer.waterheater', 'idle') %} \U0001f6ab No timer set \U0001f6ab:/TCB_waterheater_refresh{% else %}\U000023F3 0:{{((as_timestamp(now())-as_timestamp((states.timer.waterheater.last_changed))))| timestamp_custom('%M:%S')}} / {{(state_attr('timer.waterheater', 'duration'))}} \U000023F3:/TCB_waterheater_stoptimer{% endif %}"
+         - "\U0001f504 Refresh:/TCB_waterheater_refresh,
+           \U0001f448 Back:/TCB_start_menu"

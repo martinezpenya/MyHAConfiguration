@@ -1,4 +1,30 @@
 #input for timers
+notification_max_volume:
+  name: Notification max volume
+  icon: mdi:volume-high
+  min: 0
+  max: 1
+  step: 0.01
+  mode: slider
+
+notification_night_start_hour:
+  name: Notification night start hour
+  icon: mdi:weather-night
+  min: 0
+  max: 23
+  step: 1
+  mode: box
+  #initial: 21
+
+notification_night_end_hour:
+  name: Notification night end hour
+  icon: mdi:white-balance-sunny
+  min: 0
+  max: 23
+  step: 1
+  mode: box
+  #initial: 7
+
 timer1_hour:
   name: Hour
   icon: mdi:timer
@@ -37,161 +63,29 @@ timer2_duration:
   max: 59
   step: 5
 
-bw1_kw_pico:
-  name: Kw pico
-  icon: mdi:trending-up
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
+ventilador_despatx_rf_on_index:
+  name: Ventilador despatx RF ON index
+  icon: mdi:counter
+  min: 1
+  max: 4
+  step: 1
   mode: box
-  step: 0.001 
-bw1_kw_valle:
-  name: Kw valle
-  icon: mdi:trending-down
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001 
-bw1_partial:
-  name: partial data
-  icon: mdi:calculator-variant
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001
+  initial: 1
 
-bw2_kw_pico:
-  name: Kw pico
-  icon: mdi:trending-up
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
+ventilador_despatx_rf_std_index:
+  name: Ventilador despatx RF STD index
+  icon: mdi:counter
+  min: 1
+  max: 5
+  step: 1
   mode: box
-  step: 0.001 
-bw2_kw_valle:
-  name: Kw valle
-  icon: mdi:trending-down
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001 
-bw2_partial:
-  name: partial data
-  icon: mdi:calculator-variant
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001
-  
-bw3_kw_pico:
-  name: Kw pico
-  icon: mdi:trending-up
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001 
-bw3_kw_valle:
-  name: Kw valle
-  icon: mdi:trending-down
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001 
-bw3_partial:
-  name: partial data
-  icon: mdi:calculator-variant
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001
-  
-bw4_kw_pico:
-  name: Kw pico
-  icon: mdi:trending-up
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001 
-bw4_kw_valle:
-  name: Kw valle
-  icon: mdi:trending-down
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001 
-bw4_partial:
-  name: partial data
-  icon: mdi:calculator-variant
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001  
+  initial: 1
 
-bw5_kw_pico:
-  name: Kw pico
-  icon: mdi:trending-up
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
+ventilador_altre_rf_std_index:
+  name: Ventilador altre RF STD index
+  icon: mdi:counter
+  min: 1
+  max: 4
+  step: 1
   mode: box
-  step: 0.001 
-bw5_kw_valle:
-  name: Kw valle
-  icon: mdi:trending-down
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001 
-bw5_partial:
-  name: partial data
-  icon: mdi:calculator-variant
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001  
-
-bw6_kw_pico:
-  name: Kw pico
-  icon: mdi:trending-up
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001 
-bw6_kw_valle:
-  name: Kw valle
-  icon: mdi:trending-down
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001 
-bw6_partial:
-  name: partial data
-  icon: mdi:calculator-variant
-  unit_of_measurement: "KW"
-  min: 0
-  max: 1000
-  mode: box
-  step: 0.001  
-
-window_position:
-  name: window position
-  min: 0
-  max: 28
-window_set_position:
-  name: window set position
-  min: 0
-  max: 100
+  initial: 1

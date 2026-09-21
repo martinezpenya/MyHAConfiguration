@@ -1,0 +1,14 @@
+# - platform: nut
+#   host: localhost
+#   port: 3493
+#   username: admin
+#   password: 1234
+#   resources:
+#     - ups.load
+#     - ups.realpower.nominal
+#     - input.voltage
+#     - battery.runtime
+#     - ups.status
+#     - battery.charge
+#     - ups.type
+#     - battery.voltage

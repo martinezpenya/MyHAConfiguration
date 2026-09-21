@@ -2,8 +2,7 @@
 ## sonoffMini5 http://192.168.0./
 ## ??
 ##
-- platform: mqtt
-  name: "Luz Comedor mesa"
+- name: "Luz Comedor mesa"
   state_topic: "stat/sonoffMini8/POWER"
   command_topic: "cmnd/sonoffMini8/POWER"
   qos: 2

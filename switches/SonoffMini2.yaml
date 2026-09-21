@@ -2,8 +2,7 @@
 ## sonoffMini2 http://192.168.0./
 ## ??
 ##
-- platform: mqtt
-  name: "Luz Plancha"
+- name: "Luz Habitación"
   state_topic: "stat/sonoffMini2/POWER"
   command_topic: "cmnd/sonoffMini2/POWER"
   qos: 2

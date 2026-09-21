@@ -2,19 +2,18 @@
 ## KEYBOARD - TVset
 ##
 - alias: 'TC TVset'
-  initial_state: 'true'
-  hide_entity: true
+  initial_state: true
   trigger:
      - platform: event
        event_type: telegram_command
        event_data:
          command: '/TVset'
   action:
-     - service: notify.homeassistant
-       data:
-         message: 'Select an option'
-         data:
-            keyboard:
-            - '/TVset_on, /TVset_off'
-            - '/start'
+    - action: telegram_bot.send_message
+      data_template:
+        message: 'Select an option'
+        data:
+          keyboard:
+          - '/TVset_on, /TVset_off'
+          - '/start'
                 

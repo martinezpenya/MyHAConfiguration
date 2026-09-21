@@ -2,20 +2,18 @@
 ## KEYBOARD - shutter
 ##
 - alias: 'TC shutter'
-  initial_state: 'true'
-  hide_entity: true
+  initial_state: true
   trigger:
      - platform: event
        event_type: telegram_command
        event_data:
          command: '/shutter'
   action:
-     - service: notify.homeassistant
-       data:
-         message: "Select an option\nShutter is in position *** {{states.input_number.window_position.state}} of 28***"
-         data:
-           keyboard:
-             - '/shutter_close, /shutter_open'
-             - '/shutter_bit_open, /shutter_half'
-             - '/shutter_stop'
-             - '/start'
+    - action: telegram_bot.send_message
+      data_template:
+        message: "Select an option\nShutter is in position *** {{states.input_number.window_position.state}} of 28***"
+        keyboard:
+          - '/shutter_close, /shutter_open'
+          - '/shutter_bit_open, /shutter_half'
+          - '/shutter_stop'
+          - '/start'

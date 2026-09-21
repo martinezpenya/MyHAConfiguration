@@ -2,18 +2,17 @@
 ## KEYBOARD - TVset_off
 ##
 - alias: 'TC_TVset_off'
-  initial_state: 'true'
-  hide_entity: true
+  initial_state: true
   trigger:
     platform: event
     event_type: telegram_command
     event_data:
       command: '/TVset_off'
   action:
-    - service: notify.homeassistant
-      data:
+    - action: telegram_bot.send_message
+      data_template:
         message: "TVset off"
     - service: switch.turn_off
       data:
         entity_id:
-          - switch.sonoffTVset
+          - switch.blitzw0lf_6

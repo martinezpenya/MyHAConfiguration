@@ -2,20 +2,18 @@
 ## KEYBOARD - waterheater
 ##
 - alias: 'TC waterheater'
-  initial_state: 'true'
-  hide_entity: true
+  initial_state: true
   trigger:
      - platform: event
        event_type: telegram_command
        event_data:
          command: '/waterheater'
-  action:
-     - service: notify.homeassistant
-       data:
-         message: 'Select an option'
-         data:
-            keyboard:
-            - '/waterheater_60min, /waterheater_30min, /waterheater_15min'
-            - '/waterheater_off, /waterheater_on'
-            - '/start'
+  actions:
+    - action: telegram_bot.send_message
+      data_template:
+        message: 'Select an option'
+        keyboard:
+          - '/waterheater_60min, /waterheater_30min, /waterheater_15min'
+          - '/waterheater_off, /waterheater_on'
+          - '/start'
                 

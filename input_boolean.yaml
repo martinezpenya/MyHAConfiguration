@@ -5,4 +5,15 @@ programweekday1:
 programweekday2:
     name: Weekdays Only
     icon: mdi:calendar
- 
+shutter_office_led_state:
+   name: Shutter Office LED State
+   initial: off
+shutter_dinner_led_state:
+   name: Shutter Dinner LED State
+   initial: off
+shutter_sleep_led_state:
+   name: Shutter Sleep LED State
+   initial: off
+shutter_room_led_state:
+   name: Shutter Room LED State
+   initial: off

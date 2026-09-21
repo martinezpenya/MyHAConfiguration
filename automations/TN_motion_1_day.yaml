@@ -1,9 +1,9 @@
 - alias: 'PIR motion 1_day'
-  initial_state: 'true'
-  hide_entity: true
+  id: pir_motion_1_day
+  initial_state: true
   trigger:
     platform: state
-    entity_id: 'binary_sensor.PIR_kerui_p831_1'
+    entity_id: 'binary_sensor.pir_kerui_p831_1'
     to: 'on'
     
   condition:
@@ -16,7 +16,4 @@
         entity_id: sensor.esphome3_brightness
         below: 5
   action:
-    #- service: notify.homeassistant
-    #  data:
-    #    message: "PIR motion 1 day"
     - service: script.yeelight_day

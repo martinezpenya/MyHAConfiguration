@@ -86,86 +86,357 @@ yeelight_step:
             255
           {% endif %}
 
-blitzwolf1_report:
-  sequence:
-    - service: persistent_notification.create
+bondiamusica:
+  alias: bondiamusica
+  sequence: 
+    - service: switch.turn_on
+      data:
+        entity_id: switch.sonoffbasic_3
+    - service: telegram_bot.send_message
       data_template:
-        title: "Blitwolf1 Report"
-        message: "From {{ (states.sensor.bw1_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-        KW Pico: {{ states.sensor.sensor_bw1_kw_pico.state_with_unit }} \n
-        KW Vall: {{ states.sensor.sensor_bw1_kw_valle.state_with_unit }} \n
-        Total KW: {{ states.sensor.bw1_total.state_with_unit }}\n\n
-        € Pico: {{ states.sensor.sensor_bw1_eur_pico.state_with_unit }} \n
-        € Vall: {{ states.sensor.sensor_bw1_eur_valle.state_with_unit }} \n
-        Total €: {{ states.sensor.sensor_bw1_total_euro.state_with_unit }}\n"
+        message: 'Bon dia!, vols parar la música?'
+        inline_keyboard: 
+        - '✔Yes:/TCB_speaker_off, ❌No:/TCB_cancel'
+    - delay: 00:00:01
+    - service: telegram_bot.send_message
+      data_template:
+        message: 'Bon dia!, vols canviar la posició de les persianes?'
+        inline_keyboard: 
+        - '🏠 Open:/TCB_shutter_open_all, 💡 Low:/TCB_shutter_low, ❌No:/TCB_cancel'
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.0 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
+    - delay: 00:00:01 #wait for switch
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.speaker
+        source: RockFM        
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.01 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.02 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.03 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.04 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.05 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.06 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.07 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.08 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.09 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
+    - delay: 00:00:05 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.1 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
+    - delay: 00:00:10 
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.speaker
+        volume_level: "{{ ((states('input_number.notification_max_volume') | float(1)) * 0.15 * (0.5 if (now().hour >= (states('input_number.notification_night_start_hour') | int) or now().hour < (states('input_number.notification_night_end_hour') | int)) else 1)) | round(3) }}"
 
-blitzwolf2_report:
-  sequence:
-    - service: persistent_notification.create
+benvingut_a_casa:
+  alias: benvingut_a_casa
+  sequence: 
+    - service: telegram_bot.send_message
       data_template:
-        title: "Blitwolf2 Report"
-        message: "From {{ (states.sensor.bw2_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-        KW Pico: {{ states.sensor.sensor_bw2_kw_pico.state_with_unit }} \n
-        KW Vall: {{ states.sensor.sensor_bw2_kw_valle.state_with_unit }} \n
-        Total KW: {{ states.sensor.bw2_total.state_with_unit }}\n\n
-        € Pico: {{ states.sensor.sensor_bw2_eur_pico.state_with_unit }} \n
-        € Vall: {{ states.sensor.sensor_bw2_eur_valle.state_with_unit }} \n
-        Total €: {{ states.sensor.sensor_bw2_total_euro.state_with_unit }}\n"             
+        message: 'Benvingut a casa!, vols canviar la posició de les persianes?'
+        inline_keyboard: 
+        - '🏠 Open:/TCB_shutter_open_all, 💡 Low:/TCB_shutter_low, ❌No:/TCB_cancel'
 
-blitzwolf3_report:
-  sequence:
-    - service: persistent_notification.create
-      data_template:
-        title: "Blitwolf3 Report"
-        message: "From {{ (states.sensor.bw3_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-        KW Pico: {{ states.sensor.sensor_bw3_kw_pico.state_with_unit }} \n
-        KW Vall: {{ states.sensor.sensor_bw3_kw_valle.state_with_unit }} \n
-        Total KW: {{ states.sensor.bw3_total.state_with_unit }}\n\n
-        € Pico: {{ states.sensor.sensor_bw3_eur_pico.state_with_unit }} \n
-        € Vall: {{ states.sensor.sensor_bw3_eur_valle.state_with_unit }} \n
-        Total €: {{ states.sensor.sensor_bw3_total_euro.state_with_unit }}\n"
-
-blitzwolf4_report:
-  sequence:
-    - service: persistent_notification.create
-      data_template:
-        title: "Blitwolf4 Report"
-        message: "From {{ (states.sensor.bw4_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-        KW Pico: {{ states.sensor.sensor_bw4_kw_pico.state_with_unit }} \n
-        KW Vall: {{ states.sensor.sensor_bw4_kw_valle.state_with_unit }} \n
-        Total KW: {{ states.sensor.bw4_total.state_with_unit }}\n\n
-        € Pico: {{ states.sensor.sensor_bw4_eur_pico.state_with_unit }} \n
-        € Vall: {{ states.sensor.sensor_bw4_eur_valle.state_with_unit }} \n
-        Total €: {{ states.sensor.sensor_bw4_total_euro.state_with_unit }}\n"        
+bondiallums:
+  alias: bondiallums
+  sequence: 
+    - service: light.turn_on
+      data:
+        entity_id: light.Yeelight_1
+        effect: Sunrise
+        #transition: 40
         
-blitzwolf5_report:
+    # - service: light.turn_on
+    #   data:
+    #     entity_id: light.Yeelight_1
+    #     rgb_color: [255,166,0]
+    #     transition: 60
+    # - service: light.turn_on
+    #   data:
+    #     entity_id: light.Yeelight_1
+    #     rgb_color: [255,255,255]
+    #     transition: 30
+    # - service: light.turn_on
+    #   data:
+    #     entity_id: light.Yeelight_1
+    #     effect: "Strobe epilespy!"
+    #     rgb_color: [255,255,255]
+    
+    # # Wait 5 seconds
+    # - delay: 00:01:00
+        
+    # - service: light.turn_off
+    #   data:
+    #     entity_id: light.Yeelight_1
+    #     transition: 40
+
+ventilador_despatx_on:
+  alias: Ventilador despatx ON
   sequence:
-    - service: persistent_notification.create
-      data_template:
-        title: "Blitwolf5 Report"
-        message: "From {{ (states.sensor.bw5_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-        KW Pico: {{ states.sensor.sensor_bw5_kw_pico.state_with_unit }} \n
-        KW Vall: {{ states.sensor.sensor_bw5_kw_valle.state_with_unit }} \n
-        Total KW: {{ states.sensor.bw5_total.state_with_unit }}\n\n
-        € Pico: {{ states.sensor.sensor_bw5_eur_pico.state_with_unit }} \n
-        € Vall: {{ states.sensor.sensor_bw5_eur_valle.state_with_unit }} \n
-        Total €: {{ states.sensor.sensor_bw5_total_euro.state_with_unit }}\n"           
-                
-blitzwolf6_report:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ states('input_number.ventilador_despatx_rf_on_index') | int(1) == 1 }}"
+          sequence:
+            - service: mqtt.publish
+              data:
+                topic: "cmnd/sonoffRF433/Backlog"
+                payload: "RfRaw AAA54BDC012202EE0A215C55; RfRaw 0"
+            - service: input_number.set_value
+              target:
+                entity_id: input_number.ventilador_despatx_rf_on_index
+              data:
+                value: 2
+        - conditions:
+            - condition: template
+              value_template: "{{ states('input_number.ventilador_despatx_rf_on_index') | int(1) == 2 }}"
+          sequence:
+            - service: mqtt.publish
+              data:
+                topic: "cmnd/sonoffRF433/Backlog"
+                payload: "RfRaw AAA54560012202F80A215A55; RfRaw 0"
+            - service: input_number.set_value
+              target:
+                entity_id: input_number.ventilador_despatx_rf_on_index
+              data:
+                value: 3
+        - conditions:
+            - condition: template
+              value_template: "{{ states('input_number.ventilador_despatx_rf_on_index') | int(1) == 3 }}"
+          sequence:
+            - service: mqtt.publish
+              data:
+                topic: "cmnd/sonoffRF433/Backlog"
+                payload: "RfRaw AAA54BBE012202F80A215955; RfRaw 0"
+            - service: input_number.set_value
+              target:
+                entity_id: input_number.ventilador_despatx_rf_on_index
+              data:
+                value: 4
+      default:
+        - service: mqtt.publish
+          data:
+            topic: "cmnd/sonoffRF433/Backlog"
+            payload: "RfRaw AAA54C04012202EE0A215F55; RfRaw 0"
+        - service: input_number.set_value
+          target:
+            entity_id: input_number.ventilador_despatx_rf_on_index
+          data:
+            value: 1
+
+ventilador_despatx_on_std:
+  alias: Ventilador despatx ON STD
   sequence:
-    - service: persistent_notification.create
-      data_template:
-        title: "Blitwolf6 Report"
-        message: "From {{ (states.sensor.bw6_totalstarttime.state) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n
-        to {{ as_timestamp(now()) | timestamp_custom('%d/%m/%Y %H:%M:%S' )}}\n\n
-        KW Pico: {{ states.sensor.sensor_bw6_kw_pico.state_with_unit }} \n
-        KW Vall: {{ states.sensor.sensor_bw6_kw_valle.state_with_unit }} \n
-        Total KW: {{ states.sensor.bw6_total.state_with_unit }}\n\n
-        € Pico: {{ states.sensor.sensor_bw6_eur_pico.state_with_unit }} \n
-        € Vall: {{ states.sensor.sensor_bw6_eur_valle.state_with_unit }} \n
-        Total €: {{ states.sensor.sensor_bw6_total_euro.state_with_unit }}\n"           
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ states('input_number.ventilador_despatx_rf_std_index') | int(1) == 1 }}"
+          sequence:
+            - service: mqtt.publish
+              data:
+                topic: "cmnd/sonoffRF433/Backlog"
+                payload: "RfSync 15470; RfLow 310; RfHigh 740; RfCode #215CF0; RfCode #215CF0; RfCode #215CF0; RfCode #215CF0"
+            - service: input_number.set_value
+              target:
+                entity_id: input_number.ventilador_despatx_rf_std_index
+              data:
+                value: 2
+        - conditions:
+            - condition: template
+              value_template: "{{ states('input_number.ventilador_despatx_rf_std_index') | int(1) == 2 }}"
+          sequence:
+            - service: mqtt.publish
+              data:
+                topic: "cmnd/sonoffRF433/Backlog"
+                payload: "RfSync 14740; RfLow 300; RfHigh 750; RfCode #10AD4A; RfCode #10AD4A; RfCode #10AD4A; RfCode #10AD4A"
+            - service: input_number.set_value
+              target:
+                entity_id: input_number.ventilador_despatx_rf_std_index
+              data:
+                value: 3
+        - conditions:
+            - condition: template
+              value_template: "{{ states('input_number.ventilador_despatx_rf_std_index') | int(1) == 3 }}"
+          sequence:
+            - service: mqtt.publish
+              data:
+                topic: "cmnd/sonoffRF433/Backlog"
+                payload: "RfSync 15330; RfLow 300; RfHigh 750; RfCode #215A94; RfCode #215A94; RfCode #215A94; RfCode #215A94"
+            - service: input_number.set_value
+              target:
+                entity_id: input_number.ventilador_despatx_rf_std_index
+              data:
+                value: 4
+        - conditions:
+            - condition: template
+              value_template: "{{ states('input_number.ventilador_despatx_rf_std_index') | int(1) == 4 }}"
+          sequence:
+            - service: mqtt.publish
+              data:
+                topic: "cmnd/sonoffRF433/Backlog"
+                payload: "RfSync 15320; RfLow 310; RfHigh 740; RfCode #21595C; RfCode #21595C; RfCode #21595C; RfCode #21595C"
+            - service: input_number.set_value
+              target:
+                entity_id: input_number.ventilador_despatx_rf_std_index
+              data:
+                value: 5
+      default:
+        - service: mqtt.publish
+          data:
+            topic: "cmnd/sonoffRF433/Backlog"
+            payload: "RfSync 12580; RfLow 320; RfHigh 720; RfCode #215FFC; RfCode #215FFC; RfCode #215FFC; RfCode #215FFC"
+        - service: input_number.set_value
+          target:
+            entity_id: input_number.ventilador_despatx_rf_std_index
+          data:
+            value: 1
+
+ventilador_altre_on_std:
+  alias: Ventilador altre ON STD
+  sequence:
+    - repeat:
+        count: 2
+        sequence:
+          - service: mqtt.publish
+            data:
+              topic: "cmnd/sonoffRF433/Backlog"
+              payload: "RfSync 8710; RfLow 280; RfHigh 850; RfCode #57180A; RfCode #57180A"
+          - delay:
+              milliseconds: 180
+          - service: mqtt.publish
+            data:
+              topic: "cmnd/sonoffRF433/Backlog"
+              payload: "RfSync 5750; RfLow 370; RfHigh 610; RfCode #029A80; RfCode #029A80; RfCode #029A80; RfCode #029A80"
+          - delay:
+              milliseconds: 180
+          - service: mqtt.publish
+            data:
+              topic: "cmnd/sonoffRF433/Backlog"
+              payload: "RfSync 5750; RfLow 350; RfHigh 620; RfCode #039B81; RfCode #039B81; RfCode #039B81; RfCode #039B81"
+          - delay:
+              milliseconds: 180
+          - service: mqtt.publish
+            data:
+              topic: "cmnd/sonoffRF433/Backlog"
+              payload: "RfSync 5750; RfLow 370; RfHigh 600; RfCode #009482; RfCode #009482; RfCode #009482; RfCode #009482"
+          - delay:
+              milliseconds: 180
+          - service: mqtt.publish
+            data:
+              topic: "cmnd/sonoffRF433/Backlog"
+              payload: "RfSync 5770; RfLow 330; RfHigh 650; RfCode #35997F; RfCode #35997F; RfCode #35997F; RfCode #35997F"
+          - delay:
+              milliseconds: 220
+
+ventilador_altre_off_std:
+  alias: Ventilador altre OFF STD
+  sequence:
+    - repeat:
+        count: 3
+        sequence:
+          - service: mqtt.publish
+            data:
+              topic: "cmnd/sonoffRF433/Backlog"
+              payload: "RfSync 5750; RfLow 340; RfHigh 640; RfCode #A2FAE0; RfCode #A2FAE0; RfCode #A2FAE0; RfCode #A2FAE0"
+          - delay:
+              milliseconds: 180
+          - service: mqtt.publish
+            data:
+              topic: "cmnd/sonoffRF433/Backlog"
+              payload: "RfSync 5770; RfLow 330; RfHigh 650; RfCode #A2FAE0; RfCode #A2FAE0"
+          - delay:
+              milliseconds: 250
+
+sonoff_rf433_raw_sniff_on:
+  alias: Sonoff RF433 raw sniff ON
+  sequence:
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/sonoffRF433/RfRaw"
+        payload: "AAB155"
+
+sonoff_rf433_raw_sniff_off:
+  alias: Sonoff RF433 raw sniff OFF
+  sequence:
+    - service: mqtt.publish
+      data:
+        topic: "cmnd/sonoffRF433/RfRaw"
+        payload: "0"
+
+# limpia_despacho:
+#   alias: "Limpia despacho"
+#   sequence:
+#     - service: vacuum.send_command
+#       data:
+#         entity_id: vacuum.robot_aspirador
+#         command: app_segment_clean
+#         params: [12]
+
+open_street_door:
+  alias: Abrir porteria
+  sequence:      
+    #turn video on
+    - service: switch.turn_on
+      data:
+        entity_id: switch.esphome8_relay1
+    # Wait 1 second
+    - delay: 00:0:01      
+    #- delay: milliseconds: 500
+    #turn video off
+    - service: switch.turn_off
+      data:
+        entity_id: switch.esphome8_relay1 
+    #leave extra time for video open
+    - delay: 00:0:01      
+    #open door
+    - service: switch.turn_on
+      data:
+        entity_id: switch.esphome8_relay3
+    #wait 1 sec
+    #- delay: 00:0:01      
+    - delay: 
+        milliseconds: 500
+    #release open door
+    - service: switch.turn_off
+      data:
+        entity_id: switch.esphome8_relay3
