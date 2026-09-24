@@ -1,10 +1,11 @@
 - alias: 'UpdateAvailable'
+  id: update_available
   initial_state: true
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.docker_hub_update_available
       to: 'on'
   actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: "La nueva versión {{ state_attr('binary_sensor.docker_hub_update_available', 'newest_version') }} de Home Assistant está disponible\n Release notes: {{ state_attr('binary_sensor.docker_hub_update_available', 'release_notes') }}"

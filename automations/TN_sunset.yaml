@@ -1,14 +1,15 @@
 - alias: 'Sunset'
+  id: sunset
   initial_state: true
-  trigger:
-    platform: sun
-    event: sunset
-    #offset: "-00:45:00"
+  triggers:
+    - trigger: sun
+      event: sunset
+      #offset: "-00:45:00"
   #condition:
     #condition: state
     #entity_id: group.all_devices
     #state: home
   actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: "Sunset"
