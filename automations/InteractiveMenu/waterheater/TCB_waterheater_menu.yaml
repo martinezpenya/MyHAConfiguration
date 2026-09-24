@@ -23,5 +23,5 @@
       data:
         message_id: 'last'
         chat_id: '{{ trigger.event.data.chat_id }}'
-        inline_keyboard: !include TCB_waterheater_menu_buttons
+        inline_keyboard: !include TCB_waterheater_menu_buttons.btn
 
