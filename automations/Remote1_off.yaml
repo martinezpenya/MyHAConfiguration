@@ -11,6 +11,7 @@
 # Al final se manda un código OFF inventado al sensor binario
 # a los X segundos para simular que lo hace él mismo al apagarse
 - alias: mqtt_restart_Remote1_ButtonA
+  id: mqtt_restart_remote1_buttona
   initial_state: true
   triggers:
     - trigger: state
@@ -26,6 +27,7 @@
          payload: '{"RfReceived":{"Data":"801D48off"}}'
 
 - alias: mqtt_restart_Remote1_ButtonB
+  id: mqtt_restart_remote1_buttonb
   initial_state: true
   triggers:
     - trigger: state
@@ -41,6 +43,7 @@
          payload: '{"RfReceived":{"Data":"801D44off"}}'
 
 - alias: mqtt_restart_Remote1_ButtonC
+  id: mqtt_restart_remote1_buttonc
   initial_state: true
   triggers:
     - trigger: state
@@ -56,6 +59,7 @@
          payload: '{"RfReceived":{"Data":"801D42off"}}'
 
 - alias: mqtt_restart_Remote1_ButtonD
+  id: mqtt_restart_remote1_buttond
   initial_state: true
   triggers:
     - trigger: state

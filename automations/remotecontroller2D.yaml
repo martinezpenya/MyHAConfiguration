@@ -5,12 +5,13 @@
 # Button D
 
 - alias: Remote2ButtonD
+  id: remote2_buttond
   initial_state: true
-  trigger:
-    platform: state
-    entity_id: binary_sensor.remote2_btnd
-    to: 'on'
-  action:
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.remote2_btnd
+      to: 'on'
+  actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: "Remote2 buttonD pressed"
