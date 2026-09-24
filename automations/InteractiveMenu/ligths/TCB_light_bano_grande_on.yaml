@@ -2,24 +2,25 @@
 ## INLINE_KEYBOARD - TCB_light_bano_grande_on
 ##
 - alias: 'TCB_light_bano_grande_on'
+  id: tcb_light_bano_grande_on
   initial_state: true
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: '/TCB_light_bano_grande_on'
-  action:
-    - service: telegram_bot.answer_callback_query
-      data_template:
+  triggers:
+    - trigger: event
+      event_type: telegram_callback
+      event_data:
+        data: '/TCB_light_bano_grande_on'
+  actions:
+    - action: telegram_bot.answer_callback_query
+      data:
         callback_query_id: '{{ trigger.event.data.id }}'
         message: 'Switching Baño Grande light on'
-    - service: switch.turn_on
+    - action: switch.turn_on
       data:
         entity_id:
           - switch.luz_bano_grande
     - delay: 00:00:01
-    - service: telegram_bot.edit_replymarkup
-      data_template:
+    - action: telegram_bot.edit_replymarkup
+      data:
         message_id: 'last'
         chat_id: '{{ trigger.event.data.chat_id }}'
         inline_keyboard: !include TCB_lights_menu_buttons.btn

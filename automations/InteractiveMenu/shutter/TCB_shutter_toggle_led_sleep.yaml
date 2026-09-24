@@ -1,21 +1,22 @@
 - alias: 'Shutter LED toggle Sleep'
+  id: tcb_shutter_toggle_led_sleep
   initial_state: true
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: '/TCB_shutter_toggle_led_sleep'
-  action:
-    - service: light.toggle
+  triggers:
+    - trigger: event
+      event_type: telegram_callback
+      event_data:
+        data: '/TCB_shutter_toggle_led_sleep'
+  actions:
+    - action: light.toggle
       data:
         entity_id: light.shutter_sleep_button_led
-    - service: telegram_bot.answer_callback_query
-      data_template:
+    - action: telegram_bot.answer_callback_query
+      data:
         callback_query_id: '{{ trigger.event.data.id }}'
         message: 'LED Sleep toggled'
     - delay: 00:00:01
-    - service: telegram_bot.edit_replymarkup
-      data_template:
+    - action: telegram_bot.edit_replymarkup
+      data:
         message_id: 'last'
         chat_id: '{{ trigger.event.data.chat_id }}'
         inline_keyboard: !include TCB_shutter_menu_buttons.btn

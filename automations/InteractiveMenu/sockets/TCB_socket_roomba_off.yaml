@@ -2,24 +2,25 @@
 ## INLINE_KEYBOARD - TCB_socket_roomba_off
 ##
 - alias: 'TCB_socket_roomba_off'
+  id: tcb_socket_roomba_off
   initial_state: true
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: '/TCB_socket_roomba_off'
-  action:
-    - service: telegram_bot.answer_callback_query
-      data_template:
+  triggers:
+    - trigger: event
+      event_type: telegram_callback
+      event_data:
+        data: '/TCB_socket_roomba_off'
+  actions:
+    - action: telegram_bot.answer_callback_query
+      data:
         callback_query_id: '{{ trigger.event.data.id }}'
         message: 'Switching Roomba socket off'
-    - service: switch.turn_off
+    - action: switch.turn_off
       data:
         entity_id:
           - switch.blitzw0lf_5
     - delay: 00:00:01
-    - service: telegram_bot.edit_replymarkup
-      data_template:
+    - action: telegram_bot.edit_replymarkup
+      data:
         message_id: 'last'
         chat_id: '{{ trigger.event.data.chat_id }}'
         inline_keyboard: !include TCB_sockets_menu_buttons.btn

@@ -4,6 +4,7 @@
 ## Se envia al iniciar HA y bajo demanda con /menu_launcher.
 ##
 - alias: 'TC menu launcher'
+  id: tc_menu_launcher
   initial_state: true
   triggers:
     - trigger: homeassistant

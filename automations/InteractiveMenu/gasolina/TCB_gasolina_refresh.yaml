@@ -2,20 +2,21 @@
 ## INLINE_KEYBOARD - TCB_gasolina_refresh
 ##
 - alias: 'TCB_gasolina_refresh'
+  id: tcb_gasolina_refresh
   initial_state: true
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: '/TCB_gasolina_refresh'
-  action:
-    - service: telegram_bot.answer_callback_query
-      data_template:
+  triggers:
+    - trigger: event
+      event_type: telegram_callback
+      event_data:
+        data: '/TCB_gasolina_refresh'
+  actions:
+    - action: telegram_bot.answer_callback_query
+      data:
         callback_query_id: '{{ trigger.event.data.id }}'
         message: 'Refresh Gasolina menu'
     - delay: 00:00:01
-    - service: telegram_bot.edit_message
-      data_template:
+    - action: telegram_bot.edit_message
+      data:
         message_id: 'last'
         chat_id: '{{ trigger.event.data.chat_id }}'
         disable_web_page_preview: yes
@@ -64,8 +65,8 @@
           {{"- `N/D` ___(" + item.label + ")___" + map + "\n"}}
           {% endfor %}
           {% endfor %}
-    - service: telegram_bot.edit_replymarkup
-      data_template:
+    - action: telegram_bot.edit_replymarkup
+      data:
         message_id: 'last'
         chat_id: '{{ trigger.event.data.chat_id }}'
         inline_keyboard: !include TCB_gasolina_menu_buttons.btn
