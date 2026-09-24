@@ -1,8 +1,9 @@
 - alias: 'Front door open Christmas Tree'
+  id: christmas_lights_open_door
   initial_state: true
-  trigger:
-    platform: state
-    entity_id: 'binary_sensor.front_door'
-    to: 'on'
-  action:       
-    - service: script.christmas_tree
+  triggers:
+    - trigger: state
+      entity_id: 'binary_sensor.front_door'
+      to: 'on'
+  actions:
+    - action: script.christmas_tree

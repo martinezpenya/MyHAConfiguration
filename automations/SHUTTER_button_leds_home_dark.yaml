@@ -51,7 +51,7 @@
                   - light.shutter_sleep_button_led
                   - light.shutter_room_button_led
             - action: telegram_bot.send_message
-              data_template:
+              data:
                 message: 'The shutter button LEDs have been turned on.'
         - conditions:
             - condition: template
@@ -71,7 +71,7 @@
                   - light.shutter_sleep_button_led
                   - light.shutter_room_button_led
             - action: telegram_bot.send_message
-              data_template:
+              data:
                 message: 'The shutter button LEDs have been turned off.'
       default:
         - action: light.turn_off

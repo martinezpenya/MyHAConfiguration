@@ -1,39 +1,39 @@
 - id: wh_timer2
   alias: 'Timer2'
-  trigger:
-    platform: template
-    value_template: '{{ states.sensor.time.state == states.sensor.timer2_time.state }}'
-  condition:
-    condition: or
-    conditions:
-      - condition: and
-        conditions:
-          - condition: state
-            entity_id: input_boolean.programweekday2
-            state: 'on'
-          - condition: time
-            weekday:
-              - mon
-              - tue
-              - wed
-              - thu
-              - fri
-      - condition: state
-        entity_id: input_boolean.programweekday2
-        state: 'off'
+  triggers:
+    - trigger: template
+      value_template: '{{ states.sensor.time.state == states.sensor.timer2_time.state }}'
+  conditions:
+    - condition: or
+      conditions:
+        - condition: and
+          conditions:
+            - condition: state
+              entity_id: input_boolean.programweekday2
+              state: 'on'
+            - condition: time
+              weekday:
+                - mon
+                - tue
+                - wed
+                - thu
+                - fri
+        - condition: state
+          entity_id: input_boolean.programweekday2
+          state: 'off'
   actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: "Timer 2 - waterheater on"
-    - service: switch.turn_on
+    - action: switch.turn_on
       data:
         entity_id:
           - switch.BliTZW0lF_1
     - delay: "{{states.sensor.timer2_duration.state}}"
-    - service: switch.turn_off
+    - action: switch.turn_off
       data:
         entity_id:
-          - switch.BliTZW0lF_1          
+          - switch.BliTZW0lF_1
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: "Timer 2 - waterheater off"
