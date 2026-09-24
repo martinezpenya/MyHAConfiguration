@@ -1,14 +1,14 @@
 - alias: 'PIR motion 1_night'
   id: pir_motion_1_night
   initial_state: true
-  trigger:
-    platform: state
-    entity_id: 'binary_sensor.pir_kerui_p831_1'
-    to: 'on'
-  condition: 
-    condition: state
-    entity_id: sun.sun
-    state: below_horizon
-  action:
-    - service: script.yeelight_night
+  triggers:
+    - trigger: state
+      entity_id: 'binary_sensor.pir_kerui_p831_1'
+      to: 'on'
+  conditions:
+    - condition: state
+      entity_id: sun.sun
+      state: below_horizon
+  actions:
+    - action: script.yeelight_night
   mode: restart

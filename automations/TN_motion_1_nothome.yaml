@@ -1,20 +1,20 @@
 - alias: 'PIR motion 1 nothome'
   id: pir_motion_1_nothome
   initial_state: true
-  trigger:
-    platform: state
-    entity_id: 'binary_sensor.pir_kerui_p831_1'
-    to: 'on'
-  condition:
-   condition: or
-   conditions:
-     - condition: state
-       entity_id: device_tracker.rdm13nppmovil
-       state: 'not_home'
-     - condition: state
-       entity_id: device_tracker.rdm13nppmovil
-       state: 'unavailable'
-  action:
-    - service: telegram_bot.send_message
-      data_template:
+  triggers:
+    - trigger: state
+      entity_id: 'binary_sensor.pir_kerui_p831_1'
+      to: 'on'
+  conditions:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: device_tracker.rdm13nppmovil
+          state: 'not_home'
+        - condition: state
+          entity_id: device_tracker.rdm13nppmovil
+          state: 'unavailable'
+  actions:
+    - action: telegram_bot.send_message
+      data:
         message: "PIR motion 1 nothome"

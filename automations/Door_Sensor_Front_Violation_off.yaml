@@ -10,20 +10,21 @@
 # a los X segundos para simular que lo hace él mismo al apagarse
 
 - alias: mqtt restart Door_Sensor_Front_Violation_off
+  id: door_sensor_front_violation_off
   initial_state: true
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.Front_Door_Violation
       # from: 'off'
       to: 'on'
       for:
-        seconds: 3       
-  action:
-    - service: persistent_notification.create
+        seconds: 3
+  actions:
+    - action: persistent_notification.create
       data:
         message: "Violation"
         title: "Front Door"
-    - service: mqtt.publish
+    - action: mqtt.publish
       data:
          topic: tele/sonoffRF433/RESULT
          payload: '{"RfReceived":{"Data":"2D3807off"}}'

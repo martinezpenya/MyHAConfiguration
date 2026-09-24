@@ -1,20 +1,20 @@
 - alias: 'PIR motion 1_day'
   id: pir_motion_1_day
   initial_state: true
-  trigger:
-    platform: state
-    entity_id: 'binary_sensor.pir_kerui_p831_1'
-    to: 'on'
-    
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: sun.sun
-        state: above_horizon
-      - condition: numeric_state
-        entity_id: sensor.esphome3_brightness
-        below: 5
-  action:
-    - service: script.yeelight_day
+  triggers:
+    - trigger: state
+      entity_id: 'binary_sensor.pir_kerui_p831_1'
+      to: 'on'
+
+  conditions:
+    - condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: above_horizon
+        - condition: numeric_state
+          entity_id: sensor.esphome3_brightness
+          below: 5
+  actions:
+    - action: script.yeelight_day
   mode: restart
