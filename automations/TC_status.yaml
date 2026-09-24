@@ -2,15 +2,16 @@
 ## KEYBOARD - status
 ##
 - alias: 'TC status'
+  id: tc_status
   initial_state: true
-  trigger:
-    platform: event
-    event_type: telegram_command
-    event_data:
-      command: '/status'
-  action:
+  triggers:
+    - trigger: event
+      event_type: telegram_command
+      event_data:
+        command: '/status'
+  actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
           title: "***Sensors:***"
           message: "{% for state in states.sensor -%}
                     {%- if loop.first %}  - {% elif loop.last %} \n - {% else %}\n - {% endif -%}

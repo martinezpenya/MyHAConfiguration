@@ -2,15 +2,16 @@
 ## KEYBOARD - computer
 ##
 - alias: 'TC computer'
+  id: tc_computer
   initial_state: true
-  trigger:
-     - platform: event
-       event_type: telegram_command
-       event_data:
-         command: '/computer'
+  triggers:
+    - trigger: event
+      event_type: telegram_command
+      event_data:
+        command: '/computer'
   actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: "Select an option\nComputer is *** {{states.switch.sw03_8tree.state.upper()}} ***"
         keyboard:
           - '/computer_off, /computer_on'

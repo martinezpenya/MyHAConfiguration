@@ -2,15 +2,16 @@
 ## KEYBOARD - computer_off
 ##
 - alias: 'TC_computer_off'
+  id: tc_computer_off
   initial_state: true
-  trigger:
-    platform: event
-    event_type: telegram_command
-    event_data:
-      command: '/computer_off'
+  triggers:
+    - trigger: event
+      event_type: telegram_command
+      event_data:
+        command: '/computer_off'
   actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: "computer off"
     - action: switch.turn_off
       data:

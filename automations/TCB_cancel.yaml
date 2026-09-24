@@ -2,22 +2,23 @@
 ## INLINE_KEYBOARD - TCB_cancel
 ##
 - alias: 'TCB_cancel'
+  id: tcb_cancel
   initial_state: true
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: '/TCB_cancel'
+  triggers:
+    - trigger: event
+      event_type: telegram_callback
+      event_data:
+        data: '/TCB_cancel'
   actions:
     - action: telegram_bot.answer_callback_query
-      data_template:
+      data:
         callback_query_id: '{{ trigger.event.data.id }}'
         message: 'Nothing to do'
         show_alert: false
     - action: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: '{{ trigger.event.data.message.message_id }}'
         chat_id: '{{ trigger.event.data.chat_id }}'
     - action: telegram_bot.send_message
-      data_template:
-        message: "You've answered not, maybe next time. Bye."        
+      data:
+        message: "You've answered not, maybe next time. Bye."

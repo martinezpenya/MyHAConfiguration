@@ -2,15 +2,16 @@
 ## KEYBOARD - light_PC
 ##
 - alias: 'TC light PC'
+  id: tc_light_pc
   initial_state: true
-  trigger:
-     - platform: event
-       event_type: telegram_command
-       event_data:
-         command: '/light_pc'
+  triggers:
+    - trigger: event
+      event_type: telegram_command
+      event_data:
+        command: '/light_pc'
   actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: 'Select an option'
         keyboard:
         - '/light_pc_off, /light_pc_on'

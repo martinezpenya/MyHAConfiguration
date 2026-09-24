@@ -2,27 +2,28 @@
 ## KEYBOARD - shutter bit open
 ##
 - alias: 'TC_shutter_bit_open'
+  id: tc_shutter_bit_open
   initial_state: true
-  trigger:
-    platform: event
-    event_type: telegram_command
-    event_data:
-      command: '/shutter_bit_open'
+  triggers:
+    - trigger: event
+      event_type: telegram_command
+      event_data:
+        command: '/shutter_bit_open'
   actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: "shutter bit open"
     - action: input_number.set_value
-      data_template:
+      data:
         entity_id: input_number.window_set_position
         value: 32
     - delay: 00:00:01
     - action: input_number.set_value
-      data_template:
+      data:
         entity_id: input_number.window_set_position
         value: 33
     - delay: 00:00:30
     - action: telegram_bot.send_message
-      data_template:
-        message: 
+      data:
+        message:
           "Shutter is in position Shutter is in position ***{{states.input_number.window_position.state}} of 28***"                         

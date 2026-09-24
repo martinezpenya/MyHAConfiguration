@@ -2,15 +2,16 @@
 ## KEYBOARD - TVset
 ##
 - alias: 'TC TVset'
+  id: tc_tvset
   initial_state: true
-  trigger:
-     - platform: event
-       event_type: telegram_command
-       event_data:
-         command: '/TVset'
-  action:
+  triggers:
+    - trigger: event
+      event_type: telegram_command
+      event_data:
+        command: '/TVset'
+  actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: 'Select an option'
         keyboard:
         - '/TVset_on, /TVset_off'

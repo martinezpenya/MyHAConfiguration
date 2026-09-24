@@ -2,15 +2,16 @@
 ## KEYBOARD - Printer
 ##
 - alias: 'TC Printer'
+  id: tc_printer
   initial_state: true
-  trigger:
-     - platform: event
-       event_type: telegram_command
-       event_data:
-         command: '/Printer'
+  triggers:
+    - trigger: event
+      event_type: telegram_command
+      event_data:
+        command: '/Printer'
   actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: 'Select an option'
         keyboard:
         - '/Printer_on, /Printer_off'

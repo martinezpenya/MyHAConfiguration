@@ -2,15 +2,16 @@
 ## KEYBOARD - lights
 ##
 - alias: 'TC lights'
+  id: tc_lights
   initial_state: true
-  trigger:
-     - platform: event
-       event_type: telegram_command
-       event_data:
-         command: '/lights'
+  triggers:
+    - trigger: event
+      event_type: telegram_command
+      event_data:
+        command: '/lights'
   actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: 'Select an option'
         keyboard:
         - '/light_pc, /light_Habitacio, /light_Planxa'

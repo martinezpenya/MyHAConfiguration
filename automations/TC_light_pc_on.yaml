@@ -2,15 +2,16 @@
 ## KEYBOARD - light_pc_on
 ##
 - alias: 'TC_light_pc_on'
+  id: tc_light_pc_on
   initial_state: true
-  trigger:
-    platform: event
-    event_type: telegram_command
-    event_data:
-      command: '/light_pc_on'
+  triggers:
+    - trigger: event
+      event_type: telegram_command
+      event_data:
+        command: '/light_pc_on'
   actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: "light pc on"
     - action: switch.turn_on
       data:

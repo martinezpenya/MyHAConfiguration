@@ -2,15 +2,16 @@
 ## KEYBOARD - 3dprinter_on
 ##
 - alias: 'TC_3dprinter_on'
+  id: tc_3dprinter_on
   initial_state: true
-  trigger:
-    platform: event
-    event_type: telegram_command
-    event_data:
-      command: '/3dprinter_on'
+  triggers:
+    - trigger: event
+      event_type: telegram_command
+      event_data:
+        command: '/3dprinter_on'
   actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: "3dPrinter on"
     - action: switch.turn_on
       data:

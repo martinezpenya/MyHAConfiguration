@@ -2,27 +2,28 @@
 ## INLINE_KEYBOARD - TBC_computer_on
 ##
 - alias: 'TCB_3dprinter_off'
+  id: tcb_3dprinter_off
   initial_state: true
-  trigger:
-    platform: event
-    event_type: telegram_callback
-    event_data:
-      data: '/TCB_3dprinter_off'
+  triggers:
+    - trigger: event
+      event_type: telegram_callback
+      event_data:
+        data: '/TCB_3dprinter_off'
   actions:
     - action: switch.turn_off
       data:
         entity_id:
           - switch.BliTZW0lF_2
     - action: telegram_bot.answer_callback_query
-      data_template:
+      data:
         callback_query_id: '{{ trigger.event.data.id }}'
-        message: 'Powering down 3d printer'    
+        message: 'Powering down 3d printer'
     - action: telegram_bot.delete_message
-      data_template:
+      data:
         message_id: '{{ trigger.event.data.message.message_id }}'
         chat_id: '{{ trigger.event.data.chat_id }}'
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: "3d printer powered down after printing job"
 #    - service: telegram_bot.edit_message
 #      data_template:

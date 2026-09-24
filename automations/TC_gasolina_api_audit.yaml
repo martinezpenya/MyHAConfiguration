@@ -4,17 +4,17 @@
 - alias: 'TC gasolina API unavailable'
   id: tc_gasolina_api_unavailable
   initial_state: true
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id:
         - sensor.gasolinera1
         - sensor.gasolinera2
         - sensor.gasolinera3
       to: 'unavailable'
       for: '00:05:00'
-  action:
-    - service: telegram_bot.send_message
-      data_template:
+  actions:
+    - action: telegram_bot.send_message
+      data:
         chat_id: !secret id_group_telegram
         parse_mode: markdown
         message: >-
@@ -27,16 +27,16 @@
 - alias: 'TC gasolina API recovered'
   id: tc_gasolina_api_recovered
   initial_state: true
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id:
         - sensor.gasolinera1
         - sensor.gasolinera2
         - sensor.gasolinera3
       from: 'unavailable'
-  action:
-    - service: telegram_bot.send_message
-      data_template:
+  actions:
+    - action: telegram_bot.send_message
+      data:
         chat_id: !secret id_group_telegram
         parse_mode: markdown
         message: >-
@@ -48,12 +48,12 @@
 - alias: 'TC gasolina refresh on HA start'
   id: tc_gasolina_refresh_on_start
   initial_state: true
-  trigger:
-    - platform: event
+  triggers:
+    - trigger: event
       event_type: homeassistant_start
-  action:
+  actions:
     - delay: '00:00:45'
-    - service: homeassistant.update_entity
+    - action: homeassistant.update_entity
       target:
         entity_id:
           - sensor.gasolinera1
@@ -68,8 +68,8 @@
                    or states('sensor.gasolinera2') in ['unknown','unavailable']
                    or states('sensor.gasolinera3') in ['unknown','unavailable'] }}
           sequence:
-            - service: telegram_bot.send_message
-              data_template:
+            - action: telegram_bot.send_message
+              data:
                 chat_id: !secret id_group_telegram
                 parse_mode: markdown
                 message: >-

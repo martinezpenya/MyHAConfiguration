@@ -4,8 +4,8 @@
 - alias: 'TC gasolina sources unavailable'
   id: tc_gasolina_sources_unavailable
   initial_state: true
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id:
         - sensor.gasolinera11
         - sensor.gasolinera12
@@ -24,9 +24,9 @@
         - sensor.gasolinera36
       to: 'unavailable'
       for: '00:20:00'
-  action:
-    - service: telegram_bot.send_message
-      data_template:
+  actions:
+    - action: telegram_bot.send_message
+      data:
         chat_id: !secret id_group_telegram
         parse_mode: markdown
         message: >-
@@ -36,8 +36,8 @@
 - alias: 'TC gasolina sources recovered'
   id: tc_gasolina_sources_recovered
   initial_state: true
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id:
         - sensor.gasolinera11
         - sensor.gasolinera12
@@ -55,9 +55,9 @@
         - sensor.gasolinera35
         - sensor.gasolinera36
       from: 'unavailable'
-  action:
-    - service: telegram_bot.send_message
-      data_template:
+  actions:
+    - action: telegram_bot.send_message
+      data:
         chat_id: !secret id_group_telegram
         parse_mode: markdown
         message: >-

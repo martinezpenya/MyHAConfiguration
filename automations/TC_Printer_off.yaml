@@ -2,15 +2,16 @@
 ## KEYBOARD - Printer_off
 ##
 - alias: 'TC_Printer_off'
+  id: tc_printer_off
   initial_state: true
-  trigger:
-    platform: event
-    event_type: telegram_command
-    event_data:
-      command: '/Printer_off'
+  triggers:
+    - trigger: event
+      event_type: telegram_command
+      event_data:
+        command: '/Printer_off'
   actions:
     - action: telegram_bot.send_message
-      data_template:
+      data:
         message: "Printer off"
     - action: switch.turn_off
       data:
