@@ -24,3 +24,6 @@ backups/
 .ha_run.lock
 __pycache__/
 *.pyc
+# Auditorías y hallazgos: privados, nunca a GitHub
+documentation/AUDIT_*.md
+documentation/PRIVADO_*

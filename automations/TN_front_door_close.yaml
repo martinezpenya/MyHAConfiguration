@@ -5,6 +5,9 @@
     - trigger: state
       entity_id: 'binary_sensor.front_door'
       to: 'off'
+      not_from:
+        - unavailable
+        - unknown
 #  condition:
 #    condition: or
 #    conditions:
