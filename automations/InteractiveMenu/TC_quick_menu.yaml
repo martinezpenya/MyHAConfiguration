@@ -1,0 +1,128 @@
+##########################################
+## KEYBOARD - accesos directos
+## Botones del teclado fijo que envía TC_menu_launcher.yaml: cada uno abre
+## en un mensaje nuevo el menú de su sección, con los mismos .btn que el
+## menú principal. Las etiquetas deben coincidir exactamente con las del
+## teclado (requiere el modo privacidad del bot desactivado en BotFather).
+##
+- alias: 'TC quick menu'
+  id: tc_quick_menu
+  initial_state: true
+  mode: queued
+  triggers:
+    - trigger: event
+      id: lights
+      event_type: telegram_text
+      event_data:
+        text: '💡 Luces'
+    - trigger: event
+      id: sockets
+      event_type: telegram_text
+      event_data:
+        text: '🔌 Enchufes'
+    - trigger: event
+      id: waterheater
+      event_type: telegram_text
+      event_data:
+        text: '🔥 Termo'
+    - trigger: event
+      id: wcfan
+      event_type: telegram_text
+      event_data:
+        text: '🌀 Ventilador WC'
+    - trigger: event
+      id: shutter
+      event_type: telegram_text
+      event_data:
+        text: '📶 Persianas'
+    - trigger: event
+      id: pipedmusic
+      event_type: telegram_text
+      event_data:
+        text: '📢 Música'
+    - trigger: event
+      id: gasolina
+      event_type: telegram_text
+      event_data:
+        text: '⛽ Gasolina'
+    - trigger: event
+      id: sensors
+      event_type: telegram_text
+      event_data:
+        text: '🌡️ Sensores'
+  actions:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: lights
+          sequence:
+            - action: telegram_bot.send_message
+              data:
+                chat_id: '{{ trigger.event.data.chat_id }}'
+                message: "\U0001f4a1 ***Lights*** \U0001f4a1"
+                inline_keyboard: !include ligths/TCB_lights_menu_buttons.btn
+        - conditions:
+            - condition: trigger
+              id: sockets
+          sequence:
+            - action: telegram_bot.send_message
+              data:
+                chat_id: '{{ trigger.event.data.chat_id }}'
+                message: "\U0001f50c ***Sockets*** \U0001f50c"
+                inline_keyboard: !include sockets/TCB_sockets_menu_buttons.btn
+        - conditions:
+            - condition: trigger
+              id: waterheater
+          sequence:
+            - action: telegram_bot.send_message
+              data:
+                chat_id: '{{ trigger.event.data.chat_id }}'
+                message: "\U0001f525 ***WaterHeater*** \U0001f525"
+                inline_keyboard: !include waterheater/TCB_waterheater_menu_buttons.btn
+        - conditions:
+            - condition: trigger
+              id: wcfan
+          sequence:
+            - action: telegram_bot.send_message
+              data:
+                chat_id: '{{ trigger.event.data.chat_id }}'
+                message: "\U0001f300 ***WC Fan*** \U0001f300"
+                inline_keyboard: !include wcfan/TCB_wcfan_menu_buttons.btn
+        - conditions:
+            - condition: trigger
+              id: shutter
+          sequence:
+            - action: telegram_bot.send_message
+              data:
+                chat_id: '{{ trigger.event.data.chat_id }}'
+                message: "\U0001f4f6 ***Shutter*** \U0001f4f6"
+                inline_keyboard: !include shutter/TCB_shutter_menu_buttons.btn
+        - conditions:
+            - condition: trigger
+              id: pipedmusic
+          sequence:
+            - action: telegram_bot.send_message
+              data:
+                chat_id: '{{ trigger.event.data.chat_id }}'
+                message: "\U0001f4e2 ***Piped music*** \U0001f4e2"
+                inline_keyboard: !include pipedmusic/TCB_pipedmusic_menu_buttons.btn
+        - conditions:
+            - condition: trigger
+              id: gasolina
+          sequence:
+            - action: telegram_bot.send_message
+              data:
+                chat_id: '{{ trigger.event.data.chat_id }}'
+                disable_web_page_preview: yes
+                message: !include gasolina/TCB_gasolina_menu_message.msg
+                inline_keyboard: !include gasolina/TCB_gasolina_menu_buttons.btn
+        - conditions:
+            - condition: trigger
+              id: sensors
+          sequence:
+            - action: telegram_bot.send_message
+              data:
+                chat_id: '{{ trigger.event.data.chat_id }}'
+                disable_web_page_preview: yes
+                message: !include sensors/TCB_sensors_menu_message.msg
+                inline_keyboard: !include sensors/TCB_sensors_menu_buttons.btn

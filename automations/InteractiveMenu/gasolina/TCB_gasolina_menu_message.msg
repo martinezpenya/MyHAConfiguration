@@ -1,0 +1,40 @@
+>-
+  {{"\U000026fd ***Gasolina 95*** \U000026fd\n"}}
+  {% set zones = [
+    ('Carlet', 'sensor.gasolinera1', ['sensor.gasolinera11','sensor.gasolinera12','sensor.gasolinera13','sensor.gasolinera14','sensor.gasolinera15','sensor.gasolinera16','sensor.gasolinera17']),
+    ('Catadau', 'sensor.gasolinera2', ['sensor.gasolinera21','sensor.gasolinera22']),
+    ('Alcudia', 'sensor.gasolinera3', ['sensor.gasolinera31','sensor.gasolinera32','sensor.gasolinera33','sensor.gasolinera34','sensor.gasolinera35','sensor.gasolinera36'])
+  ] %}
+  {%- for zone_name, source_sensor, stations in zones %}
+  {{"\n*" + zone_name + "* (`" + states(source_sensor) + "`)\n"}}
+  {%- set ns = namespace(priced=[], nodata=[]) -%}
+  {%- for entity_id in stations %}
+  {%- set label = state_attr(entity_id, 'friendly_name') | default(entity_id, true) -%}
+  {%- set value = states(entity_id) -%}
+  {%- if value in ['unknown', 'unavailable', 'none', 'None', ''] -%}
+  {%- set ns.nodata = ns.nodata + [{'label': label, 'entity_id': entity_id}] -%}
+  {%- else -%}
+  {%- set ns.priced = ns.priced + [{'label': label, 'entity_id': entity_id, 'value': (value | float(0)), 'display': (value | replace('.', ','))}] -%}
+  {%- endif -%}
+  {%- endfor %}
+  {%- for item in ns.priced | sort(attribute='value') %}
+  {%- set lat = state_attr(item.entity_id, 'latitude') -%}
+  {%- set lon = state_attr(item.entity_id, 'longitude') -%}
+  {%- if lat is not none and lon is not none -%}
+  {%- set map = " [🧭](https://www.google.com/maps/search/?api=1&query=" + (lat | string) + "," + (lon | string) + ")" -%}
+  {%- else -%}
+  {%- set map = '' -%}
+  {%- endif -%}
+  {{"\t- `" + item.display + " €/L` ___(" + item.label + ")___" + map + "\n"}}
+  {%- endfor %}
+  {%- for item in ns.nodata %}
+  {%- set lat = state_attr(item.entity_id, 'latitude') -%}
+  {%- set lon = state_attr(item.entity_id, 'longitude') -%}
+  {%- if lat is not none and lon is not none -%}
+  {%- set map = " [🧭](https://www.google.com/maps/search/?api=1&query=" + (lat | string) + "," + (lon | string) + ")" -%}
+  {%- else -%}
+  {%- set map = '' -%}
+  {%- endif -%}
+  {{"\t- `N/D` ___(" + item.label + ")___" + map + "\n"}}
+  {%- endfor %}
+  {%- endfor %}

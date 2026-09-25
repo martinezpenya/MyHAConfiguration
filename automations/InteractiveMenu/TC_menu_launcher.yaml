@@ -1,7 +1,7 @@
 ##########################################
 ## INLINE_KEYBOARD - launcher
-## Publica un teclado fijo con un boton para abrir el menu principal
-## (lo recoge TC_start_menu.yaml).
+## Publica un teclado fijo con accesos directos a cada seccion (los recoge
+## TC_quick_menu.yaml) y al menu principal (TC_start_menu.yaml).
 ## Se envia al iniciar HA y bajo demanda con /menu_launcher.
 ##
 - alias: 'TC menu launcher'
@@ -26,7 +26,11 @@
     - action: telegram_bot.send_message
       data:
         chat_id: !secret id_group_telegram
-        message: "\U0001F4CC *Launcher del menu*\nPulsa el boton de abajo para abrir el menu principal."
+        message: "\U0001F4CC *Launcher del menu*\nUsa los botones de abajo para abrir cada menu."
         resize_keyboard: true
         keyboard:
+          - '💡 Luces, 🔌 Enchufes'
+          - '🔥 Termo, 🌀 Ventilador WC'
+          - '📶 Persianas, 📢 Música'
+          - '⛽ Gasolina, 🌡️ Sensores'
           - '🏠 Menú'

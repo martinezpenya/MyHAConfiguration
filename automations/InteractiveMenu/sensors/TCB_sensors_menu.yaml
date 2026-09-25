@@ -18,9 +18,7 @@
         message_id: 'last'
         chat_id: '{{ trigger.event.data.chat_id }}'
         disable_web_page_preview: yes
-        message: >-
-            {{"\U0001f321 ***Temp Sensors*** \U0001f321\n"}}
-            {{"\n"}}{% for entity_id in states.group.temperature_sensors.attributes.entity_id %}{% set domain, device = entity_id.split('.') %}{{"- `" + states[domain][device].state_with_unit + " ` ___(" + states[domain][device].name + ")___ \n"}}{% endfor %}
+        message: !include TCB_sensors_menu_message.msg
     - action: telegram_bot.edit_replymarkup
       data:
         message_id: 'last'
