@@ -15,11 +15,21 @@
     - action: telegram_bot.send_message
       data:
         message: "Remote1 buttonA pressed"
-    - action: automation.trigger
-      data:
-        entity_id: >-
-          {% if is_state('switch.blitzw0lf_6', 'on') %}
-            automation.TC_TVset_off
-          {% else %}
-            automation.TC_TVset_on
-          {% endif %}
+    - if:
+        - condition: state
+          entity_id: switch.blitzw0lf_6
+          state: 'on'
+      then:
+        - action: telegram_bot.send_message
+          data:
+            message: "TVset off"
+        - action: switch.turn_off
+          target:
+            entity_id: switch.blitzw0lf_6
+      else:
+        - action: telegram_bot.send_message
+          data:
+            message: "TVset on"
+        - action: switch.turn_on
+          target:
+            entity_id: switch.blitzw0lf_6

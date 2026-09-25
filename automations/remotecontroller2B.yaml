@@ -15,11 +15,3 @@
     - action: telegram_bot.send_message
       data:
         message: "Remote2 buttonB pressed"
-    # - service: automation.trigger
-    #   data_template:
-    #     entity_id: >-
-    #       {% if is_state('switch.sw03_8tree', 'on') %}
-    #         automation.TC_computer_off
-    #       {% else %}
-    #         automation.TC_computer_on
-    #       {% endif %}

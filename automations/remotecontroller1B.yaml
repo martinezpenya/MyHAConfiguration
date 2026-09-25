@@ -15,11 +15,21 @@
     - action: telegram_bot.send_message
       data:
         message: "Remote1 buttonB pressed"
-    - action: automation.trigger
-      data:
-        entity_id: >-
-          {% if is_state('switch.sw03_8tree', 'on') %}
-            automation.TC_computer_off
-          {% else %}
-            automation.TC_computer_on
-          {% endif %}
+    - if:
+        - condition: state
+          entity_id: switch.sw03_8tree
+          state: 'on'
+      then:
+        - action: telegram_bot.send_message
+          data:
+            message: "computer off"
+        - action: switch.turn_off
+          target:
+            entity_id: switch.sw03_8tree
+      else:
+        - action: telegram_bot.send_message
+          data:
+            message: "computer on"
+        - action: switch.turn_on
+          target:
+            entity_id: switch.sw03_8tree

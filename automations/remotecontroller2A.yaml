@@ -15,11 +15,3 @@
     - action: telegram_bot.send_message
       data:
         message: "Remote2 buttonA pressed"
-    # - service: automation.trigger
-    #   data_template:
-    #     entity_id: >-
-    #       {% if is_state('switch.blitzw0lf_6', 'on') %}
-    #         automation.TC_TVset_off
-    #       {% else %}
-    #         automation.TC_TVset_on
-    #       {% endif %}
