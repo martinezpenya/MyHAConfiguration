@@ -7,15 +7,13 @@
      - trigger: event
        event_type: telegram_command
        event_data:
-         command: '/start_menu'
-     - trigger: event
-       event_type: telegram_command
-       event_data:
          command: '/menu'
+     # Botón del teclado fijo que envía TC_menu_launcher.yaml
+     # (requiere el modo privacidad del bot desactivado en BotFather)
      - trigger: event
-       event_type: telegram_command
+       event_type: telegram_text
        event_data:
-         command: '/ha_menu'
+         text: '🏠 Menú'
   actions:
      - action: telegram_bot.send_message
        data:
