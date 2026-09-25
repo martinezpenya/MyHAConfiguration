@@ -21,14 +21,3 @@
     state: '{{ ((states(''sensor.shelly2_apparent_power'')|float(0)) / (states(''sensor.shelly2_voltage'')|float(0)
       or 1))|round(2) }}'
     availability: '{{ has_value(''sensor.shelly2_apparent_power'') and has_value(''sensor.shelly2_voltage'') }}'
-- sensor:
-  - device_class: energy
-    unit_of_measurement: kWh
-    default_entity_id: sensor.shelly2_energy
-    icon: mdi:mdi-current-ac
-    attributes:
-      state_class: total_increasing
-      device_class: energy
-    name: Energy Shelly2
-    state: '{{ states(''sensor.shelly2_total'') }}'
-    availability: '{{ has_value(''sensor.shelly2_total'') }}'

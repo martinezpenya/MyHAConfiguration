@@ -39,14 +39,6 @@ mqtt:
     unique_id: "shelly2_reactive_power"
     state_topic: "shellies/shellyem2/emeter/0/reactive_power"
     unit_of_measurement: 'VAR'
-    
-  - name: Shelly2 Total
-    unique_id: "shelly2_total"
-    state_topic: "shellies/shellyem2/emeter/0/total"
-    value_template: "{{ (value  | float ) | round(3)  }}"
-    unit_of_measurement: W
-    state_class: total_increasing
-    device_class: power     
 
 # sensor:
 # - platform: template
@@ -65,25 +57,18 @@ mqtt:
 #       device_class: current
 #       value_template: "{{ ((states('sensor.shelly2_apparent_power')|float) / (states('sensor.shelly2_voltage')|float))|round(2) }}"
 #       unit_of_measurement: 'A'
-#     shelly2_energy:
-#       device_class: energy
-#       friendly_name: "Energy Shelly2"
-#       attribute_templates:
-#         state_class: total_increasing
-#         device_class: energy
-#       unit_of_measurement: 'kWh'
-#       value_template: "{{ states('sensor.shelly2_total') }}"
-#       icon_template: mdi:mdi-current-ac
 
+# La energía acumulada sale de la integración oficial de Shelly (kWh),
+# la misma entidad que usa el panel de Energía.
 utility_meter:
-  shelly2_energy_usage_daily:
-    source: sensor.shelly2_total
+  shelly2_canal1_energy_daily:
+    source: sensor.sheely2_canal_1_energy
     cycle: daily
-  shelly2_energy_usage_monthly:
-    source: sensor.shelly2_total
+  shelly2_canal1_energy_monthly:
+    source: sensor.sheely2_canal_1_energy
     cycle: monthly
-  shelly2_energy_usage_yearly:
-    source: sensor.shelly2_total
+  shelly2_canal1_energy_yearly:
+    source: sensor.sheely2_canal_1_energy
     cycle: yearly
 
 script:
