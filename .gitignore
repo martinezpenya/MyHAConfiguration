@@ -27,3 +27,5 @@ __pycache__/
 # Auditorías y hallazgos: privados, nunca a GitHub
 documentation/AUDIT_*.md
 documentation/PRIVADO_*
+# Snapshots temporales de cámaras (Telegram)
+snapshots/

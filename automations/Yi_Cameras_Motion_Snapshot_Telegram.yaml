@@ -1,0 +1,39 @@
+# La cámara (yi-hack) publica la foto del movimiento en <prefijo>/motion_detection_image
+# unos 40 s después del motion_start. La integración yi_hack la guarda en
+# camera.yiN_motion_detection_cam; la guardamos en un archivo y la enviamos.
+- alias: 'Yi cameras motion snapshot Telegram'
+  id: yi_cameras_motion_snapshot_telegram
+  initial_state: true
+  triggers:
+    - trigger: mqtt
+      topic: yicam1/motion_detection_image
+      # Payload binario (JPEG): sin decodificar
+      encoding: ''
+    - trigger: mqtt
+      topic: yicam2/motion_detection_image
+      encoding: ''
+  conditions:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: device_tracker.rdm13nppmovil
+          state: 'not_home'
+        - condition: state
+          entity_id: device_tracker.rdm13nppmovil
+          state: 'unavailable'
+  variables:
+    cam: "{{ trigger.topic.split('/')[0] | replace('yicam', 'yi') }}"
+    file: "/config/snapshots/{{ cam }}_motion.jpg"
+  actions:
+    # Margen para que la integración yi_hack guarde la imagen recibida
+    - delay: 0:00:02
+    - action: camera.snapshot
+      target:
+        entity_id: "camera.{{ cam }}_motion_detection_cam"
+      data:
+        filename: "{{ file }}"
+    - action: telegram_bot.send_photo
+      data:
+        file: "{{ file }}"
+        caption: "\U0001F4F9 {{ cam }} ({{ now().strftime('%H:%M:%S') }})"
+  mode: queued

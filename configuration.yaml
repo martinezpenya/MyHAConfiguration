@@ -1,9 +1,11 @@
 homeassistant:
   # Name of the location where Home Assistant is running
-  name: Home
+  name: Casa
   # Location required to calculate the time the sun rises and sets
   latitude: !secret latitude
   longitude: !secret longitude
+  # Radius of the home zone in meters (default 100)
+  radius: 30
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: !secret elevation
   # metric for Metric, imperial for Imperial
@@ -16,6 +18,9 @@ homeassistant:
   packages: !include_dir_named packages
   internal_url: !secret internal_url
   external_url: !secret external_url
+  # Carpetas que HA puede leer para enviar archivos (p.ej. snapshots por Telegram)
+  allowlist_external_dirs:
+    - /config/snapshots
 
 # Show links to resources in log and frontend
 #introduction:

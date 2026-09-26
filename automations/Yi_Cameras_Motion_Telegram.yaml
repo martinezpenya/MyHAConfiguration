@@ -1,0 +1,25 @@
+- alias: 'Yi cameras motion Telegram'
+  id: yi_cameras_motion_telegram
+  initial_state: true
+  triggers:
+    - trigger: state
+      entity_id:
+        - binary_sensor.yi1_motion_detection
+        - binary_sensor.yi2_motion_detection
+      # from 'off' para no avisar cuando la cámara vuelve de 'unavailable' tras reiniciar
+      from: 'off'
+      to: 'on'
+  conditions:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: device_tracker.rdm13nppmovil
+          state: 'not_home'
+        - condition: state
+          entity_id: device_tracker.rdm13nppmovil
+          state: 'unavailable'
+  actions:
+    - action: telegram_bot.send_message
+      data:
+        message: "\U0001F4F9 Movimiento detectado en {{ trigger.entity_id.split('.')[1].split('_')[0] }} ({{ now().strftime('%H:%M:%S') }})"
+  mode: queued
