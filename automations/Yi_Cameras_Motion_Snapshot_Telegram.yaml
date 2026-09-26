@@ -1,17 +1,19 @@
-# La cámara (yi-hack) publica la foto del movimiento en <prefijo>/motion_detection_image
-# unos 40 s después del motion_start. La integración yi_hack la guarda en
-# camera.yiN_motion_detection_cam; la guardamos en un archivo y la enviamos.
+# Foto del movimiento sacada por HA del vídeo RTSP (camera.yiN, ffmpeg) en el
+# momento del motion_start. La foto que publica yi-hack en
+# yicamN/motion_detection_image se captura ~35 s tarde, así que no se usa.
+# El aviso de texto va aparte (Yi_Cameras_Motion_Telegram.yaml): si falla la
+# captura, el aviso llega igualmente.
 - alias: 'Yi cameras motion snapshot Telegram'
   id: yi_cameras_motion_snapshot_telegram
   initial_state: true
   triggers:
-    - trigger: mqtt
-      topic: yicam1/motion_detection_image
-      # Payload binario (JPEG): sin decodificar
-      encoding: ''
-    - trigger: mqtt
-      topic: yicam2/motion_detection_image
-      encoding: ''
+    - trigger: state
+      entity_id:
+        - binary_sensor.yi1_motion_detection
+        - binary_sensor.yi2_motion_detection
+      # from 'off' para no disparar cuando la cámara vuelve de 'unavailable' tras reiniciar
+      from: 'off'
+      to: 'on'
   conditions:
     - condition: or
       conditions:
@@ -22,14 +24,13 @@
           entity_id: device_tracker.rdm13nppmovil
           state: 'unavailable'
   variables:
-    cam: "{{ trigger.topic.split('/')[0] | replace('yicam', 'yi') }}"
+    cam: "{{ trigger.entity_id.split('.')[1].split('_')[0] }}"
     file: "/config/snapshots/{{ cam }}_motion.jpg"
   actions:
-    # Margen para que la integración yi_hack guarde la imagen recibida
-    - delay: 0:00:02
+    # Si la captura falla, la automatización se para aquí y no se envía una foto antigua
     - action: camera.snapshot
       target:
-        entity_id: "camera.{{ cam }}_motion_detection_cam"
+        entity_id: "camera.{{ cam }}"
       data:
         filename: "{{ file }}"
     - action: telegram_bot.send_photo
