@@ -1,0 +1,55 @@
+# Respuesta a los botones Sí/No de las sugerencias de persianas por Telegram
+# (Persianas_Manual.yaml y script.persiana_mover).
+#   /persiana_si_<persiana>_<posición> -> vuelve a modo automático y la pone ahí
+#   /persiana_no_<persiana>            -> sigue en manual hasta las 00:01
+- alias: 'Persianas respuesta Telegram'
+  id: persianas_respuesta_telegram
+  initial_state: true
+  triggers:
+    - trigger: event
+      event_type: telegram_callback
+  conditions:
+    - condition: template
+      value_template: "{{ trigger.event.data.data is string and trigger.event.data.data.startswith('/persiana_') }}"
+  variables:
+    partes: "{{ trigger.event.data.data.split('_') }}"
+    respuesta: "{{ partes[1] }}"
+    persiana: "{{ partes[2] }}"
+    posicion: "{{ partes[3] | int(0) if partes | count > 3 else 0 }}"
+    nombre: "{{ {'office': 'Despacho', 'dinner': 'Comedor', 'sleep': 'Dormitorio', 'room': 'Habitación'}.get(persiana, persiana) }}"
+    texto: "{{ trigger.event.data.message.text | default('') }}"
+  actions:
+    - if:
+        - condition: template
+          value_template: "{{ respuesta == 'si' }}"
+      then:
+        - action: input_boolean.turn_off
+          target:
+            entity_id: "input_boolean.persiana_{{ persiana }}_manual"
+        - action: telegram_bot.answer_callback_query
+          data:
+            callback_query_id: "{{ trigger.event.data.id }}"
+            message: "{{ nombre }} → {{ posicion }} %"
+        - action: telegram_bot.edit_message
+          data:
+            chat_id: "{{ trigger.event.data.chat_id }}"
+            message_id: "{{ trigger.event.data.message.message_id }}"
+            message: "{{ texto }}\n\U00002705 Sí: {{ nombre }} al {{ posicion }} % y vuelve al modo automático"
+            inline_keyboard: []
+        - action: script.persiana_mover
+          data:
+            persiana: "{{ persiana }}"
+            posicion: "{{ posicion }}"
+            motivo: "lo has aceptado en Telegram"
+      else:
+        - action: telegram_bot.answer_callback_query
+          data:
+            callback_query_id: "{{ trigger.event.data.id }}"
+            message: "Vale, no la toco"
+        - action: telegram_bot.edit_message
+          data:
+            chat_id: "{{ trigger.event.data.chat_id }}"
+            message_id: "{{ trigger.event.data.message.message_id }}"
+            message: "{{ texto }}\n\U0000274C No: {{ nombre }} sigue en manual hasta las 00:01"
+            inline_keyboard: []
+  mode: queued

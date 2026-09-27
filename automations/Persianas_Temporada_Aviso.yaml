@@ -1,0 +1,23 @@
+# Aviso por Telegram del cambio de temporada de las persianas
+# (binary_sensor.persianas_calor, packages/persianas.yaml).
+- alias: 'Persianas aviso temporada'
+  id: persianas_aviso_temporada
+  initial_state: true
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.persianas_calor
+      from:
+        - 'on'
+        - 'off'
+      to:
+        - 'on'
+        - 'off'
+  conditions:
+    - condition: state
+      entity_id: input_boolean.persianas_notificar
+      state: 'on'
+  actions:
+    - action: telegram_bot.send_message
+      data:
+        message: "{{ '\U0001F321 Persianas en modo calor' if trigger.to_state.state == 'on' else '\U00002744 Persianas en modo frío' }} (máx. {{ state_attr('binary_sensor.persianas_calor', 'maxima_evaluada') }} °C, ahora {{ states('sensor.carlet_valencia_temperature') }} °C): {{ 'sombra con sol en la fachada y 25 % de noche' if trigger.to_state.state == 'on' else 'sin sombra y cierre total de noche' }}"
+  mode: single

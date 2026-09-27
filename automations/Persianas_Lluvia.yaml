@@ -1,0 +1,59 @@
+# Lluvia (binary_sensor.persianas_lluvia, estación Meteoclimatic de Carlet): baja
+# todas las persianas a 0 % para que no se ensucien los cristales ni entre agua
+# si hay una ventana abierta. Cuando lleva 20 min sin llover, cada persiana vuelve a la
+# posición que le toca (custom_templates/persianas.jinja). Las que estén en
+# manual se preguntan con Sí/No y, al empezar a llover, se bajan igualmente si no
+# contestas en 5 min (script.persiana_lluvia_pregunta). Ver packages/persianas.yaml.
+- alias: 'Persianas lluvia'
+  id: persianas_lluvia
+  initial_state: true
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.persianas_lluvia
+      from: 'off'
+      to: 'on'
+      for: "00:02:00"
+      id: empieza
+    - trigger: state
+      entity_id: binary_sensor.persianas_lluvia
+      from: 'on'
+      to: 'off'
+      for: "00:20:00"
+      id: para
+  actions:
+    - repeat:
+        for_each:
+          - office
+          - dinner
+          - sleep
+          - room
+        sequence:
+          - variables:
+              ideal: >-
+                {% from 'persianas.jinja' import persiana_ideal %}{{ persiana_ideal(repeat.item) }}
+              motivo: >-
+                {{ 'está lloviendo (' ~ state_attr('binary_sensor.persianas_lluvia', 'precipitacion_hoy') ~ ' mm hoy, estación: ' ~ state_attr('binary_sensor.persianas_lluvia', 'estado_tiempo') ~ ')' if trigger.id == 'empieza' else 'ha dejado de llover; ' ~ ideal.split('|')[1] }}
+          # Al empezar a llover, las que están en manual (y no cerradas) se
+          # preguntan y se bajan igualmente si no contestas en 5 min
+          - if:
+              - condition: template
+                value_template: >-
+                  {{ trigger.id == 'empieza'
+                     and is_state('input_boolean.persianas_auto', 'on')
+                     and is_state('input_boolean.persiana_' ~ repeat.item ~ '_manual', 'on')
+                     and state_attr('cover.shutter_' ~ repeat.item, 'current_position') | int(0) > 3 }}
+            then:
+              - action: script.turn_on
+                target:
+                  entity_id: script.persiana_lluvia_pregunta
+                data:
+                  variables:
+                    persiana: "{{ repeat.item }}"
+                    motivo: "{{ motivo }}"
+            else:
+              - action: script.persiana_mover
+                data:
+                  persiana: "{{ repeat.item }}"
+                  posicion: "{{ 0 if trigger.id == 'empieza' else ideal.split('|')[0] | int }}"
+                  motivo: "{{ motivo }}"
+  mode: single

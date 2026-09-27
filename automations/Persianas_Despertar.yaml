@@ -1,0 +1,60 @@
+# Marca el despertar (input_boolean.persianas_despierto) para abrir las persianas
+# por la mañana (Persianas_Abrir_Manana.yaml):
+#   - alarma del móvil entre las 05:00 y las 12:00 (con el GPS en casa)
+#   - móvil en el wifi con el GPS en casa entre las 05:00 y las 23:00 (al volver
+#     al wifi, al arrancar HA o al recargar automatizaciones)
+# Se reinicia a las 03:00. Ver packages/persianas.yaml.
+- alias: 'Persianas despertar'
+  id: persianas_despertar
+  initial_state: true
+  triggers:
+    - trigger: time
+      at: sensor.rdm13npp_next_alarm
+      id: alarma
+    - trigger: state
+      entity_id: binary_sensor.persianas_durmiendo
+      from: 'on'
+      to: 'off'
+      id: wifi
+    - trigger: homeassistant
+      event: start
+      id: wifi
+    - trigger: event
+      event_type: automation_reloaded
+      id: wifi
+    - trigger: time
+      at: "03:00:00"
+      id: reinicio
+  actions:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: reinicio
+          sequence:
+            - action: input_boolean.turn_off
+              target:
+                entity_id: input_boolean.persianas_despierto
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.persianas_despierto
+              state: 'off'
+            - condition: state
+              entity_id: device_tracker.rdm13npp
+              state: 'home'
+            - condition: template
+              value_template: >-
+                {% if trigger.id == 'alarma' %}{{ 5 <= now().hour < 12 }}
+                {% else %}{{ 5 <= now().hour < 23 and is_state('device_tracker.rdm13nppmovil', 'home') }}{% endif %}
+          sequence:
+            - action: input_boolean.turn_on
+              target:
+                entity_id: input_boolean.persianas_despierto
+            - if:
+                - condition: state
+                  entity_id: input_boolean.persianas_notificar
+                  state: 'on'
+              then:
+                - action: telegram_bot.send_message
+                  data:
+                    message: "\U00002600 Estás despierto ({{ 'alarma' if trigger.id == 'alarma' else 'móvil en el wifi' }}, {{ now().strftime('%H:%M') }})"
+  mode: single

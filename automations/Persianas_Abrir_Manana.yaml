@@ -1,0 +1,62 @@
+# Abre las persianas por la mañana cuando te has despertado y ya es de día
+# (lo que llegue más tarde). En temporada de calor, si el sol ya da en esa
+# fachada, va directa a la posición de sombra.
+# Respaldo a las 11:00 si no te has despertado en casa (viaje): abre solo
+# despacho y comedor para que parezca que hay alguien; los dormitorios no.
+# Ver packages/persianas.yaml.
+- alias: 'Persianas abrir mañana'
+  id: persianas_abrir_manana
+  initial_state: true
+  triggers:
+    - trigger: state
+      entity_id: input_boolean.persianas_despierto
+      from: 'off'
+      to: 'on'
+      id: despierto
+    - trigger: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      above: -2
+      id: amanecer
+    - trigger: time
+      at: "11:00:00"
+      id: respaldo
+  variables:
+    fachadas:
+      office: despacho
+      dinner: sur
+      sleep: este
+      room: este
+    nublado: "{{ states('weather.carlet_valencia') in ['cloudy', 'rainy', 'pouring', 'fog', 'snowy', 'snowy-rainy', 'hail', 'lightning', 'lightning-rainy'] }}"
+    calor: "{{ is_state('binary_sensor.persianas_calor', 'on') }}"
+    fuera: "{{ is_state('binary_sensor.persianas_fuera', 'on') }}"
+    sombra_pos: "{{ 10 if fuera else 30 }}"
+    despierto: "{{ is_state('input_boolean.persianas_despierto', 'on') }}"
+    de_dia: "{{ state_attr('sun.sun', 'elevation') | float(-90) > -2 }}"
+    persianas: >-
+      {{ ['office', 'dinner'] if trigger.id == 'respaldo' else ['office', 'dinner', 'sleep', 'room'] }}
+  conditions:
+    - condition: template
+      value_template: >-
+        {{ not despierto if trigger.id == 'respaldo' else (despierto and de_dia and now().hour < 13) }}
+  actions:
+    - repeat:
+        for_each: "{{ persianas }}"
+        sequence:
+          - variables:
+              fachada: "{{ fachadas[repeat.item] }}"
+              donde: "{{ {'sur': 'la fachada sur', 'este': 'la fachada este', 'despacho': 'el balcón del despacho'}[fachada] }}"
+              pc: >-
+                {% from 'persianas.jinja' import despacho_pc %}{{ despacho_pc() if repeat.item == 'office' else '' }}
+              sombra: "{{ calor and not nublado and pc != 'tarde' and is_state('binary_sensor.sol_fachada_' ~ fachada, 'on') }}"
+              por_que: >-
+                {%- if trigger.id == 'respaldo' -%}son las 11:00 y no te has despertado en casa (simula presencia)
+                {%- elif trigger.id == 'amanecer' -%}ya es de día y estás despierto
+                {%- else -%}te has despertado ({{ now().strftime('%H:%M') }}){%- endif -%}
+          - action: script.persiana_mover
+            data:
+              persiana: "{{ repeat.item }}"
+              posicion: "{{ (50 if pc == 'manana' else sombra_pos) if sombra else 100 }}"
+              motivo: >-
+                {{ por_que }}{% if sombra %}; sol en {{ donde }} y temporada de calor{{ ', estás fuera' if fuera else '' }}{% endif %}
+  mode: single

@@ -1,0 +1,92 @@
+# Protección solar en temporada de calor: cuando el sol da en una fachada o en
+# el balcón del despacho (sensores sol_fachada_*, packages/persianas.yaml) (y no
+# está nublado) baja sus persianas a la posición de sombra (30 % en casa, 10 %
+# fuera); cuando deja de dar, las vuelve a abrir.
+# Solo toca persianas abiertas o en posición de sombra: una persiana en posición
+# de noche (25 % o 0 %) o movida a mano no se toca. Si sales con el sol dando,
+# baja la sombra a la de fuera. Ver packages/persianas.yaml.
+- alias: 'Persianas protección solar'
+  id: persianas_proteccion_solar
+  initial_state: true
+  triggers:
+    # Márgenes para que una nube o el cambio de azimut no la muevan arriba y abajo
+    - trigger: state
+      entity_id:
+        - binary_sensor.sol_fachada_sur
+        - binary_sensor.sol_fachada_este
+        - binary_sensor.sol_fachada_despacho
+      from: 'off'
+      to: 'on'
+      for: "00:10:00"
+      id: sol
+    - trigger: state
+      entity_id:
+        - binary_sensor.sol_fachada_sur
+        - binary_sensor.sol_fachada_este
+        - binary_sensor.sol_fachada_despacho
+      from: 'on'
+      to: 'off'
+      for: "00:15:00"
+      id: sol
+    # Al salir, la sombra baja de 30 % a 10 %. La llegada la gestiona
+    # Persianas_Llegada.yaml
+    - trigger: state
+      entity_id: binary_sensor.persianas_fuera
+      from: 'off'
+      to: 'on'
+      id: fuera
+    - trigger: state
+      entity_id: binary_sensor.persianas_calor
+      from: 'off'
+      to: 'on'
+      id: calor
+  variables:
+    fachadas:
+      office: despacho
+      dinner: sur
+      sleep: este
+      room: este
+    nublado: "{{ states('weather.carlet_valencia') in ['cloudy', 'rainy', 'pouring', 'fog', 'snowy', 'snowy-rainy', 'hail', 'lightning', 'lightning-rainy'] }}"
+    calor: "{{ is_state('binary_sensor.persianas_calor', 'on') }}"
+    fuera: "{{ is_state('binary_sensor.persianas_fuera', 'on') }}"
+    sombra_pos: "{{ 10 if fuera else 30 }}"
+    # Con el disparo de una fachada solo se miran sus persianas
+    persianas: >-
+      {%- if trigger.id == 'sol' -%}
+        {%- set f = trigger.entity_id.split('_')[-1] -%}
+        {{ fachadas | dictsort | selectattr(1, 'eq', f) | map(attribute=0) | list }}
+      {%- else -%}{{ fachadas.keys() | list }}{%- endif -%}
+  actions:
+    - repeat:
+        for_each: "{{ persianas }}"
+        sequence:
+          - variables:
+              fachada: "{{ fachadas[repeat.item] }}"
+              donde: "{{ {'sur': 'la fachada sur', 'este': 'la fachada este', 'despacho': 'el balcón del despacho'}[fachada] }}"
+              sol: "{{ is_state('binary_sensor.sol_fachada_' ~ fachada, 'on') }}"
+              pos: "{{ state_attr('cover.shutter_' ~ repeat.item, 'current_position') | int(-100) }}"
+              # Despacho con el ordenador encendido: sombra al 50 % por la mañana,
+              # sin sombra (100 %) por la tarde
+              pc: >-
+                {% from 'persianas.jinja' import despacho_pc %}{{ despacho_pc() if repeat.item == 'office' else '' }}
+              sombra_esta: "{{ 50 if pc == 'manana' else sombra_pos }}"
+              en_sombra: "{{ (pos - 10) | abs <= 3 or (pos - 30) | abs <= 3 or (repeat.item == 'office' and (pos - 50) | abs <= 3) }}"
+              abierta: "{{ pos > sombra_esta + 3 }}"
+              # Qué toca: sombra, abrir o nada
+              destino: >-
+                {%- if pc == 'tarde' -%}none
+                {%- elif calor and sol and not nublado and (abierta or en_sombra) -%}{{ sombra_esta }}
+                {%- elif not sol and en_sombra -%}100
+                {%- else -%}none{%- endif -%}
+          - if:
+              - condition: template
+                value_template: "{{ destino | trim != 'none' }}"
+            then:
+              - action: script.persiana_mover
+                data:
+                  persiana: "{{ repeat.item }}"
+                  posicion: "{{ destino | int }}"
+                  motivo: >-
+                    {%- if destino | int == 100 -%}el sol ya no da en {{ donde }}
+                    {%- else -%}sol en {{ donde }}, temporada de calor (máx. evaluada {{ state_attr('binary_sensor.persianas_calor', 'maxima_evaluada') }} °C), {{ states('weather.carlet_valencia') }}, {{ 'estás fuera' if fuera else 'estás en casa' }}{{ ', trabajando en el ordenador (sombra suave)' if pc == 'manana' else '' }}{%- endif -%}
+  mode: queued

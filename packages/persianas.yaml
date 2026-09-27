@@ -1,0 +1,340 @@
+# Gestión automática de las 4 persianas (automations/Persianas_*.yaml).
+#
+#   Persiana              Estancia     Fachada
+#   cover.shutter_office  Despacho     sur, con balcón (sol solo hasta ~14:00)
+#   cover.shutter_dinner  Comedor      sur
+#   cover.shutter_sleep   Dormitorio   este
+#   cover.shutter_room    Habitación   este
+#
+# Posiciones: 0 = cerrada, 100 = abierta.
+#   Sombra (calor y sol en la fachada): 30 % en casa, 10 % fuera
+#   Noche: 25 % en temporada de calor (corriente de aire), 0 % en frío
+#   Lluvia: 0 % (que no se ensucien los cristales ni entre agua)
+# Todas las órdenes pasan por script.persiana_mover, que avisa por Telegram de
+# cada decisión si input_boolean.persianas_notificar está activo.
+# Una persiana movida a mano queda en manual hasta las 00:01; mientras tanto, si
+# no está donde tocaría, se pregunta por Telegram con botones Sí/No si se pone
+# (Persianas_Manual.yaml, Persianas_Telegram_Respuesta.yaml). La posición que
+# toca en cada momento se calcula en custom_templates/persianas.jinja.
+#
+# Presencia (mismo móvil, dos trackers): de noche se apaga el wifi del móvil.
+#   GPS casa + wifi casa  -> despierto en casa
+#   GPS casa + sin wifi   -> durmiendo
+#   GPS fuera             -> fuera
+
+input_boolean:
+  persianas_auto:
+    name: Persianas automáticas
+    icon: mdi:window-shutter-auto
+  persianas_notificar:
+    name: Persianas avisar por Telegram
+    icon: mdi:message-badge
+  persianas_despierto:
+    name: Persianas despierto
+    icon: mdi:weather-sunset-up
+  persiana_office_manual:
+    name: Persiana despacho manual
+    icon: mdi:hand-back-right
+  persiana_dinner_manual:
+    name: Persiana comedor manual
+    icon: mdi:hand-back-right
+  persiana_sleep_manual:
+    name: Persiana dormitorio manual
+    icon: mdi:hand-back-right
+  persiana_room_manual:
+    name: Persiana habitación manual
+    icon: mdi:hand-back-right
+
+# Hora de la última orden automática de cada persiana (Persianas_Manual.yaml)
+input_datetime:
+  persiana_office_auto:
+    name: Persiana despacho última orden automática
+    has_date: true
+    has_time: true
+  persiana_dinner_auto:
+    name: Persiana comedor última orden automática
+    has_date: true
+    has_time: true
+  persiana_sleep_auto:
+    name: Persiana dormitorio última orden automática
+    has_date: true
+    has_time: true
+  persiana_room_auto:
+    name: Persiana habitación última orden automática
+    has_date: true
+    has_time: true
+
+# Posición a la que se mandó cada persiana en la última orden automática: un
+# cambio que no la acerca a ese objetivo es manual (Persianas_Manual.yaml)
+input_number:
+  persiana_office_objetivo:
+    name: Persiana despacho objetivo automático
+    min: 0
+    max: 100
+    step: 1
+    mode: box
+    unit_of_measurement: "%"
+  persiana_dinner_objetivo:
+    name: Persiana comedor objetivo automático
+    min: 0
+    max: 100
+    step: 1
+    mode: box
+    unit_of_measurement: "%"
+  persiana_sleep_objetivo:
+    name: Persiana dormitorio objetivo automático
+    min: 0
+    max: 100
+    step: 1
+    mode: box
+    unit_of_measurement: "%"
+  persiana_room_objetivo:
+    name: Persiana habitación objetivo automático
+    min: 0
+    max: 100
+    step: 1
+    mode: box
+    unit_of_measurement: "%"
+
+template:
+  # Temporada de calor, con histéresis: se evalúa a las 20:00 con la máxima real
+  # del día (la de medianoche se reinicia y no sirve), así vale para esa noche y
+  # el día siguiente. Una ola de calor (>= 27 °C ahora) la activa en el momento.
+  # Al arrancar HA solo se calcula si aún no tiene valor (primera vez).
+  - triggers:
+      - trigger: homeassistant
+        event: start
+        id: inicio
+      - trigger: time
+        at: "20:00:00"
+      - trigger: numeric_state
+        entity_id: sensor.carlet_valencia_temperature
+        above: 27
+        id: ola_calor
+    binary_sensor:
+      - name: Persianas calor
+        unique_id: persianas_calor
+        icon: mdi:thermometer-high
+        state: >-
+          {%- set previo = this.state == 'on' -%}
+          {%- set maxima = states('sensor.carlet_valencia_daily_max_temperature') | float(none) -%}
+          {%- if trigger.id == 'inicio' and this.state in ['on', 'off'] -%}{{ previo }}
+          {%- elif trigger.id == 'ola_calor' -%}true
+          {%- elif maxima is none -%}{{ previo }}
+          {%- elif maxima >= 25 -%}true
+          {%- elif maxima <= 22 -%}false
+          {%- else -%}{{ previo }}{%- endif -%}
+        attributes:
+          maxima_evaluada: "{{ states('sensor.carlet_valencia_daily_max_temperature') }}"
+
+  # Lloviendo, según la estación Meteoclimatic de Carlet: sube su precipitación
+  # del día (se da por lloviendo hasta 30 min después de la última subida) o
+  # weather.carlet_valencia dice que llueve. Un falso positivo solo baja persianas.
+  - triggers:
+      - trigger: state
+        entity_id: sensor.carlet_valencia_daily_precipitation
+        id: estacion
+      - trigger: state
+        entity_id: weather.carlet_valencia
+      - trigger: time_pattern
+        minutes: /5
+      - trigger: homeassistant
+        event: start
+    binary_sensor:
+      - name: Persianas lluvia
+        unique_id: persianas_lluvia
+        icon: mdi:weather-pouring
+        state: >-
+          {%- set sube = trigger.id == 'estacion' and is_number(trigger.from_state.state) and is_number(trigger.to_state.state)
+                         and trigger.to_state.state | float > trigger.from_state.state | float -%}
+          {%- set ultima = now().timestamp() if sube else this.attributes.get('ultima_subida', 0) | float(0) -%}
+          {{ states('weather.carlet_valencia') in ['rainy', 'pouring', 'lightning-rainy', 'hail']
+             or now().timestamp() - ultima < 1800 }}
+        attributes:
+          ultima_subida: >-
+            {%- set sube = trigger.id == 'estacion' and is_number(trigger.from_state.state) and is_number(trigger.to_state.state)
+                           and trigger.to_state.state | float > trigger.from_state.state | float -%}
+            {{ now().timestamp() if sube else this.attributes.get('ultima_subida', 0) | float(0) }}
+          precipitacion_hoy: "{{ states('sensor.carlet_valencia_daily_precipitation') }}"
+          estado_tiempo: "{{ states('weather.carlet_valencia') }}"
+
+  - binary_sensor:
+      # Sol dando en cada fachada (azimut y elevación de sun.sun). Sin
+      # delay_on/delay_off: sun.sun se actualiza cada pocos minutos y reiniciaría
+      # el retraso sin llegar a cumplirse nunca; el margen va en los `for:` de
+      # Persianas_Proteccion_Solar.yaml
+      - name: Sol fachada sur
+        unique_id: sol_fachada_sur
+        icon: mdi:sun-angle
+        state: >-
+          {{ 100 <= state_attr('sun.sun', 'azimuth') | float(0) <= 260
+             and state_attr('sun.sun', 'elevation') | float(-90) > 15 }}
+      # Despacho: la ventana está retirada dentro del balcón, que le quita el
+      # sol a partir del mediodía solar (azimut 180°, ~14:00); el comedor, con la
+      # ventana a ras de fachada, sigue con sol_fachada_sur
+      - name: Sol despacho (balcón)
+        unique_id: sol_fachada_despacho
+        default_entity_id: binary_sensor.sol_fachada_despacho
+        icon: mdi:sun-angle
+        state: >-
+          {{ 100 <= state_attr('sun.sun', 'azimuth') | float(0) <= 180
+             and state_attr('sun.sun', 'elevation') | float(-90) > 15 }}
+      - name: Sol fachada este
+        unique_id: sol_fachada_este
+        icon: mdi:sun-angle
+        state: >-
+          {{ 45 <= state_attr('sun.sun', 'azimuth') | float(0) <= 170
+             and state_attr('sun.sun', 'elevation') | float(-90) > 8 }}
+      # GPS en casa pero el móvil sin wifi: durmiendo. Sin delay_on por lo mismo
+      # que los de sol (los atributos del GPS cambian a menudo)
+      - name: Persianas durmiendo
+        unique_id: persianas_durmiendo
+        icon: mdi:sleep
+        state: >-
+          {{ is_state('device_tracker.rdm13npp', 'home')
+             and not is_state('device_tracker.rdm13nppmovil', 'home') }}
+      - name: Persianas fuera
+        unique_id: persianas_fuera
+        icon: mdi:home-export-outline
+        state: >-
+          {{ states('device_tracker.rdm13npp') not in ['home', 'unknown', 'unavailable'] }}
+
+script:
+  persiana_mover:
+    alias: Persiana mover (automático)
+    description: Orden automática a una persiana, respetando el control manual y avisando por Telegram
+    mode: parallel
+    fields:
+      persiana:
+        description: office, dinner, sleep o room
+        example: dinner
+      posicion:
+        description: Posición destino (0 cerrada, 100 abierta)
+        example: 30
+      motivo:
+        description: Por qué se mueve (va en el aviso)
+        example: sol en fachada sur
+      forzar:
+        description: Moverla aunque esté en manual (lluvia sin respuesta)
+        example: false
+    variables:
+      cover: "cover.shutter_{{ persiana }}"
+      nombre: "{{ {'office': 'Despacho', 'dinner': 'Comedor', 'sleep': 'Dormitorio', 'room': 'Habitación'}[persiana] }}"
+      destino: "{{ posicion | int }}"
+      manual: "input_boolean.persiana_{{ persiana }}_manual"
+      avisar: "{{ is_state('input_boolean.persianas_notificar', 'on') }}"
+    sequence:
+      - condition: state
+        entity_id: input_boolean.persianas_auto
+        state: 'on'
+      # Tras reiniciar HA las persianas tardan unos segundos en volver (MQTT):
+      # se espera hasta 2 min antes de darla por no disponible
+      - wait_template: "{{ has_value(cover) }}"
+        timeout: "00:02:00"
+        continue_on_timeout: true
+      - variables:
+          actual: "{{ state_attr(cover, 'current_position') | int(-100) }}"
+      - if:
+          - condition: template
+            value_template: "{{ not has_value(cover) }}"
+        then:
+          - if:
+              - condition: template
+                value_template: "{{ avisar }}"
+            then:
+              - action: telegram_bot.send_message
+                data:
+                  message: "\U000026A0 {{ nombre }}: no disponible, no la muevo al {{ destino }} % ({{ motivo }})"
+          - stop: "Persiana no disponible"
+      # Ya está ahí: nada que hacer ni que avisar
+      - condition: template
+        value_template: "{{ (actual - destino) | abs > 3 }}"
+      # En manual: no se mueve, pero se pregunta por Telegram si se pone
+      # (respuesta en automations/Persianas_Telegram_Respuesta.yaml)
+      - if:
+          - condition: template
+            value_template: "{{ is_state(manual, 'on') and not (forzar | default(false)) }}"
+        then:
+          - action: telegram_bot.send_message
+            data:
+              message: "\U0000270B {{ nombre }} está en manual (la moviste a las {{ as_timestamp(states[manual].last_changed) | timestamp_custom('%H:%M') }}). Ahora tocaría ponerla al {{ destino }} %: {{ motivo }}. ¿La pongo?"
+              inline_keyboard:
+                - "\U00002705 Sí ({{ destino }} %):/persiana_si_{{ persiana }}_{{ destino }}, \U0000274C No:/persiana_no_{{ persiana }}"
+          - stop: "Persiana en manual"
+      # Con lluvia no se abre ninguna persiana (Persianas_Lluvia.yaml las baja
+      # y las recoloca al parar)
+      - if:
+          - condition: template
+            value_template: "{{ is_state('binary_sensor.persianas_lluvia', 'on') and destino > actual }}"
+        then:
+          - if:
+              - condition: template
+                value_template: "{{ avisar }}"
+            then:
+              - action: telegram_bot.send_message
+                data:
+                  message: "\U0001F327 {{ nombre }}: no la subo al {{ destino }} % ({{ motivo }}) porque está lloviendo"
+          - stop: "Lloviendo"
+      - action: input_number.set_value
+        target:
+          entity_id: "input_number.persiana_{{ persiana }}_objetivo"
+        data:
+          value: "{{ destino }}"
+      - action: input_datetime.set_datetime
+        target:
+          entity_id: "input_datetime.persiana_{{ persiana }}_auto"
+        data:
+          timestamp: "{{ now().timestamp() }}"
+      - action: cover.set_cover_position
+        target:
+          entity_id: "{{ cover }}"
+        data:
+          position: "{{ destino }}"
+      - if:
+          - condition: template
+            value_template: "{{ avisar }}"
+        then:
+          - action: telegram_bot.send_message
+            data:
+              message: "\U0001FA9F {{ nombre }} → {{ destino }} % · {{ motivo }}"
+
+  # Lluvia con una persiana en manual: pregunta si se baja y, si en 5 min no
+  # contestas, la baja igualmente. Con "No" se respeta. La respuesta la procesa
+  # automations/Persianas_Telegram_Respuesta.yaml; aquí solo se espera por ella.
+  persiana_lluvia_pregunta:
+    alias: Persiana lluvia pregunta (manual)
+    mode: parallel
+    fields:
+      persiana:
+        description: office, dinner, sleep o room
+        example: dinner
+      motivo:
+        description: Detalle de la lluvia (va en los avisos)
+        example: está lloviendo
+    variables:
+      nombre: "{{ {'office': 'Despacho', 'dinner': 'Comedor', 'sleep': 'Dormitorio', 'room': 'Habitación'}[persiana] }}"
+    sequence:
+      - action: telegram_bot.send_message
+        data:
+          message: "\U0001F327 {{ nombre }} está en manual y {{ motivo }}. ¿La bajo al 0 %? Si no contestas en 5 min, la bajo igualmente."
+          inline_keyboard:
+            - "\U00002705 Sí (0 %):/persiana_si_{{ persiana }}_0, \U0000274C No:/persiana_no_{{ persiana }}"
+      - wait_for_trigger:
+          - trigger: event
+            event_type: telegram_callback
+            event_data:
+              data: "/persiana_si_{{ persiana }}_0"
+          - trigger: event
+            event_type: telegram_callback
+            event_data:
+              data: "/persiana_no_{{ persiana }}"
+        timeout: "00:05:00"
+      # Si has contestado, ya lo ha hecho Persianas_Telegram_Respuesta.yaml
+      - condition: template
+        value_template: "{{ wait.trigger is none and is_state('binary_sensor.persianas_lluvia', 'on') }}"
+      - action: script.persiana_mover
+        data:
+          persiana: "{{ persiana }}"
+          posicion: 0
+          motivo: "{{ motivo }} y no has contestado en 5 min"
+          forzar: true

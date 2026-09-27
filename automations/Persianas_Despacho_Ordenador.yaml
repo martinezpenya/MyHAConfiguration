@@ -1,0 +1,39 @@
+# Despacho y ordenador (switch.sw03_8tree): al encenderlo o apagarlo, y a las
+# 12:00, la persiana del despacho pasa a la posición que le toca
+# (custom_templates/persianas.jinja, despacho_pc):
+#   ordenador encendido antes de las 12:00 -> sombra suave, 50 % (si toca sombra)
+#   ordenador encendido desde las 12:00    -> 100 %
+#   ordenador apagado                      -> lo normal
+# La lluvia y la noche siguen mandando. Ver packages/persianas.yaml.
+- alias: 'Persianas despacho ordenador'
+  id: persianas_despacho_ordenador
+  initial_state: true
+  triggers:
+    - trigger: state
+      entity_id: switch.sw03_8tree
+      from: 'off'
+      to: 'on'
+      id: encendido
+    - trigger: state
+      entity_id: switch.sw03_8tree
+      from: 'on'
+      to: 'off'
+      id: apagado
+    # Ordenador ya encendido desde la mañana
+    - trigger: time
+      at: "12:00:00"
+      id: mediodia
+  conditions:
+    - condition: template
+      value_template: "{{ trigger.id != 'mediodia' or is_state('switch.sw03_8tree', 'on') }}"
+  variables:
+    ideal: >-
+      {% from 'persianas.jinja' import persiana_ideal %}{{ persiana_ideal('office') }}
+  actions:
+    - action: script.persiana_mover
+      data:
+        persiana: office
+        posicion: "{{ ideal.split('|')[0] | int }}"
+        motivo: >-
+          {{ ('has apagado el ordenador; ' if trigger.id == 'apagado' else '') ~ ideal.split('|')[1] }}
+  mode: single

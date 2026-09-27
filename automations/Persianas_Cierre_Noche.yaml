@@ -1,0 +1,41 @@
+# Cierre de noche de las 4 persianas cuando el sol baja de -4° (poco después
+# de la puesta), nunca antes de las 18:00; a las 23:30 se repite por si se
+# perdió el disparo (p. ej. reinicio de HA).
+# Temporada de calor: 25 % para que corra el aire. Frío: cierre total.
+# Ver packages/persianas.yaml.
+- alias: 'Persianas cierre noche'
+  id: persianas_cierre_noche
+  initial_state: true
+  triggers:
+    - trigger: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      below: -4
+    - trigger: time
+      at: "18:00:00"
+    - trigger: time
+      at: "23:30:00"
+  conditions:
+    - condition: time
+      after: "17:59:00"
+    - condition: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      below: -4
+  variables:
+    calor: "{{ is_state('binary_sensor.persianas_calor', 'on') }}"
+  actions:
+    - repeat:
+        for_each:
+          - office
+          - dinner
+          - sleep
+          - room
+        sequence:
+          - action: script.persiana_mover
+            data:
+              persiana: "{{ repeat.item }}"
+              posicion: "{{ 25 if calor else 0 }}"
+              motivo: >-
+                {{ 'noche, temporada de calor: 25 % para que corra el aire' if calor else 'noche, temporada de frío: cierre total para conservar el calor' }}
+  mode: single

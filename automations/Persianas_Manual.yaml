@@ -1,0 +1,115 @@
+# Movimiento manual de una persiana (botón, menú de Telegram, panel): si la
+# posición cambia y no es una orden automática (en los últimos 90 s y
+# acercándose a su objetivo, input_number.persiana_X_objetivo), se espera a que
+# se pare (la posición llega de 1 en 1 mientras se mueve) y, si se ha movido más
+# de 3 puntos desde donde estaba, se marca como manual (la automatización no la
+# toca hasta las 00:01). Si la posición en la que se queda no es la que tocaría
+# ahora, pregunta por Telegram si se pone la sugerida (respuesta en
+# Persianas_Telegram_Respuesta.yaml).
+# Ver packages/persianas.yaml y custom_templates/persianas.jinja.
+- alias: 'Persianas movimiento manual'
+  id: persianas_movimiento_manual
+  initial_state: true
+  triggers:
+    - trigger: state
+      entity_id:
+        - cover.shutter_office
+        - cover.shutter_dinner
+        - cover.shutter_sleep
+        - cover.shutter_room
+      attribute: current_position
+      id: movimiento
+    - trigger: time
+      at: "00:01:00"
+      id: reinicio
+  actions:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: reinicio
+          sequence:
+            - action: input_boolean.turn_off
+              target:
+                entity_id:
+                  - input_boolean.persiana_office_manual
+                  - input_boolean.persiana_dinner_manual
+                  - input_boolean.persiana_sleep_manual
+                  - input_boolean.persiana_room_manual
+        - conditions:
+            - condition: template
+              value_template: >-
+                {%- set p = trigger.entity_id.split('_')[-1] -%}
+                {%- set antes = trigger.from_state.attributes.current_position | default(none) -%}
+                {%- set ahora = trigger.to_state.attributes.current_position | default(none) -%}
+                {{ antes is number and ahora is number and ahora != antes
+                   and is_state('input_boolean.persianas_auto', 'on')
+                   and is_state('input_boolean.persiana_' ~ p ~ '_manual', 'off')
+                   and not (now().timestamp() - state_attr('input_datetime.persiana_' ~ p ~ '_auto', 'timestamp') | float(0) < 90
+                            and (ahora - states('input_number.persiana_' ~ p ~ '_objetivo') | float(0)) | abs
+                                < (antes - states('input_number.persiana_' ~ p ~ '_objetivo') | float(0)) | abs) }}
+          sequence:
+            - variables:
+                persiana: "{{ trigger.entity_id.split('_')[-1] }}"
+                de_nombre: "{{ {'office': 'del despacho', 'dinner': 'del comedor', 'sleep': 'del dormitorio', 'room': 'de la habitación'}[persiana] }}"
+                antes: "{{ trigger.from_state.attributes.current_position | int }}"
+            # Se marca ya para que los siguientes pasos del mismo movimiento no
+            # lancen otra ejecución (la posición llega de 1 en 1 mientras se mueve)
+            - action: input_boolean.turn_on
+              target:
+                entity_id: "input_boolean.persiana_{{ persiana }}_manual"
+            # Esperar a que deje de moverse: 8 s sin cambios de su posición
+            # (entity_id no admite plantillas: se escuchan las 4 y se filtra)
+            - repeat:
+                sequence:
+                  - wait_for_trigger:
+                      - trigger: state
+                        entity_id:
+                          - cover.shutter_office
+                          - cover.shutter_dinner
+                          - cover.shutter_sleep
+                          - cover.shutter_room
+                        attribute: current_position
+                    timeout: "00:00:08"
+                    continue_on_timeout: true
+                until:
+                  - condition: template
+                    value_template: >-
+                      {{ repeat.index >= 60 or wait.trigger is none
+                         or (wait.trigger.entity_id != trigger.entity_id and now() - states[trigger.entity_id].last_updated > timedelta(seconds=8)) }}
+            - variables:
+                final: "{{ state_attr(trigger.entity_id, 'current_position') | int(antes) }}"
+            # Un ajuste de pocos puntos (o un vaivén) no cuenta como manual
+            - if:
+                - condition: template
+                  value_template: "{{ (final - antes) | abs <= 3 }}"
+              then:
+                - action: input_boolean.turn_off
+                  target:
+                    entity_id: "input_boolean.persiana_{{ persiana }}_manual"
+                - stop: "Movimiento de 3 puntos o menos"
+            - variables:
+                ideal: >-
+                  {% from 'persianas.jinja' import persiana_ideal %}{{ persiana_ideal(persiana) }}
+                ideal_pos: "{{ ideal.split('|')[0] | int }}"
+                ideal_motivo: "{{ ideal.split('|')[1] }}"
+                verbo: "{{ 'subido' if final > antes else 'bajado' }}"
+            - if:
+                - condition: template
+                  value_template: "{{ (final - ideal_pos) | abs > 5 }}"
+              then:
+                - action: telegram_bot.send_message
+                  data:
+                    message: "\U0000270B Has {{ verbo }} la persiana {{ de_nombre }} al {{ final }} %, pero {{ ideal_motivo }}: yo la pondría al {{ ideal_pos }} %. ¿La pongo?"
+                    inline_keyboard:
+                      - "\U00002705 Sí ({{ ideal_pos }} %):/persiana_si_{{ persiana }}_{{ ideal_pos }}, \U0000274C No:/persiana_no_{{ persiana }}"
+              else:
+                - if:
+                    - condition: state
+                      entity_id: input_boolean.persianas_notificar
+                      state: 'on'
+                  then:
+                    - action: telegram_bot.send_message
+                      data:
+                        message: "\U0000270B Has {{ verbo }} la persiana {{ de_nombre }} al {{ final }} % (coincide con lo que haría yo: {{ ideal_motivo }}). No la toco hasta mañana."
+  mode: parallel
+  max: 10

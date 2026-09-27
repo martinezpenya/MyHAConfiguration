@@ -1,0 +1,38 @@
+{#- Posición que le tocaría ahora a una persiana según las reglas de
+    packages/persianas.yaml. Devuelve "posición|motivo", p. ej. "30|hace calor y
+    el sol da en la fachada sur". Uso:
+      {% from 'persianas.jinja' import persiana_ideal %}
+      {% set ideal = persiana_ideal('dinner').split('|') %} -#}
+{#- Despacho con el ordenador encendido (switch.sw03_8tree): 'manana' antes de
+    las 12:00 (sombra más suave, 50 %), 'tarde' después (abierta del todo) o ''
+    si está apagado. -#}
+{%- macro despacho_pc() -%}
+  {{- ('tarde' if now().hour >= 12 else 'manana') if is_state('switch.sw03_8tree', 'on') else '' -}}
+{%- endmacro -%}
+{%- macro persiana_ideal(persiana) -%}
+  {%- set fachada = {'office': 'despacho', 'dinner': 'sur', 'sleep': 'este', 'room': 'este'}[persiana] -%}
+  {%- set donde = {'sur': 'la fachada sur', 'este': 'la fachada este', 'despacho': 'el balcón del despacho'}[fachada] -%}
+  {%- set calor = is_state('binary_sensor.persianas_calor', 'on') -%}
+  {%- set fuera = is_state('binary_sensor.persianas_fuera', 'on') -%}
+  {%- set despierto = is_state('input_boolean.persianas_despierto', 'on') -%}
+  {%- set sol = is_state('binary_sensor.sol_fachada_' ~ fachada, 'on') -%}
+  {%- set nublado = states('weather.carlet_valencia') in ['cloudy', 'rainy', 'pouring', 'fog', 'snowy', 'snowy-rainy', 'hail', 'lightning', 'lightning-rainy'] -%}
+  {%- set elevacion = state_attr('sun.sun', 'elevation') | float(0) -%}
+  {%- set noche = 25 if calor else 0 -%}
+  {%- set temporada = 'temporada de calor' if calor else 'temporada de frío' -%}
+  {%- if is_state('binary_sensor.persianas_lluvia', 'on') -%}
+    0|está lloviendo
+  {%- elif elevacion < -4 -%}
+    {{ noche }}|es de noche y estamos en {{ temporada }}
+  {%- elif not despierto and (persiana in ['sleep', 'room'] or now().hour < 11) -%}
+    {{ noche }}|todavía no te has despertado
+  {%- elif persiana == 'office' and despacho_pc() == 'tarde' -%}
+    100|estás trabajando en el ordenador y es más de mediodía
+  {%- elif calor and sol and not nublado and persiana == 'office' and despacho_pc() == 'manana' -%}
+    50|hace calor y el sol da en el balcón del despacho, pero estás trabajando en el ordenador (sombra suave)
+  {%- elif calor and sol and not nublado -%}
+    {{ 10 if fuera else 30 }}|hace calor y el sol da en {{ donde }}{{ ' (estás fuera)' if fuera else '' }}
+  {%- else -%}
+    100|es de día{{ ' y en ' ~ temporada ~ ' conviene que entre el sol' if sol and not calor else '' }}
+  {%- endif -%}
+{%- endmacro -%}

@@ -1,0 +1,39 @@
+# Al volver a casa de día (el GPS vuelve a 'home') pone cada persiana en la
+# posición que le toca en ese momento (custom_templates/persianas.jinja): así
+# el dormitorio y la habitación no se quedan en posición de noche si has
+# dormido fuera, y la sombra pasa de la de "fuera" (10 %) a la de casa (30 %).
+# Llegar cuenta como despierto. Las persianas en manual no se mueven: se
+# pregunta con Sí/No (script.persiana_mover). Ver packages/persianas.yaml.
+- alias: 'Persianas llegada a casa'
+  id: persianas_llegada_casa
+  initial_state: true
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.persianas_fuera
+      from: 'on'
+      to: 'off'
+  conditions:
+    - condition: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      above: -2
+  actions:
+    - action: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.persianas_despierto
+    - repeat:
+        for_each:
+          - office
+          - dinner
+          - sleep
+          - room
+        sequence:
+          - variables:
+              ideal: >-
+                {% from 'persianas.jinja' import persiana_ideal %}{{ persiana_ideal(repeat.item) }}
+          - action: script.persiana_mover
+            data:
+              persiana: "{{ repeat.item }}"
+              posicion: "{{ ideal.split('|')[0] | int }}"
+              motivo: "has llegado a casa; {{ ideal.split('|')[1] }}"
+  mode: single
