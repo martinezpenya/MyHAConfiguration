@@ -1,6 +1,11 @@
-# Foto del movimiento sacada por HA del vídeo RTSP (camera.yiN, ffmpeg) en el
-# momento del motion_start. La foto que publica yi-hack en
-# yicamN/motion_detection_image se captura ~35 s tarde, así que no se usa.
+# Foto y vídeo de ~10 s del movimiento sacados del RTSP en el momento del
+# motion_start. Requiere el audio desactivado en el RTSP de yi-hack: con audio,
+# la cámara manda marcas de tiempo erróneas y el stream de HA se cae cada poco.
+# Foto de camera.yiN (ffmpeg, alta resolución; la de camera.yiN_cam es la de baja
+# resolución de la cámara). Van en paralelo: la foto llega en ~4 s y el vídeo
+# unos 10 s después de la detección; si falla uno, el otro sigue.
+# La foto que publica yi-hack en yicamN/motion_detection_image se captura ~35 s
+# tarde, así que no se usa.
 # El aviso de texto va aparte (Yi_Cameras_Motion_Telegram.yaml): si falla la
 # captura, el aviso llega igualmente.
 - alias: 'Yi cameras motion snapshot Telegram'
@@ -26,15 +31,47 @@
   variables:
     cam: "{{ trigger.entity_id.split('.')[1].split('_')[0] }}"
     file: "/config/snapshots/{{ cam }}_motion.jpg"
+    video: "/config/snapshots/{{ cam }}_motion.mp4"
+    hora: "{{ now().strftime('%H:%M:%S') }}"
   actions:
-    # Si la captura falla, la automatización se para aquí y no se envía una foto antigua
-    - action: camera.snapshot
-      target:
-        entity_id: "camera.{{ cam }}"
-      data:
-        filename: "{{ file }}"
-    - action: telegram_bot.send_photo
-      data:
-        file: "{{ file }}"
-        caption: "\U0001F4F9 {{ cam }} ({{ now().strftime('%H:%M:%S') }})"
+    - parallel:
+        # Si la captura falla, este ramal se para aquí y no se envía una foto antigua
+        - sequence:
+            - action: camera.snapshot
+              target:
+                entity_id: "camera.{{ cam }}"
+              data:
+                filename: "{{ file }}"
+            - action: telegram_bot.send_photo
+              data:
+                file: "{{ file }}"
+                caption: "\U0001F4F9 {{ cam }} ({{ hora }})"
+        # Vídeo de camera.yiN_cam (yi_hack, con "Precargar stream"): lookback añade
+        # los ~3 s previos a la detección. camera.record espera a que el mp4 esté
+        # escrito. Si el stream de HA no está disponible en ese momento (HA se
+        # saltaría la grabación sin error), se graba con ffmpeg directo, sin lookback.
+        - sequence:
+            - action: shell_command.yi_borrar_video_movimiento
+              data:
+                cam: "{{ cam }}"
+            - if:
+                - condition: template
+                  value_template: "{{ has_value('camera.' ~ cam ~ '_cam') }}"
+              then:
+                - action: camera.record
+                  target:
+                    entity_id: "camera.{{ cam }}_cam"
+                  data:
+                    filename: "{{ video }}"
+                    duration: 8
+                    lookback: 3
+              else:
+                - action: shell_command.yi_grabar_video_movimiento
+                  data:
+                    cam: "{{ cam }}"
+                    segundos: 10
+            - action: telegram_bot.send_video
+              data:
+                file: "{{ video }}"
+                caption: "\U0001F3AC {{ cam }} ({{ hora }})"
   mode: queued

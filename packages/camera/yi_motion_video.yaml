@@ -1,0 +1,10 @@
+# Ayudas para el vídeo de movimiento de yi1/yi2 por Telegram
+# (automations/Yi_Cameras_Motion_Snapshot_Telegram.yaml).
+shell_command:
+  # Borra el vídeo anterior: si la grabación falla, no se envía uno viejo
+  yi_borrar_video_movimiento: "rm -f /config/snapshots/{{ cam }}_motion.mp4"
+  # Plan B si el stream de HA (camera.yiN_cam) no está disponible: ffmpeg directo
+  yi_grabar_video_movimiento: >-
+    ffmpeg -hide_banner -loglevel error -rtsp_transport tcp
+    -i rtsp://{{ cam }}.casa/ch0_0.h264 -t {{ segundos }}
+    -c copy -an -movflags +faststart -y /config/snapshots/{{ cam }}_motion.mp4
