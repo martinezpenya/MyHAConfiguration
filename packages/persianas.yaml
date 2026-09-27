@@ -298,6 +298,36 @@ script:
             data:
               message: "\U0001FA9F {{ nombre }} → {{ destino }} % · {{ motivo }}"
 
+  # Botón "Ok, hazlo" del panel: pone las 4 en la posición que toca ahora
+  # (custom_templates/persianas.jinja), quitando antes la marca de manual
+  persianas_aplicar_ideal:
+    alias: Persianas aplicar posición ideal
+    icon: mdi:window-shutter-cog
+    mode: single
+    sequence:
+      - action: input_boolean.turn_off
+        target:
+          entity_id:
+            - input_boolean.persiana_office_manual
+            - input_boolean.persiana_dinner_manual
+            - input_boolean.persiana_sleep_manual
+            - input_boolean.persiana_room_manual
+      - repeat:
+          for_each:
+            - office
+            - dinner
+            - sleep
+            - room
+          sequence:
+            - variables:
+                ideal: >-
+                  {% from 'persianas.jinja' import persiana_ideal %}{{ persiana_ideal(repeat.item) }}
+            - action: script.persiana_mover
+              data:
+                persiana: "{{ repeat.item }}"
+                posicion: "{{ ideal.split('|')[0] | int }}"
+                motivo: "lo has pedido desde el panel; {{ ideal.split('|')[1] }}"
+
   # Lluvia con una persiana en manual: pregunta si se baja y, si en 5 min no
   # contestas, la baja igualmente. Con "No" se respeta. La respuesta la procesa
   # automations/Persianas_Telegram_Respuesta.yaml; aquí solo se espera por ella.
