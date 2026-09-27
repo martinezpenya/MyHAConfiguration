@@ -10,9 +10,9 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (CONF_HOST, CONF_MAC, CONF_NAME, CONF_PASSWORD,
                                  CONF_PORT, CONF_USERNAME)
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import event
-from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
-
+from .common import get_device_info
 from .const import (ALLWINNER, ALLWINNERV2, CONF_ANIMAL_DETECTION_MSG,
                     CONF_BABY_CRYING_MSG, CONF_BIRTH_MSG, CONF_HACK_NAME,
                     CONF_HUMAN_DETECTION_MSG, CONF_MOTION_START_MSG,
@@ -20,7 +20,7 @@ from .const import (ALLWINNER, ALLWINNERV2, CONF_ANIMAL_DETECTION_MSG,
                     CONF_SOUND_DETECTION_MSG, CONF_TOPIC_MOTION_DETECTION,
                     CONF_TOPIC_SOUND_DETECTION, CONF_TOPIC_STATUS,
                     CONF_VEHICLE_DETECTION_MSG, CONF_WILL_MSG, DEFAULT_BRAND,
-                    DOMAIN, MSTAR, SONOFF, V5)
+                    MSTAR, SONOFF, V5)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -72,11 +72,13 @@ class YiMQTTBinarySensor(BinarySensorEntity):
 
     def __init__(self, config: ConfigEntry, sensor_type, name):
         """Initialize the sensor."""
+        self._config_entry = config
         self._state = False
         self._device_name = config.data[CONF_NAME]
         self._name = self._device_name + " " + name
         self._mac = config.data[CONF_MAC]
         self._mqtt_subscription = None
+        self._mqtt_enabled = True
         self._delay_listener = None
         self._payload_off = None
         self._off_delay = None
@@ -192,9 +194,16 @@ class YiMQTTBinarySensor(BinarySensorEntity):
 
             self.async_write_ha_state()
 
-        self._mqtt_subscription = await mqtt.async_subscribe(
-            self.hass, self._state_topic, message_received, 1
-        )
+        try:
+            self._mqtt_subscription = await mqtt.async_subscribe(
+                self.hass, self._state_topic, message_received, 1
+            )
+        except (HomeAssistantError, KeyError):
+            self._mqtt_enabled = False
+            _LOGGER.warning(
+                "MQTT is not configured; updates disabled for %s",
+                self._name,
+            )
 
     async def async_will_remove_from_hass(self):
         """Unsubscribe from MQTT events."""
@@ -214,10 +223,4 @@ class YiMQTTBinarySensor(BinarySensorEntity):
     @property
     def device_info(self):
         """Return device specific attributes."""
-        return {
-            "name": self._device_name,
-            "connections": {(CONNECTION_NETWORK_MAC, self._mac)},
-            "identifiers": {(DOMAIN, self._mac)},
-            "manufacturer": DEFAULT_BRAND,
-            "model": DOMAIN,
-        }
+        return get_device_info(self._config_entry)

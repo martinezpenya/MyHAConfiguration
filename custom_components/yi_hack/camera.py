@@ -8,7 +8,6 @@ from requests.auth import HTTPBasicAuth
 
 import voluptuous as vol
 from haffmpeg.camera import CameraMjpeg
-from haffmpeg.tools import IMAGE_JPEG, ImageFrame
 from homeassistant.components import mqtt
 from homeassistant.components.camera import (Camera, CameraEntityFeature)
 from homeassistant.components.ffmpeg import CONF_EXTRA_ARGUMENTS, DATA_FFMPEG
@@ -16,13 +15,13 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (CONF_HOST, CONF_MAC, CONF_NAME, CONF_PASSWORD,
                                  CONF_PORT, CONF_USERNAME, STATE_OFF, STATE_ON)
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import entity_platform
 from homeassistant.helpers.aiohttp_client import async_aiohttp_proxy_stream
-from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
-
+from .common import get_device_info
 from .const import (ALLWINNER, ALLWINNERV2, CONF_BOOST_SPEAKER, CONF_HACK_NAME,
                     CONF_MQTT_PREFIX, CONF_PTZ,
-                    CONF_TOPIC_MOTION_DETECTION_IMAGE, DEFAULT_BRAND, DOMAIN,
+                    CONF_TOPIC_MOTION_DETECTION_IMAGE, DEFAULT_BRAND,
                     HTTP_TIMEOUT, LINK_HIGH_RES_STREAM, LINK_LOW_RES_STREAM,
                     MSTAR, SERVICE_MOVE_TO_PRESET, SERVICE_PTZ,
                     SERVICE_REBOOT, SERVICE_SPEAK)
@@ -50,6 +49,9 @@ DEFAULT_LANGUAGE = "en-US"
 DEFAULT_SENTENCE = ""
 
 ICON = "mdi:camera"
+SNAPSHOT_TIMEOUT = 3
+SNAPSHOT_CACHE_TTL = 5
+SNAPSHOT_FAILURE_BACKOFF = 15
 
 async def async_setup_entry(hass: HomeAssistant, config: ConfigEntry, async_add_entities):
     """Set up a Yi Camera."""
@@ -119,6 +121,7 @@ class YiHackCamera(Camera):
         """Initialize."""
         super().__init__()
 
+        self._config_entry = config
         self._extra_arguments = config.data[CONF_EXTRA_ARGUMENTS]
         self._manager = hass.data[DATA_FFMPEG]
         self._device_name = config.data[CONF_NAME]
@@ -132,14 +135,21 @@ class YiHackCamera(Camera):
         self._hack_name = config.data[CONF_HACK_NAME]
         self._ptz = config.data[CONF_PTZ]
         self._mqtt_subscription = None
+        self._mqtt_enabled = True
         self._mqtt_cmnd_topic = config.data[CONF_MQTT_PREFIX] + "/cmnd/camera/switch_on"
         self._mqtt_stat_topic = config.data[CONF_MQTT_PREFIX] + "/stat/camera/switch_on"
         self._state = True
+        self._snapshot_lock = asyncio.Lock()
+        self._last_snapshot = None
+        self._last_snapshot_at = 0.0
+        self._snapshot_backoff_until = 0.0
 
         self._http_base_url = "http://" + self._host
         if self._port != 80:
             self._http_base_url += ":" + str(self._port)
-        self._still_image_url = self._http_base_url + "/cgi-bin/snapshot.sh?res=high&watermark=yes"
+        # Low-resolution JPEGs are fast enough for dashboard previews. The
+        # live RTSP stream remains high resolution.
+        self._still_image_url = self._http_base_url + "/cgi-bin/snapshot.sh?res=low&watermark=yes"
 
         try:
             self._boost_speaker = config.data[CONF_BOOST_SPEAKER]
@@ -172,9 +182,16 @@ class YiHackCamera(Camera):
 
             self.async_write_ha_state()
 
-        self._mqtt_subscription = await mqtt.async_subscribe(
-            self.hass, self._mqtt_stat_topic, message_received, 1, None
-        )
+        try:
+            self._mqtt_subscription = await mqtt.async_subscribe(
+                self.hass, self._mqtt_stat_topic, message_received, 1, None
+            )
+        except (HomeAssistantError, KeyError):
+            self._mqtt_enabled = False
+            _LOGGER.warning(
+                "MQTT is not configured; status updates disabled for %s",
+                self._name,
+            )
 
     async def async_will_remove_from_hass(self):
         """Unsubscribe from MQTT events."""
@@ -188,6 +205,9 @@ class YiHackCamera(Camera):
 
     async def async_turn_off(self):
         """Turn off camera"""
+        if not self._mqtt_enabled:
+            _LOGGER.warning("MQTT is not configured; command disabled for %s", self._name)
+            return
         self.hass.async_create_task(
             mqtt.async_publish(self.hass, self._mqtt_cmnd_topic, "no", 1, 0)
         )
@@ -195,6 +215,9 @@ class YiHackCamera(Camera):
 
     async def async_turn_on(self):
         """Turn on camera"""
+        if not self._mqtt_enabled:
+            _LOGGER.warning("MQTT is not configured; command disabled for %s", self._name)
+            return
         self.hass.async_create_task(
             mqtt.async_publish(self.hass, self._mqtt_cmnd_topic, "yes", 1, 0)
         )
@@ -235,52 +258,53 @@ class YiHackCamera(Camera):
     async def async_camera_image(
         self, width: int | None = None, height: int | None = None
     ) -> bytes | None:
-        """Return a still image response from the camera."""
-        """Ignore width and height when the image is fetched from url."""
-        """Camera component will resize it."""
-        image = None
+        """Return a fast preview without opening a second live stream.
 
-        if self._still_image_url:
+        Snapshot requests are serialized, cached briefly, and stopped quickly
+        when a camera is offline. A failed preview must not trigger FFmpeg or
+        block the dashboard while the live RTSP stream remains available.
+        """
+        if not self._still_image_url:
+            return None
+
+        async with self._snapshot_lock:
+            now = asyncio.get_running_loop().time()
+            if (
+                self._last_snapshot is not None
+                and now - self._last_snapshot_at < SNAPSHOT_CACHE_TTL
+            ):
+                return self._last_snapshot
+            if now < self._snapshot_backoff_until:
+                return None
+
             auth = None
             if self._user or self._password:
                 auth = HTTPBasicAuth(self._user, self._password)
 
             def fetch():
-                """Read image from a URL."""
+                """Read one low-resolution image from the camera."""
                 try:
-                    response = requests.get(self._still_image_url, timeout=HTTP_TIMEOUT, auth=auth)
-                    if response.status_code < 300:
-                        return response.content
+                    response = requests.get(
+                        self._still_image_url,
+                        timeout=SNAPSHOT_TIMEOUT,
+                        auth=auth,
+                    )
+                    if response.status_code < 300 and response.content:
+                        return response.content, None
+                    return None, f"HTTP {response.status_code}"
                 except requests.exceptions.RequestException as error:
-                    _LOGGER.error(
-                        "Fetch snapshot image failed from %s, falling back to FFmpeg; %s",
-                        self._name,
-                        error,
-                    )
+                    return None, str(error)
 
-                return None
+            image, error = await self.hass.async_add_executor_job(fetch)
+            if image:
+                self._last_snapshot = image
+                self._last_snapshot_at = now
+                self._snapshot_backoff_until = 0.0
+                return image
 
-            image = await self.hass.async_add_executor_job(fetch)
-            if image is None:
-                await asyncio.sleep(1)
-                image = await self.hass.async_add_executor_job(fetch)
-            if image is None:
-                await asyncio.sleep(1)
-                image = await self.hass.async_add_executor_job(fetch)
-
-        if image is None:
-            stream_source = await self.stream_source()
-            if stream_source:
-                ffmpeg = ImageFrame(self.hass.data[DATA_FFMPEG].binary)
-                image = await asyncio.shield(
-                    ffmpeg.get_image(
-                        stream_source,
-                        output_format=IMAGE_JPEG,
-                        extra_cmd=self._extra_arguments
-                    )
-                )
-
-        return image
+            self._snapshot_backoff_until = now + SNAPSHOT_FAILURE_BACKOFF
+            _LOGGER.debug("Yi snapshot unavailable for %s: %s", self._name, error)
+            return None
 
     async def handle_async_mjpeg_stream(self, request):
         """Generate an HTTP MJPEG stream from the camera."""
@@ -443,14 +467,7 @@ class YiHackCamera(Camera):
     @property
     def device_info(self):
         """Return device specific attributes."""
-        return {
-            "name": self._device_name,
-            "connections": {(CONNECTION_NETWORK_MAC, self._mac)},
-            "identifiers": {(DOMAIN, self._mac)},
-            "manufacturer": DEFAULT_BRAND,
-            "model": DOMAIN,
-            "configuration_url": self._http_base_url,
-        }
+        return get_device_info(self._config_entry)
 
 class YiHackMqttCamera(Camera):
     """Representation of a MQTT camera."""
@@ -459,6 +476,7 @@ class YiHackMqttCamera(Camera):
         """Initialize the MQTT Camera."""
         super().__init__()
 
+        self._config_entry = config
         self._device_name = config.data[CONF_NAME]
         self._name = self._device_name + " " + "Motion Detection Cam"
         self._unique_id = self._device_name + "_camd"
@@ -471,6 +489,7 @@ class YiHackMqttCamera(Camera):
         self._last_image = None
         self._mqtt_subscription = None
         self._mqtt_image_subscription = None
+        self._mqtt_enabled = True
         self._mqtt_cmnd_topic = config.data[CONF_MQTT_PREFIX] + "/cmnd/camera/switch_on"
         self._mqtt_stat_topic = config.data[CONF_MQTT_PREFIX] + "/stat/camera/switch_on"
         self._state = True
@@ -501,9 +520,16 @@ class YiHackMqttCamera(Camera):
 
             self.async_write_ha_state()
 
-        self._mqtt_subscription = await mqtt.async_subscribe(
-            self.hass, self._mqtt_stat_topic, message_received, 1, None
-        )
+        try:
+            self._mqtt_subscription = await mqtt.async_subscribe(
+                self.hass, self._mqtt_stat_topic, message_received, 1, None
+            )
+        except (HomeAssistantError, KeyError):
+            self._mqtt_enabled = False
+            _LOGGER.warning(
+                "MQTT is not configured; status updates disabled for %s",
+                self._name,
+            )
 
         @callback
         def image_message_received(msg):
@@ -512,9 +538,15 @@ class YiHackMqttCamera(Camera):
 
             self._last_image = data
 
-        self._mqtt_image_subscription = await mqtt.async_subscribe(
-            self.hass, self._image_topic, image_message_received, 1, None
-        )
+        try:
+            self._mqtt_image_subscription = await mqtt.async_subscribe(
+                self.hass, self._image_topic, image_message_received, 1, None
+            )
+        except (HomeAssistantError, KeyError):
+            _LOGGER.warning(
+                "MQTT is not configured; motion images disabled for %s",
+                self._name,
+            )
 
     async def async_will_remove_from_hass(self):
         """Unsubscribe from MQTT events."""
@@ -530,6 +562,9 @@ class YiHackMqttCamera(Camera):
 
     async def async_turn_off(self):
         """Turn off camera"""
+        if not self._mqtt_enabled:
+            _LOGGER.warning("MQTT is not configured; command disabled for %s", self._name)
+            return
         self.hass.async_create_task(
             mqtt.async_publish(self.hass, self._mqtt_cmnd_topic, "no", 1, 0)
         )
@@ -537,6 +572,9 @@ class YiHackMqttCamera(Camera):
 
     async def async_turn_on(self):
         """Turn on camera"""
+        if not self._mqtt_enabled:
+            _LOGGER.warning("MQTT is not configured; command disabled for %s", self._name)
+            return
         self.hass.async_create_task(
             mqtt.async_publish(self.hass, self._mqtt_cmnd_topic, "yes", 1, 0)
         )
@@ -584,10 +622,4 @@ class YiHackMqttCamera(Camera):
     @property
     def device_info(self):
         """Return device specific attributes."""
-        return {
-            "name": self._device_name,
-            "connections": {(CONNECTION_NETWORK_MAC, self._mac)},
-            "identifiers": {(DOMAIN, self._mac)},
-            "manufacturer": DEFAULT_BRAND,
-            "model": DOMAIN,
-        }
+        return get_device_info(self._config_entry)
