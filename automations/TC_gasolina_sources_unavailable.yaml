@@ -55,6 +55,12 @@
         - sensor.gasolinera35
         - sensor.gasolinera36
       from: 'unavailable'
+  # Solo si antes saltó la alerta (20 min en unavailable): al arrancar HA pasan
+  # unos segundos por unavailable y no debe avisar de nada
+  conditions:
+    - condition: template
+      value_template: >-
+        {{ trigger.to_state.last_changed - trigger.from_state.last_changed >= timedelta(minutes=20) }}
   actions:
     - action: telegram_bot.send_message
       data:
@@ -62,3 +68,4 @@
         parse_mode: markdown
         message: >-
           ✅ *Gasolina recuperada*: {{ trigger.entity_id }} vuelve a `{{ states(trigger.entity_id) }}`.
+  mode: queued
