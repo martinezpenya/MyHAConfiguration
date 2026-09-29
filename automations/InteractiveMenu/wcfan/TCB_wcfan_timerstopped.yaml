@@ -15,12 +15,8 @@
       data:
         entity_id:
           - switch.ventilador_wc
-    - delay: 00:00:01
+    # Solo el aviso: antes se le añadía el teclado del ventilador (edit_replymarkup
+    # sobre el último mensaje, que era este mismo aviso)
     - action: telegram_bot.send_message
       data:
         message: 'WC Fan timer ended'
-    - action: telegram_bot.edit_replymarkup
-      data:
-        message_id: 'last'
-        chat_id: !secret id_group_telegram
-        inline_keyboard: !include TCB_wcfan_menu_buttons.btn
