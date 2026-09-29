@@ -1,6 +1,7 @@
-# Abre las persianas por la mañana cuando te has despertado y ya es de día
-# (lo que llegue más tarde). En temporada de calor, si el sol ya da en esa
-# fachada, va directa a la posición de sombra.
+# Abre las persianas por la mañana en cuanto te despiertas (el móvil vuelve al
+# wifi o suena la alarma, Persianas_Despertar.yaml), aunque aún no haya
+# amanecido. En temporada de calor, si el sol ya da en esa fachada, va directa a
+# la posición de sombra.
 # Respaldo a las 11:00 si no te has despertado en casa (viaje): abre solo
 # despacho y comedor para que parezca que hay alguien; los dormitorios no.
 # Ver packages/persianas.yaml.
@@ -13,11 +14,6 @@
       from: 'off'
       to: 'on'
       id: despierto
-    - trigger: numeric_state
-      entity_id: sun.sun
-      attribute: elevation
-      above: -2
-      id: amanecer
     - trigger: time
       at: "11:00:00"
       id: respaldo
@@ -32,13 +28,12 @@
     fuera: "{{ is_state('binary_sensor.persianas_fuera', 'on') }}"
     sombra_pos: "{{ 10 if fuera else 30 }}"
     despierto: "{{ is_state('input_boolean.persianas_despierto', 'on') }}"
-    de_dia: "{{ state_attr('sun.sun', 'elevation') | float(-90) > -2 }}"
     persianas: >-
       {{ ['office', 'dinner'] if trigger.id == 'respaldo' else ['office', 'dinner', 'sleep', 'room'] }}
   conditions:
     - condition: template
       value_template: >-
-        {{ not despierto if trigger.id == 'respaldo' else (despierto and de_dia and now().hour < 13) }}
+        {{ not despierto if trigger.id == 'respaldo' else (despierto and now().hour < 13) }}
   actions:
     - repeat:
         for_each: "{{ persianas }}"
@@ -51,7 +46,6 @@
               sombra: "{{ calor and not nublado and pc != 'tarde' and is_state('binary_sensor.sol_fachada_' ~ fachada, 'on') }}"
               por_que: >-
                 {%- if trigger.id == 'respaldo' -%}son las 11:00 y no te has despertado en casa (simula presencia)
-                {%- elif trigger.id == 'amanecer' -%}ya es de día y estás despierto
                 {%- else -%}te has despertado ({{ now().strftime('%H:%M') }}){%- endif -%}
           - action: script.persiana_mover
             data:

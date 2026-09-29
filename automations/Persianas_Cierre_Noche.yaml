@@ -1,7 +1,10 @@
-# Cierre de noche de las 4 persianas cuando el sol baja de -4° (poco después
-# de la puesta), nunca antes de las 18:00; a las 23:30 se repite por si se
-# perdió el disparo (p. ej. reinicio de HA).
-# Temporada de calor: 25 % para que corra el aire. Frío: cierre total.
+# Persianas de noche (sol por debajo de -4°, poco después de la puesta):
+#   frío  -> cierre total (0 %) al anochecer, para conservar el calor
+#   calor -> abiertas mientras estás despierto en casa; al 25 % (corriente de
+#            aire) cuando te vas a dormir (GPS en casa y wifi apagado: al
+#            momento desde las 23:00, con 5 min de margen antes) o si estás fuera
+# La posición la decide custom_templates/persianas.jinja (persiana_ideal). La
+# vuelta a casa de noche la gestiona Persianas_Llegada.yaml.
 # Ver packages/persianas.yaml.
 - alias: 'Persianas cierre noche'
   id: persianas_cierre_noche
@@ -11,19 +14,32 @@
       entity_id: sun.sun
       attribute: elevation
       below: -4
-    - trigger: time
-      at: "18:00:00"
-    - trigger: time
-      at: "23:30:00"
+      id: anochecer
+    # Desde las 23:00 apagar el wifi es irse a dormir: al momento. Antes, con
+    # 5 min de margen por si es un corte de wifi
+    - trigger: state
+      entity_id: binary_sensor.persianas_durmiendo
+      from: 'off'
+      to: 'on'
+      id: dormir_ya
+    - trigger: state
+      entity_id: binary_sensor.persianas_durmiendo
+      from: 'off'
+      to: 'on'
+      for: "00:05:00"
+      id: dormir
+    - trigger: state
+      entity_id: binary_sensor.persianas_fuera
+      from: 'off'
+      to: 'on'
+      id: salir
   conditions:
-    - condition: time
-      after: "17:59:00"
     - condition: numeric_state
       entity_id: sun.sun
       attribute: elevation
       below: -4
-  variables:
-    calor: "{{ is_state('binary_sensor.persianas_calor', 'on') }}"
+    - condition: template
+      value_template: "{{ trigger.id != 'dormir_ya' or now().hour >= 23 or now().hour < 5 }}"
   actions:
     - repeat:
         for_each:
@@ -32,10 +48,12 @@
           - sleep
           - room
         sequence:
+          - variables:
+              ideal: >-
+                {% from 'persianas.jinja' import persiana_ideal %}{{ persiana_ideal(repeat.item) }}
           - action: script.persiana_mover
             data:
               persiana: "{{ repeat.item }}"
-              posicion: "{{ 25 if calor else 0 }}"
-              motivo: >-
-                {{ 'noche, temporada de calor: 25 % para que corra el aire' if calor else 'noche, temporada de frío: cierre total para conservar el calor' }}
-  mode: single
+              posicion: "{{ ideal.split('|')[0] | int }}"
+              motivo: "{{ ideal.split('|')[1] }}"
+  mode: queued

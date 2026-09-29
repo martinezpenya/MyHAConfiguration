@@ -19,5 +19,5 @@
   actions:
     - action: telegram_bot.send_message
       data:
-        message: "{{ '\U0001F321 Persianas en modo calor' if trigger.to_state.state == 'on' else '\U00002744 Persianas en modo frío' }} (máx. {{ state_attr('binary_sensor.persianas_calor', 'maxima_evaluada') }} °C, ahora {{ states('sensor.carlet_valencia_temperature') }} °C): {{ 'sombra con sol en la fachada y 25 % de noche' if trigger.to_state.state == 'on' else 'sin sombra y cierre total de noche' }}"
+        message: "{{ '\U0001F321 Persianas en modo calor' if trigger.to_state.state == 'on' else '\U00002744 Persianas en modo frío' }} (máx. {{ state_attr('binary_sensor.persianas_calor', 'maxima_evaluada') }} °C, ahora {{ states('sensor.carlet_valencia_temperature') }} °C): {{ 'sombra con sol en la fachada y de noche abiertas hasta que te vayas a dormir (25 %)' if trigger.to_state.state == 'on' else 'sin sombra y cierre total al anochecer' }}"
   mode: single

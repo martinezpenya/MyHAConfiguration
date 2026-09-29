@@ -1,9 +1,13 @@
-# Al volver a casa de día (el GPS vuelve a 'home') pone cada persiana en la
-# posición que le toca en ese momento (custom_templates/persianas.jinja): así
-# el dormitorio y la habitación no se quedan en posición de noche si has
-# dormido fuera, y la sombra pasa de la de "fuera" (10 %) a la de casa (30 %).
-# Llegar cuenta como despierto. Las persianas en manual no se mueven: se
-# pregunta con Sí/No (script.persiana_mover). Ver packages/persianas.yaml.
+# Vuelta a casa (el GPS vuelve a 'home'):
+#   de día   -> cada persiana a la posición que le toca en ese momento
+#               (custom_templates/persianas.jinja): el dormitorio y la habitación
+#               no se quedan en posición de noche si has dormido fuera, y la
+#               sombra pasa de la de "fuera" (10 %) a la de casa (30 %). Llegar
+#               cuenta como despierto.
+#   de noche -> con calor y alguna persiana bajada, pregunta por Telegram si se
+#               abren al 100 %; sin respuesta en 10 min se quedan como están.
+# Las persianas en manual no se mueven: se pregunta con Sí/No
+# (script.persiana_mover). Ver packages/persianas.yaml.
 - alias: 'Persianas llegada a casa'
   id: persianas_llegada_casa
   initial_state: true
@@ -12,28 +16,87 @@
       entity_id: binary_sensor.persianas_fuera
       from: 'on'
       to: 'off'
-  conditions:
-    - condition: numeric_state
-      entity_id: sun.sun
-      attribute: elevation
-      above: -2
+  variables:
+    noche: "{{ state_attr('sun.sun', 'elevation') | float(0) < -4 }}"
   actions:
-    - action: input_boolean.turn_on
-      target:
-        entity_id: input_boolean.persianas_despierto
-    - repeat:
-        for_each:
-          - office
-          - dinner
-          - sleep
-          - room
-        sequence:
-          - variables:
-              ideal: >-
-                {% from 'persianas.jinja' import persiana_ideal %}{{ persiana_ideal(repeat.item) }}
-          - action: script.persiana_mover
-            data:
-              persiana: "{{ repeat.item }}"
-              posicion: "{{ ideal.split('|')[0] | int }}"
-              motivo: "has llegado a casa; {{ ideal.split('|')[1] }}"
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ not noche }}"
+          sequence:
+            - action: input_boolean.turn_on
+              target:
+                entity_id: input_boolean.persianas_despierto
+            - repeat:
+                for_each:
+                  - office
+                  - dinner
+                  - sleep
+                  - room
+                sequence:
+                  - variables:
+                      ideal: >-
+                        {% from 'persianas.jinja' import persiana_ideal %}{{ persiana_ideal(repeat.item) }}
+                  - action: script.persiana_mover
+                    data:
+                      persiana: "{{ repeat.item }}"
+                      posicion: "{{ ideal.split('|')[0] | int }}"
+                      motivo: "has llegado a casa; {{ ideal.split('|')[1] }}"
+        - conditions:
+            - condition: template
+              value_template: >-
+                {{ noche and is_state('binary_sensor.persianas_calor', 'on')
+                   and is_state('input_boolean.persianas_auto', 'on')
+                   and ['office', 'dinner', 'sleep', 'room']
+                       | map('regex_replace', '^', 'cover.shutter_') | map('state_attr', 'current_position')
+                       | map('int', 100) | min < 90 }}
+          sequence:
+            # Esperar a que el móvil entre en el wifi: hasta entonces el GPS en
+            # casa sin wifi parece "durmiendo"
+            - wait_template: "{{ is_state('device_tracker.rdm13nppmovil', 'home') }}"
+              timeout: "00:03:00"
+              continue_on_timeout: false
+            - action: telegram_bot.send_message
+              data:
+                message: "\U0001F319 Has llegado de noche y las persianas están bajadas. ¿Las abro al 100 %? Si no contestas en 10 min, se quedan como están."
+                inline_keyboard:
+                  - "\U00002705 Sí:/persianas_noche_si, \U0000274C No:/persianas_noche_no"
+            - wait_for_trigger:
+                - trigger: event
+                  event_type: telegram_callback
+                  event_data:
+                    data: /persianas_noche_si
+                - trigger: event
+                  event_type: telegram_callback
+                  event_data:
+                    data: /persianas_noche_no
+              timeout: "00:10:00"
+              continue_on_timeout: false
+            - variables:
+                si: "{{ wait.trigger.event.data.data == '/persianas_noche_si' }}"
+                callback: "{{ wait.trigger.event.data }}"
+            - action: telegram_bot.answer_callback_query
+              data:
+                callback_query_id: "{{ callback.id }}"
+                message: "{{ 'Abriendo las persianas' if si else 'Vale, no las toco' }}"
+            - action: telegram_bot.edit_message
+              data:
+                chat_id: "{{ callback.chat_id }}"
+                message_id: "{{ callback.message.message_id }}"
+                message: "\U0001F319 Has llegado de noche. {{ '\U00002705 Sí: abro las persianas al 100 %' if si else '\U0000274C No: se quedan como están' }}"
+                inline_keyboard: []
+            - condition: template
+              value_template: "{{ si }}"
+            - repeat:
+                for_each:
+                  - office
+                  - dinner
+                  - sleep
+                  - room
+                sequence:
+                  - action: script.persiana_mover
+                    data:
+                      persiana: "{{ repeat.item }}"
+                      posicion: 100
+                      motivo: has llegado de noche y lo has pedido
   mode: single

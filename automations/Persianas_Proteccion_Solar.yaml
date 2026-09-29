@@ -65,8 +65,9 @@
               donde: "{{ {'sur': 'la fachada sur', 'este': 'la fachada este', 'despacho': 'el balcón del despacho'}[fachada] }}"
               sol: "{{ is_state('binary_sensor.sol_fachada_' ~ fachada, 'on') }}"
               pos: "{{ state_attr('cover.shutter_' ~ repeat.item, 'current_position') | int(-100) }}"
-              # Despacho con el ordenador encendido: sombra al 50 % por la mañana,
-              # sin sombra (100 %) por la tarde
+              # Despacho con el ordenador encendido: sombra al 50 % mientras entra
+              # el sol; cuando lo tapa el balcón, sol_fachada_despacho se apaga y
+              # se abre como las demás
               pc: >-
                 {% from 'persianas.jinja' import despacho_pc %}{{ despacho_pc() if repeat.item == 'office' else '' }}
               sombra_esta: "{{ 50 if pc == 'manana' else sombra_pos }}"
@@ -74,8 +75,7 @@
               abierta: "{{ pos > sombra_esta + 3 }}"
               # Qué toca: sombra, abrir o nada
               destino: >-
-                {%- if pc == 'tarde' -%}none
-                {%- elif calor and sol and not nublado and (abierta or en_sombra) -%}{{ sombra_esta }}
+                {%- if calor and sol and not nublado and (abierta or en_sombra) -%}{{ sombra_esta }}
                 {%- elif not sol and en_sombra -%}100
                 {%- else -%}none{%- endif -%}
           - if:

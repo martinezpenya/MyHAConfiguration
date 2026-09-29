@@ -3,11 +3,16 @@
     el sol da en la fachada sur". Uso:
       {% from 'persianas.jinja' import persiana_ideal %}
       {% set ideal = persiana_ideal('dinner').split('|') %} -#}
-{#- Despacho con el ordenador encendido (switch.sw03_8tree): 'manana' antes de
-    las 12:00 (sombra más suave, 50 %), 'tarde' después (abierta del todo) o ''
-    si está apagado. -#}
+{#- Azimut a partir del cual la sombra del balcón tapa la ventana del despacho
+    (el sol ya va alto): hoy (29-09) ~13:15. Lo usan binary_sensor.sol_fachada_despacho
+    (packages/persianas.yaml) y despacho_pc. -#}
+{%- macro azimut_sombra_balcon() -%}165{%- endmacro -%}
+{#- Despacho con el ordenador encendido (switch.sw03_8tree): 'manana' mientras
+    el sol puede entrar por el balcón (sombra más suave, 50 %), 'tarde' cuando
+    ya lo tapa la sombra del balcón (abierta del todo) o '' si está apagado. -#}
 {%- macro despacho_pc() -%}
-  {{- ('tarde' if now().hour >= 12 else 'manana') if is_state('switch.sw03_8tree', 'on') else '' -}}
+  {{- ('tarde' if state_attr('sun.sun', 'azimuth') | float(0) >= azimut_sombra_balcon() | int else 'manana')
+      if is_state('switch.sw03_8tree', 'on') else '' -}}
 {%- endmacro -%}
 {%- macro persiana_ideal(persiana) -%}
   {%- set fachada = {'office': 'despacho', 'dinner': 'sur', 'sleep': 'este', 'room': 'este'}[persiana] -%}
@@ -20,14 +25,21 @@
   {%- set elevacion = state_attr('sun.sun', 'elevation') | float(0) -%}
   {%- set noche = 25 if calor else 0 -%}
   {%- set temporada = 'temporada de calor' if calor else 'temporada de frío' -%}
+  {#- De madrugada, ya despierto, cuenta como de día: las persianas se abren al
+      despertar aunque aún no haya amanecido -#}
+  {%- set de_noche = elevacion < -4 and not (despierto and 5 <= now().hour < 12) -%}
   {%- if is_state('binary_sensor.persianas_lluvia', 'on') -%}
     0|está lloviendo
-  {%- elif elevacion < -4 -%}
-    {{ noche }}|es de noche y estamos en {{ temporada }}
+  {%- elif de_noche and not calor -%}
+    0|noche en temporada de frío: cierre total para conservar el calor
+  {%- elif de_noche and (fuera or is_state('binary_sensor.persianas_durmiendo', 'on')) -%}
+    25|noche de calor y {{ 'estás fuera' if fuera else 'te has ido a dormir' }}: 25 % para que corra el aire
+  {%- elif de_noche -%}
+    100|noche de calor y estás despierto en casa: abiertas hasta que te vayas a dormir
   {%- elif not despierto and (persiana in ['sleep', 'room'] or now().hour < 11) -%}
     {{ noche }}|todavía no te has despertado
   {%- elif persiana == 'office' and despacho_pc() == 'tarde' -%}
-    100|estás trabajando en el ordenador y es más de mediodía
+    100|estás trabajando en el ordenador y la sombra del balcón ya no deja entrar el sol
   {%- elif calor and sol and not nublado and persiana == 'office' and despacho_pc() == 'manana' -%}
     50|hace calor y el sol da en el balcón del despacho, pero estás trabajando en el ordenador (sombra suave)
   {%- elif calor and sol and not nublado -%}

@@ -1,14 +1,15 @@
 # Gestión automática de las 4 persianas (automations/Persianas_*.yaml).
 #
 #   Persiana              Estancia     Fachada
-#   cover.shutter_office  Despacho     sur, con balcón (sol solo hasta ~14:00)
+#   cover.shutter_office  Despacho     sur, con balcón (sol hasta que la sombra del balcón lo tapa)
 #   cover.shutter_dinner  Comedor      sur
 #   cover.shutter_sleep   Dormitorio   este
 #   cover.shutter_room    Habitación   este
 #
 # Posiciones: 0 = cerrada, 100 = abierta.
 #   Sombra (calor y sol en la fachada): 30 % en casa, 10 % fuera
-#   Noche: 25 % en temporada de calor (corriente de aire), 0 % en frío
+#   Noche (sol < -4°): en frío, 0 % al anochecer; en calor, abiertas mientras
+#   estás despierto en casa y 25 % (corriente de aire) al irte a dormir o fuera
 #   Lluvia: 0 % (que no se ensucien los cristales ni entre agua)
 # Todas las órdenes pasan por script.persiana_mover, que avisa por Telegram de
 # cada decisión si input_boolean.persianas_notificar está activo.
@@ -169,15 +170,17 @@ template:
         state: >-
           {{ 100 <= state_attr('sun.sun', 'azimuth') | float(0) <= 260
              and state_attr('sun.sun', 'elevation') | float(-90) > 15 }}
-      # Despacho: la ventana está retirada dentro del balcón, que le quita el
-      # sol a partir del mediodía solar (azimut 180°, ~14:00); el comedor, con la
-      # ventana a ras de fachada, sigue con sol_fachada_sur
+      # Despacho: la ventana está retirada dentro del balcón; cuando el sol ya
+      # va alto la sombra del balcón la tapa (azimut_sombra_balcon en
+      # custom_templates/persianas.jinja, ~13:15 a finales de septiembre); el
+      # comedor, con la ventana a ras de fachada, sigue con sol_fachada_sur
       - name: Sol despacho (balcón)
         unique_id: sol_fachada_despacho
         default_entity_id: binary_sensor.sol_fachada_despacho
         icon: mdi:sun-angle
         state: >-
-          {{ 100 <= state_attr('sun.sun', 'azimuth') | float(0) <= 180
+          {% from 'persianas.jinja' import azimut_sombra_balcon %}
+          {{ 100 <= state_attr('sun.sun', 'azimuth') | float(0) < azimut_sombra_balcon() | int
              and state_attr('sun.sun', 'elevation') | float(-90) > 15 }}
       - name: Sol fachada este
         unique_id: sol_fachada_este
@@ -275,6 +278,10 @@ script:
                 data:
                   message: "\U0001F327 {{ nombre }}: no la subo al {{ destino }} % ({{ motivo }}) porque está lloviendo"
           - stop: "Lloviendo"
+      # Las órdenes que se pierden llegan siempre en tandas (varias persianas en
+      # el mismo segundo): se escalonan 4 s entre persianas
+      - delay:
+          seconds: "{{ {'office': 0, 'dinner': 4, 'sleep': 8, 'room': 12}[persiana] }}"
       - action: input_number.set_value
         target:
           entity_id: "input_number.persiana_{{ persiana }}_objetivo"
@@ -290,13 +297,93 @@ script:
           entity_id: "{{ cover }}"
         data:
           position: "{{ destino }}"
+      # Comprobar que llega (y avisar) sin hacer esperar a quien la ha llamado
+      - action: script.turn_on
+        target:
+          entity_id: script.persiana_verificar
+        data:
+          variables:
+            persiana: "{{ persiana }}"
+            destino: "{{ destino }}"
+            motivo: "{{ motivo }}"
+
+  # Comprueba que una persiana llega a la posición ordenada. A veces la orden se
+  # pierde sin error por las reglas de Tasmota del propio dispositivo: Rule2
+  # desactiva Rule1 (la que pasa la orden al motor Tuya) mientras resincroniza la
+  # posición, y Rule1 solo reenvía un objetivo si es distinto del anterior (Var1),
+  # así que repetir la misma orden no siempre sirve. El motor confirma en 1-2 s:
+  #   intento 1 y 2: cover.set_cover_position, 15 s de espera cada uno
+  #   intento 3: directo al motor por MQTT (reactiva Rule1/Rule2 y TuyaSend2),
+  #     saltándose las reglas; la posición en HA la actualiza la resincronización
+  #     de Rule2 (cada 2 min), así que se esperan hasta 3 min
+  # El aviso de Telegram solo sale al llegar, o un ⚠ si no se mueve.
+  persiana_verificar:
+    alias: Persiana verificar movimiento
+    mode: parallel
+    fields:
+      persiana:
+        example: dinner
+      destino:
+        example: 30
+      motivo:
+        example: sol en la fachada sur
+    variables:
+      cover: "cover.shutter_{{ persiana }}"
+      nombre: "{{ {'office': 'Despacho', 'dinner': 'Comedor', 'sleep': 'Dormitorio', 'room': 'Habitación'}[persiana] }}"
+      avisar: "{{ is_state('input_boolean.persianas_notificar', 'on') }}"
+    sequence:
+      - repeat:
+          sequence:
+            - if:
+                - condition: template
+                  value_template: "{{ repeat.index == 2 }}"
+              then:
+                - action: input_datetime.set_datetime
+                  target:
+                    entity_id: "input_datetime.persiana_{{ persiana }}_auto"
+                  data:
+                    timestamp: "{{ now().timestamp() }}"
+                - action: cover.set_cover_position
+                  target:
+                    entity_id: "{{ cover }}"
+                  data:
+                    position: "{{ destino | int }}"
+            - if:
+                - condition: template
+                  value_template: "{{ repeat.index == 3 }}"
+              then:
+                - action: input_datetime.set_datetime
+                  target:
+                    entity_id: "input_datetime.persiana_{{ persiana }}_auto"
+                  data:
+                    timestamp: "{{ now().timestamp() }}"
+                - action: mqtt.publish
+                  data:
+                    topic: "cmnd/shutter_{{ persiana }}/Backlog"
+                    payload: "Rule1 1; Rule2 1; TuyaSend2 2,{{ destino | int }}"
+            - wait_template: "{{ (state_attr(cover, 'current_position') | int(-100) - destino | int) | abs <= 3 }}"
+              timeout: "{{ '00:03:00' if repeat.index == 3 else '00:00:15' }}"
+              continue_on_timeout: true
+          until:
+            - condition: template
+              value_template: "{{ wait.completed or repeat.index >= 3 }}"
+      - variables:
+          llegada: "{{ (state_attr(cover, 'current_position') | int(-100) - destino | int) | abs <= 3 }}"
       - if:
           - condition: template
-            value_template: "{{ avisar }}"
+            value_template: "{{ llegada }}"
         then:
+          - if:
+              - condition: template
+                value_template: "{{ avisar }}"
+            then:
+              - action: telegram_bot.send_message
+                data:
+                  message: "\U0001FA9F {{ nombre }} → {{ destino }} % · {{ motivo }}"
+        else:
           - action: telegram_bot.send_message
             data:
-              message: "\U0001FA9F {{ nombre }} → {{ destino }} % · {{ motivo }}"
+              message: "\U000026A0 {{ nombre }} no se ha movido al {{ destino }} % ({{ motivo }}): está al {{ state_attr(cover, 'current_position') }} % tras dos órdenes normales y una directa al motor"
 
   # Botón "Ok, hazlo" del panel: pone las 4 en la posición que toca ahora
   # (custom_templates/persianas.jinja), quitando antes la marca de manual
