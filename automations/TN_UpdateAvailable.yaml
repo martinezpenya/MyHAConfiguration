@@ -1,3 +1,7 @@
+# Aviso por Telegram de una versión nueva de Home Assistant (imagen de Docker
+# Hub). Se avisa una sola vez por versión: los sensores de la integración
+# Version pasan a unavailable a menudo al fallar la consulta y, al volver, no
+# deben repetir el aviso. Ver packages/ha_version.yaml.
 - alias: 'UpdateAvailable'
   id: update_available
   initial_state: true
@@ -5,7 +9,29 @@
     - trigger: state
       entity_id: binary_sensor.docker_hub_update_available
       to: 'on'
+    - trigger: state
+      entity_id: sensor.docker_hub
+    # Al arrancar, la integración Version ya tiene estado antes de que las
+    # automatizaciones escuchen: se comprueba aquí
+    - trigger: homeassistant
+      event: start
   actions:
+    # Esperar a tener versión publicada y "actualización disponible" (hasta 10 min)
+    - wait_template: >-
+        {{ is_state('binary_sensor.docker_hub_update_available', 'on')
+           and has_value('sensor.docker_hub') }}
+      timeout: "00:10:00"
+      continue_on_timeout: false
+    - variables:
+        nueva: "{{ states('sensor.docker_hub') }}"
+    - condition: template
+      value_template: "{{ nueva != states('input_text.ha_version_avisada') }}"
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.ha_version_avisada
+      data:
+        value: "{{ nueva }}"
     - action: telegram_bot.send_message
       data:
-        message: "La nueva versión {{ state_attr('binary_sensor.docker_hub_update_available', 'newest_version') }} de Home Assistant está disponible\n Release notes: {{ state_attr('binary_sensor.docker_hub_update_available', 'release_notes') }}"
+        message: "\U0001F195 Home Assistant {{ nueva }} disponible.\nNotas: https://github.com/home-assistant/core/releases/tag/{{ nueva }}"
+  mode: restart

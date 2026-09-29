@@ -1,0 +1,7 @@
+# Última versión de Home Assistant avisada por Telegram
+# (automations/TN_UpdateAvailable.yaml), para no repetir el aviso cada vez que
+# la integración Version pierde la conexión y vuelve.
+input_text:
+  ha_version_avisada:
+    name: Versión de HA ya avisada
+    icon: mdi:update
